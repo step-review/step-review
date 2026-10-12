@@ -1,0 +1,28 @@
+.root {
+  position: relative;
+}
+
+/* Matches the review dropzone, with a solid border. */
+.input {
+  --input-bg: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  box-sizing: border-box;
+  height: 10rem;
+  border-width: 2px;
+  padding-block: var(--mantine-spacing-md);
+  padding-inline-start: var(--mantine-spacing-lg);
+}
+
+.copyButtonSection {
+  align-items: flex-start;
+  padding-top: var(--mantine-spacing-sm);
+}
+
+/* Positioned outside the flow so that it doesn't shift the page. */
+.copiedMessage {
+  position: absolute;
+  top: 100%;
+  margin-top: var(--mantine-spacing-xs);
+}

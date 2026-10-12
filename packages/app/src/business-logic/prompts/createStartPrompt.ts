@@ -1,17 +1,12 @@
-import reviewFileName from "./reviewFileName.ts";
-import type ReviewTargetInput from "./ReviewTargetInput.ts";
+import startPromptPlaceholder from "./startPromptPlaceholder.ts";
 
-/** Prompt that asks a coding agent to write the first round of a review. */
-export default function createStartPrompt(
-  { target, focus }: ReviewTargetInput,
-  origin: string,
-): string {
-  const trimmedTarget = target.trim();
-  const isLink = /^https?:\/\//u.test(trimmedTarget);
-  const fileName = reviewFileName(trimmedTarget);
+/**
+ * Editable prompt that asks a coding agent to write the first round of a
+ * review. The user replaces the placeholder with what to review.
+ */
+export default function createStartPrompt(origin: string): string {
   return [
-    `Review ${isLink ? trimmedTarget : `the changes in \`${trimmedTarget}\``} with step-review, following the instructions at ${origin}/SKILL.md.`,
-    `Write the review to \`${fileName}\` at the root of the repository. Don't commit it.`,
-    ...(focus.trim() ? ["", `Focus on: ${focus.trim()}`] : []),
+    `Review ${startPromptPlaceholder} with step-review, following the instructions at ${origin}/SKILL.md.`,
+    "Write the review file at the root of the repository. Don't commit it.",
   ].join("\n");
 }

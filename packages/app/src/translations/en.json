@@ -5,15 +5,6 @@
   "AttentionBadge.tsx_v5MVrw": {
     "defaultMessage": "Skim"
   },
-  "ColorSchemeToggle.tsx_Efqxns": {
-    "defaultMessage": "Dark theme"
-  },
-  "ColorSchemeToggle.tsx_Vny4fL": {
-    "defaultMessage": "System theme"
-  },
-  "ColorSchemeToggle.tsx_ee1Wp5": {
-    "defaultMessage": "Light theme"
-  },
   "CommentCard.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -197,20 +188,11 @@
   "PreviousRoundSummary.tsx_dodTBy": {
     "defaultMessage": "No longer in the PR"
   },
-  "PromptGenerator.tsx_3awt54": {
-    "defaultMessage": "A PR link, a branch, or a commit range such as main..my-feature."
-  },
-  "PromptGenerator.tsx_TpWde1": {
-    "defaultMessage": "e.g. error handling and the database migration"
-  },
-  "PromptGenerator.tsx_YOMe7O": {
-    "defaultMessage": "Focus (optional)"
-  },
-  "PromptGenerator.tsx_ayXqt0": {
-    "defaultMessage": "What to review"
-  },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
+  },
+  "PromptGenerator.tsx_irbHMA": {
+    "defaultMessage": "Prompt copied"
   },
   "PromptGenerator.tsx_k9O196": {
     "defaultMessage": "Prompt for your coding agent"
@@ -218,11 +200,8 @@
   "ReloadDropzone.tsx_/YcyUn": {
     "defaultMessage": "Drop the review file to reload it"
   },
-  "ReviewDropzone.tsx_582J9O": {
-    "defaultMessage": "Drop the review file here"
-  },
-  "ReviewDropzone.tsx_JF+2bv": {
-    "defaultMessage": "Or click to choose it. The file stays in your browser."
+  "ReviewDropzone.tsx_Au4AP9": {
+    "defaultMessage": "Drop here"
   },
   "ReviewDropzone.tsx_PK4BW0": {
     "defaultMessage": "Copy the problems"
@@ -299,17 +278,14 @@
   "Start.tsx_/cghO8": {
     "defaultMessage": "Load the review file again to continue where you were."
   },
-  "Start.tsx_89MFdb": {
-    "defaultMessage": "Review pull requests step by step, with notes from your coding agent."
+  "Start.tsx_Aetvq9": {
+    "defaultMessage": "1. Send this prompt"
   },
-  "Start.tsx_LoAMlM": {
-    "defaultMessage": "1. Ask your agent for a review"
+  "Start.tsx_c5UR7r": {
+    "defaultMessage": "A better way to review PRs"
   },
-  "Start.tsx_PuVKKh": {
-    "defaultMessage": "2. Open the review"
-  },
-  "Start.tsx_taSFRA": {
-    "defaultMessage": "Agents follow the instructions in {skillLink}. Review files are validated against {schemaLink}."
+  "Start.tsx_i0i2E6": {
+    "defaultMessage": "2. Open the review file"
   },
   "StepHeader.tsx_7DgWhv": {
     "defaultMessage": "Comment on the step"

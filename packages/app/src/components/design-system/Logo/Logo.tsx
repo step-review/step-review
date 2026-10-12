@@ -13,7 +13,7 @@ export default function Logo({ size }: Props) {
       width={size}
       height={size}
       role="img"
-      aria-label="step-review"
+      aria-label="Step Review"
     >
       <rect className={styles["background"]} width="64" height="64" rx="14" />
       <g className={styles["bars"]}>

@@ -5,9 +5,17 @@ import { FormattedMessage } from "react-intl";
 interface Props {
   value: string;
   label: string;
+  size?: "sm" | "lg";
+  variant?: "subtle" | "default";
 }
 
-export default function CopyIconButton({ value, label }: Props) {
+export default function CopyIconButton({
+  value,
+  label,
+  size = "sm",
+  variant = "subtle",
+}: Props) {
+  const iconSize = size === "lg" ? 18 : 14;
   return (
     <CopyButton value={value} timeout={1500}>
       {({ copied, copy }) => (
@@ -16,13 +24,17 @@ export default function CopyIconButton({ value, label }: Props) {
           withArrow
         >
           <ActionIcon
-            variant="subtle"
+            variant={variant}
             color={copied ? "teal" : "gray"}
-            size="sm"
+            size={size}
             onClick={copy}
             aria-label={label}
           >
-            {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+            {copied ? (
+              <IconCheck size={iconSize} />
+            ) : (
+              <IconCopy size={iconSize} />
+            )}
           </ActionIcon>
         </Tooltip>
       )}

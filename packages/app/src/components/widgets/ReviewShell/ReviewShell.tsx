@@ -19,7 +19,6 @@ import { useReviewState } from "../../../business-logic/review-state/ReviewState
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import type RoundView from "../../../business-logic/rounds/RoundView.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
-import ColorSchemeToggle from "../ColorSchemeToggle/ColorSchemeToggle.tsx";
 import FeedbackModal from "../FeedbackModal/FeedbackModal.tsx";
 import FileTreeDrawer from "../FileTreeDrawer/FileTreeDrawer.tsx";
 import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
@@ -111,9 +110,6 @@ export default function ReviewShell({
               &nbsp;({feedbackCount})
             </Button>
             <ReviewMenu loadedReview={loadedReview} />
-            <Box visibleFrom="sm">
-              <ColorSchemeToggle />
-            </Box>
           </Group>
         </Group>
       </AppShell.Header>
