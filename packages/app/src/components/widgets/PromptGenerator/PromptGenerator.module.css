@@ -2,14 +2,13 @@
   position: relative;
 }
 
-/* Matches the review dropzone, with a solid border. */
 .input {
   --input-bg: light-dark(
     var(--mantine-color-gray-0),
     var(--mantine-color-dark-6)
   );
   box-sizing: border-box;
-  height: 10rem;
+  height: 7rem;
   border-width: 2px;
   padding-block: var(--mantine-spacing-md);
   padding-inline-start: var(--mantine-spacing-lg);

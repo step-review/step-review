@@ -77,7 +77,7 @@ export default function ReviewShell({
           >
             <Logo size={26} />
             <Text fw={700} visibleFrom="sm">
-              step-review
+              Step Review
             </Text>
           </Group>
           <RoundSwitcher

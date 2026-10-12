@@ -53,6 +53,12 @@
       "value": "Copied"
     }
   ],
+  "ExampleReviewPreview.tsx_ft40Bq": [
+    {
+      "type": 0,
+      "value": "Screenshot of a review step: the diff, with notes from the coding agent."
+    }
+  ],
   "FeedbackModal.tsx_Ejhdi4": [
     {
       "type": 0,
@@ -527,10 +533,10 @@
       "value": "Drop the review file to reload it"
     }
   ],
-  "ReviewDropzone.tsx_Au4AP9": [
+  "ReviewDropzone.tsx_LsFoKe": [
     {
       "type": 0,
-      "value": "Drop here"
+      "value": "Open file"
     }
   ],
   "ReviewDropzone.tsx_PK4BW0": [
@@ -539,10 +545,22 @@
       "value": "Copy the problems"
     }
   ],
+  "ReviewDropzone.tsx_TZtr0K": [
+    {
+      "type": 0,
+      "value": "or drop it anywhere"
+    }
+  ],
   "ReviewDropzone.tsx_ldEvwe": [
     {
       "type": 0,
       "value": "The file is not a valid review"
+    }
+  ],
+  "ReviewDropzone.tsx_p5lOej": [
+    {
+      "type": 0,
+      "value": "Drop the review file to open it"
     }
   ],
   "ReviewMenu.tsx_4RPdv1": [
@@ -753,6 +771,26 @@
     {
       "type": 0,
       "value": "2. Open the review file"
+    }
+  ],
+  "Start.tsx_scBiTb": [
+    {
+      "type": 0,
+      "value": "3. Review the PR ("
+    },
+    {
+      "type": 1,
+      "value": "exampleLink"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "Start.tsx_tM2s2t": [
+    {
+      "type": 0,
+      "value": "see example"
     }
   ],
   "StepHeader.tsx_7DgWhv": [

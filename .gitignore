@@ -29,3 +29,4 @@ wrangler.deploy.json
 
 # Review files
 *.step-review
+!packages/app/public/examples/*.step-review

@@ -1,0 +1,17 @@
+/* When its container is shorter than the image, the frame crops it from the
+   bottom and fades out, so it reads as continuing. */
+.frame {
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid
+    light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border-radius: var(--mantine-radius-md);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 4rem), transparent);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}

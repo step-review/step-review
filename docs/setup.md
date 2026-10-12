@@ -39,6 +39,9 @@ From the repository root:
 - `pnpm test`
 - `pnpm qa`: all of the above checks.
 - `pnpm --filter <package> <script>`: run a package's script.
+- `pnpm --filter @step-review/app capture-screenshots`: recapture the start
+  page's screenshots of the example review (`packages/app/public/examples/`).
+  Run it after visible changes to the review pages.
 
 ## Editor setup
 

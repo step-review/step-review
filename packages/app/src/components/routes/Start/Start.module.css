@@ -1,3 +1,30 @@
+/* Fills the viewport without scrolling: the example screenshot gets whatever
+   height the other sections leave. */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.header {
+  flex: none;
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
   padding-block: var(--mantine-spacing-xl);
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+.exampleSection {
+  flex: 1;
+  min-height: 12rem;
 }

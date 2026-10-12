@@ -1,0 +1,1253 @@
+#step-review:round
+{
+  "$schema": "https://step-review.dev/schema/v1.json",
+  "version": 1,
+  "createdAt": "2026-10-12T09:00:00Z",
+  "target": {
+    "title": "Keep open links private",
+    "url": "https://github.com/superegodev/superego/pull/166",
+    "baseRef": "main",
+    "headRef": "codex/private-open-links",
+    "baseCommit": "4b40f2f62c0b9eab92ca59c6852861f4a283cd0a",
+    "headCommit": "7893f7a590f23bfeccc975310bdf7e727d317e24"
+  },
+  "overview": {
+    "summary": "Web links to Superego resources used to carry collection, document, version and app IDs in the URL path of `open.superego.dev`, so every click sent them to the server. This PR moves them into the URL fragment, which browsers never send: the CLI now generates `https://open.superego.dev/#deepLink=…` links, and the Open Worker serves a static page whose inline script reads the fragment and opens the `superego://` link.\n\nThe rest of the PR is CI: preview deployments for the Open Worker, production deploys on every push to `main`, and tighter permissions for the workflows.",
+    "areas": [
+      {
+        "title": "CLI: link generation",
+        "points": [
+          "`get-deep-link` defaults to web links, now fragment-based.",
+          "`desktop` still returns plain `superego://` links."
+        ]
+      },
+      {
+        "title": "Open Worker",
+        "points": [
+          "The server-side redirect is replaced by a client-side opener page.",
+          "HTML responses get a strict Content Security Policy.",
+          "Every path except `/`, `/privacy` and `/robots.txt` now returns 404."
+        ]
+      },
+      {
+        "title": "CI",
+        "points": [
+          "PRs deploy an Open Worker preview, linked in the preview comment.",
+          "Pushes to `main` deploy the website, demo and Open Worker; tags also build Electron.",
+          "Jobs get read-only permissions and don't persist checkout credentials."
+        ]
+      }
+    ],
+    "readingPlan": "Steps 1 and 2 are the privacy fix and deserve the most attention. Steps 3 and 4 are deployment plumbing. Step 5 removes the Worker's tests and can be skimmed, but see its note."
+  },
+  "steps": [
+    {
+      "id": "cli-links",
+      "title": "Fragment-based links in the CLI",
+      "attention": "high",
+      "intro": "`getDeepLink` now puts the whole `superego://` link, URL-encoded, in the fragment of an `open.superego.dev` URL, and makes web links the default. The help text and new tests follow.",
+      "files": [
+        {
+          "path": "packages/apps/cli/src/commands/get-deep-link/get-deep-link.ts",
+          "notes": [
+            {
+              "id": "n1",
+              "kind": "explainer",
+              "body": "Two changes in one: the link format (the deep link moves from the path to `#deepLink=`), and the default. Before, an omitted `linkFormat` meant `desktop`; now only an explicit `desktop` does, so omitting it gives a web link.",
+              "anchor": {
+                "side": "new",
+                "line": 72,
+                "text": "  return linkFormat === \"desktop\"",
+                "endLine": 74
+              }
+            },
+            {
+              "id": "n2",
+              "kind": "issue",
+              "severity": "concern",
+              "body": "The new default isn't reflected in the agent skill that the CLI installs: `packages/apps/cli/src/commands/agents/install-skill/SKILL.md` still says `get-deep-link` creates a `superego://...` desktop link. Agents following it will now get web links without expecting them. Update the skill in this PR.",
+              "anchor": {
+                "side": "new",
+                "line": 72,
+                "text": "  return linkFormat === \"desktop\""
+              }
+            },
+            {
+              "id": "n3",
+              "kind": "issue",
+              "severity": "nit",
+              "body": "Missing blank line between the end of the command definition and the comment.",
+              "anchor": {
+                "side": "new",
+                "line": 69,
+                "text": "// Exported only for tests."
+              }
+            }
+          ]
+        },
+        {
+          "path": "packages/apps/cli/src/commands/get-deep-link/additional-notes.md"
+        },
+        {
+          "path": "packages/apps/cli/src/commands/get-deep-link/get-deep-link.test.ts",
+          "notes": [
+            {
+              "id": "n4",
+              "kind": "explainer",
+              "body": "The expected URL shows the encoding end to end: the deep link's own query (`?view=App&appId=…`) is fully escaped, so it can't be confused with the fragment's `deepLink=` parameter.",
+              "anchor": {
+                "side": "new",
+                "line": 18,
+                "text": "      \"https://open.superego.dev/#deepLink=superego%3A%2F%2F%2Fcollections%2FCollection_abc%3Fview%3DApp%26appId%3DApp_abc\",",
+                "endLine": 20
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opener-page",
+      "title": "Client-side opener page",
+      "attention": "high",
+      "intro": "The Worker no longer redirects. It serves the info page at `/` and `/privacy`, and that page's script reads `#deepLink=` and navigates to it if it's a `superego:` URL.",
+      "files": [
+        {
+          "path": "packages/apps/open/src/worker.ts",
+          "notes": [
+            {
+              "id": "n5",
+              "kind": "explainer",
+              "body": "The page needs its inline script and styles, so the policy allows exactly those and blocks everything else: no external resources, no forms, no framing.",
+              "anchor": {
+                "side": "new",
+                "line": 11,
+                "text": "  \"Content-Security-Policy\": [",
+                "endLine": 18
+              }
+            },
+            {
+              "id": "n6",
+              "kind": "issue",
+              "severity": "nit",
+              "body": "The script is static (`${deepLinkProtocol}` is a constant), so `script-src` could allow it by its `sha256-…` hash instead of `'unsafe-inline'`. Not exploitable today, since nothing user-controlled is rendered server-side, but a hash keeps it that way.",
+              "anchor": {
+                "side": "new",
+                "line": 13,
+                "text": "    \"script-src 'unsafe-inline'\","
+              }
+            },
+            {
+              "id": "n7",
+              "kind": "issue",
+              "severity": "concern",
+              "body": "Links generated before this PR (`https://open.superego.dev/collections/…`) now get a plain-text 404. They live on in chat histories, and since [main now deploys production](step:ci) the break happens on merge.\n\nThose requests already contain the IDs, so a redirect for legacy paths would leak nothing new. Alternatively, serve the info page for unknown paths with a note that the link format changed.",
+              "anchor": {
+                "side": "new",
+                "line": 43,
+                "text": "  return textResponse(\"Not found\\n\", 404);"
+              }
+            },
+            {
+              "id": "n8",
+              "kind": "explainer",
+              "body": "The protocol check is what keeps this from being an open redirect: `#deepLink=https://evil.example` or `javascript:` URLs are ignored. The link is shown with `textContent`, so it can't inject markup.",
+              "anchor": {
+                "side": "new",
+                "line": 118,
+                "text": "        if (deepLinkUrl.protocol === \"${deepLinkProtocol}:\") {",
+                "endLine": 127
+              }
+            },
+            {
+              "id": "n9",
+              "kind": "issue",
+              "severity": "question",
+              "body": "When `deepLink` is present but isn't a valid `superego:` URL, the page silently shows the generic text. Should it say the link is malformed, so users can report it?",
+              "anchor": {
+                "side": "new",
+                "line": 114,
+                "text": "        } catch {",
+                "endLine": 116
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "open-previews",
+      "title": "Open Worker previews",
+      "attention": "normal",
+      "intro": "Configuration for deploying PR previews of the Open Worker as Worker versions with preview URLs. The CI job that runs it is in [the next step](step:ci).",
+      "files": [
+        {
+          "path": "packages/apps/open/wrangler.jsonc",
+          "notes": [
+            {
+              "id": "n10",
+              "kind": "explainer",
+              "body": "Required for `--preview-alias`: without preview URLs, an uploaded version has no address of its own.",
+              "anchor": {
+                "side": "new",
+                "line": 6,
+                "text": "  \"preview_urls\": true,"
+              }
+            }
+          ]
+        },
+        {
+          "path": "packages/apps/open/package.json",
+          "notes": [
+            {
+              "id": "n11",
+              "kind": "explainer",
+              "body": "`wrangler versions upload` creates a new version without routing production traffic to it, which is what makes it safe for PRs. The removed `test` script and `vitest` dependency belong to [step 5](step:removed-tests).",
+              "anchor": {
+                "side": "new",
+                "line": 8,
+                "text": "    \"deploy:preview\": \"wrangler versions upload\","
+              }
+            }
+          ]
+        },
+        {
+          "path": "package.json"
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "title": "Workflows: deploys and hardening",
+      "attention": "normal",
+      "intro": "The tag workflow becomes `main-and-tags.yml` and also deploys on pushes to `main`. Both workflows get read-only permissions and non-persisted checkout credentials, and the PR comment is now posted with `actions/github-script`.",
+      "files": [
+        {
+          "path": ".github/workflows/main-and-tags.yml",
+          "notes": [
+            {
+              "id": "n12",
+              "kind": "explainer",
+              "body": "A release is usually pushed as a commit on `main` plus its tag, which triggers two runs. The `main` run skips itself when the commit already has a version tag, leaving the work to the tag run.",
+              "anchor": {
+                "side": "new",
+                "line": 31,
+                "text": "          git fetch --force origin \"refs/tags/v*:refs/tags/v*\"",
+                "endLine": 38
+              }
+            },
+            {
+              "id": "n13",
+              "kind": "issue",
+              "severity": "question",
+              "body": "The skip only works if the tag exists when the `main` run starts. If the tag is pushed later (e.g. after checking the deployed site), both runs deploy to production. Harmless if deploys are idempotent, but is that the intended release flow?",
+              "anchor": {
+                "side": "new",
+                "line": 32,
+                "text": "          if git tag --points-at \"$GITHUB_SHA\" --list \"v*\" | grep -q .; then"
+              }
+            },
+            {
+              "id": "n14",
+              "kind": "issue",
+              "severity": "question",
+              "body": "QA moves from `warp-macos-26-arm64-6x` to `macos-latest`, while the Electron builds keep the WarpBuild runners. Intentional? It will make release QA slower.",
+              "anchor": {
+                "side": "new",
+                "line": 43,
+                "text": "    runs-on: macos-latest"
+              }
+            }
+          ]
+        },
+        {
+          "path": ".github/workflows/pull-requests.yml",
+          "notes": [
+            {
+              "id": "n15",
+              "kind": "explainer",
+              "body": "PR comments go through the Issues API, so `issues: write` is the permission it needs.",
+              "anchor": {
+                "side": "new",
+                "line": 189,
+                "text": "      issues: write"
+              }
+            },
+            {
+              "id": "n16",
+              "kind": "explainer",
+              "body": "Matching the old action's marker too means PRs opened before this change get their existing comment updated instead of a second one.",
+              "anchor": {
+                "side": "new",
+                "line": 197,
+                "text": "            const legacyMarker = \"<!-- add-pr-comment:add-pr-comment -->\";"
+              }
+            },
+            {
+              "id": "n17",
+              "kind": "issue",
+              "severity": "nit",
+              "body": "Only the first 100 comments are searched. On a long PR the marker can be on a later page, and a duplicate comment gets posted. `github.paginate(github.rest.issues.listComments, …)` avoids it.",
+              "anchor": {
+                "side": "new",
+                "line": 209,
+                "text": "            const { data: comments } = await github.rest.issues.listComments({",
+                "endLine": 214
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "removed-tests",
+      "title": "Removed Worker tests",
+      "attention": "low",
+      "intro": "Deletes the Worker's tests and its `vitest` dependency.",
+      "notes": [
+        {
+          "id": "n18",
+          "kind": "issue",
+          "severity": "concern",
+          "body": "The Worker got simpler, but it still has behavior worth pinning down: 405 for other methods, 404 for unknown paths, and the security headers. The opener script's protocol check ([explained here](note:n8)) is the security-critical part and has no test at all. Rather than deleting `worker.test.ts`, update it for the new responses and headers."
+        }
+      ],
+      "files": [
+        {
+          "path": "packages/apps/open/src/worker.test.ts"
+        },
+        {
+          "path": "yarn.lock",
+          "summary": "Drops `vitest` from the dependencies of `@superego/open`."
+        }
+      ]
+    }
+  ]
+}
+#step-review:diff
+diff --git a/.github/workflows/tags.yml b/.github/workflows/main-and-tags.yml
+similarity index 83%
+rename from .github/workflows/tags.yml
+rename to .github/workflows/main-and-tags.yml
+index 7981bba..041fef0 100644
+--- a/.github/workflows/tags.yml
++++ b/.github/workflows/main-and-tags.yml
+@@ -1,123 +1,168 @@
+ name: QA and deploy
+ 
+ on:
+   push:
++    branches:
++      - main
+     tags:
+       - "v*"
+ 
+ jobs:
++  detect-trigger:
++    runs-on: ubuntu-latest
++    permissions:
++      contents: read
++    outputs:
++      is-tag: ${{ steps.detect.outputs.is-tag }}
++      run-jobs: ${{ steps.detect.outputs.run-jobs }}
++    steps:
++      - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
++      - name: Detect push type
++        id: detect
++        run: |
++          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
++            echo "is-tag=true" >> "$GITHUB_OUTPUT"
++            echo "run-jobs=true" >> "$GITHUB_OUTPUT"
++            exit 0
++          fi
++
++          git fetch --force origin "refs/tags/v*:refs/tags/v*"
++          if git tag --points-at "$GITHUB_SHA" --list "v*" | grep -q .; then
++            echo "is-tag=false" >> "$GITHUB_OUTPUT"
++            echo "run-jobs=false" >> "$GITHUB_OUTPUT"
++          else
++            echo "is-tag=false" >> "$GITHUB_OUTPUT"
++            echo "run-jobs=true" >> "$GITHUB_OUTPUT"
++          fi
++
+   qa:
+-    runs-on: warp-macos-26-arm64-6x
++    needs: detect-trigger
++    if: needs.detect-trigger.outputs.run-jobs == 'true'
++    runs-on: macos-latest
++    permissions:
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Install Playwright
+         run: yarn playwright install --with-deps
+       - name: Check formatting
+         run: yarn check-formatting
+       - name: Check linting
+         run: yarn check-linting
+       - name: Check translations
+         run: yarn check-translations
+       - name: Check types
+         run: yarn check-types
+       - name: Test
+         run: yarn test
+       - name: Upload Playwright artifacts
+         if: failure()
+         uses: actions/upload-artifact@v6
+         with:
+           name: playwright-artifacts
+           path: |
+             packages/apps/website/playwright-report/
+             packages/apps/website/test-results/
+             packages/tests/browser-app-e2e-tests/playwright-report/
+             packages/tests/browser-app-e2e-tests/test-results/
+           retention-days: 7
+           if-no-files-found: ignore
+           compression-level: 0
+ 
+   build-deploy-demo-website-and-open:
+-    needs: qa
++    needs: [detect-trigger, qa]
++    if: needs.detect-trigger.outputs.run-jobs == 'true'
+     runs-on: ubuntu-latest
+     environment: production
++    permissions:
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Build website
+         env:
+           PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+           PUBLIC_DISCORD_INVITE_URL: ${{ vars.PUBLIC_DISCORD_INVITE_URL }}
+         run: yarn build-website
+       - name: Deploy website to https://sueprego.dev
+         env:
+           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+         run: yarn deploy-website:production
+       - name: Build demo-app for production environment
+         run: yarn build-demo:production
+       - name: Deploy demo-app to production environment
+         env:
+           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+         run: yarn deploy-demo:production
+       - name: Deploy open worker to production environment
+         env:
+           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+         run: yarn deploy-open:production
+ 
+   build-deploy-electron:
+-    needs: qa
++    needs: [detect-trigger, qa]
++    if: needs.detect-trigger.outputs.is-tag == 'true'
+     strategy:
+       matrix:
+         include:
+           - os: warp-macos-26-arm64-6x
+             arch: x64
+           - os: warp-macos-26-arm64-6x
+             arch: arm64
+           - os: ubuntu-latest
+             arch: x64
+           - os: ubuntu-24.04-arm
+             arch: arm64
+     runs-on: ${{ matrix.os }}
+     defaults:
+       run:
+         shell: bash
+     environment: production
+     permissions:
+       contents: write
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24.14.0"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install AppImage build dependencies
+         if: startsWith(matrix.os, 'ubuntu')
+         run: sudo apt-get update && sudo apt-get install -y squashfs-tools
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Setup macOS for signing and notarizing
+         if: contains(matrix.os, 'macos')
+         env:
+           MACOS_CERTIFICATE_P12_BASE64: ${{ secrets.MACOS_CERTIFICATE_P12_BASE64 }}
+           MACOS_CERTIFICATE_P12_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_P12_PASSWORD }}
+           MACOS_CERTIFICATE_P12_PATH: ${{ runner.temp }}/MacosCertificate.p12
+           MACOS_TEMP_KEYCHAIN_PATH: ${{ runner.temp }}/MacosKeychain.keychain-db
+           MACOS_TEMP_KEYCHAIN_PASSWORD: ${{ secrets.MACOS_TEMP_KEYCHAIN_PASSWORD }}
+           APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+           APPLE_API_KEY: ${{ runner.temp }}/AppleApiKey.p8
+diff --git a/.github/workflows/pull-requests.yml b/.github/workflows/pull-requests.yml
+index fa14053..ba884c9 100644
+--- a/.github/workflows/pull-requests.yml
++++ b/.github/workflows/pull-requests.yml
+@@ -1,162 +1,236 @@
+ name: QA and deploy
+ 
+ on: pull_request
+ 
+ jobs:
+   qa:
+     runs-on: macos-latest
++    permissions:
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Install Playwright
+         run: yarn playwright install --with-deps
+       - name: Check formatting
+         run: yarn check-formatting
+       - name: Check linting
+         run: yarn check-linting
+       - name: Check translations
+         run: yarn check-translations
+       - name: Check types
+         run: yarn check-types
+       - name: Test
+         run: yarn test
+       - name: Upload Playwright artifacts
+         if: failure()
+         uses: actions/upload-artifact@v6
+         with:
+           name: playwright-artifacts
+           path: |
+             packages/apps/website/playwright-report/
+             packages/apps/website/test-results/
+             packages/tests/browser-app-e2e-tests/playwright-report/
+             packages/tests/browser-app-e2e-tests/test-results/
+           retention-days: 7
+           if-no-files-found: ignore
+           compression-level: 0
+ 
+   build-deploy-demo:
+     needs: qa
+     runs-on: ubuntu-latest
++    permissions:
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Build demo-app for preview environment
+         env:
+           VITE_SANDBOX_URL: /app-sandbox.html
+         run: yarn build-demo:preview
+       - name: Deploy demo-app to preview environment
+         env:
+           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+         run: yarn deploy-demo:preview --branch ${{ github.event.number }}
+ 
+   build-deploy-website:
+     needs: qa
+     runs-on: ubuntu-latest
+     environment: preview
++    permissions:
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Build website for preview environment
+         env:
+           PUBLIC_DEMO_VIDEO_URL: ${{ vars.PUBLIC_DEMO_VIDEO_URL }}
+           PUBLIC_DISCORD_INVITE_URL: ${{ vars.PUBLIC_DISCORD_INVITE_URL }}
+         run: yarn build-website
+       - name: Deploy website to preview environment
+         env:
+           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+         run: yarn deploy-website:preview --branch ${{ github.event.number }}
+ 
++  deploy-open:
++    needs: qa
++    runs-on: ubuntu-latest
++    permissions:
++      contents: read
++    steps:
++      - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
++      - uses: actions/setup-node@v6
++        with:
++          node-version: "24"
++      - name: Enable corepack
++        run: corepack enable
++      - name: Install dependencies
++        run: yarn install --immutable --check-cache --refresh-lockfile
++      - name: Deploy open worker to preview environment
++        env:
++          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
++          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
++        run: yarn deploy-open:preview --preview-alias pr-${{ github.event.number }}
++
+   build-deploy-electron:
+     needs: qa
+     strategy:
+       matrix:
+         include:
+           - os: macos-latest
+             arch: x64
+             artifact-path: packages/apps/electron-app/out/make/zip/darwin/x64/*.zip
+           - os: macos-latest
+             arch: arm64
+             artifact-path: packages/apps/electron-app/out/make/zip/darwin/arm64/*.zip
+           - os: ubuntu-latest
+             arch: x64
+             artifact-path: |
+               packages/apps/electron-app/out/make/deb/x64/*.deb
+               packages/apps/electron-app/out/make/rpm/x64/*.rpm
+               packages/apps/electron-app/out/make/**/*.AppImage
+           - os: ubuntu-24.04-arm
+             arch: arm64
+             artifact-path: |
+               packages/apps/electron-app/out/make/deb/arm64/*.deb
+               packages/apps/electron-app/out/make/rpm/arm64/*.rpm
+               packages/apps/electron-app/out/make/**/*.AppImage
+     runs-on: ${{ matrix.os }}
+     defaults:
+       run:
+         shell: bash
+     permissions:
+-      contents: write
++      contents: read
+     steps:
+       - uses: actions/checkout@v6
++        with:
++          persist-credentials: false
+       - uses: actions/setup-node@v6
+         with:
+           node-version: "24.14.0"
+       - name: Enable corepack
+         run: corepack enable
+       - name: Install AppImage build dependencies
+         if: startsWith(matrix.os, 'ubuntu')
+         run: sudo apt-get update && sudo apt-get install -y squashfs-tools
+       - name: Install dependencies
+         run: yarn install --immutable --check-cache --refresh-lockfile
+       - name: Set electron-app package version
+         run: |
+           PKG_JSON_PATH="packages/apps/electron-app/package.json"
+           PR_NUMBER=$(echo "$GITHUB_REF" | awk -F'/' '{print $3}')
+           printf '%s' "$(jq ".version = \"0.0.0-PR-${PR_NUMBER}\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
+       - name: Build
+         env:
+           NODE_OPTIONS: --max-old-space-size=6144
+         run: yarn build-electron --arch=${{ matrix.arch }}
+       - name: Get OS friendly name
+         id: get-os
+         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
+       - name: Upload artifacts
+         uses: actions/upload-artifact@v6
+         with:
+           name: ${{ steps.get-os.outputs.name }}-${{ matrix.arch }}-app
+           path: ${{ matrix.artifact-path }}
+           compression-level: 0
+ 
+   add-pr-comment:
+-    needs: [build-deploy-demo, build-deploy-website, build-deploy-electron]
++    needs: [build-deploy-demo, build-deploy-website, deploy-open, build-deploy-electron]
+     runs-on: ubuntu-latest
+     permissions:
+-      pull-requests: write
++      issues: write
+     steps:
+-      - uses: mshick/add-pr-comment@v2
++      - name: Comment preview URLs
++        uses: actions/github-script@v8
+         with:
+-          message: |
+-            ### 🚀 Previews available
++          script: |
++            const prNumber = context.payload.pull_request.number;
++            const marker = "<!-- preview-deployments-comment -->";
++            const legacyMarker = "<!-- add-pr-comment:add-pr-comment -->";
++            const body = [
++              marker,
++              "",
++              "### 🚀 Previews available",
++              "",
++              `- Demo app: https://${prNumber}.demosuperegodev.pages.dev/`,
++              `- Website: https://${prNumber}.superegodev.pages.dev/`,
++              `- Open worker: https://pr-${prNumber}-opensuperegodev.paolo-scanferla.workers.dev/`,
++              `- Electron apps: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
++            ].join("\n");
++
++            const { data: comments } = await github.rest.issues.listComments({
++              owner: context.repo.owner,
++              repo: context.repo.repo,
++              issue_number: prNumber,
++              per_page: 100,
++            });
++
++            const existingComment = comments.find(
++              (comment) =>
++                comment.body.includes(marker) ||
++                comment.body.includes(legacyMarker),
++            );
+ 
+-            - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
+-            - Website: https://${{ github.event.number }}.superegodev.pages.dev/
+-            - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}
++            if (existingComment) {
++              await github.rest.issues.updateComment({
++                owner: context.repo.owner,
++                repo: context.repo.repo,
++                comment_id: existingComment.id,
++                body,
++              });
++            } else {
++              await github.rest.issues.createComment({
++                owner: context.repo.owner,
++                repo: context.repo.repo,
++                issue_number: prNumber,
++                body,
++              });
++            }
+diff --git a/package.json b/package.json
+index f35334e..fbde3d1 100644
+--- a/package.json
++++ b/package.json
+@@ -1,39 +1,40 @@
+ {
+   "name": "@superego/root",
+   "version": "2026.6.0",
+   "private": true,
+   "workspaces": [
+     "packages/**/*"
+   ],
+   "type": "module",
+   "scripts": {
+     "test": "CI=true yarn workspaces foreach --all --topological-dev --verbose run test",
+     "check-types": "yarn workspaces foreach --all --topological-dev --verbose run check-types",
+     "check-translations": "yarn workspaces foreach --all --topological-dev --verbose run check-translations",
+     "check-linting": "oxlint",
+     "fix-linting": "oxlint --fix",
+     "check-formatting": "oxfmt --check && prettier --list-different \"**/*.(sql|astro|sh)\"",
+     "fix-formatting": "oxfmt && prettier --write \"**/*.(sql|astro|sh)\"",
+     "build-website": "yarn workspace @superego/website build",
+     "deploy-website:production": "yarn workspace @superego/website deploy:production",
+     "deploy-website:preview": "yarn workspace @superego/website deploy:preview",
++    "deploy-open:preview": "yarn workspace @superego/open deploy:preview",
+     "deploy-open:production": "yarn workspace @superego/open deploy:production",
+     "build-demo:preview": "yarn workspace @superego/demo-app build:preview",
+     "build-demo:production": "yarn workspace @superego/demo-app build:production",
+     "deploy-demo:preview": "yarn workspace @superego/demo-app deploy:preview",
+     "deploy-demo:production": "yarn workspace @superego/demo-app deploy:production",
+     "build-electron": "yarn workspace @superego/electron-app build",
+     "deploy-electron": "yarn workspace @superego/electron-app deploy",
+     "prepare-release": "node scripts/prepareRelease.ts",
+     "playwright": "playwright"
+   },
+   "devDependencies": {
+     "oxfmt": "^0.52.0",
+     "oxlint": "^1.67.0",
+     "playwright": "^1.60.0",
+     "prettier": "^3.8.3",
+     "prettier-plugin-astro": "^0.14.1",
+     "prettier-plugin-sh": "^0.18.1",
+     "prettier-plugin-sql-cst": "^0.22.1",
+     "typescript": "^6.0.3",
+     "zx": "8.8.5-lite"
+diff --git a/packages/apps/cli/src/commands/get-deep-link/additional-notes.md b/packages/apps/cli/src/commands/get-deep-link/additional-notes.md
+index 3ac0da9..e571403 100644
+--- a/packages/apps/cli/src/commands/get-deep-link/additional-notes.md
++++ b/packages/apps/cli/src/commands/get-deep-link/additional-notes.md
+@@ -1,7 +1,7 @@
+-`linkFormat` defaults to `desktop`, which returns a `superego://...` link. Use
+-`web` to return a clickable `https://open.superego.dev/...` redirect link for
+-chat surfaces that block custom URL schemes.
++`linkFormat` defaults to `web`, which returns a clickable
++`https://open.superego.dev/#deepLink=...` opener link for chat surfaces that
++block custom URL schemes.
+ 
+-Web links send Superego resource IDs in the URL path to the redirect service.
+-Resource IDs can be sensitive. Superego does not store, analyze, or log them in
+-the Worker.
++Web links keep Superego resource IDs in the URL fragment. Browsers do not send
++URL fragments to `open.superego.dev`, so sensitive URL data never reaches the
++server and is handled only in the browser.
+diff --git a/packages/apps/cli/src/commands/get-deep-link/get-deep-link.test.ts b/packages/apps/cli/src/commands/get-deep-link/get-deep-link.test.ts
+new file mode 100644
+index 0000000..376fc4d
+--- /dev/null
++++ b/packages/apps/cli/src/commands/get-deep-link/get-deep-link.test.ts
+@@ -0,0 +1,38 @@
++import type { AppId, CollectionId } from "@superego/backend";
++import { describe, expect, it } from "vitest";
++import { getDeepLink } from "./get-deep-link.js";
++
++describe("getDeepLink", () => {
++  it("keeps sensitive route data in the URL fragment by default", () => {
++    // Exercise
++    const deepLink = getDeepLink({
++      resource: {
++        type: "collection",
++        collectionId: "Collection_abc" as CollectionId,
++        appId: "App_abc" as AppId,
++      },
++    });
++
++    // Verify
++    expect(deepLink).toBe(
++      "https://open.superego.dev/#deepLink=superego%3A%2F%2F%2Fcollections%2FCollection_abc%3Fview%3DApp%26appId%3DApp_abc",
++    );
++  });
++
++  it("returns desktop deep links when requested", () => {
++    // Exercise
++    const deepLink = getDeepLink({
++      linkFormat: "desktop",
++      resource: {
++        type: "collection",
++        collectionId: "Collection_abc" as CollectionId,
++        appId: "App_abc" as AppId,
++      },
++    });
++
++    // Verify
++    expect(deepLink).toBe(
++      "superego:///collections/Collection_abc?view=App&appId=App_abc",
++    );
++  });
++});
+diff --git a/packages/apps/cli/src/commands/get-deep-link/get-deep-link.ts b/packages/apps/cli/src/commands/get-deep-link/get-deep-link.ts
+index 82cd5ad..ea1e3da 100644
+--- a/packages/apps/cli/src/commands/get-deep-link/get-deep-link.ts
++++ b/packages/apps/cli/src/commands/get-deep-link/get-deep-link.ts
+@@ -1,24 +1,23 @@
+ import {
+   CollectionRouteView,
+   RouteName,
+-  deepLinkProtocol,
+   toDeepLink,
+   type Route,
+ } from "@superego/routing";
+ import { valibotSchemas } from "@superego/shared-utils";
+ import { Command } from "commander";
+ import * as v from "valibot";
+ import { readArgsFile } from "../../utils/argsFile.js";
+ import { useMarkdownHelp } from "../../utils/markdownHelp.js";
+ import {
+   runCommand,
+   successfulResult,
+   unsuccessfulResult,
+ } from "../../utils/results.js";
+ import additionalNotes from "./additional-notes.md?raw";
+ 
+ const argsSchema = v.strictObject({
+   linkFormat: v.optional(v.picklist(["desktop", "web"])),
+   resource: v.variant("type", [
+     v.strictObject({
+       type: v.literal("document"),
+@@ -50,46 +49,46 @@ export default useMarkdownHelp(
+       await runCommand(async () => {
+         const argsFileResult = readArgsFile(options.args);
+         if (!argsFileResult.success) {
+           return argsFileResult;
+         }
+ 
+         const validationResult = v.safeParse(argsSchema, argsFileResult.data);
+         if (!validationResult.success) {
+           return unsuccessfulResult("ArgumentsNotValid", {
+             issues: validationResult.issues,
+           });
+         }
+ 
+         return successfulResult({
+           deepLink: getDeepLink(validationResult.output),
+         });
+       });
+     }),
+   { argsSchema, additionalNotes },
+ );
+-
+-function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
++// Exported only for tests.
++export function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
+   const deepLink = toDeepLink(getRoute(resource));
+-  return linkFormat === "web"
+-    ? deepLink.replace(`${deepLinkProtocol}://`, openDeepLinkOrigin)
+-    : deepLink;
++  return linkFormat === "desktop"
++    ? deepLink
++    : `${openDeepLinkOrigin}/#deepLink=${encodeURIComponent(deepLink)}`;
+ }
+ 
+ function getRoute(resource: GetDeepLinkArgs["resource"]): Route {
+   switch (resource.type) {
+     case "document":
+       return {
+         name: RouteName.Document,
+         collectionId: resource.collectionId,
+         documentId: resource.documentId,
+       };
+     case "documentVersion":
+       return {
+         name: RouteName.Document,
+         collectionId: resource.collectionId,
+         documentId: resource.documentId,
+         documentVersionId: resource.documentVersionId,
+       };
+     case "collection":
+       return resource.appId
+         ? {
+diff --git a/packages/apps/open/package.json b/packages/apps/open/package.json
+index 8266423..831d4d2 100644
+--- a/packages/apps/open/package.json
++++ b/packages/apps/open/package.json
+@@ -1,20 +1,19 @@
+ {
+   "name": "@superego/open",
+   "version": "2026.6.0",
+   "private": true,
+   "type": "module",
+   "scripts": {
+     "check-types": "tsc --noEmit",
+-    "test": "vitest --reporter=verbose",
++    "deploy:preview": "wrangler versions upload",
+     "deploy:production": "wrangler deploy"
+   },
+   "dependencies": {
+     "@superego/routing": "workspace:*"
+   },
+   "devDependencies": {
+     "@cloudflare/workers-types": "4.20260526.1",
+     "typescript": "^6.0.3",
+-    "vitest": "^4.1.7",
+     "wrangler": "^4.94.0"
+   }
+ }
+diff --git a/packages/apps/open/src/worker.test.ts b/packages/apps/open/src/worker.test.ts
+deleted file mode 100644
+index f4b2cf1..0000000
+--- a/packages/apps/open/src/worker.test.ts
++++ /dev/null
+@@ -1,46 +0,0 @@
+-import { describe, expect, it } from "vitest";
+-import { handleRequest } from "./worker.js";
+-
+-describe("handleRequest", () => {
+-  it("redirects route paths to Superego deep links", () => {
+-    // Exercise
+-    const response = handleRequest(
+-      new Request(
+-        "https://open.superego.dev/collections/Collection_abc?view=App&appId=App_abc",
+-      ),
+-    );
+-
+-    // Verify
+-    expect(response.status).toBe(302);
+-    expect(response.headers.get("Location")).toBe(
+-      "superego:///collections/Collection_abc?view=App&appId=App_abc",
+-    );
+-    expect(response.headers.get("Cache-Control")).toBe("no-store");
+-  });
+-
+-  it("renders the privacy note at the root", async () => {
+-    // Exercise
+-    const response = handleRequest(new Request("https://open.superego.dev/"));
+-
+-    // Verify
+-    expect(response.status).toBe(200);
+-    expect(response.headers.get("Content-Type")).toBe(
+-      "text/html; charset=utf-8",
+-    );
+-    await expect(response.text()).resolves.toContain(
+-      "Superego does not store, analyze, or log these IDs",
+-    );
+-  });
+-
+-  it("rejects non-GET methods", () => {
+-    // Exercise
+-    const response = handleRequest(
+-      new Request("https://open.superego.dev/collections/Collection_abc", {
+-        method: "POST",
+-      }),
+-    );
+-
+-    // Verify
+-    expect(response.status).toBe(405);
+-  });
+-});
+diff --git a/packages/apps/open/src/worker.ts b/packages/apps/open/src/worker.ts
+index f66ab54..223043a 100644
+--- a/packages/apps/open/src/worker.ts
++++ b/packages/apps/open/src/worker.ts
+@@ -1,110 +1,133 @@
+ import { deepLinkProtocol } from "@superego/routing";
+ 
+-const noStoreHeaders = {
++const baseHeaders = {
+   "Cache-Control": "no-store",
++  "Referrer-Policy": "no-referrer",
++  "X-Robots-Tag": "noindex, nofollow",
++} as const;
++
++const htmlHeaders = {
++  ...baseHeaders,
++  "Content-Security-Policy": [
++    "default-src 'none'",
++    "script-src 'unsafe-inline'",
++    "style-src 'unsafe-inline'",
++    "base-uri 'none'",
++    "form-action 'none'",
++    "frame-ancestors 'none'",
++  ].join("; "),
++  "Content-Type": "text/html; charset=utf-8",
+ } as const;
+ 
+ export default {
+   fetch(request) {
+     return handleRequest(request);
+   },
+ } satisfies ExportedHandler;
+ 
+ export function handleRequest(request: Request): Response {
+   if (request.method !== "GET" && request.method !== "HEAD") {
+     return new Response("Method not allowed", {
+       status: 405,
+-      headers: noStoreHeaders,
++      headers: baseHeaders,
+     });
+   }
+ 
+   const url = new URL(request.url);
+   if (url.pathname === "/robots.txt") {
+     return textResponse("User-agent: *\nDisallow: /\n");
+   }
+   if (url.pathname === "/" || url.pathname === "/privacy") {
+     return htmlResponse(getInfoPage());
+   }
+-  if (!isSafeHref(url.pathname)) {
+-    return textResponse("Not found\n", 404);
+-  }
+-
+-  return new Response(null, {
+-    status: 302,
+-    headers: {
+-      ...noStoreHeaders,
+-      Location: `${deepLinkProtocol}://${url.pathname}${url.search}`,
+-    },
+-  });
+-}
+-
+-function isSafeHref(pathname: string): boolean {
+-  return pathname.startsWith("/") && !pathname.startsWith("//");
++  return textResponse("Not found\n", 404);
+ }
+ 
+ function textResponse(body: string, status = 200): Response {
+   return new Response(body, {
+     status,
+     headers: {
+-      ...noStoreHeaders,
++      ...baseHeaders,
+       "Content-Type": "text/plain; charset=utf-8",
+     },
+   });
+ }
+ 
+ function htmlResponse(body: string): Response {
+   return new Response(body, {
+-    headers: {
+-      ...noStoreHeaders,
+-      "Content-Type": "text/html; charset=utf-8",
+-    },
++    headers: htmlHeaders,
+   });
+ }
+ 
+ function getInfoPage(): string {
+   return `<!doctype html>
+ <html lang="en">
+   <head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="robots" content="noindex,nofollow" />
+     <title>Open Superego Links</title>
+     <style>
+       :root {
+         color-scheme: light dark;
+         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+       }
+       body {
+         line-height: 1.5;
+         margin: 40px;
+         max-width: 720px;
+       }
+       h1 {
+         font-size: 24px;
+         margin: 0 0 16px;
+       }
+       p {
+         margin: 0 0 12px;
+       }
+       code {
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+       }
+     </style>
+   </head>
+   <body>
+-    <h1>Open Superego Links</h1>
++    <h1 id="title">Open Superego Links</h1>
++    <p id="status">This page opens Superego desktop app links.</p>
+     <p>
+-      This service redirects links from <code>https://open.superego.dev/...</code>
+-      to the Superego desktop app using <code>superego://...</code>.
++      Privacy notice: Superego link details belong in the URL fragment, which
++      browsers keep client-side and do not send to this service.
+     </p>
+     <p>
+-      The URL path contains Superego resource IDs. Resource IDs can be sensitive
+-      because they identify local collections, documents, versions, and apps.
+-    </p>
+-    <p>
+-      Superego does not store, analyze, or log these IDs in this Worker. The
+-      request is still processed by Cloudflare to provide the redirect.
++      If Superego does not open, make sure the desktop app is installed and
++      registered for <code>${deepLinkProtocol}://</code> links.
+     </p>
++    <script>
++      (() => {
++        const searchParams = new URLSearchParams(window.location.hash.slice(1));
++        const deepLink = searchParams.get("deepLink");
++        if (deepLink === null) {
++          return;
++        }
++
++        let deepLinkUrl;
++        try {
++          deepLinkUrl = new URL(deepLink);
++        } catch {
++          return;
++        }
++
++        if (deepLinkUrl.protocol === "${deepLinkProtocol}:") {
++          document.title = "Opening Superego link";
++          document.getElementById("title").textContent =
++            "Opening Superego link";
++          const status = document.getElementById("status");
++          status.textContent = "Opening ";
++          const code = document.createElement("code");
++          code.textContent = deepLink;
++          status.append(code, ".");
++          window.location.replace(deepLink);
++        }
++      })();
++    </script>
+   </body>
+ </html>`;
+ }
+diff --git a/packages/apps/open/wrangler.jsonc b/packages/apps/open/wrangler.jsonc
+index e8928b2..b54a0da 100644
+--- a/packages/apps/open/wrangler.jsonc
++++ b/packages/apps/open/wrangler.jsonc
+@@ -1,10 +1,11 @@
+ {
+   "$schema": "../../../node_modules/wrangler/config-schema.json",
+   "name": "opensuperegodev",
+   "compatibility_date": "2026-06-03",
+   "main": "./src/worker.ts",
++  "preview_urls": true,
+   "routes": [{ "pattern": "open.superego.dev", "custom_domain": true }],
+   "observability": {
+     "logs": { "enabled": false },
+   },
+ }
+diff --git a/yarn.lock b/yarn.lock
+index e3d1200..f6e9d54 100644
+--- a/yarn.lock
++++ b/yarn.lock
+@@ -7053,41 +7053,40 @@ __metadata:
+ "@superego/multi-driver-inference-service@workspace:*, @superego/multi-driver-inference-service@workspace:packages/ai/multi-driver-inference-service":
+   version: 0.0.0-use.local
+   resolution: "@superego/multi-driver-inference-service@workspace:packages/ai/multi-driver-inference-service"
+   dependencies:
+     "@superego/backend": "workspace:*"
+     "@superego/executing-backend": "workspace:*"
+     "@superego/shared-utils": "workspace:*"
+     "@types/json-schema": "npm:^7.0.15"
+     typescript: "npm:^6.0.3"
+     vitest: "npm:^4.1.7"
+   languageName: unknown
+   linkType: soft
+ 
+ "@superego/open@workspace:packages/apps/open":
+   version: 0.0.0-use.local
+   resolution: "@superego/open@workspace:packages/apps/open"
+   dependencies:
+     "@cloudflare/workers-types": "npm:4.20260526.1"
+     "@superego/routing": "workspace:*"
+     typescript: "npm:^6.0.3"
+-    vitest: "npm:^4.1.7"
+     wrangler: "npm:^4.94.0"
+   languageName: unknown
+   linkType: soft
+ 
+ "@superego/quickjs-javascript-sandbox@workspace:*, @superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox":
+   version: 0.0.0-use.local
+   resolution: "@superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox"
+   dependencies:
+     "@jitl/quickjs-wasmfile-debug-sync": "npm:^0.32.0"
+     "@jitl/quickjs-wasmfile-release-sync": "npm:^0.32.0"
+     "@superego/backend": "workspace:*"
+     "@superego/executing-backend": "workspace:*"
+     "@superego/global-types": "workspace:*"
+     "@superego/javascript-sandbox-global-utils": "workspace:*"
+     quickjs-emscripten: "npm:^0.32.0"
+     typescript: "npm:^6.0.3"
+     vitest: "npm:^4.1.7"
+   languageName: unknown
+   linkType: soft
+ 

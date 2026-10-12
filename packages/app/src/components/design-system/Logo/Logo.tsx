@@ -4,7 +4,7 @@ interface Props {
   size: number;
 }
 
-/** The step-review logo, following the app's color scheme. */
+/** The Step Review logo, following the app's color scheme. */
 export default function Logo({ size }: Props) {
   return (
     <svg

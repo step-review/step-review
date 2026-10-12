@@ -1,72 +1,27 @@
-import { Alert, Group, List, Stack, Text } from "@mantine/core";
+import {
+  Alert,
+  Button,
+  FileButton,
+  Group,
+  List,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { IconAlertTriangle, IconFileUpload } from "@tabler/icons-react";
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import useOpenReviewFile from "../../../business-logic/review/useOpenReviewFile.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
-import styles from "./ReviewDropzone.module.css";
 
-/** Opens a review file dropped on the dropzone or anywhere else on the page. */
+/**
+ * Opens a review file chosen with the button or dropped anywhere on the page,
+ * and shows why it can't be opened if it's not a valid review.
+ */
 export default function ReviewDropzone() {
   const intl = useIntl();
-  const { openReviewFile, problems, isLoading } = useOpenReviewFile();
-  const dropzoneRef = useRef<HTMLDivElement>(null);
-  const [isDraggingFile, setIsDraggingFile] = useState(false);
-  const openDroppedFile = useEffectEvent((file: File) => {
-    void openReviewFile(file);
-  });
-
-  useEffect(() => {
-    // Counts nested dragenter/dragleave pairs, since dragleave also fires
-    // when the drag moves between elements of the page.
-    let dragDepth = 0;
-    // Ignore drags of text or links, which can't be review files.
-    const isFileDrag = (event: DragEvent) =>
-      event.dataTransfer?.types.includes("Files") ?? false;
-    const handleDragEnter = (event: DragEvent) => {
-      if (isFileDrag(event)) {
-        dragDepth += 1;
-        setIsDraggingFile(true);
-      }
-    };
-    const handleDragLeave = (event: DragEvent) => {
-      if (isFileDrag(event)) {
-        dragDepth = Math.max(0, dragDepth - 1);
-        setIsDraggingFile(dragDepth > 0);
-      }
-    };
-    const handleDragOver = (event: DragEvent) => {
-      if (isFileDrag(event)) {
-        // Allows dropping, instead of the browser opening the file.
-        event.preventDefault();
-      }
-    };
-    const handleDrop = (event: DragEvent) => {
-      dragDepth = 0;
-      setIsDraggingFile(false);
-      // The dropzone opens the files dropped on it by itself.
-      if (dropzoneRef.current?.contains(event.target as Node)) {
-        return;
-      }
-      const file = event.dataTransfer?.files[0];
-      if (file) {
-        event.preventDefault();
-        openDroppedFile(file);
-      }
-    };
-    window.addEventListener("dragenter", handleDragEnter);
-    window.addEventListener("dragleave", handleDragLeave);
-    window.addEventListener("dragover", handleDragOver);
-    window.addEventListener("drop", handleDrop);
-    return () => {
-      window.removeEventListener("dragenter", handleDragEnter);
-      window.removeEventListener("dragleave", handleDragLeave);
-      window.removeEventListener("dragover", handleDragOver);
-      window.removeEventListener("drop", handleDrop);
-    };
-  }, []);
-
+  const { openReviewFile, problems } = useOpenReviewFile();
+  const resetFileButtonRef = useRef<() => void>(null);
   const problemsText = problems
     .map((problem) =>
       problem.location
@@ -76,12 +31,33 @@ export default function ReviewDropzone() {
     .join("\n");
   return (
     <Stack gap="sm">
-      <Dropzone
-        ref={dropzoneRef}
-        mod={{ "page-drag": isDraggingFile }}
-        classNames={{ root: styles["dropzone"], inner: styles["inner"] }}
+      <Group gap="sm">
+        <FileButton
+          resetRef={resetFileButtonRef}
+          onChange={(file) => {
+            // Lets the user choose the same file again, e.g. after fixing it.
+            resetFileButtonRef.current?.();
+            if (file) {
+              void openReviewFile(file);
+            }
+          }}
+        >
+          {(props) => (
+            <Button
+              {...props}
+              variant="default"
+              leftSection={<IconFileUpload size={16} />}
+            >
+              <FormattedMessage defaultMessage="Open file" />
+            </Button>
+          )}
+        </FileButton>
+        <Text c="dimmed">
+          <FormattedMessage defaultMessage="or drop it anywhere" />
+        </Text>
+      </Group>
+      <Dropzone.FullScreen
         multiple={false}
-        loading={isLoading}
         onDrop={(files) => {
           const file = files[0];
           if (file) {
@@ -89,19 +65,13 @@ export default function ReviewDropzone() {
           }
         }}
       >
-        <Stack
-          align="center"
-          justify="center"
-          gap={4}
-          h="100%"
-          style={{ pointerEvents: "none" }}
-        >
-          <IconFileUpload size={44} stroke={1.5} />
-          <Text size="lg">
-            <FormattedMessage defaultMessage="Drop here" />
+        <Group justify="center" mih="60vh" style={{ pointerEvents: "none" }}>
+          <IconFileUpload size={48} stroke={1.5} />
+          <Text size="xl">
+            <FormattedMessage defaultMessage="Drop the review file to open it" />
           </Text>
-        </Stack>
-      </Dropzone>
+        </Group>
+      </Dropzone.FullScreen>
       {problems.length > 0 && (
         <Alert
           color="red"
