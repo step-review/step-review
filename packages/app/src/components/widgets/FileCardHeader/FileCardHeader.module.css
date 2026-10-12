@@ -12,7 +12,7 @@
     var(--mantine-color-dark-6)
   );
   border-bottom: 1px solid var(--mantine-color-default-border);
-  border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
+  border-radius: var(--mantine-radius-default) var(--mantine-radius-default) 0 0;
 
   &[data-viewed] {
     opacity: 0.8;

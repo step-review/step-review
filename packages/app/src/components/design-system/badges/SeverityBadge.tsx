@@ -7,9 +7,9 @@ interface Props {
 }
 
 const colors: Record<IssueSeverity, string> = {
-  blocker: "red",
-  concern: "orange",
-  question: "violet",
+  blocker: "danger",
+  concern: "attention",
+  question: "question",
   nit: "gray",
 };
 
@@ -20,7 +20,6 @@ export default function SeverityBadge({ severity }: Props) {
       color={colors[severity]}
       variant="filled"
       size="xs"
-      radius="sm"
     >
       {severity === "blocker" ? (
         <FormattedMessage defaultMessage="Blocker" />

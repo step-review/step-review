@@ -5,5 +5,5 @@
   flex: 0 1 auto;
   min-height: 0;
   width: 100%;
-  border-radius: var(--mantine-radius-md);
+  border-radius: var(--mantine-radius-default);
 }

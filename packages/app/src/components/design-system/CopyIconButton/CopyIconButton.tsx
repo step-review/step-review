@@ -19,7 +19,7 @@ export default function CopyIconButton({ value, label, size = "sm" }: Props) {
         >
           <ActionIcon
             variant="subtle"
-            color={copied ? "teal" : "gray"}
+            color={copied ? "success" : "gray"}
             size={size}
             onClick={copy}
             aria-label={label}

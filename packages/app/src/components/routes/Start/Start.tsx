@@ -36,7 +36,7 @@ export default function Start({ isReviewMissing = false }: Props) {
       <Container size={696} className={styles["container"]}>
         <Stack gap={32} className={styles["content"]}>
           {isReviewMissing && (
-            <Alert icon={<IconInfoCircle />} color="blue">
+            <Alert icon={<IconInfoCircle />}>
               <FormattedMessage defaultMessage="Load the review file again to continue where you were." />
             </Alert>
           )}

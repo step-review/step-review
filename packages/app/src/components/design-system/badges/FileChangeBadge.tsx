@@ -31,12 +31,7 @@ export default function FileChangeBadge({
         )
       }
     >
-      <Badge
-        miw="max-content"
-        color={change === "new" ? "teal" : "violet"}
-        size="sm"
-        radius="sm"
-      >
+      <Badge miw="max-content" color="revision" size="sm">
         {change === "new" ? (
           <FormattedMessage defaultMessage="New" />
         ) : (

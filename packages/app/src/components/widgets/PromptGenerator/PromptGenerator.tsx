@@ -66,7 +66,7 @@ export default function PromptGenerator() {
         }}
       />
       {copiedPrompt === prompt && (
-        <Group gap={6} c="teal" className={styles["copiedMessage"]}>
+        <Group gap={6} c="success" className={styles["copiedMessage"]}>
           <IconCheck size={16} />
           <Text size="sm">
             <FormattedMessage defaultMessage="Prompt copied" />

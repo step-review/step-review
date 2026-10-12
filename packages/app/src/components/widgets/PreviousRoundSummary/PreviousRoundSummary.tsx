@@ -16,8 +16,8 @@ import NoteLink from "../NoteLink/NoteLink.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
 
 const statusColors: Record<IssueStatus, string> = {
-  resolved: "teal",
-  open: "orange",
+  resolved: "success",
+  open: "attention",
   obsolete: "gray",
 };
 
@@ -62,7 +62,6 @@ export default function PreviousRoundSummary() {
                       miw="max-content"
                       color={statusColors[issue.status]}
                       variant="light"
-                      radius="sm"
                     >
                       {issue.status === "resolved" ? (
                         <FormattedMessage defaultMessage="Resolved" />

@@ -74,7 +74,7 @@ export default function ReviewDropzone() {
       </Dropzone.FullScreen>
       {problems.length > 0 && (
         <Alert
-          color="red"
+          color="danger"
           icon={<IconAlertTriangle />}
           title={
             <Group gap="xs">

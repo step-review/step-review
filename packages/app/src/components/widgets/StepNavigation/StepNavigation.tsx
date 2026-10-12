@@ -43,7 +43,9 @@ export default function StepNavigation({
               ? (overall.viewedCount / overall.totalCount) * 100
               : 0
           }
-          color={overall.viewedCount === overall.totalCount ? "teal" : "blue"}
+          color={
+            overall.viewedCount === overall.totalCount ? "success" : "brand"
+          }
           size="sm"
         />
         <Text size="xs" c="dimmed" mt={4}>
@@ -89,9 +91,8 @@ export default function StepNavigation({
                     <Badge
                       miw="max-content"
                       size="xs"
-                      color="violet"
+                      color="revision"
                       variant="light"
-                      radius="sm"
                     >
                       <FormattedMessage
                         defaultMessage="{changedCount} changed"
@@ -108,8 +109,8 @@ export default function StepNavigation({
                   }
                   color={
                     progress.viewedCount === progress.totalCount
-                      ? "teal"
-                      : "blue"
+                      ? "success"
+                      : "brand"
                   }
                 />
               </Stack>

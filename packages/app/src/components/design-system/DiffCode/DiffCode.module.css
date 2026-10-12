@@ -5,17 +5,23 @@
 
 .segment {
   color: var(--light-color, inherit);
-  border-radius: 2px;
+  border-radius: var(--mantine-radius-default);
 
   @mixin dark {
     color: var(--dark-color, inherit);
   }
 
   &[data-changed="addition"] {
-    background: light-dark(rgba(46, 160, 67, 0.3), rgba(46, 160, 67, 0.45));
+    background: light-dark(
+      alpha(var(--mantine-color-addition-8), 0.3),
+      alpha(var(--mantine-color-addition-8), 0.45)
+    );
   }
 
   &[data-changed="deletion"] {
-    background: light-dark(rgba(248, 81, 73, 0.3), rgba(248, 81, 73, 0.45));
+    background: light-dark(
+      alpha(var(--mantine-color-removal-6), 0.3),
+      alpha(var(--mantine-color-removal-6), 0.45)
+    );
   }
 }

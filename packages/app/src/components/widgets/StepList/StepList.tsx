@@ -47,9 +47,8 @@ export default function StepList() {
                   <Badge
                     miw="max-content"
                     size="sm"
-                    color="violet"
+                    color="revision"
                     variant="light"
-                    radius="sm"
                   >
                     <FormattedMessage
                       defaultMessage="{changedCount} changed"
@@ -72,7 +71,9 @@ export default function StepList() {
                 (progress.viewedCount / Math.max(progress.totalCount, 1)) * 100
               }
               color={
-                progress.viewedCount === progress.totalCount ? "teal" : "blue"
+                progress.viewedCount === progress.totalCount
+                  ? "success"
+                  : "brand"
               }
             />
             {step.intro && <ReviewMarkdown>{step.intro}</ReviewMarkdown>}

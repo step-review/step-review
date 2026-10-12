@@ -7,22 +7,16 @@ interface Props {
 }
 
 const colors: Record<FileDiffStatus, string> = {
-  added: "green",
-  deleted: "red",
-  modified: "blue",
-  renamed: "grape",
-  copied: "grape",
+  added: "addition",
+  deleted: "removal",
+  modified: "gray",
+  renamed: "gray",
+  copied: "gray",
 };
 
 export default function FileStatusBadge({ status }: Props) {
   return (
-    <Badge
-      miw="max-content"
-      color={colors[status]}
-      variant="light"
-      size="sm"
-      radius="sm"
-    >
+    <Badge miw="max-content" color={colors[status]} variant="light" size="sm">
       {status === "added" ? (
         <FormattedMessage defaultMessage="Added" />
       ) : status === "deleted" ? (

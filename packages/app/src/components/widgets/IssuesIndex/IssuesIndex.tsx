@@ -70,8 +70,7 @@ export default function IssuesIndex() {
                           miw="max-content"
                           size="sm"
                           variant="light"
-                          color={verdict === "accepted" ? "teal" : "gray"}
-                          radius="sm"
+                          color={verdict === "accepted" ? "success" : "gray"}
                         >
                           {verdict === "accepted" ? (
                             <FormattedMessage defaultMessage="Accepted" />

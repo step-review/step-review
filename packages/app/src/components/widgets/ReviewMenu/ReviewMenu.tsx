@@ -90,7 +90,7 @@ export default function ReviewMenu({ loadedReview }: Props) {
           </FileButton>
           <Menu.Divider />
           <Menu.Item
-            color="red"
+            color="danger"
             leftSection={<IconEyeOff size={14} />}
             onClick={() => {
               if (
