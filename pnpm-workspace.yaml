@@ -1,0 +1,15 @@
+packages:
+  - packages/**
+
+autoInstallPeers: false
+
+allowBuilds:
+  esbuild: true
+  workerd: true
+
+minimumReleaseAgeExclude:
+  - "@mantine/core@9.7.2"
+  - "@mantine/dropzone@9.7.2"
+  - "@mantine/hooks@9.7.2"
+  - "@mantine/spotlight@9.7.2"
+  - "@mantine/store@9.7.2"

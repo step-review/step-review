@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .background { fill: #2f6fe4; }
+    .mark { fill: #fff; stroke: #fff; }
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #74a6ff; }
+      .mark { fill: #0f1d3a; stroke: #0f1d3a; }
+    }
+  </style>
+  <rect class="background" width="64" height="64" rx="14" />
+  <g class="mark" stroke-width="0">
+    <rect x="12" y="17" width="25" height="7" rx="1.5" />
+    <rect x="12" y="28.5" width="25" height="7" rx="1.5" />
+    <rect x="12" y="40" width="25" height="7" rx="1.5" />
+  </g>
+  <g class="mark" fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M42.5 20.5 46 24 52.5 17" fill="none" />
+    <path d="M42.5 32 46 35.5 52.5 28.5" fill="none" />
+    <path d="M43.5 40.5 50.5 47.5 M50.5 40.5 43.5 47.5" fill="none" />
+  </g>
+</svg>

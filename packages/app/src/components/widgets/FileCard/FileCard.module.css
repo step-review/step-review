@@ -1,0 +1,20 @@
+.card {
+  scroll-margin-top: calc(var(--app-shell-header-offset, 0px) + 8px);
+}
+
+.body {
+  padding-bottom: 4px;
+}
+
+.comments {
+  padding-inline: var(--mantine-spacing-xs);
+  max-width: 760px;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.rangeControl {
+  align-self: flex-start;
+}

@@ -1,0 +1,10 @@
+.container {
+  padding-block: var(--mantine-spacing-xl);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-md);
+}

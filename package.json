@@ -1,0 +1,30 @@
+{
+  "name": "@step-review/root",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "packageManager": "pnpm@12.11.2",
+  "scripts": {
+    "dev": "pnpm --filter @step-review/app dev",
+    "build": "pnpm --filter @step-review/app build",
+    "check-translations": "pnpm -r --if-present check-translations",
+    "check-types": "pnpm -r --if-present check-types",
+    "check-formatting": "oxfmt --check .",
+    "fix-formatting": "oxfmt --write .",
+    "lint": "oxlint --type-aware --deny-warnings .",
+    "lint-fix": "oxlint --type-aware --deny-warnings --fix .",
+    "test": "pnpm -r --if-present test",
+    "qa": "pnpm check-formatting && pnpm lint && pnpm check-types && pnpm check-translations && pnpm test",
+    "deploy-site": "pnpm --filter @step-review/app deploy-site",
+    "cleanup-preview": "pnpm --filter @step-review/app cleanup-preview"
+  },
+  "devDependencies": {
+    "@step-review/oxlint-custom-rules": "workspace:*",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "typescript": "7.0.2"
+  }
+}

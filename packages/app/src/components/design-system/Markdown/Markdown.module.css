@@ -1,0 +1,23 @@
+.root {
+  font-size: var(--mantine-font-size-sm);
+  overflow-wrap: anywhere;
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  & p,
+  & ul,
+  & ol,
+  & pre {
+    margin-block: 0.5em;
+  }
+
+  & pre {
+    white-space: pre-wrap;
+  }
+}

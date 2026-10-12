@@ -1,0 +1,13 @@
+.column {
+  position: relative;
+  width: 340px;
+  flex-shrink: 0;
+  padding: 0 8px;
+}
+
+.note {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  transition: top 100ms;
+}

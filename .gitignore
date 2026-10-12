@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+pnpm-debug.log*
+
+# Build and test output
+dist/
+coverage/
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+# Local configuration
+.claude/settings.local.json
+.env
+.env.local
+.env.*.local
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Cloudflare local state
+.wrangler/
+wrangler.deploy.json
+
+# Review files
+*.step-review

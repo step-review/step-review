@@ -1,0 +1,359 @@
+{
+  "AttentionBadge.tsx_HRTugO": {
+    "defaultMessage": "Read carefully"
+  },
+  "AttentionBadge.tsx_v5MVrw": {
+    "defaultMessage": "Skim"
+  },
+  "ColorSchemeToggle.tsx_Efqxns": {
+    "defaultMessage": "Dark theme"
+  },
+  "ColorSchemeToggle.tsx_Vny4fL": {
+    "defaultMessage": "System theme"
+  },
+  "ColorSchemeToggle.tsx_ee1Wp5": {
+    "defaultMessage": "Light theme"
+  },
+  "CommentCard.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "CommentCard.tsx_vbDFvq": {
+    "defaultMessage": "Your comment"
+  },
+  "CommentCard.tsx_wEQDC6": {
+    "defaultMessage": "Edit"
+  },
+  "CommentEditor.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "CommentEditor.tsx_AIDV4F": {
+    "defaultMessage": "Save comment"
+  },
+  "CommentEditor.tsx_Z9aaZ0": {
+    "defaultMessage": "Your comment, for the agent"
+  },
+  "CopyIconButton.tsx_p556q3": {
+    "defaultMessage": "Copied"
+  },
+  "FeedbackModal.tsx_Ejhdi4": {
+    "defaultMessage": "Feedback"
+  },
+  "FeedbackModal.tsx_JudhTj": {
+    "defaultMessage": "Download JSON"
+  },
+  "FeedbackModal.tsx_VdMzek": {
+    "defaultMessage": "Your verdicts on the issues and your comments, as Markdown. Paste it into the conversation with your coding agent, or into a PR comment."
+  },
+  "FeedbackModal.tsx_aRsvyM": {
+    "defaultMessage": "Copy as Markdown"
+  },
+  "FeedbackModal.tsx_vdmu+g": {
+    "defaultMessage": "Download Markdown"
+  },
+  "FileCard.tsx_7pgZ/R": {
+    "defaultMessage": "Since round {roundNumber}"
+  },
+  "FileCard.tsx_DMq9Ip": {
+    "defaultMessage": "Binary file: no diff to show."
+  },
+  "FileCard.tsx_K7Ltek": {
+    "defaultMessage": "Summary instead of the diff"
+  },
+  "FileCard.tsx_LOz1a8": {
+    "defaultMessage": "No content changes."
+  },
+  "FileCard.tsx_OrgU+P": {
+    "defaultMessage": "Whole PR"
+  },
+  "FileCard.tsx_ijGqbf": {
+    "defaultMessage": "Only the changes since the previous round. Line notes are on the whole-PR diff."
+  },
+  "FileCard.tsx_sTeP5e": {
+    "defaultMessage": "Show the diff"
+  },
+  "FileCard.tsx_x+6bxc": {
+    "defaultMessage": "Hide the diff"
+  },
+  "FileCardHeader.tsx_173lRp": {
+    "defaultMessage": "Show or hide the diff"
+  },
+  "FileCardHeader.tsx_4U8CMv": {
+    "defaultMessage": "Open on GitHub"
+  },
+  "FileCardHeader.tsx_D/0ALU": {
+    "defaultMessage": "Viewed"
+  },
+  "FileCardHeader.tsx_GpV+Pi": {
+    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
+  },
+  "FileCardHeader.tsx_s3aLc+": {
+    "defaultMessage": "Copy the path"
+  },
+  "FileCardHeader.tsx_yqegxX": {
+    "defaultMessage": "Comment on the file"
+  },
+  "FileChangeBadge.tsx_5qWo1m": {
+    "defaultMessage": "Changed since round {roundNumber}"
+  },
+  "FileChangeBadge.tsx_PLUzwy": {
+    "defaultMessage": "Changed"
+  },
+  "FileChangeBadge.tsx_bW7B87": {
+    "defaultMessage": "New"
+  },
+  "FileChangeBadge.tsx_hDl8xv": {
+    "defaultMessage": "Not in the PR at round {roundNumber}"
+  },
+  "FileStatusBadge.tsx_KQvWvD": {
+    "defaultMessage": "Deleted"
+  },
+  "FileStatusBadge.tsx_Yg0L8+": {
+    "defaultMessage": "Renamed"
+  },
+  "FileStatusBadge.tsx_p556q3": {
+    "defaultMessage": "Copied"
+  },
+  "FileStatusBadge.tsx_rIAJlE": {
+    "defaultMessage": "Added"
+  },
+  "FileStatusBadge.tsx_tOxzip": {
+    "defaultMessage": "Modified"
+  },
+  "FileTreeDrawer.tsx_m4vqJl": {
+    "defaultMessage": "Files"
+  },
+  "GapRow.tsx_p+3Agd": {
+    "defaultMessage": "Show {hiddenLineCount} hidden lines"
+  },
+  "IssueVerdictControls.tsx_9HU8vw": {
+    "defaultMessage": "Reply"
+  },
+  "IssueVerdictControls.tsx_ORC+Rr": {
+    "defaultMessage": "Your reply, for the agent"
+  },
+  "IssueVerdictControls.tsx_TDaF6J": {
+    "defaultMessage": "Dismiss"
+  },
+  "IssueVerdictControls.tsx_sjzLbX": {
+    "defaultMessage": "Accept"
+  },
+  "IssuesIndex.tsx_1MnSfo": {
+    "defaultMessage": "Dismissed"
+  },
+  "IssuesIndex.tsx_Wj5TbN": {
+    "defaultMessage": "Issues"
+  },
+  "IssuesIndex.tsx_aFyFm0": {
+    "defaultMessage": "Accepted"
+  },
+  "NextRoundModal.tsx_8qlI8r": {
+    "defaultMessage": "When the PR changes, ask your agent to add a round to the review file, then drop the file here again."
+  },
+  "NextRoundModal.tsx_c+pa/J": {
+    "defaultMessage": "Copy the prompt"
+  },
+  "NextRoundModal.tsx_gWQUre": {
+    "defaultMessage": "Prompt for the next round"
+  },
+  "NotFound.tsx_osJs96": {
+    "defaultMessage": "Page not found."
+  },
+  "NotFound.tsx_zI4VpE": {
+    "defaultMessage": "Go to the start page"
+  },
+  "NoteCard.tsx_Ama+hh": {
+    "defaultMessage": "Copy the note for your agent"
+  },
+  "NoteCard.tsx_qMePPG": {
+    "defaultMessage": "Note"
+  },
+  "Overview.tsx_huCHmk": {
+    "defaultMessage": "Steps"
+  },
+  "OverviewHeader.tsx_4RJvam": {
+    "defaultMessage": "Overview · round {roundNumber} · {date}"
+  },
+  "OverviewHeader.tsx_GpV+Pi": {
+    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
+  },
+  "OverviewHeader.tsx_Nvd511": {
+    "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
+  },
+  "OverviewSummary.tsx_NNdqGL": {
+    "defaultMessage": "How to read this review"
+  },
+  "PreviousRoundSummary.tsx_5SYu/g": {
+    "defaultMessage": "Since round {roundNumber} ({commit})"
+  },
+  "PreviousRoundSummary.tsx_6KhoSk": {
+    "defaultMessage": "Still open"
+  },
+  "PreviousRoundSummary.tsx_W6nSYE": {
+    "defaultMessage": "Resolved"
+  },
+  "PreviousRoundSummary.tsx_Y+zA1G": {
+    "defaultMessage": "Obsolete"
+  },
+  "PreviousRoundSummary.tsx_dodTBy": {
+    "defaultMessage": "No longer in the PR"
+  },
+  "PromptGenerator.tsx_3awt54": {
+    "defaultMessage": "A PR link, a branch, or a commit range such as main..my-feature."
+  },
+  "PromptGenerator.tsx_TpWde1": {
+    "defaultMessage": "e.g. error handling and the database migration"
+  },
+  "PromptGenerator.tsx_YOMe7O": {
+    "defaultMessage": "Focus (optional)"
+  },
+  "PromptGenerator.tsx_ayXqt0": {
+    "defaultMessage": "What to review"
+  },
+  "PromptGenerator.tsx_c+pa/J": {
+    "defaultMessage": "Copy the prompt"
+  },
+  "PromptGenerator.tsx_k9O196": {
+    "defaultMessage": "Prompt for your coding agent"
+  },
+  "ReloadDropzone.tsx_/YcyUn": {
+    "defaultMessage": "Drop the review file to reload it"
+  },
+  "ReviewDropzone.tsx_582J9O": {
+    "defaultMessage": "Drop the review file here"
+  },
+  "ReviewDropzone.tsx_JF+2bv": {
+    "defaultMessage": "Or click to choose it. The file stays in your browser."
+  },
+  "ReviewDropzone.tsx_PK4BW0": {
+    "defaultMessage": "Copy the problems"
+  },
+  "ReviewDropzone.tsx_ldEvwe": {
+    "defaultMessage": "The file is not a valid review"
+  },
+  "ReviewMenu.tsx_4RPdv1": {
+    "defaultMessage": "Export viewed files and feedback"
+  },
+  "ReviewMenu.tsx_581Xwm": {
+    "defaultMessage": "Reset viewed files"
+  },
+  "ReviewMenu.tsx_Gy09SB": {
+    "defaultMessage": "The file is not a valid review state."
+  },
+  "ReviewMenu.tsx_P5HOgu": {
+    "defaultMessage": "Import viewed files and feedback"
+  },
+  "ReviewMenu.tsx_S8/4ZI": {
+    "defaultMessage": "More actions"
+  },
+  "ReviewMenu.tsx_bhQL99": {
+    "defaultMessage": "Mark every file as not viewed?"
+  },
+  "ReviewMenu.tsx_cNrFsL": {
+    "defaultMessage": "Open another review"
+  },
+  "ReviewMenu.tsx_gWQUre": {
+    "defaultMessage": "Prompt for the next round"
+  },
+  "ReviewSearch.tsx_9BK0YE": {
+    "defaultMessage": "Files in no step"
+  },
+  "ReviewSearch.tsx_bgFHH5": {
+    "defaultMessage": "Jump to"
+  },
+  "ReviewSearch.tsx_bz4Mm+": {
+    "defaultMessage": "Nothing found"
+  },
+  "ReviewSearch.tsx_vfoiY7": {
+    "defaultMessage": "Search steps, files and notes"
+  },
+  "ReviewShell.tsx_Ejhdi4": {
+    "defaultMessage": "Feedback"
+  },
+  "ReviewShell.tsx_peRgj6": {
+    "defaultMessage": "All files"
+  },
+  "ReviewWarnings.tsx_7oiKM4": {
+    "defaultMessage": "Copy for your agent"
+  },
+  "ReviewWarnings.tsx_gMwaXo": {
+    "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
+  },
+  "RoundSwitcher.tsx_dzFlGY": {
+    "defaultMessage": "Review round"
+  },
+  "RoundSwitcher.tsx_mfqFtN": {
+    "defaultMessage": "Round {roundNumber} · {date} · {commit}"
+  },
+  "SeverityBadge.tsx_9eQkfo": {
+    "defaultMessage": "Concern"
+  },
+  "SeverityBadge.tsx_VLLL1E": {
+    "defaultMessage": "Nit"
+  },
+  "SeverityBadge.tsx_kgOBET": {
+    "defaultMessage": "Question"
+  },
+  "SeverityBadge.tsx_mjXHSf": {
+    "defaultMessage": "Blocker"
+  },
+  "Start.tsx_/cghO8": {
+    "defaultMessage": "Load the review file again to continue where you were."
+  },
+  "Start.tsx_89MFdb": {
+    "defaultMessage": "Review pull requests step by step, with notes from your coding agent."
+  },
+  "Start.tsx_LoAMlM": {
+    "defaultMessage": "1. Ask your agent for a review"
+  },
+  "Start.tsx_PuVKKh": {
+    "defaultMessage": "2. Open the review"
+  },
+  "Start.tsx_taSFRA": {
+    "defaultMessage": "Agents follow the instructions in {skillLink}. Review files are validated against {schemaLink}."
+  },
+  "StepHeader.tsx_7DgWhv": {
+    "defaultMessage": "Comment on the step"
+  },
+  "StepHeader.tsx_JENnli": {
+    "defaultMessage": "These files changed in the PR, but the review doesn't assign them to a step."
+  },
+  "StepHeader.tsx_JNtjKE": {
+    "defaultMessage": "Step {stepNumber} of {stepCount}"
+  },
+  "StepList.tsx_XfsLLb": {
+    "defaultMessage": "{changedCount} changed"
+  },
+  "StepList.tsx_heFjBO": {
+    "defaultMessage": "{viewedCount} / {totalCount} viewed"
+  },
+  "StepNavigation.tsx_9uOFF3": {
+    "defaultMessage": "Overview"
+  },
+  "StepNavigation.tsx_XfsLLb": {
+    "defaultMessage": "{changedCount} changed"
+  },
+  "StepNavigation.tsx_kqGsf4": {
+    "defaultMessage": "{viewedCount} of {totalCount} files viewed"
+  },
+  "StepPager.tsx_9uOFF3": {
+    "defaultMessage": "Overview"
+  },
+  "StepTitle.tsx_9BK0YE": {
+    "defaultMessage": "Files in no step"
+  },
+  "StepToolbar.tsx_AVI/0j": {
+    "defaultMessage": "Split"
+  },
+  "StepToolbar.tsx_I5Wd5l": {
+    "defaultMessage": "Mark all as viewed"
+  },
+  "StepToolbar.tsx_LTHsul": {
+    "defaultMessage": "Only files changed since round {roundNumber}"
+  },
+  "StepToolbar.tsx_LzD3TV": {
+    "defaultMessage": "Unified"
+  },
+  "StepToolbar.tsx_Nm1nyY": {
+    "defaultMessage": "Only issues"
+  }
+}

@@ -1,0 +1,117 @@
+name: QA and deploy PR preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Chromium for component tests
+        run: pnpm --filter @step-review/app exec playwright install --with-deps chromium
+      - name: Check formatting
+        run: pnpm check-formatting
+      - name: Check linting
+        run: pnpm lint
+      - name: Check translations
+        run: pnpm check-translations
+      - name: Check types
+        run: pnpm check-types
+      - name: Test
+        run: pnpm test
+
+  build-deploy:
+    outputs:
+      deployed: ${{ steps.deploy.outputs.deployed }}
+    # Previews need the Cloudflare secrets, which fork PRs don't get.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    needs: qa
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Deploy Worker
+        id: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_REVISION: ${{ github.event.pull_request.head.sha }}
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
+        run: pnpm deploy-site --pr "$PULL_REQUEST_NUMBER"
+
+  add-pr-comment:
+    if: needs.build-deploy.outputs.deployed == 'true'
+    needs: build-deploy
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment preview URL
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pullRequestNumber = context.payload.pull_request.number;
+            const marker = "<!-- preview-deployments-comment -->";
+            const body = [
+              marker,
+              "",
+              "### Preview available",
+              "",
+              `https://pr-${pullRequestNumber}.step-review.dev/`,
+              "",
+              `Revision: ${context.payload.pull_request.head.sha}`,
+            ].join("\n");
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              ...context.repo,
+              issue_number: pullRequestNumber,
+              per_page: 100,
+            });
+            const existingComment = comments.find(
+              (comment) => comment.user?.login === "github-actions[bot]" && comment.body?.includes(marker),
+            );
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existingComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: pullRequestNumber,
+                body,
+              });
+            }

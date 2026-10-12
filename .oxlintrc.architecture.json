@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [],
+  "jsPlugins": [
+    {
+      "name": "architecture",
+      "specifier": "@step-review/oxlint-custom-rules"
+    }
+  ],
+  "categories": {
+    "correctness": "off",
+    "suspicious": "off",
+    "pedantic": "off",
+    "perf": "off",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "ignorePatterns": ["**/dist/**", "**/coverage/**", "**/node_modules/**"],
+  "overrides": [
+    {
+      "files": ["packages/**/{dev,src,scripts}/**/*.tsx"],
+      "excludeFiles": ["**/*.generated.*", "**/{build,coverage,dist,out}/**"],
+      "rules": {
+        "architecture/component-named-props": "error"
+      }
+    },
+    {
+      "files": [
+        "packages/**/{dev,src,scripts}/**/*.{cjs,cts,js,jsx,mjs,mts,ts,tsx}"
+      ],
+      "excludeFiles": [
+        "**/*.d.ts",
+        "**/*.generated.*",
+        "**/{build,coverage,dist,out}/**",
+        "**/translations/compiled/**"
+      ],
+      "rules": {
+        "architecture/filename-matches-default-export": "error",
+        "architecture/no-unnecessary-default-export-variable": "error",
+        "architecture/max-files-per-folder": [
+          "error",
+          {
+            "max": 20
+          }
+        ],
+        "architecture/max-lines": [
+          "error",
+          {
+            "max": 250
+          }
+        ],
+        "architecture/public-exports": "error"
+      }
+    }
+  ]
+}

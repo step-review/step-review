@@ -1,0 +1,27 @@
+.card {
+  border-left-width: 3px;
+  transition: box-shadow 100ms;
+
+  &[data-kind="explainer"] {
+    border-left-color: var(--mantine-color-blue-filled);
+  }
+
+  &[data-kind="issue"] {
+    border-left-color: var(--mantine-color-orange-filled);
+    background: var(--mantine-color-orange-light);
+  }
+
+  &[data-highlighted] {
+    box-shadow: 0 0 0 2px var(--mantine-primary-color-filled);
+  }
+}
+
+.issueIcon {
+  color: var(--mantine-color-orange-filled);
+  flex-shrink: 0;
+}
+
+.explainerIcon {
+  color: var(--mantine-color-blue-filled);
+  flex-shrink: 0;
+}

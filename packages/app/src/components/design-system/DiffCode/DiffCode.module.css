@@ -1,0 +1,21 @@
+.code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.segment {
+  color: var(--light-color, inherit);
+  border-radius: 2px;
+
+  @mixin dark {
+    color: var(--dark-color, inherit);
+  }
+
+  &[data-changed="addition"] {
+    background: light-dark(rgba(46, 160, 67, 0.3), rgba(46, 160, 67, 0.45));
+  }
+
+  &[data-changed="deletion"] {
+    background: light-dark(rgba(248, 81, 73, 0.3), rgba(248, 81, 73, 0.45));
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@step-review/review-format",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@valibot/to-json-schema": "1.8.0",
+    "valibot": "1.5.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  }
+}

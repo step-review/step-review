@@ -1,0 +1,16 @@
+.logo {
+  flex-shrink: 0;
+  display: block;
+}
+
+.background {
+  fill: light-dark(#2f6fe4, #74a6ff);
+}
+
+.bars {
+  fill: light-dark(#fff, #0f1d3a);
+}
+
+.marks {
+  stroke: light-dark(#fff, #0f1d3a);
+}

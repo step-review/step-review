@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.rows {
+  flex: 1;
+  min-width: 0;
+}
+
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 720px;
+}
