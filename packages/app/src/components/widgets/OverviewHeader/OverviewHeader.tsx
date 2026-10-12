@@ -61,10 +61,10 @@ export default function OverviewHeader() {
             values={{ fileCount: round.diff.length }}
           />
         </Text>
-        <Text size="sm" c="green" fw={600}>
+        <Text size="sm" c="addition" fw={600}>
           +{additions}
         </Text>
-        <Text size="sm" c="red" fw={600}>
+        <Text size="sm" c="removal" fw={600}>
           −{deletions}
         </Text>
         <Text size="sm">

@@ -1,0 +1,28 @@
+.root {
+  position: relative;
+}
+
+.input {
+  --input-bg: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  box-sizing: border-box;
+  border-width: 1px;
+  padding-block: var(--mantine-spacing-xs);
+  padding-inline-start: var(--mantine-spacing-sm);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: rem(15px);
+}
+
+.copyButtonSection {
+  align-items: flex-start;
+  padding-top: var(--mantine-spacing-sm);
+}
+
+/* Positioned outside the flow so that it doesn't shift the page. */
+.copiedMessage {
+  position: absolute;
+  top: 100%;
+  margin-top: var(--mantine-spacing-xs);
+}

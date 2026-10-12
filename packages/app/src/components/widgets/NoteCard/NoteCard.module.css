@@ -3,12 +3,12 @@
   transition: box-shadow 100ms;
 
   &[data-kind="explainer"] {
-    border-left-color: var(--mantine-color-blue-filled);
+    border-left-color: var(--mantine-color-gray-filled);
   }
 
   &[data-kind="issue"] {
-    border-left-color: var(--mantine-color-orange-filled);
-    background: var(--mantine-color-orange-light);
+    border-left-color: var(--mantine-color-attention-filled);
+    background: var(--mantine-color-attention-light);
   }
 
   &[data-highlighted] {
@@ -17,11 +17,11 @@
 }
 
 .issueIcon {
-  color: var(--mantine-color-orange-filled);
+  color: var(--mantine-color-attention-filled);
   flex-shrink: 0;
 }
 
 .explainerIcon {
-  color: var(--mantine-color-blue-filled);
+  color: var(--mantine-color-gray-filled);
   flex-shrink: 0;
 }

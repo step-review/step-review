@@ -1,0 +1,9 @@
+/* Shrinks to the available height, cropping the screenshot from the bottom. */
+.button {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
+  border-radius: var(--mantine-radius-default);
+}

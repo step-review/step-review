@@ -1,6 +1,6 @@
 # @step-review/review-format
 
-The step-review file format: Valibot schemas, the file parser, and the
+The Step Review file format: Valibot schemas, the file parser, and the
 consistency checks that the app reports to the user.
 
 ## Files

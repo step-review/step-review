@@ -1,25 +1,26 @@
 <img src="packages/app/public/favicon.svg" alt="" width="64" height="64">
 
-# step-review
+# Step Review
 
-Review big pull requests step by step, with notes from your coding agent.
+A better way to review PRs.
 
 Your coding agent splits a PR into steps (by part of the system, by concern,
 mechanical changes apart…) and writes notes on the changes: explainers for the
-non-obvious parts, and issues to check. step-review shows the review one step at
+non-obvious parts, and issues to check. Step Review shows the review one step at
 a time, with the notes beside the diff, and lets you mark files as viewed,
 accept or dismiss issues, and comment on lines. Your feedback goes back to the
 agent as Markdown.
 
 ## How it works
 
-1. Open [step-review.dev](https://step-review.dev), enter the PR link (or a
-   branch, or a commit range), and copy the generated prompt.
+1. Open [step-review.dev](https://step-review.dev) and paste the PR link (or a
+   branch, or a commit range) into the prompt. The app copies the completed
+   prompt for you.
 2. Give the prompt to your coding agent. Following
    [SKILL.md](packages/app/public/SKILL.md) (published at
    `step-review.dev/SKILL.md`), it writes a single review file, such as
    `pr-123.step-review`, in your repository. The file is never committed.
-3. Drop the file into step-review. Everything stays in your browser.
+3. Drop the file into Step Review. Everything stays in your browser.
 4. When the PR changes, ask the agent for a new round: it appends to the same
    file, and the app shows what changed since your last review.
 

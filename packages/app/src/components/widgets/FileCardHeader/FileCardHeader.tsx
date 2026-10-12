@@ -106,20 +106,14 @@ export default function FileCardHeader({
         </Tooltip>
       )}
       <Group gap={8} ml="auto" wrap="nowrap">
-        <Text size="xs" ff="monospace" c="green" fw={600}>
+        <Text size="xs" ff="monospace" c="addition" fw={600}>
           +{stepFileView.additions}
         </Text>
-        <Text size="xs" ff="monospace" c="red" fw={600}>
+        <Text size="xs" ff="monospace" c="removal" fw={600}>
           −{stepFileView.deletions}
         </Text>
         {noteCount > 0 && (
-          <Badge
-            miw="max-content"
-            size="sm"
-            variant="light"
-            color="yellow"
-            radius="sm"
-          >
+          <Badge miw="max-content" size="sm" variant="light" color="gray">
             <FormattedMessage
               defaultMessage="{noteCount, plural, one {# note} other {# notes}}"
               values={{ noteCount }}

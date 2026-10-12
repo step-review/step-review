@@ -13,23 +13,11 @@ export default function AttentionBadge({ attention, size = "sm" }: Props) {
     return null;
   }
   return attention === "high" ? (
-    <Badge
-      miw="max-content"
-      color="orange"
-      variant="light"
-      size={size}
-      radius="sm"
-    >
+    <Badge miw="max-content" color="attention" variant="light" size={size}>
       <FormattedMessage defaultMessage="Read carefully" />
     </Badge>
   ) : (
-    <Badge
-      miw="max-content"
-      color="gray"
-      variant="light"
-      size={size}
-      radius="sm"
-    >
+    <Badge miw="max-content" color="gray" variant="light" size={size}>
       <FormattedMessage defaultMessage="Skim" />
     </Badge>
   );

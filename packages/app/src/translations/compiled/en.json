@@ -11,24 +11,6 @@
       "value": "Skim"
     }
   ],
-  "ColorSchemeToggle.tsx_Efqxns": [
-    {
-      "type": 0,
-      "value": "Dark theme"
-    }
-  ],
-  "ColorSchemeToggle.tsx_Vny4fL": [
-    {
-      "type": 0,
-      "value": "System theme"
-    }
-  ],
-  "ColorSchemeToggle.tsx_ee1Wp5": [
-    {
-      "type": 0,
-      "value": "Light theme"
-    }
-  ],
   "CommentCard.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -69,6 +51,12 @@
     {
       "type": 0,
       "value": "Copied"
+    }
+  ],
+  "ExampleReviewPreview.tsx_ft40Bq": [
+    {
+      "type": 0,
+      "value": "Screenshot of a review step: the diff, with notes from the coding agent."
     }
   ],
   "FeedbackModal.tsx_Ejhdi4": [
@@ -521,34 +509,16 @@
       "value": "No longer in the PR"
     }
   ],
-  "PromptGenerator.tsx_3awt54": [
-    {
-      "type": 0,
-      "value": "A PR link, a branch, or a commit range such as main..my-feature."
-    }
-  ],
-  "PromptGenerator.tsx_TpWde1": [
-    {
-      "type": 0,
-      "value": "e.g. error handling and the database migration"
-    }
-  ],
-  "PromptGenerator.tsx_YOMe7O": [
-    {
-      "type": 0,
-      "value": "Focus (optional)"
-    }
-  ],
-  "PromptGenerator.tsx_ayXqt0": [
-    {
-      "type": 0,
-      "value": "What to review"
-    }
-  ],
   "PromptGenerator.tsx_c+pa/J": [
     {
       "type": 0,
       "value": "Copy the prompt"
+    }
+  ],
+  "PromptGenerator.tsx_irbHMA": [
+    {
+      "type": 0,
+      "value": "Prompt copied"
     }
   ],
   "PromptGenerator.tsx_k9O196": [
@@ -563,16 +533,16 @@
       "value": "Drop the review file to reload it"
     }
   ],
-  "ReviewDropzone.tsx_582J9O": [
+  "ReviewDropzone.tsx_4yZKai": [
     {
       "type": 0,
-      "value": "Drop the review file here"
+      "value": "or drop it anywhere here"
     }
   ],
-  "ReviewDropzone.tsx_JF+2bv": [
+  "ReviewDropzone.tsx_LsFoKe": [
     {
       "type": 0,
-      "value": "Or click to choose it. The file stays in your browser."
+      "value": "Open file"
     }
   ],
   "ReviewDropzone.tsx_PK4BW0": [
@@ -585,6 +555,12 @@
     {
       "type": 0,
       "value": "The file is not a valid review"
+    }
+  ],
+  "ReviewDropzone.tsx_p5lOej": [
+    {
+      "type": 0,
+      "value": "Drop the review file to open it"
     }
   ],
   "ReviewMenu.tsx_4RPdv1": [
@@ -779,44 +755,42 @@
       "value": "Load the review file again to continue where you were."
     }
   ],
-  "Start.tsx_89MFdb": [
+  "Start.tsx_Aetvq9": [
     {
       "type": 0,
-      "value": "Review pull requests step by step, with notes from your coding agent."
+      "value": "1. Send this prompt"
     }
   ],
-  "Start.tsx_LoAMlM": [
+  "Start.tsx_Reg+fk": [
     {
       "type": 0,
-      "value": "1. Ask your agent for a review"
-    }
-  ],
-  "Start.tsx_PuVKKh": [
-    {
-      "type": 0,
-      "value": "2. Open the review"
-    }
-  ],
-  "Start.tsx_taSFRA": [
-    {
-      "type": 0,
-      "value": "Agents follow the instructions in "
+      "value": "3. Go through the PR ("
     },
     {
       "type": 1,
-      "value": "skillLink"
+      "value": "exampleLink"
     },
     {
       "type": 0,
-      "value": ". Review files are validated against "
-    },
-    {
-      "type": 1,
-      "value": "schemaLink"
-    },
+      "value": ")"
+    }
+  ],
+  "Start.tsx_c5UR7r": [
     {
       "type": 0,
-      "value": "."
+      "value": "A better way to review PRs"
+    }
+  ],
+  "Start.tsx_i0i2E6": [
+    {
+      "type": 0,
+      "value": "2. Open the review file"
+    }
+  ],
+  "Start.tsx_tM2s2t": [
+    {
+      "type": 0,
+      "value": "see example"
     }
   ],
   "StepHeader.tsx_7DgWhv": [

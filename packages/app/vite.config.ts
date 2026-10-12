@@ -22,5 +22,7 @@ export default defineConfig({
   },
   server: {
     host: "127.0.0.1",
+    // Lets parallel dev servers run on assigned ports.
+    port: process.env["PORT"] ? Number(process.env["PORT"]) : 5173,
   },
 });

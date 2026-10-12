@@ -1,53 +1,78 @@
-import { Code, Group, Stack, Text, Textarea, TextInput } from "@mantine/core";
-import { useState } from "react";
+import { Group, Text, Textarea } from "@mantine/core";
+import { IconCheck } from "@tabler/icons-react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import createStartPrompt from "../../../business-logic/prompts/createStartPrompt.ts";
+import startPromptPlaceholder from "../../../business-logic/prompts/startPromptPlaceholder.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
+import styles from "./PromptGenerator.module.css";
 
 export default function PromptGenerator() {
   const intl = useIntl();
-  const [target, setTarget] = useState("");
-  const [focus, setFocus] = useState("");
-  const prompt = target.trim()
-    ? createStartPrompt({ target, focus }, window.location.origin)
-    : null;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isPastingRef = useRef(false);
+  const [prompt, setPrompt] = useState(() =>
+    createStartPrompt(window.location.origin),
+  );
+  const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
+
+  // Select the placeholder so that pasting a link replaces it.
+  useEffect(() => {
+    const textarea = textareaRef.current!;
+    const placeholderStart = textarea.value.indexOf(startPromptPlaceholder);
+    textarea.focus();
+    textarea.setSelectionRange(
+      placeholderStart,
+      placeholderStart + startPromptPlaceholder.length,
+    );
+  }, []);
+
   return (
-    <Stack gap="sm">
-      <TextInput
-        label={<FormattedMessage defaultMessage="What to review" />}
-        description={
-          <FormattedMessage defaultMessage="A PR link, a branch, or a commit range such as main..my-feature." />
-        }
-        placeholder="https://github.com/owner/repo/pull/123"
-        value={target}
-        onChange={(event) => setTarget(event.currentTarget.value)}
-      />
+    <div className={styles["root"]}>
       <Textarea
-        label={<FormattedMessage defaultMessage="Focus (optional)" />}
-        placeholder={intl.formatMessage({
-          defaultMessage: "e.g. error handling and the database migration",
+        ref={textareaRef}
+        aria-label={intl.formatMessage({
+          defaultMessage: "Prompt for your coding agent",
         })}
+        size="lg"
+        resize="none"
         autosize
-        minRows={1}
-        value={focus}
-        onChange={(event) => setFocus(event.currentTarget.value)}
+        rightSection={
+          <CopyIconButton
+            value={prompt}
+            label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
+            size="md"
+          />
+        }
+        rightSectionWidth={60}
+        classNames={{
+          input: styles["input"],
+          section: styles["copyButtonSection"],
+        }}
+        value={prompt}
+        onPaste={() => {
+          isPastingRef.current = true;
+        }}
+        onChange={(event) => {
+          const updatedPrompt = event.currentTarget.value;
+          setPrompt(updatedPrompt);
+          // Pasting completes the prompt, so copy it for the coding agent.
+          if (isPastingRef.current) {
+            isPastingRef.current = false;
+            void navigator.clipboard
+              .writeText(updatedPrompt)
+              .then(() => setCopiedPrompt(updatedPrompt));
+          }
+        }}
       />
-      {prompt && (
-        <Stack gap={4}>
-          <Group justify="space-between">
-            <Text size="sm" fw={500}>
-              <FormattedMessage defaultMessage="Prompt for your coding agent" />
-            </Text>
-            <CopyIconButton
-              value={prompt}
-              label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
-            />
-          </Group>
-          <Code block style={{ whiteSpace: "pre-wrap" }}>
-            {prompt}
-          </Code>
-        </Stack>
+      {copiedPrompt === prompt && (
+        <Group gap={6} c="success" className={styles["copiedMessage"]}>
+          <IconCheck size={16} />
+          <Text size="sm">
+            <FormattedMessage defaultMessage="Prompt copied" />
+          </Text>
+        </Group>
       )}
-    </Stack>
+    </div>
   );
 }

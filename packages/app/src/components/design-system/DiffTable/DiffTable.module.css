@@ -47,11 +47,17 @@
   }
 
   &[data-tone="addition"] {
-    background: light-dark(rgba(46, 160, 67, 0.12), rgba(46, 160, 67, 0.18));
+    background: light-dark(
+      alpha(var(--mantine-color-addition-8), 0.12),
+      alpha(var(--mantine-color-addition-8), 0.18)
+    );
   }
 
   &[data-tone="deletion"] {
-    background: light-dark(rgba(248, 81, 73, 0.12), rgba(248, 81, 73, 0.18));
+    background: light-dark(
+      alpha(var(--mantine-color-removal-6), 0.12),
+      alpha(var(--mantine-color-removal-6), 0.18)
+    );
   }
 
   &[data-tone="empty"] {
@@ -64,8 +70,8 @@
   &[data-tone="hunk"],
   &[data-tone="gap"] {
     background: light-dark(
-      var(--mantine-color-blue-0),
-      rgba(66, 99, 235, 0.12)
+      var(--mantine-color-brand-0),
+      alpha(var(--mantine-color-brand-4), 0.12)
     );
     color: var(--mantine-color-dimmed);
   }

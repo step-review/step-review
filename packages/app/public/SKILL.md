@@ -2,12 +2,12 @@
 name: step-review
 description:
   Review a pull request, branch or commit range step by step, and write the
-  review as a file that the user opens in the step-review app.
+  review as a file that the user opens in the Step Review app.
 ---
 
-# step-review
+# Step Review
 
-The user reviews code changes in the step-review app (https://step-review.dev).
+The user reviews code changes in the Step Review app (https://step-review.dev).
 Your job is to prepare the review: split the changes into steps the user goes
 through one at a time, and write notes on the changes. You write a single review
 file; the user drops it into the app.

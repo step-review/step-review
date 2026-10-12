@@ -83,7 +83,7 @@ export default function FileTreeDrawer({ roundView, opened, onClose }: Props) {
                 viewedFingerprints.has(file.stepFileView.fingerprint) ? (
                 <IconCircleCheck
                   size={14}
-                  color="var(--mantine-color-teal-6)"
+                  color="var(--mantine-color-success-filled)"
                 />
               ) : (
                 <IconFile size={14} />

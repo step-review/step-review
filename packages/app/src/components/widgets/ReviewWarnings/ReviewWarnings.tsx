@@ -25,7 +25,7 @@ export default function ReviewWarnings({ loadedReview, roundNumber }: Props) {
   ].join("\n");
   return (
     <Alert
-      color="yellow"
+      color="warning"
       icon={<IconAlertTriangle />}
       title={
         <Group gap="xs">

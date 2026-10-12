@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "check-types": "tsc --noEmit",
     "check-translations": "node scripts/checkTranslations.ts",
+    "capture-screenshots": "node scripts/captureScreenshots.ts",
     "test": "vitest run",
     "translations:extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --id-interpolation-pattern='[name].[ext]_[sha512:contenthash:base64:6]' --out-file src/translations/en.json",
     "translations:compile": "formatjs compile-folder --ast src/translations/ src/translations/compiled",

@@ -31,7 +31,7 @@ export default function IssueVerdictControls({ noteId }: Props) {
       <Group gap={4}>
         <Button
           size="compact-xs"
-          color="teal"
+          color="success"
           variant={issueVerdict.verdict === "accepted" ? "filled" : "subtle"}
           leftSection={<IconCheck size={12} />}
           onClick={() => setVerdict("accepted")}
