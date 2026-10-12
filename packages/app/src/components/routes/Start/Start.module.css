@@ -1,6 +1,23 @@
 /* Fills the viewport without scrolling: when the content doesn't fit, the
    example screenshot shrinks to the height the other sections leave. */
 .page {
+  /* Mantine's dimmed text is too faint for the start page's key lines. */
+  --mantine-color-dimmed: light-dark(
+    color-mix(
+      in srgb,
+      var(--mantine-color-gray-6),
+      var(--mantine-color-gray-7)
+    ),
+    color-mix(in srgb, var(--mantine-color-dark-1), var(--mantine-color-dark-2))
+  );
+  background: light-dark(
+    color-mix(
+      in srgb,
+      var(--mantine-color-blue-0) 40%,
+      var(--mantine-color-white)
+    ),
+    var(--mantine-color-body)
+  );
   display: flex;
   flex-direction: column;
   gap: calc(var(--mantine-spacing-xl) * 1.5);
