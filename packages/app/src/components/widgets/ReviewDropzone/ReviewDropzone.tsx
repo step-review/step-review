@@ -53,7 +53,7 @@ export default function ReviewDropzone() {
           )}
         </FileButton>
         <Text c="dimmed">
-          <FormattedMessage defaultMessage="or drop it anywhere" />
+          <FormattedMessage defaultMessage="or drop it anywhere here" />
         </Text>
       </Group>
       <Dropzone.FullScreen

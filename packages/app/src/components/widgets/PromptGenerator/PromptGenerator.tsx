@@ -36,12 +36,12 @@ export default function PromptGenerator() {
         })}
         size="lg"
         resize="none"
+        autosize
         rightSection={
           <CopyIconButton
             value={prompt}
             label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
-            size="lg"
-            variant="default"
+            size="md"
           />
         }
         rightSectionWidth={60}

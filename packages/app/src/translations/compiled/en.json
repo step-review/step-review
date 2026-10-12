@@ -533,6 +533,12 @@
       "value": "Drop the review file to reload it"
     }
   ],
+  "ReviewDropzone.tsx_4yZKai": [
+    {
+      "type": 0,
+      "value": "or drop it anywhere here"
+    }
+  ],
   "ReviewDropzone.tsx_LsFoKe": [
     {
       "type": 0,
@@ -543,12 +549,6 @@
     {
       "type": 0,
       "value": "Copy the problems"
-    }
-  ],
-  "ReviewDropzone.tsx_TZtr0K": [
-    {
-      "type": 0,
-      "value": "or drop it anywhere"
     }
   ],
   "ReviewDropzone.tsx_ldEvwe": [
@@ -761,6 +761,20 @@
       "value": "1. Send this prompt"
     }
   ],
+  "Start.tsx_Reg+fk": [
+    {
+      "type": 0,
+      "value": "3. Go through the PR ("
+    },
+    {
+      "type": 1,
+      "value": "exampleLink"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "Start.tsx_c5UR7r": [
     {
       "type": 0,
@@ -771,20 +785,6 @@
     {
       "type": 0,
       "value": "2. Open the review file"
-    }
-  ],
-  "Start.tsx_scBiTb": [
-    {
-      "type": 0,
-      "value": "3. Review the PR ("
-    },
-    {
-      "type": 1,
-      "value": "exampleLink"
-    },
-    {
-      "type": 0,
-      "value": ")"
     }
   ],
   "Start.tsx_tM2s2t": [

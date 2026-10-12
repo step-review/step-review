@@ -6,11 +6,4 @@
   min-height: 0;
   width: 100%;
   border-radius: var(--mantine-radius-md);
-  transition: box-shadow 150ms ease;
-}
-
-@media (hover: hover) {
-  .button:hover {
-    box-shadow: var(--mantine-shadow-md);
-  }
 }

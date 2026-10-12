@@ -203,14 +203,14 @@
   "ReloadDropzone.tsx_/YcyUn": {
     "defaultMessage": "Drop the review file to reload it"
   },
+  "ReviewDropzone.tsx_4yZKai": {
+    "defaultMessage": "or drop it anywhere here"
+  },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
   },
   "ReviewDropzone.tsx_PK4BW0": {
     "defaultMessage": "Copy the problems"
-  },
-  "ReviewDropzone.tsx_TZtr0K": {
-    "defaultMessage": "or drop it anywhere"
   },
   "ReviewDropzone.tsx_ldEvwe": {
     "defaultMessage": "The file is not a valid review"
@@ -290,14 +290,14 @@
   "Start.tsx_Aetvq9": {
     "defaultMessage": "1. Send this prompt"
   },
+  "Start.tsx_Reg+fk": {
+    "defaultMessage": "3. Go through the PR ({exampleLink})"
+  },
   "Start.tsx_c5UR7r": {
     "defaultMessage": "A better way to review PRs"
   },
   "Start.tsx_i0i2E6": {
     "defaultMessage": "2. Open the review file"
-  },
-  "Start.tsx_scBiTb": {
-    "defaultMessage": "3. Review the PR ({exampleLink})"
   },
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"

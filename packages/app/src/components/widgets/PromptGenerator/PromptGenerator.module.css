@@ -8,10 +8,11 @@
     var(--mantine-color-dark-6)
   );
   box-sizing: border-box;
-  height: 7rem;
-  border-width: 2px;
-  padding-block: var(--mantine-spacing-md);
-  padding-inline-start: var(--mantine-spacing-lg);
+  border-width: 1px;
+  padding-block: var(--mantine-spacing-xs);
+  padding-inline-start: var(--mantine-spacing-sm);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: rem(15px);
 }
 
 .copyButtonSection {

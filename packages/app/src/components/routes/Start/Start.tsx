@@ -18,23 +18,22 @@ export default function Start({ isReviewMissing = false }: Props) {
     <div className={styles["page"]}>
       <Group
         component="header"
-        px="md"
-        py="sm"
-        gap="sm"
+        justify="center"
+        gap="md"
         wrap="nowrap"
         className={styles["header"]}
       >
-        <Logo size={36} />
+        <Logo size={56} />
         <div>
-          <Text fw={700} lh={1.2}>
+          <Title order={2} lh={1.2}>
             Step Review
-          </Text>
-          <Text size="sm" c="dimmed" lh={1.2}>
+          </Title>
+          <Text size="lg" c="dimmed" lh={1.3}>
             <FormattedMessage defaultMessage="A better way to review PRs" />
           </Text>
         </div>
       </Group>
-      <Container size="md" className={styles["container"]}>
+      <Container size={696} className={styles["container"]}>
         <Stack gap={32} className={styles["content"]}>
           {isReviewMissing && (
             <Alert icon={<IconInfoCircle />} color="blue">
@@ -56,7 +55,7 @@ export default function Start({ isReviewMissing = false }: Props) {
           <Stack gap="sm" className={styles["exampleSection"]}>
             <Title order={4}>
               <FormattedMessage
-                defaultMessage="3. Review the PR ({exampleLink})"
+                defaultMessage="3. Go through the PR ({exampleLink})"
                 values={{
                   exampleLink: (
                     <ExampleReviewLink>
@@ -66,7 +65,9 @@ export default function Start({ isReviewMissing = false }: Props) {
                 }}
               />
             </Title>
-            <ExampleReviewPreview />
+            <div className={styles["example"]}>
+              <ExampleReviewPreview />
+            </div>
           </Stack>
         </Stack>
       </Container>
