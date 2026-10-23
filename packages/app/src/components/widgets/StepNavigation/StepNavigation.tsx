@@ -5,12 +5,11 @@ import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
-import FileIcon from "../FileIcon/FileIcon.tsx";
+import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
 interface Props {
@@ -25,7 +24,6 @@ export default function StepNavigation({
   onNavigate,
 }: Props) {
   const viewedFingerprints = useViewedFingerprints();
-  const fragment = useFragment();
   const overall = countViewedFiles(reviewView.steps, viewedFingerprints);
   const go =
     (stepId: string | null, fileFragment?: string) => (event: MouseEvent) => {
@@ -69,7 +67,7 @@ export default function StepNavigation({
             key={step.id}
             component="a"
             px="xs"
-            py={6}
+            py={10}
             href={routeHref({ name: RouteName.Step, stepId: step.id })}
             active={activeStepId === step.id}
             opened={activeStepId === step.id}
@@ -87,35 +85,12 @@ export default function StepNavigation({
             }
             description={<ViewedProgress progress={progress} mt={6} />}
           >
-            {step.files.map((file) => {
-              const fileFragment = `file-${file.id}`;
-              const separatorIndex = file.path.lastIndexOf("/");
-              const isViewed = viewedFingerprints.has(file.fingerprint);
-              return (
-                <NavLink
-                  key={file.id}
-                  component="a"
-                  px="xs"
-                  py={2}
-                  href={`${routeHref({ name: RouteName.Step, stepId: step.id })}#${encodeURIComponent(fileFragment)}`}
-                  active={fragment === fileFragment}
-                  onClick={go(step.id, fileFragment)}
-                  noWrap
-                  title={file.path}
-                  leftSection={<FileIcon path={file.path} />}
-                  label={
-                    // Viewed files are dimmed; the directory follows the name
-                    // on the same line, cut off when it doesn't fit.
-                    <Text span size="xs" c={isViewed ? "dimmed" : undefined}>
-                      {file.path.slice(separatorIndex + 1)}{" "}
-                      <Text span inherit c="dimmed" ml={4}>
-                        {file.path.slice(0, Math.max(separatorIndex, 0))}
-                      </Text>
-                    </Text>
-                  }
-                />
-              );
-            })}
+            <StepFileTree
+              stepView={step}
+              onFileClick={(event, fileFragment) =>
+                go(step.id, fileFragment)(event)
+              }
+            />
           </NavLink>
         );
       })}
