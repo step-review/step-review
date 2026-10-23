@@ -78,7 +78,7 @@ export default function StepNavigation({
             onClick={go(step.id)}
             childrenOffset="xs"
             label={
-              <Group gap={6} wrap="nowrap">
+              <Group gap={6} wrap="nowrap" justify="space-between">
                 <span>
                   {step.number}. <StepTitle step={step} />
                 </span>
