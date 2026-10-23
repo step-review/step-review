@@ -1,7 +1,7 @@
-#step-review:round
+#step-review:review
 {
-  "$schema": "https://step-review.dev/schema/v1.json",
-  "version": 1,
+  "$schema": "https://step-review.dev/schema/v2.json",
+  "version": 2,
   "createdAt": "2026-10-12T09:00:00Z",
   "target": {
     "title": "Keep open links private",

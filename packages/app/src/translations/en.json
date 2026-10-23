@@ -11,9 +11,6 @@
   "ExampleReviewPreview.tsx_ft40Bq": {
     "defaultMessage": "Screenshot of a review step: the diff, with notes from the coding agent."
   },
-  "FileCard.tsx_7pgZ/R": {
-    "defaultMessage": "Since round {roundNumber}"
-  },
   "FileCard.tsx_DMq9Ip": {
     "defaultMessage": "Binary file: no diff to show."
   },
@@ -22,12 +19,6 @@
   },
   "FileCard.tsx_LOz1a8": {
     "defaultMessage": "No content changes."
-  },
-  "FileCard.tsx_OrgU+P": {
-    "defaultMessage": "Whole PR"
-  },
-  "FileCard.tsx_ijGqbf": {
-    "defaultMessage": "Only the changes since the previous round. Line notes are on the whole-PR diff."
   },
   "FileCard.tsx_sTeP5e": {
     "defaultMessage": "Show the diff"
@@ -50,18 +41,6 @@
   "FileCardHeader.tsx_s3aLc+": {
     "defaultMessage": "Copy the path"
   },
-  "FileChangeBadge.tsx_5qWo1m": {
-    "defaultMessage": "Changed since round {roundNumber}"
-  },
-  "FileChangeBadge.tsx_PLUzwy": {
-    "defaultMessage": "Changed"
-  },
-  "FileChangeBadge.tsx_bW7B87": {
-    "defaultMessage": "New"
-  },
-  "FileChangeBadge.tsx_hDl8xv": {
-    "defaultMessage": "Not in the PR at round {roundNumber}"
-  },
   "FileStatusBadge.tsx_KQvWvD": {
     "defaultMessage": "Deleted"
   },
@@ -83,15 +62,6 @@
   "IssuesIndex.tsx_Wj5TbN": {
     "defaultMessage": "Issues"
   },
-  "NextRoundModal.tsx_8qlI8r": {
-    "defaultMessage": "When the PR changes, ask your agent to add a round to the review file, then drop the file here again."
-  },
-  "NextRoundModal.tsx_c+pa/J": {
-    "defaultMessage": "Copy the prompt"
-  },
-  "NextRoundModal.tsx_gWQUre": {
-    "defaultMessage": "Prompt for the next round"
-  },
   "NotFound.tsx_osJs96": {
     "defaultMessage": "Page not found."
   },
@@ -107,32 +77,17 @@
   "Overview.tsx_huCHmk": {
     "defaultMessage": "Steps"
   },
-  "OverviewHeader.tsx_4RJvam": {
-    "defaultMessage": "Overview · round {roundNumber} · {date}"
-  },
   "OverviewHeader.tsx_GpV+Pi": {
     "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
   },
   "OverviewHeader.tsx_Nvd511": {
     "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
   },
+  "OverviewHeader.tsx_k+RvCX": {
+    "defaultMessage": "Overview · {date}"
+  },
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"
-  },
-  "PreviousRoundSummary.tsx_5SYu/g": {
-    "defaultMessage": "Since round {roundNumber} ({commit})"
-  },
-  "PreviousRoundSummary.tsx_6KhoSk": {
-    "defaultMessage": "Still open"
-  },
-  "PreviousRoundSummary.tsx_W6nSYE": {
-    "defaultMessage": "Resolved"
-  },
-  "PreviousRoundSummary.tsx_Y+zA1G": {
-    "defaultMessage": "Obsolete"
-  },
-  "PreviousRoundSummary.tsx_dodTBy": {
-    "defaultMessage": "No longer in the PR"
   },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
@@ -182,20 +137,11 @@
   "ReviewMenu.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
   },
-  "ReviewMenu.tsx_gWQUre": {
-    "defaultMessage": "Prompt for the next round"
-  },
   "ReviewWarnings.tsx_7oiKM4": {
     "defaultMessage": "Copy for your agent"
   },
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
-  },
-  "RoundSwitcher.tsx_dzFlGY": {
-    "defaultMessage": "Review round"
-  },
-  "RoundSwitcher.tsx_mfqFtN": {
-    "defaultMessage": "Round {roundNumber} · {date} · {commit}"
   },
   "SeverityBadge.tsx_9eQkfo": {
     "defaultMessage": "Concern"
@@ -233,17 +179,11 @@
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
   },
-  "StepList.tsx_XfsLLb": {
-    "defaultMessage": "{changedCount} changed"
-  },
   "StepList.tsx_heFjBO": {
     "defaultMessage": "{viewedCount} / {totalCount} viewed"
   },
   "StepNavigation.tsx_9uOFF3": {
     "defaultMessage": "Overview"
-  },
-  "StepNavigation.tsx_XfsLLb": {
-    "defaultMessage": "{changedCount} changed"
   },
   "StepNavigation.tsx_kqGsf4": {
     "defaultMessage": "{viewedCount} of {totalCount} files viewed"
@@ -259,9 +199,6 @@
   },
   "StepToolbar.tsx_I5Wd5l": {
     "defaultMessage": "Mark all as viewed"
-  },
-  "StepToolbar.tsx_LTHsul": {
-    "defaultMessage": "Only files changed since round {roundNumber}"
   },
   "StepToolbar.tsx_LzD3TV": {
     "defaultMessage": "Unified"

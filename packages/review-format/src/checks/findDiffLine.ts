@@ -1,6 +1,6 @@
+import type DiffSide from "../data/types/DiffSide.ts";
 import type DiffLine from "../diff/DiffLine.ts";
 import type Hunk from "../diff/Hunk.ts";
-import type DiffSide from "../round/types/DiffSide.ts";
 
 /** Finds the line with the given number on one side of the diff. */
 export default function findDiffLine(

@@ -1,10 +1,10 @@
 import { List, Paper, SimpleGrid, Stack, Title } from "@mantine/core";
 import { FormattedMessage } from "react-intl";
-import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
+import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
 
 export default function OverviewSummary() {
-  const { overview } = useCurrentRoundView().round.data;
+  const { overview } = useCurrentReviewView().data;
   return (
     <Stack gap="md">
       <ReviewMarkdown>{overview.summary}</ReviewMarkdown>

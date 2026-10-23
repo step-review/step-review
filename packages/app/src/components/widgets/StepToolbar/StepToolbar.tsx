@@ -5,15 +5,10 @@ import type DiffPreferences from "../../../business-logic/preferences/DiffPrefer
 
 interface Props {
   preferences: DiffPreferences;
-  previousRoundNumber: number | null;
   onMarkAllViewed: () => void;
 }
 
-export default function StepToolbar({
-  preferences,
-  previousRoundNumber,
-  onMarkAllViewed,
-}: Props) {
+export default function StepToolbar({ preferences, onMarkAllViewed }: Props) {
   const intl = useIntl();
   return (
     <Group gap="md" wrap="wrap">
@@ -42,23 +37,6 @@ export default function StepToolbar({
           )
         }
       />
-      {previousRoundNumber !== null && (
-        <Switch
-          size="xs"
-          label={
-            <FormattedMessage
-              defaultMessage="Only files changed since round {roundNumber}"
-              values={{ roundNumber: previousRoundNumber }}
-            />
-          }
-          checked={preferences.fileFilter === "changed"}
-          onChange={(event) =>
-            preferences.setFileFilter(
-              event.currentTarget.checked ? "changed" : "all",
-            )
-          }
-        />
-      )}
       <Button
         size="xs"
         variant="light"

@@ -8,15 +8,13 @@ import {
 } from "@mantine/core";
 import { IconBrandGithub, IconChevronDown } from "@tabler/icons-react";
 import { FormattedMessage, useIntl } from "react-intl";
-import type StepFileView from "../../../business-logic/rounds/StepFileView.ts";
-import FileChangeBadge from "../../design-system/badges/FileChangeBadge.tsx";
+import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import FileStatusBadge from "../../design-system/badges/FileStatusBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import styles from "./FileCardHeader.module.css";
 
 interface Props {
   stepFileView: StepFileView;
-  previousRoundNumber: number | null;
   githubUrl: string | null;
   isCollapsed: boolean;
   isViewed: boolean;
@@ -26,7 +24,6 @@ interface Props {
 
 export default function FileCardHeader({
   stepFileView,
-  previousRoundNumber,
   githubUrl,
   isCollapsed,
   isViewed,
@@ -55,12 +52,6 @@ export default function FileCardHeader({
         />
       </ActionIcon>
       <FileStatusBadge status={fileDiff.status} />
-      {previousRoundNumber !== null && (
-        <FileChangeBadge
-          change={stepFileView.change}
-          previousRoundNumber={previousRoundNumber}
-        />
-      )}
       <Text
         className={styles["path"]}
         ff="monospace"

@@ -1,21 +1,14 @@
-import {
-  Alert,
-  Button,
-  Paper,
-  SegmentedControl,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Alert, Button, Paper, Stack, Text } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
-import githubFileUrl from "../../../business-logic/rounds/githubFileUrl.ts";
-import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
-import splitFileNotes from "../../../business-logic/rounds/splitFileNotes.ts";
-import type StepFileView from "../../../business-logic/rounds/StepFileView.ts";
-import type StepView from "../../../business-logic/rounds/StepView.ts";
+import githubFileUrl from "../../../business-logic/review-view/githubFileUrl.ts";
+import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
+import splitFileNotes from "../../../business-logic/review-view/splitFileNotes.ts";
+import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
+import type StepView from "../../../business-logic/review-view/StepView.ts";
 import DiffView from "../DiffView/DiffView.tsx";
 import FileCardHeader from "../FileCardHeader/FileCardHeader.tsx";
 import NoteCard from "../NoteCard/NoteCard.tsx";
@@ -35,14 +28,12 @@ export default function FileCard({
   layout,
   areExplainersHidden,
 }: Props) {
-  const intl = useIntl();
-  const roundView = useCurrentRoundView();
+  const reviewView = useCurrentReviewView();
   const { dispatch } = useReviewState();
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
     isViewed || stepView.attention === "low",
   );
-  const [diffRange, setDiffRange] = useState<"pr" | "previousRound">("pr");
   const [isSummaryDiffShown, setIsSummaryDiffShown] = useState(false);
   const fragment = useFragment();
   const isTargeted =
@@ -58,18 +49,11 @@ export default function FileCard({
       setIsCollapsed(false);
     }
   }, [isTargeted]);
-  const isSincePreviousRound =
-    diffRange === "previousRound" && stepFileView.interdiffHunks !== null;
-  const hunks = isSincePreviousRound
-    ? stepFileView.interdiffHunks!
-    : stepFileView.hunks;
+  const { hunks } = stepFileView;
   const visibleNotes = stepFileView.notes.filter(
     (note) => !areExplainersHidden || note.kind === "issue",
   );
-  const { lineNotes, fileNotes } = splitFileNotes(
-    visibleNotes,
-    isSincePreviousRound ? [] : hunks,
-  );
+  const { lineNotes, fileNotes } = splitFileNotes(visibleNotes, hunks);
   const cardRef = useRef<HTMLDivElement>(null);
   const setViewed = (viewed: boolean) => {
     dispatch({
@@ -93,11 +77,7 @@ export default function FileCard({
     >
       <FileCardHeader
         stepFileView={stepFileView}
-        previousRoundNumber={roundView.previousRound?.number ?? null}
-        githubUrl={githubFileUrl(
-          roundView.round.data.target,
-          stepFileView.path,
-        )}
+        githubUrl={githubFileUrl(reviewView.data.target, stepFileView.path)}
         isCollapsed={isCollapsed}
         isViewed={isViewed}
         onToggleCollapsed={() => setIsCollapsed((collapsed) => !collapsed)}
@@ -111,33 +91,6 @@ export default function FileCard({
                 <NoteCard key={note.id} note={note} />
               ))}
             </Stack>
-          )}
-          {stepFileView.interdiffHunks && (
-            <SegmentedControl
-              size="xs"
-              ml="xs"
-              className={styles["rangeControl"]}
-              value={diffRange}
-              onChange={(value) => setDiffRange(value)}
-              data={[
-                {
-                  value: "pr",
-                  label: intl.formatMessage({ defaultMessage: "Whole PR" }),
-                },
-                {
-                  value: "previousRound",
-                  label: intl.formatMessage(
-                    { defaultMessage: "Since round {roundNumber}" },
-                    { roundNumber: roundView.previousRound?.number ?? 0 },
-                  ),
-                },
-              ]}
-            />
-          )}
-          {isSincePreviousRound && (
-            <Text size="xs" c="dimmed" px="xs">
-              <FormattedMessage defaultMessage="Only the changes since the previous round. Line notes are on the whole-PR diff." />
-            </Text>
           )}
           {stepFileView.summary && (
             <Alert

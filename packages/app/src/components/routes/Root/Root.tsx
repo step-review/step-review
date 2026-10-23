@@ -11,17 +11,9 @@ export default function Root() {
     case RouteName.Start:
       return <Start />;
     case RouteName.Overview:
-      return (
-        <Overview key={route.roundNumber} roundNumber={route.roundNumber} />
-      );
+      return <Overview />;
     case RouteName.Step:
-      return (
-        <Step
-          key={`${route.roundNumber}/${route.stepId}`}
-          roundNumber={route.roundNumber}
-          stepId={route.stepId}
-        />
-      );
+      return <Step key={route.stepId} stepId={route.stepId} />;
     default:
       return <NotFound />;
   }

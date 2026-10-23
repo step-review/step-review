@@ -7,21 +7,18 @@ import Markdown from "../../design-system/Markdown/Markdown.tsx";
 
 interface Props {
   loadedReview: LoadedReview;
-  roundNumber: number;
 }
 
 /** Problems in the review file that the agent should fix. */
-export default function ReviewWarnings({ loadedReview, roundNumber }: Props) {
+export default function ReviewWarnings({ loadedReview }: Props) {
   const intl = useIntl();
-  const warnings = loadedReview.warnings.filter(
-    (warning) => warning.roundNumber === roundNumber,
-  );
+  const { warnings } = loadedReview;
   if (warnings.length === 0) {
     return null;
   }
   const warningsText = [
-    `The review in \`${loadedReview.fileName}\` (round ${roundNumber}) has these problems. Fix them in that round:`,
-    ...warnings.map((warning) => `- ${warning.message}`),
+    `The review in \`${loadedReview.fileName}\` has these problems. Fix them:`,
+    ...warnings.map((warning) => `- ${warning}`),
   ].join("\n");
   return (
     <Alert
@@ -45,7 +42,7 @@ export default function ReviewWarnings({ loadedReview, roundNumber }: Props) {
       <List size="sm" spacing={2}>
         {warnings.map((warning, index) => (
           <List.Item key={index}>
-            <Markdown>{warning.message}</Markdown>
+            <Markdown>{warning}</Markdown>
           </List.Item>
         ))}
       </List>

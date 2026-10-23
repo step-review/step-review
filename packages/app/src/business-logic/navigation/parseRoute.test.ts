@@ -10,30 +10,26 @@ it("routes the root path to the start page", () => {
   expect(route).toEqual({ name: RouteName.Start });
 });
 
-it.each(["/rounds/2", "/rounds/2/"])(
-  "routes %s to the overview of round 2",
+it.each(["/overview", "/overview/"])(
+  "routes %s to the overview",
   (pathname) => {
     // Exercise
     const route = parseRoute(pathname);
 
     // Verify
-    expect(route).toEqual({ name: RouteName.Overview, roundNumber: 2 });
+    expect(route).toEqual({ name: RouteName.Overview });
   },
 );
 
 it("routes a step path to the step, decoding its ID", () => {
   // Exercise
-  const route = parseRoute("/rounds/1/steps/sync%20buckets");
+  const route = parseRoute("/steps/sync%20buckets");
 
   // Verify
-  expect(route).toEqual({
-    name: RouteName.Step,
-    roundNumber: 1,
-    stepId: "sync buckets",
-  });
+  expect(route).toEqual({ name: RouteName.Step, stepId: "sync buckets" });
 });
 
-it.each(["/rounds/0", "/rounds/abc", "/steps/one", "/rounds/1/steps"])(
+it.each(["/rounds/1", "/steps", "/steps/one/two", "/overview/steps/one"])(
   "routes %s to not found",
   (pathname) => {
     // Exercise

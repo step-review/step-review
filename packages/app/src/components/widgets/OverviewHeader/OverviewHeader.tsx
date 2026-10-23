@@ -1,19 +1,13 @@
 import { Anchor, Code, Group, Stack, Text, Title } from "@mantine/core";
 import { FormattedDate, FormattedMessage } from "react-intl";
-import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
+import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 
 export default function OverviewHeader() {
-  const { round } = useCurrentRoundView();
-  const { target, createdAt } = round.data;
-  const additions = round.diff.reduce(
-    (sum, fileDiff) => sum + fileDiff.additions,
-    0,
-  );
-  const deletions = round.diff.reduce(
-    (sum, fileDiff) => sum + fileDiff.deletions,
-    0,
-  );
-  const noteCount = round.data.steps.reduce(
+  const { data, diff } = useCurrentReviewView();
+  const { target, createdAt } = data;
+  const additions = diff.reduce((sum, fileDiff) => sum + fileDiff.additions, 0);
+  const deletions = diff.reduce((sum, fileDiff) => sum + fileDiff.deletions, 0);
+  const noteCount = data.steps.reduce(
     (sum, step) =>
       sum +
       (step.notes?.length ?? 0) +
@@ -27,9 +21,8 @@ export default function OverviewHeader() {
     <Stack gap={6}>
       <Text size="sm" c="dimmed" fw={600} tt="uppercase">
         <FormattedMessage
-          defaultMessage="Overview · round {roundNumber} · {date}"
+          defaultMessage="Overview · {date}"
           values={{
-            roundNumber: round.number,
             date: (
               <FormattedDate
                 value={createdAt}
@@ -58,7 +51,7 @@ export default function OverviewHeader() {
         <Text size="sm">
           <FormattedMessage
             defaultMessage="{fileCount, plural, one {# file} other {# files}}"
-            values={{ fileCount: round.diff.length }}
+            values={{ fileCount: diff.length }}
           />
         </Text>
         <Text size="sm" c="addition" fw={600}>

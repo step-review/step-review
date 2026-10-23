@@ -18,8 +18,8 @@
   composition.
 - Model navigation routes as discriminated objects with a `name` field and
   route-specific parameters, and centralize their URL conversion.
-- Keep logic that interprets a review (diff layout, fingerprints, rounds,
-  feedback export) in `src/business-logic/`, as plain functions with unit tests.
-  Components only render its results.
+- Keep logic that interprets a review (diff layout, fingerprints, steps) in
+  `src/business-logic/`, as plain functions with unit tests. Components only
+  render its results.
 - Translate user-visible text with `react-intl` and keep the catalogs up to date
   (`translations:extract`, `translations:compile`).

@@ -1,15 +1,15 @@
 import { Group, Stack, Table, Text, Title } from "@mantine/core";
 import { FormattedMessage } from "react-intl";
 import formatNoteLocation from "../../../business-logic/notes/formatNoteLocation.ts";
-import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
+import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import NoteLink from "../NoteLink/NoteLink.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
-/** Every issue of the round, grouped by step. */
+/** Every issue of the review, grouped by step. */
 export default function IssuesIndex() {
-  const roundView = useCurrentRoundView();
-  const groups = roundView.steps
+  const reviewView = useCurrentReviewView();
+  const groups = reviewView.steps
     .map((step) => ({
       step,
       issues: [

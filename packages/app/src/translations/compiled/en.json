@@ -23,16 +23,6 @@
       "value": "Screenshot of a review step: the diff, with notes from the coding agent."
     }
   ],
-  "FileCard.tsx_7pgZ/R": [
-    {
-      "type": 0,
-      "value": "Since round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    }
-  ],
   "FileCard.tsx_DMq9Ip": [
     {
       "type": 0,
@@ -49,18 +39,6 @@
     {
       "type": 0,
       "value": "No content changes."
-    }
-  ],
-  "FileCard.tsx_OrgU+P": [
-    {
-      "type": 0,
-      "value": "Whole PR"
-    }
-  ],
-  "FileCard.tsx_ijGqbf": [
-    {
-      "type": 0,
-      "value": "Only the changes since the previous round. Line notes are on the whole-PR diff."
     }
   ],
   "FileCard.tsx_sTeP5e": [
@@ -131,38 +109,6 @@
       "value": "Copy the path"
     }
   ],
-  "FileChangeBadge.tsx_5qWo1m": [
-    {
-      "type": 0,
-      "value": "Changed since round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    }
-  ],
-  "FileChangeBadge.tsx_PLUzwy": [
-    {
-      "type": 0,
-      "value": "Changed"
-    }
-  ],
-  "FileChangeBadge.tsx_bW7B87": [
-    {
-      "type": 0,
-      "value": "New"
-    }
-  ],
-  "FileChangeBadge.tsx_hDl8xv": [
-    {
-      "type": 0,
-      "value": "Not in the PR at round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    }
-  ],
   "FileStatusBadge.tsx_KQvWvD": [
     {
       "type": 0,
@@ -213,24 +159,6 @@
       "value": "Issues"
     }
   ],
-  "NextRoundModal.tsx_8qlI8r": [
-    {
-      "type": 0,
-      "value": "When the PR changes, ask your agent to add a round to the review file, then drop the file here again."
-    }
-  ],
-  "NextRoundModal.tsx_c+pa/J": [
-    {
-      "type": 0,
-      "value": "Copy the prompt"
-    }
-  ],
-  "NextRoundModal.tsx_gWQUre": [
-    {
-      "type": 0,
-      "value": "Prompt for the next round"
-    }
-  ],
   "NotFound.tsx_osJs96": [
     {
       "type": 0,
@@ -259,24 +187,6 @@
     {
       "type": 0,
       "value": "Steps"
-    }
-  ],
-  "OverviewHeader.tsx_4RJvam": [
-    {
-      "type": 0,
-      "value": "Overview · round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    },
-    {
-      "type": 0,
-      "value": " · "
-    },
-    {
-      "type": 1,
-      "value": "date"
     }
   ],
   "OverviewHeader.tsx_GpV+Pi": [
@@ -343,56 +253,20 @@
       "pluralType": "cardinal"
     }
   ],
+  "OverviewHeader.tsx_k+RvCX": [
+    {
+      "type": 0,
+      "value": "Overview · "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
   "OverviewSummary.tsx_NNdqGL": [
     {
       "type": 0,
       "value": "How to read this review"
-    }
-  ],
-  "PreviousRoundSummary.tsx_5SYu/g": [
-    {
-      "type": 0,
-      "value": "Since round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    },
-    {
-      "type": 0,
-      "value": " ("
-    },
-    {
-      "type": 1,
-      "value": "commit"
-    },
-    {
-      "type": 0,
-      "value": ")"
-    }
-  ],
-  "PreviousRoundSummary.tsx_6KhoSk": [
-    {
-      "type": 0,
-      "value": "Still open"
-    }
-  ],
-  "PreviousRoundSummary.tsx_W6nSYE": [
-    {
-      "type": 0,
-      "value": "Resolved"
-    }
-  ],
-  "PreviousRoundSummary.tsx_Y+zA1G": [
-    {
-      "type": 0,
-      "value": "Obsolete"
-    }
-  ],
-  "PreviousRoundSummary.tsx_dodTBy": [
-    {
-      "type": 0,
-      "value": "No longer in the PR"
     }
   ],
   "PromptGenerator.tsx_c+pa/J": [
@@ -491,12 +365,6 @@
       "value": "Open another review"
     }
   ],
-  "ReviewMenu.tsx_gWQUre": [
-    {
-      "type": 0,
-      "value": "Prompt for the next round"
-    }
-  ],
   "ReviewWarnings.tsx_7oiKM4": [
     {
       "type": 0,
@@ -541,38 +409,6 @@
       },
       "offset": 0,
       "pluralType": "cardinal"
-    }
-  ],
-  "RoundSwitcher.tsx_dzFlGY": [
-    {
-      "type": 0,
-      "value": "Review round"
-    }
-  ],
-  "RoundSwitcher.tsx_mfqFtN": [
-    {
-      "type": 0,
-      "value": "Round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
-    },
-    {
-      "type": 0,
-      "value": " · "
-    },
-    {
-      "type": 1,
-      "value": "date"
-    },
-    {
-      "type": 0,
-      "value": " · "
-    },
-    {
-      "type": 1,
-      "value": "commit"
     }
   ],
   "SeverityBadge.tsx_9eQkfo": [
@@ -667,16 +503,6 @@
       "value": "stepCount"
     }
   ],
-  "StepList.tsx_XfsLLb": [
-    {
-      "type": 1,
-      "value": "changedCount"
-    },
-    {
-      "type": 0,
-      "value": " changed"
-    }
-  ],
   "StepList.tsx_heFjBO": [
     {
       "type": 1,
@@ -699,16 +525,6 @@
     {
       "type": 0,
       "value": "Overview"
-    }
-  ],
-  "StepNavigation.tsx_XfsLLb": [
-    {
-      "type": 1,
-      "value": "changedCount"
-    },
-    {
-      "type": 0,
-      "value": " changed"
     }
   ],
   "StepNavigation.tsx_kqGsf4": [
@@ -751,16 +567,6 @@
     {
       "type": 0,
       "value": "Mark all as viewed"
-    }
-  ],
-  "StepToolbar.tsx_LTHsul": [
-    {
-      "type": 0,
-      "value": "Only files changed since round "
-    },
-    {
-      "type": 1,
-      "value": "roundNumber"
     }
   ],
   "StepToolbar.tsx_LzD3TV": [

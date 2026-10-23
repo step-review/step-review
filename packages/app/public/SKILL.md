@@ -20,11 +20,13 @@ Don't post anything on the PR, and don't commit the review file.
 2. Read the whole diff and enough of the surrounding code to understand it.
 3. Split the changes into steps (see "Steps").
 4. Write notes (see "Notes").
-5. Write the round's JSON to a temporary file outside the repository, then build
-   the review file with the command in "Writing the file".
+5. Write the review's JSON to a temporary file outside the repository, then
+   build the review file with the command in "Writing the file".
 6. Tell the user the file's path.
 
-If the user asks for a new round of an existing review, see "Later rounds".
+If the PR changed since an earlier review, review it again from scratch and
+overwrite the existing file. Don't reuse the earlier JSON: the steps and notes
+must match the new diff.
 
 ## Base and head
 
@@ -91,22 +93,21 @@ Anchors:
 Get line numbers from the files themselves (e.g.
 `git show <head>:<path> | nl -ba`), not by counting lines in the diff.
 
-Note IDs (`n1`, `n2`, …) must be unique in the whole review file, including
-earlier rounds. All text fields are Markdown. To link to another part of the
-review, use `[text](note:n12)`, `[text](step:<step id>)` or
-`[text](file:<path>)`.
+Note IDs (`n1`, `n2`, …) must be unique in the review. All text fields are
+Markdown. To link to another part of the review, use `[text](note:n12)`,
+`[text](step:<step id>)` or `[text](file:<path>)`.
 
 ## Writing the file
 
 Name the file after the PR (`pr-123.step-review`) or the branch, at the root of
 the repository, unless the user asked for another name. Write the JSON of the
-round to a temporary file outside the repository, then run (with the actual
+review to a temporary file outside the repository, then run (with the actual
 commits and paths):
 
 ```sh
 {
-  echo '#step-review:round'
-  cat /tmp/step-review-round.json
+  echo '#step-review:review'
+  cat /tmp/step-review.json
   echo '#step-review:diff'
   git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
     --src-prefix=a/ --dst-prefix=b/ <base> <head>
@@ -118,12 +119,12 @@ on the 20 lines of context.
 
 ## JSON format
 
-The JSON Schema is at https://step-review.dev/schema/v1.json. Example:
+The JSON Schema is at https://step-review.dev/schema/v2.json. Example:
 
 ```json
 {
-  "$schema": "https://step-review.dev/schema/v1.json",
-  "version": 1,
+  "$schema": "https://step-review.dev/schema/v2.json",
+  "version": 2,
   "createdAt": "2026-10-11T09:30:00Z",
   "target": {
     "title": "Validate IDs in the API",
@@ -180,39 +181,8 @@ The JSON Schema is at https://step-review.dev/schema/v1.json. Example:
 ```
 
 - `path` is the file's new path, or its old path if it was deleted.
-- Step IDs use letters, digits, `-` and `_`, and are unique in the round.
+- Step IDs use letters, digits, `-` and `_`, and are unique in the review.
 - Omit optional fields rather than setting them to `null`.
-
-## Later rounds
-
-When the PR changed after a review, the user asks you to add a round to the
-existing file. Never edit the existing rounds: append.
-
-1. Read the latest round's JSON in the file (the last `#step-review:round`
-   section) and its issues.
-2. Determine the new base and head, and review the whole PR again: a round is a
-   complete review of the PR at its new head, with its own steps and notes.
-   Notes that still apply get new IDs.
-3. Add `previousRound` to the JSON: a short list of `changes` since the previous
-   round, and an entry in `issues` for every issue of earlier rounds that was
-   not yet resolved, with its `status`: `resolved`, `open` or `obsolete`, and an
-   optional `comment`.
-4. Append the round. If the previous round's head is an ancestor of the new head
-   (`git merge-base --is-ancestor <previous head> <head>`), also append an
-   interdiff, limited to the PR's files:
-
-```sh
-{
-  echo '#step-review:round'
-  cat /tmp/step-review-round.json
-  echo '#step-review:diff'
-  git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
-    --src-prefix=a/ --dst-prefix=b/ <base> <head>
-  echo '#step-review:interdiff'
-  git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
-    --src-prefix=a/ --dst-prefix=b/ <previous head> <head> -- <PR files>
-} >> pr-123.step-review
-```
 
 ## Notes from the app
 

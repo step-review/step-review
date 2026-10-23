@@ -7,7 +7,7 @@ import stepNoteSchema from "./stepNoteSchema.ts";
 export default v.strictObject({
   id: v.pipe(
     identifierSchema,
-    v.description("Unique within the round. Used in URLs."),
+    v.description("Unique within the review. Used in URLs."),
   ),
   title: v.pipe(v.string(), v.minLength(1)),
   attention: v.pipe(

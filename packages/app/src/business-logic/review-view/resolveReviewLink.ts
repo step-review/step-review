@@ -1,7 +1,7 @@
 import type NavigableRoute from "../navigation/NavigableRoute.ts";
 import RouteName from "../navigation/RouteName.ts";
 import type NoteLocation from "./NoteLocation.ts";
-import type RoundView from "./RoundView.ts";
+import type ReviewView from "./ReviewView.ts";
 
 /**
  * Resolves a link to a part of the review (`note:<id>`, `step:<id>` or
@@ -9,13 +9,12 @@ import type RoundView from "./RoundView.ts";
  */
 export default function resolveReviewLink(
   href: string,
-  roundView: RoundView,
+  reviewView: ReviewView,
   noteIndex: Map<string, NoteLocation>,
 ): { route: NavigableRoute; fragment: string | null } | null {
   const separatorIndex = href.indexOf(":");
   const scheme = href.slice(0, separatorIndex);
   const target = decodeURIComponent(href.slice(separatorIndex + 1));
-  const roundNumber = roundView.round.number;
   switch (scheme) {
     case "note": {
       const noteLocation = noteIndex.get(target);
@@ -23,7 +22,6 @@ export default function resolveReviewLink(
         ? {
             route: {
               name: RouteName.Step,
-              roundNumber: noteLocation.roundNumber,
               stepId: noteLocation.stepId,
             },
             fragment: `note-${target}`,
@@ -31,18 +29,18 @@ export default function resolveReviewLink(
         : null;
     }
     case "step":
-      return roundView.steps.some((step) => step.id === target)
+      return reviewView.steps.some((step) => step.id === target)
         ? {
-            route: { name: RouteName.Step, roundNumber, stepId: target },
+            route: { name: RouteName.Step, stepId: target },
             fragment: null,
           }
         : null;
     case "file": {
-      for (const step of roundView.steps) {
+      for (const step of reviewView.steps) {
         const file = step.files.find((stepFile) => stepFile.path === target);
         if (file) {
           return {
-            route: { name: RouteName.Step, roundNumber, stepId: step.id },
+            route: { name: RouteName.Step, stepId: step.id },
             fragment: `file-${file.id}`,
           };
         }

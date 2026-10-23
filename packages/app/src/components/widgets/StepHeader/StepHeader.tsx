@@ -1,6 +1,6 @@
 import { Group, Stack, Text, Title } from "@mantine/core";
 import { FormattedMessage } from "react-intl";
-import type StepView from "../../../business-logic/rounds/StepView.ts";
+import type StepView from "../../../business-logic/review-view/StepView.ts";
 import AttentionBadge from "../../design-system/badges/AttentionBadge.tsx";
 import NoteCard from "../NoteCard/NoteCard.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";

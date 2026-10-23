@@ -1,9 +1,9 @@
-import type { ReviewFile, ReviewFileWarning } from "@step-review/review-format";
+import type { ReviewFile } from "@step-review/review-format";
 
 export default interface LoadedReview {
   fileName: string;
   reviewFile: ReviewFile;
-  warnings: ReviewFileWarning[];
-  /** Identifies the review across rounds, for state kept in the browser. */
+  warnings: string[];
+  /** Identifies the reviewed PR, for state kept in the browser. */
   storageKey: string;
 }

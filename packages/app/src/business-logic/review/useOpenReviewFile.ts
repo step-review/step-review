@@ -8,7 +8,7 @@ import loadReview from "./loadReview.ts";
 
 /**
  * Reads and loads a review file. Stays on the current review page (e.g. after a
- * reload), otherwise opens the latest round.
+ * reload), otherwise opens the overview.
  */
 export default function useOpenReviewFile() {
   const { setLoadedReview } = useLoadedReviewContext();
@@ -25,12 +25,8 @@ export default function useOpenReviewFile() {
       setProblems([]);
       setLoadedReview(result.loadedReview);
       const route = parseRoute(window.location.pathname);
-      const roundCount = result.loadedReview.reviewFile.rounds.length;
-      const isReviewRoute =
-        (route.name === RouteName.Overview || route.name === RouteName.Step) &&
-        route.roundNumber <= roundCount;
-      if (!isReviewRoute) {
-        navigateTo({ name: RouteName.Overview, roundNumber: roundCount });
+      if (route.name !== RouteName.Overview && route.name !== RouteName.Step) {
+        navigateTo({ name: RouteName.Overview });
       }
     } finally {
       setIsLoading(false);

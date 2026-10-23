@@ -18,7 +18,7 @@ After cloning the repository:
 
 Run `pnpm dev` and open the URL printed by Vite (normally
 `http://127.0.0.1:5173`). The dev server also serves `/SKILL.md` and
-`/schema/v1.json`.
+`/schema/v2.json`.
 
 To try the app, have a coding agent write a review of any repository (see
 `packages/app/public/SKILL.md`), then drop the file on the start page.

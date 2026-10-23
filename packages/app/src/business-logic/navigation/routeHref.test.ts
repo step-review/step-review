@@ -5,11 +5,7 @@ import RouteName from "./RouteName.ts";
 
 it("builds a step URL that parses back to the same route", () => {
   // Setup SUT
-  const route = {
-    name: RouteName.Step,
-    roundNumber: 3,
-    stepId: "ids/v2",
-  } as const;
+  const route = { name: RouteName.Step, stepId: "ids/v2" } as const;
 
   // Exercise
   const href = routeHref(route);

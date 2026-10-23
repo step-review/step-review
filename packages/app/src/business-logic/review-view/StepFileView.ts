@@ -1,8 +1,7 @@
 import type { FileDiff, FileNote, Hunk } from "@step-review/review-format";
-import type FileChange from "./FileChange.ts";
 
 export default interface StepFileView {
-  /** Unique within the round; used for DOM IDs. */
+  /** Unique within the review; used for DOM IDs. */
   id: string;
   path: string;
   fileDiff: FileDiff;
@@ -14,7 +13,4 @@ export default interface StepFileView {
   notes: FileNote[];
   /** Identifies the shown changes, for the viewed state. */
   fingerprint: string;
-  change: FileChange;
-  /** Changes since the previous round, when the round has an interdiff. */
-  interdiffHunks: Hunk[] | null;
 }

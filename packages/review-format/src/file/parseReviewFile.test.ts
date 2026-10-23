@@ -1,13 +1,13 @@
 import { expect, it } from "vitest";
 import parseReviewFile from "./parseReviewFile.ts";
 
-it("parses a file with one round", () => {
+it("parses the review data and the diff", () => {
   // Exercise
   const result = parseReviewFile(
     [
-      "#step-review:round",
+      "#step-review:review",
       JSON.stringify({
-        version: 1,
+        version: 2,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -38,99 +38,32 @@ it("parses a file with one round", () => {
 
   // Verify
   expect(
-    result.success &&
-      result.reviewFile.rounds.map((round) => ({
-        number: round.number,
-        title: round.data.target.title,
-        paths: round.diff.map((fileDiff) => fileDiff.path),
-        interdiff: round.interdiff,
-      })),
-  ).toEqual([
-    { number: 1, title: "Fix sum", paths: ["sum.ts"], interdiff: null },
-  ]);
+    result.success && {
+      title: result.reviewFile.data.target.title,
+      paths: result.reviewFile.diff.map((fileDiff) => fileDiff.path),
+    },
+  ).toEqual({ title: "Fix sum", paths: ["sum.ts"] });
 });
 
-it("parses a second round with an interdiff", () => {
+it("reports a section after the diff", () => {
   // Exercise
   const result = parseReviewFile(
     [
-      "#step-review:round",
-      JSON.stringify({
-        version: 1,
-        createdAt: "2026-10-11T09:30:00Z",
-        target: {
-          title: "Fix sum",
-          baseCommit: "aaaaaaa",
-          headCommit: "bbbbbbb",
-        },
-        overview: { summary: "Fixes `sum`." },
-        steps: [
-          {
-            id: "fix",
-            title: "Fix",
-            attention: "high",
-            intro: "The fix.",
-            files: [{ path: "sum.ts" }],
-          },
-        ],
-      }),
+      "#step-review:review",
+      "{}",
       "#step-review:diff",
-      "diff --git a/sum.ts b/sum.ts",
-      "--- a/sum.ts",
-      "+++ b/sum.ts",
-      "@@ -1 +1 @@",
-      "-a - b",
-      "+a + b",
-      "#step-review:round",
-      JSON.stringify({
-        version: 1,
-        createdAt: "2026-10-12T09:30:00Z",
-        target: {
-          title: "Fix sum",
-          baseCommit: "aaaaaaa",
-          headCommit: "ccccccc",
-        },
-        overview: { summary: "Fixes `sum`." },
-        previousRound: { changes: ["Adds a test."], issues: [] },
-        steps: [
-          {
-            id: "fix",
-            title: "Fix",
-            attention: "high",
-            intro: "The fix.",
-            files: [{ path: "sum.ts" }],
-          },
-        ],
-      }),
-      "#step-review:diff",
-      "diff --git a/sum.ts b/sum.ts",
-      "--- a/sum.ts",
-      "+++ b/sum.ts",
-      "@@ -1 +1 @@",
-      "-a - b",
-      "+a + b",
-      "#step-review:interdiff",
-      "diff --git a/sum.test.ts b/sum.test.ts",
-      "new file mode 100644",
-      "--- /dev/null",
-      "+++ b/sum.test.ts",
-      "@@ -0,0 +1 @@",
-      "+test",
+      "",
+      "#step-review:review",
+      "{}",
     ].join("\n"),
   );
 
   // Verify
-  expect(
-    result.success &&
-      result.reviewFile.rounds.map((round) => ({
-        number: round.number,
-        headCommit: round.data.target.headCommit,
-        interdiffPaths:
-          round.interdiff?.map((fileDiff) => fileDiff.path) ?? null,
-      })),
-  ).toEqual([
-    { number: 1, headCommit: "bbbbbbb", interdiffPaths: null },
-    { number: 2, headCommit: "ccccccc", interdiffPaths: ["sum.test.ts"] },
+  expect(!result.success && result.problems).toEqual([
+    {
+      message: "Unexpected `#step-review:review` section after the diff.",
+      location: "line 5",
+    },
   ]);
 });
 
@@ -138,9 +71,9 @@ it("reports schema problems with their location", () => {
   // Exercise
   const result = parseReviewFile(
     [
-      "#step-review:round",
+      "#step-review:review",
       JSON.stringify({
-        version: 1,
+        version: 2,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -166,39 +99,39 @@ it("reports schema problems with their location", () => {
   // Verify
   expect(
     !result.success && result.problems.map((problem) => problem.location),
-  ).toEqual(["round 1, steps[0].attention"]);
+  ).toEqual(["steps[0].attention"]);
 });
 
 it("reports invalid JSON", () => {
   // Exercise
   const result = parseReviewFile(
-    ["#step-review:round", "{ not json", "#step-review:diff", ""].join("\n"),
+    ["#step-review:review", "{ not json", "#step-review:diff", ""].join("\n"),
   );
 
   // Verify
   expect(
     !result.success && result.problems.map((problem) => problem.location),
-  ).toEqual(["round 1 (line 1)"]);
+  ).toEqual(["line 2"]);
 });
 
-it("reports a round without a diff section", () => {
+it("reports a review without a diff section", () => {
   // Exercise
-  const result = parseReviewFile(["#step-review:round", "{}"].join("\n"));
+  const result = parseReviewFile(["#step-review:review", "{}"].join("\n"));
 
   // Verify
   expect(
     !result.success && result.problems.map((problem) => problem.message),
-  ).toEqual(["Round 1 has no `#step-review:diff` section."]);
+  ).toEqual(["The file has no `#step-review:diff` section."]);
 });
 
 it("reports content before the first section", () => {
   // Exercise
-  const result = parseReviewFile(["{}", "#step-review:round"].join("\n"));
+  const result = parseReviewFile(["{}", "#step-review:review"].join("\n"));
 
   // Verify
   expect(!result.success && result.problems).toEqual([
     {
-      message: "The file must start with a `#step-review:round` line.",
+      message: "The file must start with a `#step-review:review` line.",
       location: "line 1",
     },
   ]);
@@ -208,9 +141,9 @@ it("reports a diff problem with its line in the review file", () => {
   // Exercise
   const result = parseReviewFile(
     [
-      "#step-review:round",
+      "#step-review:review",
       JSON.stringify({
-        version: 1,
+        version: 2,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",

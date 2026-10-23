@@ -1,10 +1,10 @@
 import { toJsonSchema } from "@valibot/to-json-schema";
-import reviewRoundDataSchema from "../round/schemas/reviewRoundDataSchema.ts";
+import reviewDataSchema from "../data/schemas/reviewDataSchema.ts";
 
-/** JSON Schema of the JSON section of a review round. */
+/** JSON Schema of the JSON section of a review file. */
 export default function createJsonSchema(schemaUrl: string) {
   return {
-    ...toJsonSchema(reviewRoundDataSchema, { errorMode: "ignore" }),
+    ...toJsonSchema(reviewDataSchema, { errorMode: "ignore" }),
     $id: schemaUrl,
   };
 }

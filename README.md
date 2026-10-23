@@ -19,16 +19,15 @@ a time, with the notes beside the diff, and lets you mark files as viewed.
    `step-review.dev/SKILL.md`), it writes a single review file, such as
    `pr-123.step-review`, in your repository. The file is never committed.
 3. Drop the file into Step Review. Everything stays in your browser.
-4. When the PR changes, ask the agent for a new round: it appends to the same
-   file, and the app shows what changed since your last review.
+4. When the PR changes, ask the agent to review it again. Files whose changes
+   are the same stay marked as viewed.
 
 ## Review files
 
-A review file is a sequence of rounds. Each round is a JSON section written by
-the agent (overview, steps, notes) followed by the `git diff` of the PR, so the
-agent never writes diff content itself. See
-[`@step-review/review-format`](packages/review-format/README.md) for the format,
-and `step-review.dev/schema/v1.json` for its JSON Schema.
+A review file is a JSON section written by the agent (overview, steps, notes)
+followed by the `git diff` of the PR, so the agent never writes diff content
+itself. See [`@step-review/review-format`](packages/review-format/README.md) for
+the format, and `step-review.dev/schema/v2.json` for its JSON Schema.
 
 ## Development
 

@@ -7,7 +7,7 @@ import { createServer } from "vite";
  * both color schemes. Run it after UI changes that affect the review pages.
  */
 const appDirectory = fileURLToPath(new URL("..", import.meta.url));
-const stepPath = "/rounds/1/steps/opener-page";
+const stepPath = "/steps/opener-page";
 
 const server = await createServer({ root: appDirectory, logLevel: "warn" });
 await server.listen();
@@ -22,7 +22,7 @@ try {
     });
     await page.goto(origin);
     await page.getByRole("button", { name: "see example" }).click();
-    await page.waitForURL("**/rounds/1");
+    await page.waitForURL("**/overview");
     // Navigate client-side: a page load would drop the loaded review.
     await page.evaluate((path) => {
       window.history.pushState(null, "", path);

@@ -7,7 +7,7 @@ import useOpenReviewFile from "../../../business-logic/review/useOpenReviewFile.
 
 /**
  * Accepts a review file dropped anywhere on the page, e.g. after the agent
- * added a round.
+ * reviewed the PR again.
  */
 export default function ReloadDropzone() {
   const { openReviewFile, problems } = useOpenReviewFile();

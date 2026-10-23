@@ -1,3 +1,3 @@
-type SectionKind = "round" | "diff" | "interdiff";
+type SectionKind = "review" | "diff";
 
 export default SectionKind;

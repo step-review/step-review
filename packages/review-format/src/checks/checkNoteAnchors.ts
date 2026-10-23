@@ -1,5 +1,5 @@
+import type StepFile from "../data/types/StepFile.ts";
 import type Hunk from "../diff/Hunk.ts";
-import type StepFile from "../round/types/StepFile.ts";
 import findDiffLine from "./findDiffLine.ts";
 
 /** Returns a message for each note whose anchor does not match the diff. */

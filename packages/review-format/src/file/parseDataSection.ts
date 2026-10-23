@@ -1,15 +1,14 @@
 import * as v from "valibot";
-import reviewRoundDataSchema from "../round/schemas/reviewRoundDataSchema.ts";
-import type ReviewRoundData from "../round/types/ReviewRoundData.ts";
+import reviewDataSchema from "../data/schemas/reviewDataSchema.ts";
+import type ReviewData from "../data/types/ReviewData.ts";
 import formatIssuePath from "./formatIssuePath.ts";
 import type ReviewFileProblem from "./ReviewFileProblem.ts";
 import type Section from "./Section.ts";
 
-export default function parseRoundSection(
+export default function parseDataSection(
   section: Section,
-  roundNumber: number,
 ):
-  | { success: true; data: ReviewRoundData }
+  | { success: true; data: ReviewData }
   | { success: false; problems: ReviewFileProblem[] } {
   let json: unknown;
   try {
@@ -20,23 +19,20 @@ export default function parseRoundSection(
       problems: [
         {
           message: `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
-          location: `round ${roundNumber} (line ${section.markerLineNumber})`,
+          location: `line ${section.markerLineNumber + 1}`,
         },
       ],
     };
   }
-  const result = v.safeParse(reviewRoundDataSchema, json);
+  const result = v.safeParse(reviewDataSchema, json);
   if (result.success) {
     return { success: true, data: result.output };
   }
   return {
     success: false,
-    problems: result.issues.map((issue) => {
-      const path = formatIssuePath(issue.path);
-      return {
-        message: issue.message,
-        location: `round ${roundNumber}${path ? `, ${path}` : ""}`,
-      };
-    }),
+    problems: result.issues.map((issue) => ({
+      message: issue.message,
+      location: formatIssuePath(issue.path) || null,
+    })),
   };
 }

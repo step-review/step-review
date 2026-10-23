@@ -1,4 +1,4 @@
-import type NoteLocation from "../rounds/NoteLocation.ts";
+import type NoteLocation from "../review-view/NoteLocation.ts";
 import formatNoteLocation from "./formatNoteLocation.ts";
 
 /**
@@ -9,7 +9,7 @@ export default function createNoteReference(
   fileName: string,
   noteLocation: NoteLocation,
 ): string {
-  const { note, roundNumber, stepId, path } = noteLocation;
+  const { note, stepId, path } = noteLocation;
   const kind = note.kind === "issue" ? `Issue (${note.severity})` : "Note";
   const isOldSide = "anchor" in note && note.anchor?.side === "old";
   const location =
@@ -17,7 +17,7 @@ export default function createNoteReference(
       ? `step \`${stepId}\``
       : `\`${formatNoteLocation(note, path)}\`${isOldSide ? " (base version)" : ""}`;
   return [
-    `${kind} \`${note.id}\` from \`${fileName}\` (round ${roundNumber}), on ${location}:`,
+    `${kind} \`${note.id}\` from \`${fileName}\`, on ${location}:`,
     "",
     note.body,
   ].join("\n");

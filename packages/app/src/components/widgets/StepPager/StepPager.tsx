@@ -3,18 +3,17 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import type RoundView from "../../../business-logic/rounds/RoundView.ts";
+import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
 interface Props {
-  roundView: RoundView;
+  reviewView: ReviewView;
   stepIndex: number;
 }
 
-export default function StepPager({ roundView, stepIndex }: Props) {
-  const roundNumber = roundView.round.number;
-  const previousStep = roundView.steps[stepIndex - 1];
-  const nextStep = roundView.steps[stepIndex + 1];
+export default function StepPager({ reviewView, stepIndex }: Props) {
+  const previousStep = reviewView.steps[stepIndex - 1];
+  const nextStep = reviewView.steps[stepIndex + 1];
   return (
     <Group justify="space-between">
       <Button
@@ -23,8 +22,8 @@ export default function StepPager({ roundView, stepIndex }: Props) {
         onClick={() =>
           navigateTo(
             previousStep
-              ? { name: RouteName.Step, roundNumber, stepId: previousStep.id }
-              : { name: RouteName.Overview, roundNumber },
+              ? { name: RouteName.Step, stepId: previousStep.id }
+              : { name: RouteName.Overview },
           )
         }
       >
@@ -38,11 +37,7 @@ export default function StepPager({ roundView, stepIndex }: Props) {
         <Button
           rightSection={<IconArrowRight size={16} />}
           onClick={() =>
-            navigateTo({
-              name: RouteName.Step,
-              roundNumber,
-              stepId: nextStep.id,
-            })
+            navigateTo({ name: RouteName.Step, stepId: nextStep.id })
           }
         >
           <StepTitle step={nextStep} />
