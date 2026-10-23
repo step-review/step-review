@@ -1,18 +1,10 @@
-/* Colors and metrics of GitHub's diff view (Primer's diffBlob tokens). */
+/* Metrics of GitHub's diff view. */
 .table {
-  --diff-addition-line: light-dark(#dafbe1, #2ea04326);
-  --diff-addition-number: light-dark(#aceebb, #3fb9504d);
-  --diff-deletion-line: light-dark(#ffebe9, #f851491a);
-  --diff-deletion-number: light-dark(#ffcecb, #f851494d);
-  --diff-hunk-line: light-dark(#ddf4ff, #388bfd1a);
-  --diff-hunk-number: light-dark(#b6e3ff, #388bfd66);
-  --diff-empty: light-dark(#f6f8fa, #151b23);
-
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-family: var(--mantine-font-family-monospace);
-  font-size: 12px;
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
   line-height: 20px;
 }
 
@@ -23,7 +15,7 @@
 .row {
   /* Tints the whole line over its tone, like GitHub's selected lines. */
   &[data-highlighted] > td {
-    box-shadow: inset 0 0 0 100vmax light-dark(#fae17d80, #bb800940);
+    box-shadow: inset 0 0 0 100vmax var(--bgColor-attention-muted);
   }
 }
 
@@ -33,7 +25,7 @@
 
   &[data-kind="number"] {
     text-align: right;
-    color: var(--mantine-color-dimmed);
+    color: var(--fgColor-muted);
     user-select: none;
   }
 
@@ -44,40 +36,47 @@
 
   &[data-kind="full"] {
     padding: 6px 10px;
-    font-family: var(--mantine-font-family);
-    font-size: var(--mantine-font-size-md);
-    line-height: var(--mantine-line-height);
+    font-family: var(--fontStack-sansSerif);
+    font-size: var(--text-body-size-medium);
+    line-height: var(--text-body-lineHeight-medium);
   }
 
   &[data-tone="addition"] {
-    background: var(--diff-addition-line);
+    background: var(--diffBlob-additionLine-bgColor);
+    color: var(--diffBlob-additionLine-fgColor);
 
     &[data-kind="number"] {
-      background: var(--diff-addition-number);
-      color: var(--mantine-color-text);
+      background: var(--diffBlob-additionNum-bgColor);
+      color: var(--diffBlob-additionNum-fgColor);
     }
   }
 
   &[data-tone="deletion"] {
-    background: var(--diff-deletion-line);
+    background: var(--diffBlob-deletionLine-bgColor);
+    color: var(--diffBlob-deletionLine-fgColor);
 
     &[data-kind="number"] {
-      background: var(--diff-deletion-number);
-      color: var(--mantine-color-text);
+      background: var(--diffBlob-deletionNum-bgColor);
+      color: var(--diffBlob-deletionNum-fgColor);
     }
   }
 
   &[data-tone="empty"] {
-    background: var(--diff-empty);
+    background: var(--diffBlob-emptyLine-bgColor);
+
+    &[data-kind="number"] {
+      background: var(--diffBlob-emptyNum-bgColor);
+    }
   }
 
   &[data-tone="hunk"],
   &[data-tone="gap"] {
-    background: var(--diff-hunk-line);
-    color: var(--mantine-color-dimmed);
+    background: var(--diffBlob-hunkLine-bgColor);
+    color: var(--diffBlob-hunkLine-fgColor);
 
     &[data-kind="number"] {
-      background: var(--diff-hunk-number);
+      background: var(--diffBlob-hunkNum-bgColor-rest);
+      color: var(--diffBlob-hunkNum-fgColor-rest);
     }
   }
 }

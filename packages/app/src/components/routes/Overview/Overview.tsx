@@ -1,17 +1,18 @@
-import { Stack } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { Stack } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
+import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import IssuesIndex from "../../widgets/IssuesIndex/IssuesIndex.tsx";
 import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
 import OverviewSummary from "../../widgets/OverviewSummary/OverviewSummary.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
 import ReviewWarnings from "../../widgets/ReviewWarnings/ReviewWarnings.tsx";
 import Start from "../Start/Start.tsx";
+import styles from "./Overview.module.css";
 
 export default function Overview() {
   const { loadedReview } = useLoadedReviewContext();
@@ -38,7 +39,7 @@ export default function Overview() {
         reviewView={reviewView}
         activeStepId={null}
       >
-        <Stack gap="xl" maw={1100}>
+        <Stack gap="spacious" className={styles["content"]}>
           <OverviewHeader />
           <ReviewWarnings loadedReview={loadedReview} />
           <OverviewSummary />

@@ -389,6 +389,18 @@
       "value": "Open another review"
     }
   ],
+  "ReviewShell.tsx_huCHmk": [
+    {
+      "type": 0,
+      "value": "Steps"
+    }
+  ],
+  "ReviewShell.tsx_zGgSXZ": [
+    {
+      "type": 0,
+      "value": "Show or hide the steps"
+    }
+  ],
   "ReviewWarnings.tsx_7oiKM4": [
     {
       "type": 0,
@@ -471,6 +483,12 @@
       "value": "1. Send this prompt"
     }
   ],
+  "Start.tsx_MlSLND": [
+    {
+      "type": 0,
+      "value": "Review not loaded"
+    }
+  ],
   "Start.tsx_Reg+fk": [
     {
       "type": 0,
@@ -503,6 +521,12 @@
       "value": "see example"
     }
   ],
+  "StepFileTree.tsx_hvXAqx": [
+    {
+      "type": 0,
+      "value": "Files of the step"
+    }
+  ],
   "StepHeader.tsx_JENnli": [
     {
       "type": 0,
@@ -531,6 +555,12 @@
     {
       "type": 0,
       "value": "Overview"
+    }
+  ],
+  "StepNavigation.tsx_huCHmk": [
+    {
+      "type": 0,
+      "value": "Steps"
     }
   ],
   "StepNavigation.tsx_kqGsf4": [
@@ -585,6 +615,12 @@
     {
       "type": 0,
       "value": "Only issues"
+    }
+  ],
+  "StepToolbar.tsx_dUFzeV": [
+    {
+      "type": 0,
+      "value": "Diff layout"
     }
   ]
 }

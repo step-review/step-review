@@ -1,6 +1,7 @@
-import { Anchor } from "@mantine/core";
+import { Link } from "@primer/react";
 import type { ReactNode } from "react";
 import useOpenExampleReview from "../../../business-logic/review/useOpenExampleReview.ts";
+import styles from "./ExampleReviewLink.module.css";
 
 interface Props {
   children: ReactNode;
@@ -10,15 +11,16 @@ interface Props {
 export default function ExampleReviewLink({ children }: Props) {
   const openExampleReview = useOpenExampleReview();
   return (
-    <Anchor
-      component="button"
+    <Link
+      as="button"
       type="button"
-      inherit
+      inline
+      className={styles["link"]}
       onClick={() => {
         void openExampleReview();
       }}
     >
       {children}
-    </Anchor>
+    </Link>
   );
 }

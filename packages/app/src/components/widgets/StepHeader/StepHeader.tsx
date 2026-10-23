@@ -1,10 +1,11 @@
-import { Group, Stack, Text, Title } from "@mantine/core";
+import { Heading, Stack } from "@primer/react";
 import { FormattedMessage } from "react-intl";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
 import AttentionBadge from "../../design-system/badges/AttentionBadge.tsx";
 import NoteCard from "../NoteCard/NoteCard.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
+import styles from "./StepHeader.module.css";
 
 interface Props {
   stepView: StepView;
@@ -18,25 +19,25 @@ export default function StepHeader({
   areExplainersHidden,
 }: Props) {
   return (
-    <Stack gap="sm" maw={900}>
-      <Group gap="xs">
-        <Text size="sm" c="dimmed" fw={600} tt="uppercase">
+    <Stack gap="condensed" className={styles["header"]}>
+      <div className={styles["eyebrow"]}>
+        <span className={styles["position"]}>
           <FormattedMessage
             defaultMessage="Step {stepNumber} of {stepCount}"
             values={{ stepNumber: stepView.number, stepCount }}
           />
-        </Text>
+        </span>
         <AttentionBadge attention={stepView.attention} />
-      </Group>
-      <Title order={2}>
+      </div>
+      <Heading as="h1" variant="large">
         <StepTitle step={stepView} />
-      </Title>
+      </Heading>
       {stepView.intro ? (
         <ReviewMarkdown>{stepView.intro}</ReviewMarkdown>
       ) : (
-        <Text size="sm" c="dimmed">
+        <p className={styles["noIntro"]}>
           <FormattedMessage defaultMessage="These files changed in the PR, but the review doesn't assign them to a step." />
-        </Text>
+        </p>
       )}
       {stepView.notes
         .filter((note) => !areExplainersHidden || note.kind === "issue")

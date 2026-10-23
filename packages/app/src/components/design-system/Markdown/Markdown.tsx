@@ -1,4 +1,3 @@
-import { Typography } from "@mantine/core";
 import type { ReactNode } from "react";
 import ReactMarkdown, { defaultUrlTransform } from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -18,7 +17,7 @@ const customLinkPattern = /^[a-z]+:(?!\/\/)/u;
 /** Renders untrusted Markdown: raw HTML is shown as text, never rendered. */
 export default function Markdown({ children, renderCustomLink }: Props) {
   return (
-    <Typography className={styles["root"]}>
+    <div className={styles["root"]}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         urlTransform={(url) =>
@@ -41,6 +40,6 @@ export default function Markdown({ children, renderCustomLink }: Props) {
       >
         {children}
       </ReactMarkdown>
-    </Typography>
+    </div>
   );
 }

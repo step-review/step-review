@@ -1,9 +1,9 @@
-import { Alert, Group, List } from "@mantine/core";
-import { IconAlertTriangle } from "@tabler/icons-react";
+import { Banner } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import Markdown from "../../design-system/Markdown/Markdown.tsx";
+import styles from "./ReviewWarnings.module.css";
 
 interface Props {
   loadedReview: LoadedReview;
@@ -21,31 +21,28 @@ export default function ReviewWarnings({ loadedReview }: Props) {
     ...warnings.map((warning) => `- ${warning}`),
   ].join("\n");
   return (
-    <Alert
-      color="warning"
-      icon={<IconAlertTriangle />}
-      title={
-        <Group gap="xs">
-          <FormattedMessage
-            defaultMessage="{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
-            values={{ warningCount: warnings.length }}
-          />
-          <CopyIconButton
-            value={warningsText}
-            label={intl.formatMessage({
-              defaultMessage: "Copy for your agent",
-            })}
-          />
-        </Group>
-      }
-    >
-      <List size="sm" spacing={2}>
-        {warnings.map((warning, index) => (
-          <List.Item key={index}>
-            <Markdown>{warning}</Markdown>
-          </List.Item>
-        ))}
-      </List>
-    </Alert>
+    <Banner variant="warning">
+      <Banner.Title className={styles["title"]}>
+        <FormattedMessage
+          defaultMessage="{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
+          values={{ warningCount: warnings.length }}
+        />
+        <CopyIconButton
+          value={warningsText}
+          label={intl.formatMessage({
+            defaultMessage: "Copy for your agent",
+          })}
+        />
+      </Banner.Title>
+      <Banner.Description>
+        <ul className={styles["warnings"]}>
+          {warnings.map((warning, index) => (
+            <li key={index}>
+              <Markdown>{warning}</Markdown>
+            </li>
+          ))}
+        </ul>
+      </Banner.Description>
+    </Banner>
   );
 }

@@ -1,5 +1,5 @@
-import { Group, Text, Textarea } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
+import { CheckIcon } from "@primer/octicons-react";
+import { Textarea } from "@primer/react";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import createStartPrompt from "../../../business-logic/prompts/createStartPrompt.ts";
@@ -34,21 +34,10 @@ export default function PromptGenerator() {
         aria-label={intl.formatMessage({
           defaultMessage: "Prompt for your coding agent",
         })}
-        size="lg"
+        block
         resize="none"
-        autosize
-        rightSection={
-          <CopyIconButton
-            value={prompt}
-            label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
-            size="md"
-          />
-        }
-        rightSectionWidth={60}
-        classNames={{
-          input: styles["input"],
-          section: styles["copyButtonSection"],
-        }}
+        autoSize
+        className={styles["textarea"]}
         value={prompt}
         onPaste={() => {
           isPastingRef.current = true;
@@ -65,13 +54,18 @@ export default function PromptGenerator() {
           }
         }}
       />
+      <div className={styles["copyButton"]}>
+        <CopyIconButton
+          value={prompt}
+          label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
+          size="medium"
+        />
+      </div>
       {copiedPrompt === prompt && (
-        <Group gap={6} c="success" className={styles["copiedMessage"]}>
-          <IconCheck size={16} />
-          <Text size="sm">
-            <FormattedMessage defaultMessage="Prompt copied" />
-          </Text>
-        </Group>
+        <div className={styles["copiedMessage"]}>
+          <CheckIcon size={16} />
+          <FormattedMessage defaultMessage="Prompt copied" />
+        </div>
       )}
     </div>
   );

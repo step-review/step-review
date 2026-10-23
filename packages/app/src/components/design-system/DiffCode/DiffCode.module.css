@@ -11,18 +11,17 @@
 }
 
 .segment {
-  color: var(--light-color, inherit);
-  border-radius: var(--mantine-radius-xs);
-
-  @mixin dark {
-    color: var(--dark-color, inherit);
-  }
+  color: light-dark(
+    var(--light-color, currentColor),
+    var(--dark-color, currentColor)
+  );
+  border-radius: var(--borderRadius-small);
 
   &[data-changed="addition"] {
-    background: light-dark(#aceebb, #2ea04366);
+    background: var(--diffBlob-additionWord-bgColor);
   }
 
   &[data-changed="deletion"] {
-    background: light-dark(#ffcecb, #f8514966);
+    background: var(--diffBlob-deletionWord-bgColor);
   }
 }

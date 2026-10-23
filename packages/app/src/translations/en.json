@@ -140,6 +140,12 @@
   "ReviewMenu.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
   },
+  "ReviewShell.tsx_huCHmk": {
+    "defaultMessage": "Steps"
+  },
+  "ReviewShell.tsx_zGgSXZ": {
+    "defaultMessage": "Show or hide the steps"
+  },
   "ReviewWarnings.tsx_7oiKM4": {
     "defaultMessage": "Copy for your agent"
   },
@@ -164,6 +170,9 @@
   "Start.tsx_Aetvq9": {
     "defaultMessage": "1. Send this prompt"
   },
+  "Start.tsx_MlSLND": {
+    "defaultMessage": "Review not loaded"
+  },
   "Start.tsx_Reg+fk": {
     "defaultMessage": "3. Go through the PR ({exampleLink})"
   },
@@ -176,6 +185,9 @@
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
   },
+  "StepFileTree.tsx_hvXAqx": {
+    "defaultMessage": "Files of the step"
+  },
   "StepHeader.tsx_JENnli": {
     "defaultMessage": "These files changed in the PR, but the review doesn't assign them to a step."
   },
@@ -184,6 +196,9 @@
   },
   "StepNavigation.tsx_9uOFF3": {
     "defaultMessage": "Overview"
+  },
+  "StepNavigation.tsx_huCHmk": {
+    "defaultMessage": "Steps"
   },
   "StepNavigation.tsx_kqGsf4": {
     "defaultMessage": "{viewedCount} of {totalCount} files viewed"
@@ -205,5 +220,8 @@
   },
   "StepToolbar.tsx_Nm1nyY": {
     "defaultMessage": "Only issues"
+  },
+  "StepToolbar.tsx_dUFzeV": {
+    "defaultMessage": "Diff layout"
   }
 }

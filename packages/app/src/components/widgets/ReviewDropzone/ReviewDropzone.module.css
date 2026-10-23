@@ -1,0 +1,29 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--base-size-12);
+}
+
+.hint {
+  color: var(--fgColor-muted);
+}
+
+.problemsTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+.problems {
+  margin: 0;
+  padding-left: var(--base-size-20);
+
+  & > li + li {
+    margin-top: var(--base-size-4);
+  }
+}
+
+.location {
+  font-family: var(--fontStack-monospace);
+}

@@ -1,4 +1,4 @@
-import { useElementSize } from "@mantine/hooks";
+import { useResizeObserver } from "@primer/react";
 import type { DiffLine, FileNote, Hunk } from "@step-review/review-format";
 import { useMemo, useRef, useState } from "react";
 import buildDiffRows from "../../../business-logic/diff-layout/buildDiffRows.ts";
@@ -32,7 +32,11 @@ export default function DiffView({ path, hunks, notes, layout }: Props) {
   const [expandedGapIds, setExpandedGapIds] = useState(() => new Set<string>());
   const [hoveredNoteId, setHoveredNoteId] = useState<string | null>(null);
   const [hoveredLineKeys, setHoveredLineKeys] = useState<string[]>([]);
-  const { ref: wrapperRef, width } = useElementSize();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+  useResizeObserver((entries) => {
+    setWidth(entries[0]?.contentRect.width ?? 0);
+  }, wrapperRef);
   const rowsContainerRef = useRef<HTMLDivElement>(null);
   const isWide = width >= notesColumnMinimumWidth;
   const pinnedLineKeys = useMemo(

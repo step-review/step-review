@@ -1,0 +1,8 @@
+.icon {
+  display: inline-flex;
+  color: var(--fgColor-muted);
+
+  &[data-attention="high"] {
+    color: var(--fgColor-attention);
+  }
+}

@@ -1,5 +1,4 @@
-import { Box } from "@mantine/core";
-import type FileIconGlyph from "../../../business-logic/file-icons/FileIconGlyph.ts";
+import { useTheme } from "@primer/react/next";
 import resolveFileIcon from "../../../business-logic/file-icons/resolveFileIcon.ts";
 import setiFileIcons from "../../../business-logic/file-icons/setiFileIcons.ts";
 import styles from "./FileIcon.module.css";
@@ -10,36 +9,21 @@ interface Props {
 
 /** The icon VS Code's Seti theme shows for a file. */
 export default function FileIcon({ path }: Props) {
+  const { resolvedColorMode } = useTheme();
   const { glyph, lightGlyph } = resolveFileIcon(
     path,
     setiFileIcons.fileIconTheme,
     setiFileIcons.languageAssociations,
   );
+  const isDark = resolvedColorMode === "night" || resolvedColorMode === "dark";
+  const shownGlyph = isDark ? glyph : lightGlyph;
   return (
-    <>
-      <Glyph glyph={glyph} lightHidden />
-      <Glyph glyph={lightGlyph} darkHidden />
-    </>
-  );
-}
-
-interface GlyphProps {
-  glyph: FileIconGlyph;
-  lightHidden?: boolean;
-  darkHidden?: boolean;
-}
-
-function Glyph({ glyph, lightHidden, darkHidden }: GlyphProps) {
-  return (
-    <Box
-      component="span"
+    <span
       aria-hidden
       className={styles["icon"]}
-      c={glyph.color ?? undefined}
-      lightHidden={lightHidden}
-      darkHidden={darkHidden}
+      style={{ color: shownGlyph.color ?? undefined }}
     >
-      {glyph.character}
-    </Box>
+      {shownGlyph.character}
+    </span>
   );
 }

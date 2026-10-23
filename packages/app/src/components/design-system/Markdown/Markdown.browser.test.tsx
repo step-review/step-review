@@ -1,6 +1,5 @@
 import { expect, it } from "vitest";
 import { render } from "vitest-browser-react";
-import "@mantine/core/styles.css";
 import TestProviders from "../../../test-utils/TestProviders.tsx";
 import Markdown from "./Markdown.tsx";
 

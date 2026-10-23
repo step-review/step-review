@@ -1,10 +1,11 @@
-import { ActionIcon, Badge, Box, Button, Group, Tooltip } from "@mantine/core";
 import {
-  IconBrandGithub,
-  IconChevronDown,
-  IconSquare,
-  IconSquareCheckFilled,
-} from "@tabler/icons-react";
+  CheckboxFillIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MarkGithubIcon,
+  SquareIcon,
+} from "@primer/octicons-react";
+import { Button, IconButton, Label } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import diffstatBlocks from "../../../business-logic/diff-layout/diffstatBlocks.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
@@ -40,62 +41,44 @@ export default function FileCardHeader({
     : stepFileView.path;
   return (
     <div className={styles["header"]} data-collapsed={isCollapsed || undefined}>
-      <ActionIcon
-        variant="subtle"
-        color="gray"
-        size="sm"
+      <IconButton
+        variant="invisible"
+        size="small"
+        icon={isCollapsed ? ChevronRightIcon : ChevronDownIcon}
         onClick={onToggleCollapsed}
         aria-label={intl.formatMessage({
           defaultMessage: "Show or hide the diff",
         })}
         aria-expanded={!isCollapsed}
-      >
-        <IconChevronDown
-          size={16}
-          className={styles["chevron"]}
-          data-collapsed={isCollapsed || undefined}
-        />
-      </ActionIcon>
+      />
       {/* Modified is the usual case, so only the others are pointed out. */}
       {fileDiff.status !== "modified" && (
         <FileStatusBadge status={fileDiff.status} />
       )}
-      <Box className={styles["path"]} onClick={onToggleCollapsed}>
-        <TruncatedText
-          tooltip={displayedPath}
-          truncateFrom="start"
-          size="xs"
-          ff="monospace"
-        >
+      <div className={styles["path"]} onClick={onToggleCollapsed}>
+        <TruncatedText tooltip={displayedPath} truncateFrom="start">
           {displayedPath}
         </TruncatedText>
-      </Box>
+      </div>
       <CopyIconButton
         value={stepFileView.path}
         label={intl.formatMessage({ defaultMessage: "Copy the path" })}
       />
       {githubUrl && (
-        <Tooltip
-          label={<FormattedMessage defaultMessage="Open on GitHub" />}
-          withArrow
-        >
-          <ActionIcon
-            component="a"
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            variant="subtle"
-            color="gray"
-            size="sm"
-            aria-label={intl.formatMessage({
-              defaultMessage: "Open on GitHub",
-            })}
-          >
-            <IconBrandGithub size={14} />
-          </ActionIcon>
-        </Tooltip>
+        <IconButton
+          as="a"
+          href={githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          variant="invisible"
+          size="small"
+          icon={MarkGithubIcon}
+          aria-label={intl.formatMessage({
+            defaultMessage: "Open on GitHub",
+          })}
+        />
       )}
-      <Group gap="sm" ml="auto" wrap="nowrap">
+      <div className={styles["trailing"]}>
         <Diffstat
           additions={stepFileView.additions}
           deletions={stepFileView.deletions}
@@ -105,32 +88,26 @@ export default function FileCardHeader({
           )}
         />
         {noteCount > 0 && (
-          <Badge miw="max-content" size="sm" variant="light" color="gray">
+          <Label variant="secondary">
             <FormattedMessage
               defaultMessage="{noteCount, plural, one {# note} other {# notes}}"
               values={{ noteCount }}
             />
-          </Badge>
+          </Label>
         )}
         <Button
-          variant="default"
-          size="xs"
+          size="small"
           aria-pressed={isViewed}
           onClick={() => onViewedChange(!isViewed)}
-          leftSection={
-            isViewed ? (
-              <IconSquareCheckFilled
-                size={16}
-                color="var(--mantine-primary-color-filled)"
-              />
-            ) : (
-              <IconSquare size={16} />
-            )
-          }
+          leadingVisual={isViewed ? ViewedIcon : SquareIcon}
         >
           <FormattedMessage defaultMessage="Viewed" />
         </Button>
-      </Group>
+      </div>
     </div>
   );
+}
+
+function ViewedIcon() {
+  return <CheckboxFillIcon className={styles["viewedIcon"]} />;
 }

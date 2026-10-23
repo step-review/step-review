@@ -33,7 +33,7 @@ the format, and `step-review.dev/schema/v2.json` for its JSON Schema.
 
 pnpm monorepo:
 
-- [`packages/app`](packages/app): the web app (Vite, React, Mantine).
+- [`packages/app`](packages/app): the web app (Vite, React, Primer).
 - [`packages/review-format`](packages/review-format): the review file format:
   schemas, parser and consistency checks.
 - [`packages/tooling/oxlint-custom-rules`](packages/tooling/oxlint-custom-rules):

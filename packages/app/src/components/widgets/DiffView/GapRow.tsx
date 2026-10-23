@@ -1,8 +1,9 @@
-import { ActionIcon, Anchor } from "@mantine/core";
-import { IconArrowsMoveVertical } from "@tabler/icons-react";
+import { UnfoldIcon } from "@primer/octicons-react";
+import { IconButton, Link } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import DiffTableCell from "../../design-system/DiffTable/DiffTableCell.tsx";
 import DiffTableRow from "../../design-system/DiffTable/DiffTableRow.tsx";
+import styles from "./GapRow.module.css";
 
 interface Props {
   hiddenLineCount: number;
@@ -22,23 +23,26 @@ export default function GapRow({
   return (
     <DiffTableRow>
       <DiffTableCell kind="number" tone="gap" colSpan={numberColSpan}>
-        <ActionIcon
-          variant="subtle"
-          color="gray"
-          size="sm"
+        <IconButton
+          variant="invisible"
+          size="small"
+          icon={UnfoldIcon}
           onClick={onExpand}
           aria-label={intl.formatMessage({ defaultMessage: "Expand" })}
-        >
-          <IconArrowsMoveVertical size={14} />
-        </ActionIcon>
+        />
       </DiffTableCell>
       <DiffTableCell kind="code" tone="gap" colSpan={codeColSpan}>
-        <Anchor component="button" c="dimmed" fz="inherit" onClick={onExpand}>
+        <Link
+          as="button"
+          muted
+          className={styles["expandLink"]}
+          onClick={onExpand}
+        >
           <FormattedMessage
             defaultMessage="{hiddenLineCount, plural, one {# hidden line} other {# hidden lines}}"
             values={{ hiddenLineCount }}
           />
-        </Anchor>
+        </Link>
       </DiffTableCell>
     </DiffTableRow>
   );

@@ -1,4 +1,4 @@
-// Load Mantine styles first so that CSS modules can override them.
+// Load the design tokens first, so that every stylesheet can use them.
 import "./styles.css";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";

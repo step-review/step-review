@@ -1,36 +1,41 @@
-import { List, Paper, SimpleGrid, Stack, Title } from "@mantine/core";
+import { Heading, Stack } from "@primer/react";
 import { FormattedMessage } from "react-intl";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
+import styles from "./OverviewSummary.module.css";
 
 export default function OverviewSummary() {
   const { overview } = useCurrentReviewView().data;
   return (
-    <Stack gap="md">
+    <Stack gap="normal">
       <ReviewMarkdown>{overview.summary}</ReviewMarkdown>
       {overview.areas && overview.areas.length > 0 && (
-        <SimpleGrid cols={{ base: 1, md: 2, xl: 3 }} spacing="sm">
+        <div className={styles["areas"]}>
           {overview.areas.map((area, index) => (
-            <Paper key={index} withBorder p="sm">
-              <Title order={5} mb={6}>
+            <section key={index} className={styles["area"]}>
+              <Heading as="h3" variant="small" className={styles["areaTitle"]}>
                 {area.title}
-              </Title>
-              <List size="sm" spacing={4}>
+              </Heading>
+              <ul className={styles["points"]}>
                 {area.points.map((point, pointIndex) => (
-                  <List.Item key={pointIndex}>
+                  <li key={pointIndex}>
                     <ReviewMarkdown>{point}</ReviewMarkdown>
-                  </List.Item>
+                  </li>
                 ))}
-              </List>
-            </Paper>
+              </ul>
+            </section>
           ))}
-        </SimpleGrid>
+        </div>
       )}
       {overview.readingPlan && (
         <div>
-          <Title order={4} mb={6}>
+          <Heading
+            as="h2"
+            variant="small"
+            className={styles["readingPlanTitle"]}
+          >
             <FormattedMessage defaultMessage="How to read this review" />
-          </Title>
+          </Heading>
           <ReviewMarkdown>{overview.readingPlan}</ReviewMarkdown>
         </div>
       )}

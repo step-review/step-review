@@ -1,9 +1,18 @@
+.diffstat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
+  white-space: nowrap;
+}
+
 .additions {
-  color: light-dark(#1a7f37, #3fb950);
+  color: var(--fgColor-success);
 }
 
 .deletions {
-  color: light-dark(#d1242f, #f85149);
+  color: var(--fgColor-danger);
 }
 
 .blocks {
@@ -16,14 +25,14 @@
   height: 8px;
 
   &[data-block="added"] {
-    background: light-dark(#1f883d, #238636);
+    background: var(--bgColor-success-emphasis);
   }
 
   &[data-block="deleted"] {
-    background: light-dark(#cf222e, #da3633);
+    background: var(--bgColor-danger-emphasis);
   }
 
   &[data-block="neutral"] {
-    background: light-dark(#818b981f, #656c7633);
+    background: var(--bgColor-neutral-muted);
   }
 }

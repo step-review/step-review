@@ -1,6 +1,7 @@
-import { Anchor, Code, Group, Stack, Text, Title } from "@mantine/core";
+import { BranchName, Heading, Link, Stack } from "@primer/react";
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
+import styles from "./OverviewHeader.module.css";
 
 export default function OverviewHeader() {
   const { data, diff } = useCurrentReviewView();
@@ -18,8 +19,8 @@ export default function OverviewHeader() {
     0,
   );
   return (
-    <Stack gap={6}>
-      <Text size="sm" c="dimmed" fw={600} tt="uppercase">
+    <Stack gap="condensed">
+      <div className={styles["eyebrow"]}>
         <FormattedMessage
           defaultMessage="Overview · {date}"
           values={{
@@ -32,41 +33,48 @@ export default function OverviewHeader() {
             ),
           }}
         />
-      </Text>
-      <Title order={1}>{target.title}</Title>
-      <Group gap="md" c="dimmed">
+      </div>
+      <Heading as="h1" variant="large">
+        {target.title}
+      </Heading>
+      <div className={styles["meta"]}>
         {target.url && (
-          <Anchor href={target.url} target="_blank" rel="noreferrer" size="sm">
+          <Link href={target.url} target="_blank" rel="noreferrer">
             {target.url}
-          </Anchor>
+          </Link>
         )}
-        <Text size="sm">
-          {target.baseRef && <Code>{target.baseRef}</Code>}{" "}
-          <Code>{target.baseCommit.slice(0, 7)}</Code> →{" "}
-          {target.headRef && <Code>{target.headRef}</Code>}{" "}
-          <Code>{target.headCommit.slice(0, 7)}</Code>
-        </Text>
-      </Group>
-      <Group gap="md">
-        <Text size="sm">
+        <span className={styles["refs"]}>
+          {target.baseRef && (
+            <BranchName as="span">{target.baseRef}</BranchName>
+          )}
+          <code className={styles["commit"]}>
+            {target.baseCommit.slice(0, 7)}
+          </code>
+          →
+          {target.headRef && (
+            <BranchName as="span">{target.headRef}</BranchName>
+          )}
+          <code className={styles["commit"]}>
+            {target.headCommit.slice(0, 7)}
+          </code>
+        </span>
+      </div>
+      <div className={styles["stats"]}>
+        <span>
           <FormattedMessage
             defaultMessage="{fileCount, plural, one {# file} other {# files}}"
             values={{ fileCount: diff.length }}
           />
-        </Text>
-        <Text size="sm" c="addition" fw={600}>
-          +{additions}
-        </Text>
-        <Text size="sm" c="removal" fw={600}>
-          −{deletions}
-        </Text>
-        <Text size="sm">
+        </span>
+        <span className={styles["additions"]}>+{additions}</span>
+        <span className={styles["deletions"]}>−{deletions}</span>
+        <span>
           <FormattedMessage
             defaultMessage="{noteCount, plural, one {# note} other {# notes}}"
             values={{ noteCount }}
           />
-        </Text>
-      </Group>
+        </span>
+      </div>
     </Stack>
   );
 }

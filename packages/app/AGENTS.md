@@ -1,14 +1,15 @@
 - Design-system components are presentation and basic-interaction primitives.
-  Use Mantine components; wrappers must stay free of application business logic.
-- Prefer Mantine components and their props. Use custom styles where its APIs do
-  not cover the requirement, using Mantine CSS variables where applicable; do
-  not override Mantine internals.
+  Use Primer React components; wrappers must stay free of application business
+  logic. Build what Primer lacks in the design system.
+- Prefer Primer components and their props, and Octicons for icons. Use custom
+  styles where its APIs do not cover the requirement, using Primer's design
+  tokens (`@primer/primitives` CSS variables) instead of raw values; do not
+  override Primer internals.
 - Colocate custom styles in CSS Modules named after their owning component.
   Components style their own elements; arrange children through public APIs or
   surrounding containers, without selectors reaching into child components.
-- Reserve global CSS for the Mantine stylesheet and font imports and document
-  defaults. Configure the theme in `createAppTheme` and
-  `appCssVariablesResolver`, after GitHub's Primer design system.
+- Reserve global CSS for the design token and font imports and document
+  defaults.
 - Extract recurring visual patterns into design-system components with their own
   CSS Modules.
 - Widgets have one identifiable responsibility, compose primitives and other

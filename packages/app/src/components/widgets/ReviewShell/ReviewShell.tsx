@@ -1,13 +1,8 @@
-import {
-  AppShell,
-  Burger,
-  Group,
-  ScrollArea,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { ThreeBarsIcon, XIcon } from "@primer/octicons-react";
+import { IconButton, SplitPageLayout } from "@primer/react";
+import { useState } from "react";
 import type { ReactNode } from "react";
+import { useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
@@ -31,67 +26,74 @@ export default function ReviewShell({
   activeStepId,
   children,
 }: Props) {
-  const theme = useMantineTheme();
-  const [isNavbarOpen, navbar] = useDisclosure(false);
-  // On wide screens the navbar is always shown and holds the brand, so the
-  // header, which only opens the navbar, is hidden.
-  const isNavbarPinned = useMediaQuery(
-    `(min-width: ${theme.breakpoints.md})`,
-    true,
-    { getInitialValueInEffect: false },
-  );
+  const intl = useIntl();
+  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const goToStart = () => navigateTo({ name: RouteName.Start });
   return (
-    <AppShell
-      header={{ height: 52, collapsed: isNavbarPinned }}
-      navbar={{
-        width: 300,
-        breakpoint: "md",
-        collapsed: { mobile: !isNavbarOpen },
-      }}
-      padding="md"
-    >
-      <AppShell.Header>
-        <Group h="100%" px="md" gap="sm" wrap="nowrap">
-          <Burger opened={isNavbarOpen} onClick={navbar.toggle} size="sm" />
-          <Group
-            gap={8}
-            wrap="nowrap"
-            className={styles["brand"]}
-            onClick={goToStart}
-          >
-            <Logo size={26} />
-            <Text fw={700}>Step Review</Text>
-          </Group>
-        </Group>
-      </AppShell.Header>
-      <AppShell.Navbar>
-        <AppShell.Section pt="sm" px="sm" pb="md" visibleFrom="md">
-          <Group
-            gap={8}
-            wrap="nowrap"
-            className={styles["brand"]}
-            onClick={goToStart}
-          >
-            <Logo size={22} />
-            <Text fw={700} size="sm">
-              Step Review
-            </Text>
-          </Group>
-        </AppShell.Section>
-        <AppShell.Section grow component={ScrollArea} px="sm" py="sm">
-          <StepNavigation
-            reviewView={reviewView}
-            activeStepId={activeStepId}
-            onNavigate={navbar.close}
-          />
-        </AppShell.Section>
-        <AppShell.Section p="xs" className={styles["footer"]}>
-          <ReviewMenu loadedReview={loadedReview} />
-        </AppShell.Section>
-      </AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
+    <>
+      {/* On narrow screens the navigation is above the content, so a header
+          shows or hides it. Wider screens always show it, with the brand. */}
+      <SplitPageLayout>
+        <SplitPageLayout.Header
+          padding="condensed"
+          hidden={{ regular: true, wide: true }}
+        >
+          <div className={styles["header"]}>
+            <IconButton
+              variant="invisible"
+              icon={isNavigationOpen ? XIcon : ThreeBarsIcon}
+              aria-label={intl.formatMessage({
+                defaultMessage: "Show or hide the steps",
+              })}
+              aria-expanded={isNavigationOpen}
+              onClick={() => setIsNavigationOpen((isOpen) => !isOpen)}
+            />
+            <Brand onClick={goToStart} />
+          </div>
+        </SplitPageLayout.Header>
+        <SplitPageLayout.Pane
+          position="start"
+          padding="none"
+          resizable
+          widthStorageKey="step-review:navigation-width"
+          width={{ min: "256px", default: "300px", max: "600px" }}
+          hidden={{ narrow: !isNavigationOpen }}
+          aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
+        >
+          <div className={styles["pane"]}>
+            <div className={styles["paneBrand"]}>
+              <Brand onClick={goToStart} />
+            </div>
+            <div className={styles["navigation"]}>
+              <StepNavigation
+                reviewView={reviewView}
+                activeStepId={activeStepId}
+                onNavigate={() => setIsNavigationOpen(false)}
+              />
+            </div>
+            <div className={styles["footer"]}>
+              <ReviewMenu loadedReview={loadedReview} />
+            </div>
+          </div>
+        </SplitPageLayout.Pane>
+        <SplitPageLayout.Content width="full">
+          {children}
+        </SplitPageLayout.Content>
+      </SplitPageLayout>
       <ReloadDropzone />
-    </AppShell>
+    </>
+  );
+}
+
+interface BrandProps {
+  onClick: () => void;
+}
+
+function Brand({ onClick }: BrandProps) {
+  return (
+    <button type="button" className={styles["brand"]} onClick={onClick}>
+      <Logo size={24} />
+      Step Review
+    </button>
   );
 }

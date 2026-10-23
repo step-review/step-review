@@ -1,6 +1,6 @@
-import { Alert, Button, Paper, Stack, Text } from "@mantine/core";
+import { Banner, Stack } from "@primer/react";
 import { useEffect, useRef, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
@@ -28,6 +28,7 @@ export default function FileCard({
   layout,
   areExplainersHidden,
 }: Props) {
+  const intl = useIntl();
   const reviewView = useCurrentReviewView();
   const { dispatch } = useReviewState();
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
@@ -69,9 +70,8 @@ export default function FileCard({
   };
   const showDiff = !stepFileView.summary || isSummaryDiffShown;
   return (
-    <Paper
+    <div
       ref={cardRef}
-      withBorder
       id={`file-${stepFileView.id}`}
       className={styles["card"]}
     >
@@ -84,46 +84,46 @@ export default function FileCard({
         onViewedChange={setViewed}
       />
       {!isCollapsed && (
-        <Stack gap="xs" className={styles["body"]}>
+        <Stack gap="condensed" className={styles["body"]}>
           {fileNotes.length > 0 && (
-            <Stack gap={6} px="xs" pt="xs" maw={760}>
+            <Stack gap="condensed" className={styles["fileNotes"]}>
               {fileNotes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}
             </Stack>
           )}
           {stepFileView.summary && (
-            <Alert
-              color="gray"
-              mx="xs"
-              title={
-                <FormattedMessage defaultMessage="Summary instead of the diff" />
+            <Banner
+              variant="info"
+              className={styles["summary"]}
+              title={intl.formatMessage({
+                defaultMessage: "Summary instead of the diff",
+              })}
+              description={
+                <ReviewMarkdown>{stepFileView.summary}</ReviewMarkdown>
               }
-            >
-              <ReviewMarkdown>{stepFileView.summary}</ReviewMarkdown>
-              <Button
-                size="compact-xs"
-                variant="subtle"
-                mt="xs"
-                onClick={() => setIsSummaryDiffShown((shown) => !shown)}
-              >
-                {isSummaryDiffShown ? (
-                  <FormattedMessage defaultMessage="Hide the diff" />
-                ) : (
-                  <FormattedMessage defaultMessage="Show the diff" />
-                )}
-              </Button>
-            </Alert>
+              primaryAction={
+                <Banner.PrimaryAction
+                  onClick={() => setIsSummaryDiffShown((shown) => !shown)}
+                >
+                  {isSummaryDiffShown ? (
+                    <FormattedMessage defaultMessage="Hide the diff" />
+                  ) : (
+                    <FormattedMessage defaultMessage="Show the diff" />
+                  )}
+                </Banner.PrimaryAction>
+              }
+            />
           )}
           {showDiff && stepFileView.fileDiff.binary && (
-            <Text size="sm" c="dimmed" px="xs" pb="xs">
+            <p className={styles["message"]}>
               <FormattedMessage defaultMessage="Binary file: no diff to show." />
-            </Text>
+            </p>
           )}
           {showDiff && !stepFileView.fileDiff.binary && hunks.length === 0 && (
-            <Text size="sm" c="dimmed" px="xs" pb="xs">
+            <p className={styles["message"]}>
               <FormattedMessage defaultMessage="No content changes." />
-            </Text>
+            </p>
           )}
           {showDiff && hunks.length > 0 && (
             <DiffView
@@ -135,6 +135,6 @@ export default function FileCard({
           )}
         </Stack>
       )}
-    </Paper>
+    </div>
   );
 }

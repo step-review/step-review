@@ -1,10 +1,11 @@
-import { Group, Stack, Table, Text, Title } from "@mantine/core";
+import { Heading, Stack } from "@primer/react";
 import { FormattedMessage } from "react-intl";
 import formatNoteLocation from "../../../business-logic/notes/formatNoteLocation.ts";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import NoteLink from "../NoteLink/NoteLink.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
+import styles from "./IssuesIndex.module.css";
 
 /** Every issue of the review, grouped by step. */
 export default function IssuesIndex() {
@@ -27,43 +28,39 @@ export default function IssuesIndex() {
     return null;
   }
   return (
-    <Stack gap="sm">
-      <Title order={3}>
+    <Stack gap="condensed">
+      <Heading as="h2" variant="medium">
         <FormattedMessage defaultMessage="Issues" />
-      </Title>
+      </Heading>
       {groups.map(({ step, issues }) => (
         <div key={step.id}>
-          <Text size="sm" fw={600} mb={4}>
+          <Heading as="h3" variant="small" className={styles["stepTitle"]}>
             {step.number}. <StepTitle step={step} />
-          </Text>
-          <Table verticalSpacing={4}>
-            <Table.Tbody>
+          </Heading>
+          <table className={styles["table"]}>
+            <tbody>
               {issues.map(({ note, location }) => (
-                <Table.Tr key={note.id}>
-                  <Table.Td w="1%">
+                <tr key={note.id}>
+                  <td className={styles["fitCell"]}>
                     {note.kind === "issue" && (
                       <SeverityBadge severity={note.severity} />
                     )}
-                  </Table.Td>
-                  <Table.Td w="1%">
+                  </td>
+                  <td className={styles["fitCell"]}>
                     <NoteLink noteId={note.id} />
-                  </Table.Td>
-                  <Table.Td>
-                    <Group gap="xs" wrap="nowrap">
-                      <Text size="sm" lineClamp={1}>
-                        {note.body.split("\n")[0]}
-                      </Text>
-                    </Group>
+                  </td>
+                  <td className={styles["summaryCell"]}>
+                    <div className={styles["summary"]}>
+                      {note.body.split("\n")[0]}
+                    </div>
                     {location && (
-                      <Text size="xs" c="dimmed" ff="monospace" truncate>
-                        {location}
-                      </Text>
+                      <div className={styles["location"]}>{location}</div>
                     )}
-                  </Table.Td>
-                </Table.Tr>
+                  </td>
+                </tr>
               ))}
-            </Table.Tbody>
-          </Table>
+            </tbody>
+          </table>
         </div>
       ))}
     </Stack>

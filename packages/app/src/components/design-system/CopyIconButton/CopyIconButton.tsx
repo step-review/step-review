@@ -1,37 +1,45 @@
-import { ActionIcon, CopyButton, Tooltip } from "@mantine/core";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
-import { FormattedMessage } from "react-intl";
+import { CheckIcon, CopyIcon } from "@primer/octicons-react";
+import { IconButton } from "@primer/react";
+import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import styles from "./CopyIconButton.module.css";
 
 interface Props {
   value: string;
   label: string;
-  size?: "sm" | "md";
+  size?: "small" | "medium";
 }
 
-export default function CopyIconButton({ value, label, size = "sm" }: Props) {
-  const iconSize = size === "md" ? 16 : 14;
+/** How long the button shows that the value was copied, in milliseconds. */
+const copiedDuration = 1500;
+
+export default function CopyIconButton({
+  value,
+  label,
+  size = "small",
+}: Props) {
+  const intl = useIntl();
+  const [isCopied, setIsCopied] = useState(false);
+  useEffect(() => {
+    if (!isCopied) {
+      return;
+    }
+    const timeout = setTimeout(() => setIsCopied(false), copiedDuration);
+    return () => clearTimeout(timeout);
+  }, [isCopied]);
   return (
-    <CopyButton value={value} timeout={1500}>
-      {({ copied, copy }) => (
-        <Tooltip
-          label={copied ? <FormattedMessage defaultMessage="Copied" /> : label}
-          withArrow
-        >
-          <ActionIcon
-            variant="subtle"
-            color={copied ? "success" : "gray"}
-            size={size}
-            onClick={copy}
-            aria-label={label}
-          >
-            {copied ? (
-              <IconCheck size={iconSize} />
-            ) : (
-              <IconCopy size={iconSize} />
-            )}
-          </ActionIcon>
-        </Tooltip>
-      )}
-    </CopyButton>
+    <IconButton
+      variant="invisible"
+      size={size}
+      icon={isCopied ? CheckIcon : CopyIcon}
+      className={styles["button"]}
+      data-copied={isCopied || undefined}
+      aria-label={
+        isCopied ? intl.formatMessage({ defaultMessage: "Copied" }) : label
+      }
+      onClick={() => {
+        void navigator.clipboard.writeText(value).then(() => setIsCopied(true));
+      }}
+    />
   );
 }

@@ -5,5 +5,9 @@
   flex: 0 1 auto;
   min-height: 0;
   width: 100%;
-  border-radius: var(--mantine-radius-default);
+  padding: 0;
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  cursor: pointer;
 }

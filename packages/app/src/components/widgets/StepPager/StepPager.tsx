@@ -1,5 +1,5 @@
-import { Button, Group } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@primer/octicons-react";
+import { Button, Stack } from "@primer/react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
@@ -15,10 +15,9 @@ export default function StepPager({ reviewView, stepIndex }: Props) {
   const previousStep = reviewView.steps[stepIndex - 1];
   const nextStep = reviewView.steps[stepIndex + 1];
   return (
-    <Group justify="space-between">
+    <Stack direction="horizontal" justify="space-between" wrap="wrap">
       <Button
-        variant="default"
-        leftSection={<IconArrowLeft size={16} />}
+        leadingVisual={ArrowLeftIcon}
         onClick={() =>
           navigateTo(
             previousStep
@@ -35,7 +34,8 @@ export default function StepPager({ reviewView, stepIndex }: Props) {
       </Button>
       {nextStep && (
         <Button
-          rightSection={<IconArrowRight size={16} />}
+          variant="primary"
+          trailingVisual={ArrowRightIcon}
           onClick={() =>
             navigateTo({ name: RouteName.Step, stepId: nextStep.id })
           }
@@ -43,6 +43,6 @@ export default function StepPager({ reviewView, stepIndex }: Props) {
           <StepTitle step={nextStep} />
         </Button>
       )}
-    </Group>
+    </Stack>
   );
 }

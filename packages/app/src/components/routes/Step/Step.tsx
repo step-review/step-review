@@ -1,5 +1,4 @@
-import { Divider, Stack } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { Stack } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
@@ -10,6 +9,7 @@ import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewPr
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
+import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import FileCard from "../../widgets/FileCard/FileCard.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
 import StepHeader from "../../widgets/StepHeader/StepHeader.tsx";
@@ -17,6 +17,7 @@ import StepPager from "../../widgets/StepPager/StepPager.tsx";
 import StepToolbar from "../../widgets/StepToolbar/StepToolbar.tsx";
 import NotFound from "../NotFound/NotFound.tsx";
 import Start from "../Start/Start.tsx";
+import styles from "./Step.module.css";
 
 interface Props {
   stepId: string;
@@ -72,7 +73,7 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
       reviewView={reviewView}
       activeStepId={stepView.id}
     >
-      <Stack gap="lg">
+      <Stack gap="normal">
         <StepHeader
           stepView={stepView}
           stepCount={reviewView.steps.length}
@@ -97,7 +98,7 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
             areExplainersHidden={preferences.explainers === "hidden"}
           />
         ))}
-        <Divider />
+        <hr className={styles["divider"]} />
         <StepPager reviewView={reviewView} stepIndex={stepIndex} />
       </Stack>
     </ReviewShell>

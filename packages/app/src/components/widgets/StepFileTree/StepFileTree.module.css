@@ -1,0 +1,8 @@
+.tree {
+  /* Mona Sans tucks the dot of `worker.ts` under the `r`. */
+  font-kerning: none;
+}
+
+.fileName[data-viewed] {
+  color: var(--fgColor-muted);
+}

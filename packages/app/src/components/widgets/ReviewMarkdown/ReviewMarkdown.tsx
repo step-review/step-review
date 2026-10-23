@@ -1,4 +1,4 @@
-import { Anchor } from "@mantine/core";
+import { Link } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import resolveReviewLink from "../../../business-logic/review-view/resolveReviewLink.ts";
@@ -23,7 +23,8 @@ export default function ReviewMarkdown({ children }: Props) {
         }
         const fragment = resolved.fragment ?? undefined;
         return (
-          <Anchor
+          <Link
+            inline
             href={`${routeHref(resolved.route)}${fragment ? `#${encodeURIComponent(fragment)}` : ""}`}
             onClick={(event) => {
               event.preventDefault();
@@ -31,7 +32,7 @@ export default function ReviewMarkdown({ children }: Props) {
             }}
           >
             {linkChildren}
-          </Anchor>
+          </Link>
         );
       }}
     >

@@ -1,0 +1,7 @@
+.fileName {
+  display: block;
+  min-width: 0;
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-normal);
+}

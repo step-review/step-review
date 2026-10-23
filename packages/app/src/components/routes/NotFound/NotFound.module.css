@@ -1,0 +1,5 @@
+.page {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: var(--base-size-32) var(--base-size-16);
+}

@@ -1,11 +1,12 @@
-import { Button, FileButton, Menu, Text } from "@mantine/core";
 import {
-  IconDots,
-  IconDownload,
-  IconEyeOff,
-  IconFileImport,
-  IconFolderOpen,
-} from "@tabler/icons-react";
+  DownloadIcon,
+  EyeClosedIcon,
+  FileDirectoryOpenFillIcon,
+  KebabHorizontalIcon,
+  UploadIcon,
+} from "@primer/octicons-react";
+import { ActionList, ActionMenu, Button } from "@primer/react";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import baseFileName from "../../../business-logic/files/baseFileName.ts";
 import downloadFile from "../../../business-logic/files/downloadFile.ts";
@@ -14,6 +15,9 @@ import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import parseReviewState from "../../../business-logic/review-state/parseReviewState.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
+import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput.tsx";
+import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
+import styles from "./ReviewMenu.module.css";
 
 interface Props {
   loadedReview: LoadedReview;
@@ -22,10 +26,9 @@ interface Props {
 export default function ReviewMenu({ loadedReview }: Props) {
   const intl = useIntl();
   const { reviewState, dispatch } = useReviewState();
-  const importState = async (file: File | null) => {
-    if (!file) {
-      return;
-    }
+  // Outside the menu, which unmounts its items when it closes.
+  const stateFileInputRef = useRef<HTMLInputElement>(null);
+  const importState = async (file: File) => {
     const importedReviewState = parseReviewState(await file.text());
     if (!importedReviewState) {
       window.alert(
@@ -38,69 +41,83 @@ export default function ReviewMenu({ loadedReview }: Props) {
     dispatch({ type: "replace", reviewState: importedReviewState });
   };
   return (
-    <Menu position="top-start" width="target">
-      <Menu.Target>
-        <Button
-          variant="subtle"
-          color="gray"
-          fullWidth
-          justify="space-between"
-          rightSection={<IconDots size={16} />}
-        >
-          <Text span size="xs" ff="monospace" truncate>
-            {loadedReview.fileName}
-          </Text>
-        </Button>
-      </Menu.Target>
-      <Menu.Dropdown>
-        <Menu.Item
-          leftSection={<IconFolderOpen size={14} />}
-          onClick={() => navigateTo({ name: RouteName.Start })}
-        >
-          <FormattedMessage defaultMessage="Open another review" />
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item
-          leftSection={<IconDownload size={14} />}
-          onClick={() =>
-            downloadFile(
-              `${baseFileName(loadedReview.fileName)}.state.json`,
-              JSON.stringify(reviewState, null, 2),
-              "application/json",
-            )
-          }
-        >
-          <FormattedMessage defaultMessage="Export viewed files" />
-        </Menu.Item>
-        <FileButton
-          onChange={(file) => void importState(file)}
-          accept="application/json"
-        >
-          {(props) => (
-            <Menu.Item leftSection={<IconFileImport size={14} />} {...props}>
+    <>
+      <HiddenFileInput
+        ref={stateFileInputRef}
+        accept="application/json"
+        onChange={(file) => void importState(file)}
+      />
+      <ActionMenu>
+        <ActionMenu.Anchor>
+          <Button
+            variant="invisible"
+            block
+            alignContent="start"
+            trailingVisual={KebabHorizontalIcon}
+          >
+            <span className={styles["fileName"]}>
+              <TruncatedText tooltip={loadedReview.fileName}>
+                {loadedReview.fileName}
+              </TruncatedText>
+            </span>
+          </Button>
+        </ActionMenu.Anchor>
+        <ActionMenu.Overlay side="outside-top" width="medium">
+          <ActionList>
+            <ActionList.Item
+              onSelect={() => navigateTo({ name: RouteName.Start })}
+            >
+              <ActionList.LeadingVisual>
+                <FileDirectoryOpenFillIcon />
+              </ActionList.LeadingVisual>
+              <FormattedMessage defaultMessage="Open another review" />
+            </ActionList.Item>
+            <ActionList.Divider />
+            <ActionList.Item
+              onSelect={() =>
+                downloadFile(
+                  `${baseFileName(loadedReview.fileName)}.state.json`,
+                  JSON.stringify(reviewState, null, 2),
+                  "application/json",
+                )
+              }
+            >
+              <ActionList.LeadingVisual>
+                <DownloadIcon />
+              </ActionList.LeadingVisual>
+              <FormattedMessage defaultMessage="Export viewed files" />
+            </ActionList.Item>
+            <ActionList.Item
+              onSelect={() => stateFileInputRef.current?.click()}
+            >
+              <ActionList.LeadingVisual>
+                <UploadIcon />
+              </ActionList.LeadingVisual>
               <FormattedMessage defaultMessage="Import viewed files" />
-            </Menu.Item>
-          )}
-        </FileButton>
-        <Menu.Divider />
-        <Menu.Item
-          color="danger"
-          leftSection={<IconEyeOff size={14} />}
-          onClick={() => {
-            if (
-              window.confirm(
-                intl.formatMessage({
-                  defaultMessage: "Mark every file as not viewed?",
-                }),
-              )
-            ) {
-              dispatch({ type: "resetViewed" });
-            }
-          }}
-        >
-          <FormattedMessage defaultMessage="Reset viewed files" />
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+            </ActionList.Item>
+            <ActionList.Divider />
+            <ActionList.Item
+              variant="danger"
+              onSelect={() => {
+                if (
+                  window.confirm(
+                    intl.formatMessage({
+                      defaultMessage: "Mark every file as not viewed?",
+                    }),
+                  )
+                ) {
+                  dispatch({ type: "resetViewed" });
+                }
+              }}
+            >
+              <ActionList.LeadingVisual>
+                <EyeClosedIcon />
+              </ActionList.LeadingVisual>
+              <FormattedMessage defaultMessage="Reset viewed files" />
+            </ActionList.Item>
+          </ActionList>
+        </ActionMenu.Overlay>
+      </ActionMenu>
+    </>
   );
 }

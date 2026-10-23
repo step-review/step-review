@@ -1,7 +1,7 @@
-import { Tooltip } from "@mantine/core";
+import { EyeIcon, SkipIcon } from "@primer/octicons-react";
 import type { Attention } from "@step-review/review-format";
-import { IconEye, IconPlayerTrackNext } from "@tabler/icons-react";
 import { useIntl } from "react-intl";
+import styles from "./AttentionIcon.module.css";
 
 interface Props {
   attention: Attention;
@@ -17,19 +17,11 @@ export default function AttentionIcon({ attention }: Props) {
   const label = isHigh
     ? intl.formatMessage({ defaultMessage: "Read carefully" })
     : intl.formatMessage({ defaultMessage: "Skim" });
-  const Icon = isHigh ? IconEye : IconPlayerTrackNext;
+  const Icon = isHigh ? EyeIcon : SkipIcon;
   return (
-    <Tooltip label={label} withArrow>
-      <Icon
-        size={14}
-        role="img"
-        aria-label={label}
-        color={
-          isHigh
-            ? "var(--mantine-color-attention-filled)"
-            : "var(--mantine-color-dimmed)"
-        }
-      />
-    </Tooltip>
+    // Primer's tooltips are for interactive elements, so this uses `title`.
+    <span className={styles["icon"]} data-attention={attention} title={label}>
+      <Icon size={14} aria-label={label} />
+    </span>
   );
 }

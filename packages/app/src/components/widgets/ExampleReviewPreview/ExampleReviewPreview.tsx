@@ -1,4 +1,3 @@
-import { UnstyledButton } from "@mantine/core";
 import { useIntl } from "react-intl";
 import useOpenExampleReview from "../../../business-logic/review/useOpenExampleReview.ts";
 import ScreenshotFrame from "../../design-system/ScreenshotFrame/ScreenshotFrame.tsx";
@@ -9,7 +8,8 @@ export default function ExampleReviewPreview() {
   const intl = useIntl();
   const openExampleReview = useOpenExampleReview();
   return (
-    <UnstyledButton
+    <button
+      type="button"
       className={styles["button"]}
       onClick={() => {
         void openExampleReview();
@@ -23,6 +23,6 @@ export default function ExampleReviewPreview() {
             "Screenshot of a review step: the diff, with notes from the coding agent.",
         })}
       />
-    </UnstyledButton>
+    </button>
   );
 }

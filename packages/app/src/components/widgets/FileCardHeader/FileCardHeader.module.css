@@ -1,35 +1,40 @@
 .header {
   position: sticky;
-  top: var(--app-shell-header-offset, 0);
+  top: 0;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--base-size-8);
   min-height: 41px;
-  padding: 4px 8px;
-  background: light-dark(
-    var(--mantine-color-gray-0),
-    var(--mantine-color-dark-6)
-  );
-  border-bottom: 1px solid var(--mantine-color-default-border);
-  border-radius: var(--mantine-radius-default) var(--mantine-radius-default) 0 0;
+  padding: var(--base-size-4) var(--base-size-8);
+  background: var(--bgColor-muted);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium) var(--borderRadius-medium) 0 0;
 
   /* Alone in the card: the card's border closes it. */
   &[data-collapsed] {
     border-bottom: 0;
-    border-radius: var(--mantine-radius-default);
+    border-radius: var(--borderRadius-medium);
   }
 }
 
 .path {
   cursor: pointer;
-  min-width: 0;
+  /* Keeps the path readable on narrow screens, wrapping what follows it. */
+  flex: 0 1 auto;
+  min-width: min(160px, 50%);
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
 }
 
-.chevron {
-  transition: transform 150ms;
+.trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-12);
+  margin-left: auto;
+}
 
-  &[data-collapsed] {
-    transform: rotate(-90deg);
-  }
+.viewedIcon {
+  color: var(--fgColor-accent);
 }
