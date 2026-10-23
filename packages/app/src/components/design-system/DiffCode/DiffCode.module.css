@@ -3,25 +3,26 @@
   overflow-wrap: anywhere;
 }
 
+/* The `+` or `-` of the line, in the code cell's left padding. */
+.marker {
+  position: absolute;
+  left: 8px;
+  user-select: none;
+}
+
 .segment {
   color: var(--light-color, inherit);
-  border-radius: var(--mantine-radius-default);
+  border-radius: var(--mantine-radius-xs);
 
   @mixin dark {
     color: var(--dark-color, inherit);
   }
 
   &[data-changed="addition"] {
-    background: light-dark(
-      alpha(var(--mantine-color-addition-8), 0.3),
-      alpha(var(--mantine-color-addition-8), 0.45)
-    );
+    background: light-dark(#aceebb, #2ea04366);
   }
 
   &[data-changed="deletion"] {
-    background: light-dark(
-      alpha(var(--mantine-color-removal-6), 0.3),
-      alpha(var(--mantine-color-removal-6), 0.45)
-    );
+    background: light-dark(#ffcecb, #f8514966);
   }
 }

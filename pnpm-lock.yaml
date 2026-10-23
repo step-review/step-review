@@ -184,6 +184,9 @@ importers:
 
   packages/app:
     dependencies:
+      '@fontsource-variable/mona-sans':
+        specifier: 5.3.0
+        version: 5.3.0
       '@mantine/core':
         specifier: 9.7.2
         version: 9.7.2(@mantine/hooks@9.7.2(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -552,6 +555,9 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@fontsource-variable/mona-sans@5.3.0':
+    resolution: {integrity: sha512-PkxRB3KI4z9Gjpk7vVqgO3GMSyQuOIIj4TaRDbvbcDj8SzWwI38jvLTQxJM/cTRorhcT7h8qjcllR+qjRtM/Fg==}
 
   '@formatjs/cli-native-darwin-arm64@1.1.28':
     resolution: {integrity: sha512-kFkM6peuJgZrzcuWZiCbnh3o9SHYWBYq3OW8vwL7Cd3IRnzaH1InnzverZpqhLfRKDs+JGa64ll/IuieW/u+4A==}
@@ -2873,6 +2879,8 @@ snapshots:
       tabbable: 6.5.0
 
   '@floating-ui/utils@0.2.12': {}
+
+  '@fontsource-variable/mona-sans@5.3.0': {}
 
   '@formatjs/cli-native-darwin-arm64@1.1.28':
     optional: true

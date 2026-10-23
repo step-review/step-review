@@ -62,8 +62,11 @@
   "FileStatusBadge.tsx_tOxzip": {
     "defaultMessage": "Modified"
   },
-  "GapRow.tsx_p+3Agd": {
-    "defaultMessage": "Show {hiddenLineCount} hidden lines"
+  "GapRow.tsx_0oLj/t": {
+    "defaultMessage": "Expand"
+  },
+  "GapRow.tsx_phtN15": {
+    "defaultMessage": "{hiddenLineCount, plural, one {# hidden line} other {# hidden lines}}"
   },
   "IssuesIndex.tsx_Wj5TbN": {
     "defaultMessage": "Issues"

@@ -151,18 +151,42 @@
       "value": "Modified"
     }
   ],
-  "GapRow.tsx_p+3Agd": [
+  "GapRow.tsx_0oLj/t": [
     {
       "type": 0,
-      "value": "Show "
-    },
+      "value": "Expand"
+    }
+  ],
+  "GapRow.tsx_phtN15": [
     {
-      "type": 1,
-      "value": "hiddenLineCount"
-    },
-    {
-      "type": 0,
-      "value": " hidden lines"
+      "type": 6,
+      "value": "hiddenLineCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " hidden line"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " hidden lines"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "IssuesIndex.tsx_Wj5TbN": [

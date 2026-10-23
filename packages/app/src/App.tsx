@@ -1,5 +1,6 @@
 import { MantineProvider } from "@mantine/core";
 import { IntlProvider } from "react-intl";
+import appCssVariablesResolver from "./appCssVariablesResolver.ts";
 import LoadedReviewStateProvider from "./business-logic/review-state/LoadedReviewStateProvider.tsx";
 import LoadedReviewProvider from "./business-logic/review/LoadedReviewProvider.tsx";
 import Root from "./components/routes/Root/Root.tsx";
@@ -11,7 +12,11 @@ const theme = createAppTheme();
 export default function App() {
   return (
     <IntlProvider locale="en" defaultLocale="en" messages={getMessages()}>
-      <MantineProvider theme={theme} defaultColorScheme="auto">
+      <MantineProvider
+        theme={theme}
+        cssVariablesResolver={appCssVariablesResolver}
+        defaultColorScheme="auto"
+      >
         <LoadedReviewProvider>
           <LoadedReviewStateProvider>
             <Root />

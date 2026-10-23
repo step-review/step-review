@@ -1,0 +1,16 @@
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  /* Mona Sans tucks the dot of `worker.ts` under the `r`. */
+  &[data-unkerned] {
+    font-kerning: none;
+  }
+
+  /* A right-to-left box puts the ellipsis at the start. */
+  &[data-truncate-from="start"] {
+    direction: rtl;
+    text-align: left;
+  }
+}

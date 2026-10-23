@@ -6,8 +6,9 @@
 - Colocate custom styles in CSS Modules named after their owning component.
   Components style their own elements; arrange children through public APIs or
   surrounding containers, without selectors reaching into child components.
-- Reserve global CSS for the Mantine stylesheet imports and document defaults.
-  Configure the theme in `createAppTheme`.
+- Reserve global CSS for the Mantine stylesheet and font imports and document
+  defaults. Configure the theme in `createAppTheme` and
+  `appCssVariablesResolver`, after GitHub's Primer design system.
 - Extract recurring visual patterns into design-system components with their own
   CSS Modules.
 - Widgets have one identifiable responsibility, compose primitives and other

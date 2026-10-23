@@ -1,0 +1,29 @@
+.additions {
+  color: light-dark(#1a7f37, #3fb950);
+}
+
+.deletions {
+  color: light-dark(#d1242f, #f85149);
+}
+
+.blocks {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.block {
+  width: 8px;
+  height: 8px;
+
+  &[data-block="added"] {
+    background: light-dark(#1f883d, #238636);
+  }
+
+  &[data-block="deleted"] {
+    background: light-dark(#cf222e, #da3633);
+  }
+
+  &[data-block="neutral"] {
+    background: light-dark(#818b981f, #656c7633);
+  }
+}

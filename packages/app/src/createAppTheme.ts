@@ -5,53 +5,59 @@ import {
   type MantineColorsTuple,
 } from "@mantine/core";
 
-// Built around the logo's blues: shade 6 in light mode, shade 4 in dark mode.
+// The colors, type and shapes follow GitHub's Primer design system, so the
+// review reads like a GitHub pull request.
+
+// Primer's blue: shade 5 is the light-mode accent, shade 4 the dark-mode one.
 const brand: MantineColorsTuple = [
-  "#edf3ff",
-  "#dbe6ff",
-  "#b5ccff",
-  "#8cb2ff",
-  "#74a6ff",
-  "#4c88f5",
-  "#2f6fe4",
-  "#2259c4",
-  "#1c48a0",
-  "#163a80",
+  "#ddf4ff",
+  "#b6e3ff",
+  "#80ccff",
+  "#54aeff",
+  "#218bff",
+  "#0969da",
+  "#0550ae",
+  "#033d8b",
+  "#0a3069",
+  "#002155",
 ];
 
-// Mantine's neutral ramps, tinted toward the logo's navy.
+// Primer's dark neutrals, in Mantine's slots: text (0), dimmed text (2),
+// borders (4), hovered surfaces (5), raised surfaces (6), the page (7).
 const dark: MantineColorsTuple = [
-  "#c3c6cf",
-  "#afb5c1",
-  "#767d8f",
-  "#5e6574",
-  "#373e4d",
-  "#303746",
-  "#252a37",
-  "#1c212c",
-  "#181c26",
-  "#0f1219",
+  "#f0f6fc",
+  "#d1d7e0",
+  "#9198a1",
+  "#656c76",
+  "#3d444d",
+  "#262c36",
+  "#151b23",
+  "#0d1117",
+  "#010409",
+  "#010409",
 ];
+
+// Primer's light neutrals, in Mantine's slots: muted surfaces (0), borders
+// (3, 4), dimmed text (6).
 const gray: MantineColorsTuple = [
-  "#f8f9fa",
-  "#f0f2f6",
-  "#e8ebf0",
-  "#dce0e8",
-  "#ccd1dc",
-  "#abb2bf",
-  "#838a99",
-  "#464d5a",
-  "#313743",
-  "#1e232c",
+  "#f6f8fa",
+  "#eff2f5",
+  "#e6eaef",
+  "#d1d9e0",
+  "#d1d9e0",
+  "#818b98",
+  "#59636e",
+  "#454c54",
+  "#393f46",
+  "#25292e",
 ];
 
 export default function createAppTheme() {
   return createTheme({
     primaryColor: "brand",
-    primaryShade: { light: 6, dark: 4 },
+    primaryShade: { light: 5, dark: 4 },
     autoContrast: true,
-    // The logo's navy, also the contrast color on the dark-mode primary.
-    black: "#0f1d3a",
+    black: "#1f2328",
     colors: {
       brand,
       dark,
@@ -62,26 +68,45 @@ export default function createAppTheme() {
       addition: DEFAULT_THEME.colors.green,
       removal: DEFAULT_THEME.colors.red,
       danger: DEFAULT_THEME.colors.red,
-      success: DEFAULT_THEME.colors.teal,
+      success: DEFAULT_THEME.colors.green,
       attention: DEFAULT_THEME.colors.orange,
       question: DEFAULT_THEME.colors.violet,
       revision: DEFAULT_THEME.colors.cyan,
       warning: DEFAULT_THEME.colors.yellow,
     },
+    fontFamily:
+      '"Mona Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
     fontFamilyMonospace:
-      'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace',
+      'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+    fontSizes: {
+      xs: "0.75rem",
+      sm: "0.8125rem",
+      md: "0.875rem",
+      lg: "1rem",
+      xl: "1.25rem",
+    },
+    lineHeights: { md: "1.5" },
     headings: {
+      fontFamily:
+        '"Mona Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif',
       fontWeight: "600",
       sizes: {
-        h1: { fontSize: "1.875rem", lineHeight: "1.25" },
-        h2: { fontSize: "1.5rem", lineHeight: "1.3" },
-        h3: { fontSize: "1.25rem", lineHeight: "1.35" },
-        h4: { fontSize: "1.0625rem", lineHeight: "1.4" },
+        h1: { fontSize: "2rem", lineHeight: "1.25" },
+        h2: { fontSize: "1.5rem", lineHeight: "1.25" },
+        h3: { fontSize: "1.25rem", lineHeight: "1.25" },
+        h4: { fontSize: "1rem", lineHeight: "1.5" },
       },
+    },
+    radius: {
+      xs: "0.1875rem",
+      sm: "0.375rem",
+      md: "0.375rem",
+      lg: "0.75rem",
+      xl: "0.75rem",
     },
     defaultRadius: "sm",
     components: {
-      Badge: Badge.extend({ defaultProps: { radius: "sm" } }),
+      Badge: Badge.extend({ defaultProps: { radius: "xl" } }),
     },
   });
 }

@@ -57,7 +57,7 @@ function FileTreeNodes({
         <div key={node.path}>
           <Group gap={6} wrap="nowrap" pl={paddingLeft} py={2}>
             <IconFolder size={14} color="var(--mantine-color-dimmed)" />
-            <TruncatedText size="xs" c="dimmed" tooltip={node.path}>
+            <TruncatedText size="xs" c="dimmed" tooltip={node.path} isUnkerned>
               {node.label}
             </TruncatedText>
           </Group>
@@ -93,6 +93,7 @@ function FileTreeNodes({
                 : undefined
             }
             tooltip={stepFileView.path}
+            isUnkerned
           >
             {node.label}
           </TruncatedText>

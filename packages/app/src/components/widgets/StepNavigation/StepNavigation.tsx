@@ -1,5 +1,4 @@
 import { Group, NavLink, Progress, Stack, Text } from "@mantine/core";
-import { IconHome } from "@tabler/icons-react";
 import type { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -55,7 +54,6 @@ export default function StepNavigation({
             <ViewedProgress progress={overall} />
           </Stack>
         }
-        leftSection={<IconHome size={16} />}
         active={activeStepId === null}
         onClick={go(null)}
         mb="md"

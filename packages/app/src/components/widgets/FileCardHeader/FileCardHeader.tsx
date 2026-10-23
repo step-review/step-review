@@ -1,16 +1,17 @@
+import { ActionIcon, Badge, Box, Button, Group, Tooltip } from "@mantine/core";
 import {
-  ActionIcon,
-  Badge,
-  Checkbox,
-  Group,
-  Text,
-  Tooltip,
-} from "@mantine/core";
-import { IconBrandGithub, IconChevronDown } from "@tabler/icons-react";
+  IconBrandGithub,
+  IconChevronDown,
+  IconSquare,
+  IconSquareCheckFilled,
+} from "@tabler/icons-react";
 import { FormattedMessage, useIntl } from "react-intl";
+import diffstatBlocks from "../../../business-logic/diff-layout/diffstatBlocks.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import FileStatusBadge from "../../design-system/badges/FileStatusBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
+import Diffstat from "../../design-system/Diffstat/Diffstat.tsx";
+import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import styles from "./FileCardHeader.module.css";
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
   onViewedChange: (isViewed: boolean) => void;
 }
 
+/** The header of a file's diff, laid out like GitHub's. */
 export default function FileCardHeader({
   stepFileView,
   githubUrl,
@@ -33,8 +35,11 @@ export default function FileCardHeader({
   const intl = useIntl();
   const { fileDiff } = stepFileView;
   const noteCount = stepFileView.notes.length;
+  const displayedPath = fileDiff.oldPath
+    ? `${fileDiff.oldPath} → ${stepFileView.path}`
+    : stepFileView.path;
   return (
-    <div className={styles["header"]} data-viewed={isViewed || undefined}>
+    <div className={styles["header"]} data-collapsed={isCollapsed || undefined}>
       <ActionIcon
         variant="subtle"
         color="gray"
@@ -51,20 +56,20 @@ export default function FileCardHeader({
           data-collapsed={isCollapsed || undefined}
         />
       </ActionIcon>
-      <FileStatusBadge status={fileDiff.status} />
-      <Text
-        className={styles["path"]}
-        ff="monospace"
-        size="sm"
-        onClick={onToggleCollapsed}
-      >
-        {fileDiff.oldPath && (
-          <Text span c="dimmed" ff="monospace" size="sm">
-            {fileDiff.oldPath} →{" "}
-          </Text>
-        )}
-        {stepFileView.path}
-      </Text>
+      {/* Modified is the usual case, so only the others are pointed out. */}
+      {fileDiff.status !== "modified" && (
+        <FileStatusBadge status={fileDiff.status} />
+      )}
+      <Box className={styles["path"]} onClick={onToggleCollapsed}>
+        <TruncatedText
+          tooltip={displayedPath}
+          truncateFrom="start"
+          size="xs"
+          ff="monospace"
+        >
+          {displayedPath}
+        </TruncatedText>
+      </Box>
       <CopyIconButton
         value={stepFileView.path}
         label={intl.formatMessage({ defaultMessage: "Copy the path" })}
@@ -90,13 +95,15 @@ export default function FileCardHeader({
           </ActionIcon>
         </Tooltip>
       )}
-      <Group gap={8} ml="auto" wrap="nowrap">
-        <Text size="xs" ff="monospace" c="addition" fw={600}>
-          +{stepFileView.additions}
-        </Text>
-        <Text size="xs" ff="monospace" c="removal" fw={600}>
-          −{stepFileView.deletions}
-        </Text>
+      <Group gap="sm" ml="auto" wrap="nowrap">
+        <Diffstat
+          additions={stepFileView.additions}
+          deletions={stepFileView.deletions}
+          blocks={diffstatBlocks(
+            stepFileView.additions,
+            stepFileView.deletions,
+          )}
+        />
         {noteCount > 0 && (
           <Badge miw="max-content" size="sm" variant="light" color="gray">
             <FormattedMessage
@@ -105,12 +112,24 @@ export default function FileCardHeader({
             />
           </Badge>
         )}
-        <Checkbox
+        <Button
+          variant="default"
           size="xs"
-          label={<FormattedMessage defaultMessage="Viewed" />}
-          checked={isViewed}
-          onChange={(event) => onViewedChange(event.currentTarget.checked)}
-        />
+          aria-pressed={isViewed}
+          onClick={() => onViewedChange(!isViewed)}
+          leftSection={
+            isViewed ? (
+              <IconSquareCheckFilled
+                size={16}
+                color="var(--mantine-primary-color-filled)"
+              />
+            ) : (
+              <IconSquare size={16} />
+            )
+          }
+        >
+          <FormattedMessage defaultMessage="Viewed" />
+        </Button>
       </Group>
     </div>
   );

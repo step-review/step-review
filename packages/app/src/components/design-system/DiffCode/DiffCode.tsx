@@ -7,10 +7,18 @@ interface Props {
   tone: "context" | "addition" | "deletion";
 }
 
-/** The code of a diff line, with syntax colors and changed words. */
+const markers = { context: "", addition: "+", deletion: "-" };
+
+/**
+ * The code of a diff line, with syntax colors and changed words, preceded by
+ * its `+` or `-` marker.
+ */
 export default function DiffCode({ segments, tone }: Props) {
   return (
     <span className={styles["code"]}>
+      {tone !== "context" && (
+        <span className={styles["marker"]}>{markers[tone]}</span>
+      )}
       {segments.map((segment, index) => (
         <span
           key={index}
