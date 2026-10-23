@@ -3,6 +3,11 @@
   font-kerning: none;
 }
 
-.fileName[data-viewed] {
-  color: var(--fgColor-muted);
+.fileName {
+  display: block;
+  min-width: 0;
+
+  &[data-viewed] {
+    color: var(--fgColor-muted);
+  }
 }

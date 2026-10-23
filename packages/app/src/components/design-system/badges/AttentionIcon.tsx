@@ -1,6 +1,8 @@
 import { EyeIcon, SkipIcon } from "@primer/octicons-react";
 import type { Attention } from "@step-review/review-format";
+import { useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import AnchoredTooltip from "../AnchoredTooltip/AnchoredTooltip.tsx";
 import styles from "./AttentionIcon.module.css";
 
 interface Props {
@@ -10,6 +12,8 @@ interface Props {
 /** Compact form of `AttentionBadge`: an icon, with the label as tooltip. */
 export default function AttentionIcon({ attention }: Props) {
   const intl = useIntl();
+  const iconRef = useRef<HTMLSpanElement>(null);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   if (attention === "normal") {
     return null;
   }
@@ -19,9 +23,21 @@ export default function AttentionIcon({ attention }: Props) {
     : intl.formatMessage({ defaultMessage: "Skim" });
   const Icon = isHigh ? EyeIcon : SkipIcon;
   return (
-    // Primer's tooltips are for interactive elements, so this uses `title`.
-    <span className={styles["icon"]} data-attention={attention} title={label}>
-      <Icon size={14} aria-label={label} />
-    </span>
+    <>
+      <span
+        ref={iconRef}
+        className={styles["icon"]}
+        data-attention={attention}
+        onMouseEnter={() => setIsTooltipOpen(true)}
+        onMouseLeave={() => setIsTooltipOpen(false)}
+      >
+        <Icon size={14} aria-label={label} />
+      </span>
+      <AnchoredTooltip
+        anchorRef={iconRef}
+        isOpen={isTooltipOpen}
+        text={label}
+      />
+    </>
   );
 }

@@ -1,6 +1,8 @@
 .icon {
   display: inline-flex;
   color: var(--fgColor-muted);
+  /* Primer's list items ignore the pointer on visuals; the tooltip needs it. */
+  pointer-events: auto;
 
   &[data-attention="high"] {
     color: var(--fgColor-attention);

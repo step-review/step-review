@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
+import AnchoredTooltip from "../AnchoredTooltip/AnchoredTooltip.tsx";
 import styles from "./TruncatedText.module.css";
 
 interface Props {
-  /** Shown on hover, but only while the text is cut off. */
+  /** Shown right away on hover, but only while the text is cut off. */
   tooltip: string;
   /** Which end is cut off; `start` keeps the end of a path visible. */
   truncateFrom?: "start" | "end";
@@ -19,21 +20,29 @@ export default function TruncatedText({
   truncateFrom = "end",
   children,
 }: Props) {
-  const [isTruncated, setIsTruncated] = useState(false);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   return (
-    // Primer's tooltips are for interactive elements, so this uses `title`.
-    <span
-      className={styles["text"]}
-      data-truncate-from={truncateFrom}
-      title={isTruncated ? tooltip : undefined}
-      onMouseEnter={(event) =>
-        setIsTruncated(
-          event.currentTarget.scrollWidth > event.currentTarget.clientWidth,
-        )
-      }
-    >
-      {/* Keeps the text left to right when the start is cut off. */}
-      <span dir="ltr">{children}</span>
-    </span>
+    <>
+      <span
+        ref={textRef}
+        className={styles["text"]}
+        data-truncate-from={truncateFrom}
+        onMouseEnter={(event) =>
+          setIsTooltipOpen(
+            event.currentTarget.scrollWidth > event.currentTarget.clientWidth,
+          )
+        }
+        onMouseLeave={() => setIsTooltipOpen(false)}
+      >
+        {/* Keeps the text left to right when the start is cut off. */}
+        <span dir="ltr">{children}</span>
+      </span>
+      <AnchoredTooltip
+        anchorRef={textRef}
+        isOpen={isTooltipOpen}
+        text={tooltip}
+      />
+    </>
   );
 }

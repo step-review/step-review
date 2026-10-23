@@ -7,6 +7,7 @@ import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
+import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import FileIcon from "../FileIcon/FileIcon.tsx";
 import styles from "./StepFileTree.module.css";
 
@@ -24,7 +25,9 @@ export default function StepFileTree({ stepView, onFileSelect }: Props) {
   );
   return (
     <div className={styles["tree"]}>
+      {/* The labels truncate themselves, to show the full path on hover. */}
       <TreeView
+        truncate={false}
         aria-label={intl.formatMessage({ defaultMessage: "Files of the step" })}
       >
         <FileTreeNodes nodes={fileTree} onFileSelect={onFileSelect} />
@@ -52,7 +55,7 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
           <TreeView.LeadingVisual>
             <TreeView.DirectoryIcon />
           </TreeView.LeadingVisual>
-          {node.label}
+          <TruncatedText tooltip={node.path}>{node.label}</TruncatedText>
           <TreeView.SubTree>
             <FileTreeNodes nodes={node.children} onFileSelect={onFileSelect} />
           </TreeView.SubTree>
@@ -78,7 +81,9 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
             viewedFingerprints.has(stepFileView.fingerprint) || undefined
           }
         >
-          {node.label}
+          <TruncatedText tooltip={stepFileView.path}>
+            {node.label}
+          </TruncatedText>
         </span>
       </TreeView.Item>
     );

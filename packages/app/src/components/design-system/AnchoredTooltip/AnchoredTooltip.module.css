@@ -1,0 +1,17 @@
+/* The look of Primer's tooltips. */
+.tooltip {
+  position: absolute;
+  inset: auto;
+  max-width: 400px;
+  width: max-content;
+  margin: 0;
+  padding: var(--overlay-paddingBlock-condensed)
+    var(--overlay-padding-condensed);
+  overflow-wrap: anywhere;
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: var(--tooltip-bgColor);
+  color: var(--tooltip-fgColor);
+  font: var(--text-body-shorthand-small);
+  pointer-events: none;
+}
