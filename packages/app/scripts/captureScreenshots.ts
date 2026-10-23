@@ -29,19 +29,10 @@ try {
       window.dispatchEvent(new PopStateEvent("popstate"));
     }, stepPath);
     await page.waitForLoadState("networkidle");
-    // Leaves out the app header: the start page shows the review itself.
-    const headerHeight = (await page.locator("header").boundingBox())!.height;
-    const viewport = page.viewportSize()!;
     await page.screenshot({
       path: `${appDirectory}public/screenshots/review-${colorScheme}.jpg`,
       type: "jpeg",
       quality: 85,
-      clip: {
-        x: 0,
-        y: headerHeight,
-        width: viewport.width,
-        height: viewport.height - headerHeight,
-      },
     });
     await page.close();
   }

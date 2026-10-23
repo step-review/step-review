@@ -1,4 +1,4 @@
-import { ActionIcon, FileButton, Menu } from "@mantine/core";
+import { Button, FileButton, Menu, Text } from "@mantine/core";
 import {
   IconDots,
   IconDownload,
@@ -38,14 +38,19 @@ export default function ReviewMenu({ loadedReview }: Props) {
     dispatch({ type: "replace", reviewState: importedReviewState });
   };
   return (
-    <Menu position="bottom-end" width={260}>
+    <Menu position="top-start" width="target">
       <Menu.Target>
-        <ActionIcon
-          variant="default"
-          aria-label={intl.formatMessage({ defaultMessage: "More actions" })}
+        <Button
+          variant="subtle"
+          color="gray"
+          fullWidth
+          justify="space-between"
+          rightSection={<IconDots size={16} />}
         >
-          <IconDots size={16} />
-        </ActionIcon>
+          <Text span size="xs" ff="monospace" truncate>
+            {loadedReview.fileName}
+          </Text>
+        </Button>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item

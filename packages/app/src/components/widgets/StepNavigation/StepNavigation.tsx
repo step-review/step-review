@@ -1,5 +1,5 @@
-import { Group, NavLink, Progress, Stack, Text } from "@mantine/core";
-import { IconCircleCheck, IconFile, IconHome } from "@tabler/icons-react";
+import { Box, NavLink, Progress, Stack, Text } from "@mantine/core";
+import { IconHome } from "@tabler/icons-react";
 import type { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -38,8 +38,8 @@ export default function StepNavigation({
       onNavigate();
     };
   return (
-    <Stack gap="xs">
-      <div>
+    <Stack gap={2}>
+      <Box mb={6}>
         <Progress
           value={
             overall.totalCount
@@ -57,9 +57,11 @@ export default function StepNavigation({
             values={overall}
           />
         </Text>
-      </div>
+      </Box>
       <NavLink
         component="a"
+        px="xs"
+        py={6}
         href={routeHref({ name: RouteName.Overview })}
         label={<FormattedMessage defaultMessage="Overview" />}
         leftSection={<IconHome size={16} />}
@@ -72,24 +74,25 @@ export default function StepNavigation({
           <NavLink
             key={step.id}
             component="a"
+            px="xs"
+            py={6}
             href={routeHref({ name: RouteName.Step, stepId: step.id })}
             active={activeStepId === step.id}
             opened={activeStepId === step.id}
             // The active step is always open: no chevron to toggle it.
             rightSection={null}
             onClick={go(step.id)}
-            leftSection={
-              <Text size="xs" c="dimmed" w={18} ta="right">
-                {step.number}
-              </Text>
+            childrenOffset="xs"
+            label={
+              <>
+                {step.number}. <StepTitle step={step} />
+              </>
             }
-            label={<StepTitle step={step} />}
             description={
-              <Stack gap={4} mt={4}>
-                <Group gap={4}>
-                  <AttentionBadge attention={step.attention} size="xs" />
-                </Group>
+              <Stack gap={4} mt={4} align="flex-start">
+                <AttentionBadge attention={step.attention} size="xs" />
                 <Progress
+                  w="100%"
                   size={4}
                   value={
                     (progress.viewedCount / Math.max(progress.totalCount, 1)) *
@@ -107,30 +110,27 @@ export default function StepNavigation({
             {step.files.map((file) => {
               const fileFragment = `file-${file.id}`;
               const separatorIndex = file.path.lastIndexOf("/");
+              const isViewed = viewedFingerprints.has(file.fingerprint);
               return (
                 <NavLink
                   key={file.id}
                   component="a"
+                  px="xs"
+                  py={2}
                   href={`${routeHref({ name: RouteName.Step, stepId: step.id })}#${encodeURIComponent(fileFragment)}`}
                   active={fragment === fileFragment}
                   onClick={go(step.id, fileFragment)}
                   noWrap
                   title={file.path}
-                  leftSection={
-                    viewedFingerprints.has(file.fingerprint) ? (
-                      <IconCircleCheck
-                        size={14}
-                        color="var(--mantine-color-success-filled)"
-                      />
-                    ) : (
-                      <IconFile size={14} color="var(--mantine-color-dimmed)" />
-                    )
-                  }
-                  label={file.path.slice(separatorIndex + 1)}
-                  description={
-                    separatorIndex > 0
-                      ? file.path.slice(0, separatorIndex)
-                      : undefined
+                  label={
+                    // Viewed files are dimmed; the directory follows the name
+                    // on the same line, cut off when it doesn't fit.
+                    <Text span size="xs" c={isViewed ? "dimmed" : undefined}>
+                      {file.path.slice(separatorIndex + 1)}{" "}
+                      <Text span inherit c="dimmed">
+                        {file.path.slice(0, Math.max(separatorIndex, 0))}
+                      </Text>
+                    </Text>
                   }
                 />
               );
