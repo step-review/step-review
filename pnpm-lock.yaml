@@ -202,6 +202,9 @@ importers:
       diff:
         specifier: 9.0.0
         version: 9.0.0
+      material-icon-theme:
+        specifier: 5.39.0
+        version: 5.39.0
       react:
         specifier: 19.3.0
         version: 19.3.0
@@ -1699,6 +1702,9 @@ packages:
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
 
+  chroma-js@3.2.0:
+    resolution: {integrity: sha512-os/OippSlX1RlWWr+QDPcGUZs0uoqr32urfxESG9U93lhUfbnlyckte84Q8P1UQY/qth983AS1JONKmLS4T0nw==}
+
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
@@ -1986,6 +1992,10 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  material-icon-theme@5.39.0:
+    resolution: {integrity: sha512-6dUQXJgNBlklaILIOlCZXhSBTsBmLkt11XMoTY7Uyb4ZikelGgZHOY4AdOWBA+SXz51cVWfOVnTHrTwGM91eYw==}
+    engines: {vscode: ^1.55.0}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -3644,6 +3654,8 @@ snapshots:
 
   character-reference-invalid@2.0.1: {}
 
+  chroma-js@3.2.0: {}
+
   clsx@2.1.1: {}
 
   comma-separated-tokens@2.0.3: {}
@@ -3922,6 +3934,10 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.6.0
 
   markdown-table@3.0.4: {}
+
+  material-icon-theme@5.39.0:
+    dependencies:
+      chroma-js: 3.2.0
 
   math-intrinsics@1.1.0: {}
 

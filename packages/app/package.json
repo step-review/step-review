@@ -23,6 +23,7 @@
     "@step-review/review-format": "workspace:*",
     "@tabler/icons-react": "3.49.0",
     "diff": "9.0.0",
+    "material-icon-theme": "5.39.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-intl": "12.1.4",

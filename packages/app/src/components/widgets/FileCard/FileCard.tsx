@@ -86,7 +86,7 @@ export default function FileCard({
       {!isCollapsed && (
         <Stack gap="xs" className={styles["body"]}>
           {fileNotes.length > 0 && (
-            <Stack gap={6} p="xs" pb={0} maw={760}>
+            <Stack gap={6} px="xs" pt="xs" maw={760}>
               {fileNotes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}

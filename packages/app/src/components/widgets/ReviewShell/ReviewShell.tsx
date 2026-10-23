@@ -66,25 +66,20 @@ export default function ReviewShell({
         </Group>
       </AppShell.Header>
       <AppShell.Navbar>
-        <AppShell.Section p="sm">
+        <AppShell.Section pt="sm" px="sm" pb="md" visibleFrom="md">
           <Group
             gap={8}
             wrap="nowrap"
-            mb="sm"
             className={styles["brand"]}
             onClick={goToStart}
-            visibleFrom="md"
           >
             <Logo size={22} />
             <Text fw={700} size="sm">
               Step Review
             </Text>
           </Group>
-          <Text fw={600} size="sm" lineClamp={3}>
-            {reviewView.data.target.title}
-          </Text>
         </AppShell.Section>
-        <AppShell.Section grow component={ScrollArea} px="sm" pb="sm">
+        <AppShell.Section grow component={ScrollArea} px="sm" py="sm">
           <StepNavigation
             reviewView={reviewView}
             activeStepId={activeStepId}

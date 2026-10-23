@@ -10,6 +10,7 @@ import useViewedFingerprints from "../../../business-logic/review-state/useViewe
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionBadge from "../../design-system/badges/AttentionBadge.tsx";
+import FileIcon from "../FileIcon/FileIcon.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
 interface Props {
@@ -39,7 +40,7 @@ export default function StepNavigation({
     };
   return (
     <Stack gap={2}>
-      <Box mb={6}>
+      <Box mb="lg">
         <Progress
           value={
             overall.totalCount
@@ -67,6 +68,7 @@ export default function StepNavigation({
         leftSection={<IconHome size={16} />}
         active={activeStepId === null}
         onClick={go(null)}
+        mb="md"
       />
       {reviewView.steps.map((step) => {
         const progress = countViewedFiles([step], viewedFingerprints);
@@ -122,12 +124,13 @@ export default function StepNavigation({
                   onClick={go(step.id, fileFragment)}
                   noWrap
                   title={file.path}
+                  leftSection={<FileIcon path={file.path} size={14} />}
                   label={
                     // Viewed files are dimmed; the directory follows the name
                     // on the same line, cut off when it doesn't fit.
                     <Text span size="xs" c={isViewed ? "dimmed" : undefined}>
                       {file.path.slice(separatorIndex + 1)}{" "}
-                      <Text span inherit c="dimmed">
+                      <Text span inherit c="dimmed" ml={4}>
                         {file.path.slice(0, Math.max(separatorIndex, 0))}
                       </Text>
                     </Text>

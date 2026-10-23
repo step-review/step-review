@@ -73,7 +73,6 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
       activeStepId={stepView.id}
     >
       <Stack gap="lg">
-        <StepPager reviewView={reviewView} stepIndex={stepIndex} />
         <StepHeader
           stepView={stepView}
           stepCount={reviewView.steps.length}
