@@ -183,12 +183,6 @@
       "value": "Note"
     }
   ],
-  "Overview.tsx_huCHmk": [
-    {
-      "type": 0,
-      "value": "Steps"
-    }
-  ],
   "OverviewHeader.tsx_GpV+Pi": [
     {
       "type": 6,
@@ -495,24 +489,6 @@
     {
       "type": 1,
       "value": "stepCount"
-    }
-  ],
-  "StepList.tsx_heFjBO": [
-    {
-      "type": 1,
-      "value": "viewedCount"
-    },
-    {
-      "type": 0,
-      "value": " / "
-    },
-    {
-      "type": 1,
-      "value": "totalCount"
-    },
-    {
-      "type": 0,
-      "value": " viewed"
     }
   ],
   "StepNavigation.tsx_9uOFF3": [

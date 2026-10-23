@@ -74,9 +74,6 @@
   "NoteCard.tsx_qMePPG": {
     "defaultMessage": "Note"
   },
-  "Overview.tsx_huCHmk": {
-    "defaultMessage": "Steps"
-  },
   "OverviewHeader.tsx_GpV+Pi": {
     "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
   },
@@ -175,9 +172,6 @@
   },
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
-  },
-  "StepList.tsx_heFjBO": {
-    "defaultMessage": "{viewedCount} / {totalCount} viewed"
   },
   "StepNavigation.tsx_9uOFF3": {
     "defaultMessage": "Overview"

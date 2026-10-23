@@ -1,6 +1,5 @@
-import { Stack, Title } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
@@ -12,7 +11,6 @@ import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
 import OverviewSummary from "../../widgets/OverviewSummary/OverviewSummary.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
 import ReviewWarnings from "../../widgets/ReviewWarnings/ReviewWarnings.tsx";
-import StepList from "../../widgets/StepList/StepList.tsx";
 import Start from "../Start/Start.tsx";
 
 export default function Overview() {
@@ -44,12 +42,6 @@ export default function Overview() {
           <OverviewHeader />
           <ReviewWarnings loadedReview={loadedReview} />
           <OverviewSummary />
-          <Stack gap="sm">
-            <Title order={3}>
-              <FormattedMessage defaultMessage="Steps" />
-            </Title>
-            <StepList />
-          </Stack>
           <IssuesIndex />
         </Stack>
       </ReviewShell>

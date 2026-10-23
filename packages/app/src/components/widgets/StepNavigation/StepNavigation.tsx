@@ -1,6 +1,6 @@
-import { Box, NavLink, Progress, Stack, Text } from "@mantine/core";
+import { Group, NavLink, Progress, Stack, Text } from "@mantine/core";
 import { IconHome } from "@tabler/icons-react";
-import type { MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
@@ -40,31 +40,22 @@ export default function StepNavigation({
     };
   return (
     <Stack gap={2}>
-      <Box mb="lg">
-        <Progress
-          value={
-            overall.totalCount
-              ? (overall.viewedCount / overall.totalCount) * 100
-              : 0
-          }
-          color={
-            overall.viewedCount === overall.totalCount ? "success" : "brand"
-          }
-          size="sm"
-        />
-        <Text size="xs" c="dimmed" mt={4}>
-          <FormattedMessage
-            defaultMessage="{viewedCount} of {totalCount} files viewed"
-            values={overall}
-          />
-        </Text>
-      </Box>
       <NavLink
         component="a"
         px="xs"
         py={6}
         href={routeHref({ name: RouteName.Overview })}
         label={<FormattedMessage defaultMessage="Overview" />}
+        description={
+          <ProgressRow progress={overall}>
+            <Text size="xs" c="dimmed">
+              <FormattedMessage
+                defaultMessage="{viewedCount} of {totalCount} files viewed"
+                values={overall}
+              />
+            </Text>
+          </ProgressRow>
+        }
         leftSection={<IconHome size={16} />}
         active={activeStepId === null}
         onClick={go(null)}
@@ -91,22 +82,9 @@ export default function StepNavigation({
               </>
             }
             description={
-              <Stack gap={4} mt={4} align="flex-start">
+              <ProgressRow progress={progress}>
                 <AttentionBadge attention={step.attention} size="xs" />
-                <Progress
-                  w="100%"
-                  size={4}
-                  value={
-                    (progress.viewedCount / Math.max(progress.totalCount, 1)) *
-                    100
-                  }
-                  color={
-                    progress.viewedCount === progress.totalCount
-                      ? "success"
-                      : "brand"
-                  }
-                />
-              </Stack>
+              </ProgressRow>
             }
           >
             {step.files.map((file) => {
@@ -142,5 +120,30 @@ export default function StepNavigation({
         );
       })}
     </Stack>
+  );
+}
+
+interface ProgressRowProps {
+  progress: { viewedCount: number; totalCount: number };
+  children: ReactNode;
+}
+
+/**
+ * Viewed files as a bar, followed by a detail. The row keeps its height when
+ * the detail is empty, so every link has the same height.
+ */
+function ProgressRow({ progress, children }: ProgressRowProps) {
+  return (
+    <Group gap="xs" mt={4} h={16} wrap="nowrap">
+      <Progress
+        flex={1}
+        size={4}
+        value={(progress.viewedCount / Math.max(progress.totalCount, 1)) * 100}
+        color={
+          progress.viewedCount === progress.totalCount ? "success" : "brand"
+        }
+      />
+      {children}
+    </Group>
   );
 }
