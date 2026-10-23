@@ -1,10 +1,11 @@
 import { Group, NavLink, Progress, Stack, Text } from "@mantine/core";
-import { IconHome } from "@tabler/icons-react";
+import { IconCircleCheck, IconFile, IconHome } from "@tabler/icons-react";
 import type { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
@@ -23,16 +24,19 @@ export default function StepNavigation({
   onNavigate,
 }: Props) {
   const viewedFingerprints = useViewedFingerprints();
+  const fragment = useFragment();
   const overall = countViewedFiles(reviewView.steps, viewedFingerprints);
-  const go = (stepId: string | null) => (event: MouseEvent) => {
-    event.preventDefault();
-    navigateTo(
-      stepId === null
-        ? { name: RouteName.Overview }
-        : { name: RouteName.Step, stepId },
-    );
-    onNavigate();
-  };
+  const go =
+    (stepId: string | null, fileFragment?: string) => (event: MouseEvent) => {
+      event.preventDefault();
+      navigateTo(
+        stepId === null
+          ? { name: RouteName.Overview }
+          : { name: RouteName.Step, stepId },
+        fileFragment,
+      );
+      onNavigate();
+    };
   return (
     <Stack gap="xs">
       <div>
@@ -70,6 +74,9 @@ export default function StepNavigation({
             component="a"
             href={routeHref({ name: RouteName.Step, stepId: step.id })}
             active={activeStepId === step.id}
+            opened={activeStepId === step.id}
+            // The active step is always open: no chevron to toggle it.
+            rightSection={null}
             onClick={go(step.id)}
             leftSection={
               <Text size="xs" c="dimmed" w={18} ta="right">
@@ -96,7 +103,39 @@ export default function StepNavigation({
                 />
               </Stack>
             }
-          />
+          >
+            {step.files.map((file) => {
+              const fileFragment = `file-${file.id}`;
+              const separatorIndex = file.path.lastIndexOf("/");
+              return (
+                <NavLink
+                  key={file.id}
+                  component="a"
+                  href={`${routeHref({ name: RouteName.Step, stepId: step.id })}#${encodeURIComponent(fileFragment)}`}
+                  active={fragment === fileFragment}
+                  onClick={go(step.id, fileFragment)}
+                  noWrap
+                  title={file.path}
+                  leftSection={
+                    viewedFingerprints.has(file.fingerprint) ? (
+                      <IconCircleCheck
+                        size={14}
+                        color="var(--mantine-color-success-filled)"
+                      />
+                    ) : (
+                      <IconFile size={14} color="var(--mantine-color-dimmed)" />
+                    )
+                  }
+                  label={file.path.slice(separatorIndex + 1)}
+                  description={
+                    separatorIndex > 0
+                      ? file.path.slice(0, separatorIndex)
+                      : undefined
+                  }
+                />
+              );
+            })}
+          </NavLink>
         );
       })}
     </Stack>
