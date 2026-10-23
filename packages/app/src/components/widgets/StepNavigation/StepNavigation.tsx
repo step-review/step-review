@@ -1,6 +1,6 @@
 import { Group, NavLink, Progress, Stack, Text } from "@mantine/core";
 import { IconHome } from "@tabler/icons-react";
-import type { MouseEvent, ReactNode } from "react";
+import type { MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
@@ -9,7 +9,7 @@ import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
-import AttentionBadge from "../../design-system/badges/AttentionBadge.tsx";
+import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
 import FileIcon from "../FileIcon/FileIcon.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
@@ -47,14 +47,15 @@ export default function StepNavigation({
         href={routeHref({ name: RouteName.Overview })}
         label={<FormattedMessage defaultMessage="Overview" />}
         description={
-          <LinkStatus progress={overall}>
+          <Stack gap={6} mt={4}>
             <Text size="xs" c="dimmed">
               <FormattedMessage
                 defaultMessage="{viewedCount} of {totalCount} files viewed"
                 values={overall}
               />
             </Text>
-          </LinkStatus>
+            <ViewedProgress progress={overall} />
+          </Stack>
         }
         leftSection={<IconHome size={16} />}
         active={activeStepId === null}
@@ -77,15 +78,14 @@ export default function StepNavigation({
             onClick={go(step.id)}
             childrenOffset="xs"
             label={
-              <>
-                {step.number}. <StepTitle step={step} />
-              </>
+              <Group gap={6} wrap="nowrap">
+                <span>
+                  {step.number}. <StepTitle step={step} />
+                </span>
+                <AttentionIcon attention={step.attention} />
+              </Group>
             }
-            description={
-              <LinkStatus progress={progress}>
-                <AttentionBadge attention={step.attention} size="xs" />
-              </LinkStatus>
-            }
+            description={<ViewedProgress progress={progress} mt={6} />}
           >
             {step.files.map((file) => {
               const fileFragment = `file-${file.id}`;
@@ -123,26 +123,18 @@ export default function StepNavigation({
   );
 }
 
-interface LinkStatusProps {
+interface ViewedProgressProps {
   progress: { viewedCount: number; totalCount: number };
-  children: ReactNode;
+  mt?: number;
 }
 
-/**
- * A detail line, then the viewed files as a bar. The detail line keeps its
- * height when empty, so every link has the same height.
- */
-function LinkStatus({ progress, children }: LinkStatusProps) {
+function ViewedProgress({ progress, mt }: ViewedProgressProps) {
   return (
-    <Stack gap={6} mt={4}>
-      <Group h={16}>{children}</Group>
-      <Progress
-        size={4}
-        value={(progress.viewedCount / Math.max(progress.totalCount, 1)) * 100}
-        color={
-          progress.viewedCount === progress.totalCount ? "success" : "brand"
-        }
-      />
-    </Stack>
+    <Progress
+      mt={mt}
+      size={4}
+      value={(progress.viewedCount / Math.max(progress.totalCount, 1)) * 100}
+      color={progress.viewedCount === progress.totalCount ? "success" : "brand"}
+    />
   );
 }
