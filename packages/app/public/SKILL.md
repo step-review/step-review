@@ -214,9 +214,7 @@ existing file. Never edit the existing rounds: append.
 } >> pr-123.step-review
 ```
 
-## Feedback
+## Notes from the app
 
-The user may paste feedback from the app: issues they accepted or dismissed,
-replies, and comments on lines (`path:line`). Act on it as requested. Notes they
-copy from the app include the note ID and the review file name, so you can find
-the note in the file.
+Notes the user copies from the app include the note ID and the review file name,
+so you can find the note in the file.

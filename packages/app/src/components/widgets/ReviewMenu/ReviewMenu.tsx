@@ -76,7 +76,7 @@ export default function ReviewMenu({ loadedReview }: Props) {
               )
             }
           >
-            <FormattedMessage defaultMessage="Export viewed files and feedback" />
+            <FormattedMessage defaultMessage="Export viewed files" />
           </Menu.Item>
           <FileButton
             onChange={(file) => void importState(file)}
@@ -84,7 +84,7 @@ export default function ReviewMenu({ loadedReview }: Props) {
           >
             {(props) => (
               <Menu.Item leftSection={<IconFileImport size={14} />} {...props}>
-                <FormattedMessage defaultMessage="Import viewed files and feedback" />
+                <FormattedMessage defaultMessage="Import viewed files" />
               </Menu.Item>
             )}
           </FileButton>

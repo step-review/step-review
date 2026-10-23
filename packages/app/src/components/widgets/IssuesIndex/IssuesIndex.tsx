@@ -1,7 +1,6 @@
-import { Badge, Group, Stack, Table, Text, Title } from "@mantine/core";
+import { Group, Stack, Table, Text, Title } from "@mantine/core";
 import { FormattedMessage } from "react-intl";
 import formatNoteLocation from "../../../business-logic/notes/formatNoteLocation.ts";
-import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import NoteLink from "../NoteLink/NoteLink.tsx";
@@ -10,7 +9,6 @@ import StepTitle from "../StepTitle/StepTitle.tsx";
 /** Every issue of the round, grouped by step. */
 export default function IssuesIndex() {
   const roundView = useCurrentRoundView();
-  const { reviewState } = useReviewState();
   const groups = roundView.steps
     .map((step) => ({
       step,
@@ -40,49 +38,30 @@ export default function IssuesIndex() {
           </Text>
           <Table verticalSpacing={4}>
             <Table.Tbody>
-              {issues.map(({ note, location }) => {
-                const verdict = reviewState.issueVerdicts[note.id]?.verdict;
-                return (
-                  <Table.Tr key={note.id}>
-                    <Table.Td w="1%">
-                      {note.kind === "issue" && (
-                        <SeverityBadge severity={note.severity} />
-                      )}
-                    </Table.Td>
-                    <Table.Td w="1%">
-                      <NoteLink noteId={note.id} />
-                    </Table.Td>
-                    <Table.Td>
-                      <Group gap="xs" wrap="nowrap">
-                        <Text size="sm" lineClamp={1}>
-                          {note.body.split("\n")[0]}
-                        </Text>
-                      </Group>
-                      {location && (
-                        <Text size="xs" c="dimmed" ff="monospace" truncate>
-                          {location}
-                        </Text>
-                      )}
-                    </Table.Td>
-                    <Table.Td w="1%">
-                      {verdict && (
-                        <Badge
-                          miw="max-content"
-                          size="sm"
-                          variant="light"
-                          color={verdict === "accepted" ? "success" : "gray"}
-                        >
-                          {verdict === "accepted" ? (
-                            <FormattedMessage defaultMessage="Accepted" />
-                          ) : (
-                            <FormattedMessage defaultMessage="Dismissed" />
-                          )}
-                        </Badge>
-                      )}
-                    </Table.Td>
-                  </Table.Tr>
-                );
-              })}
+              {issues.map(({ note, location }) => (
+                <Table.Tr key={note.id}>
+                  <Table.Td w="1%">
+                    {note.kind === "issue" && (
+                      <SeverityBadge severity={note.severity} />
+                    )}
+                  </Table.Td>
+                  <Table.Td w="1%">
+                    <NoteLink noteId={note.id} />
+                  </Table.Td>
+                  <Table.Td>
+                    <Group gap="xs" wrap="nowrap">
+                      <Text size="sm" lineClamp={1}>
+                        {note.body.split("\n")[0]}
+                      </Text>
+                    </Group>
+                    {location && (
+                      <Text size="xs" c="dimmed" ff="monospace" truncate>
+                        {location}
+                      </Text>
+                    )}
+                  </Table.Td>
+                </Table.Tr>
+              ))}
             </Table.Tbody>
           </Table>
         </div>

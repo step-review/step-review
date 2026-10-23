@@ -32,7 +32,6 @@ export default function UnifiedDiffRows({ rows, renderer }: Props) {
     }
     const { line } = row;
     const keys = lineKeys(line);
-    const side = line.type === "deletion" ? "old" : "new";
     return (
       <Fragment key={row.id}>
         <DiffTableRow
@@ -42,18 +41,10 @@ export default function UnifiedDiffRows({ rows, renderer }: Props) {
             renderer.onRowHoverChange(keys, isHovered)
           }
         >
-          <DiffTableCell
-            kind="number"
-            tone={line.type}
-            onClick={() => renderer.onLineNumberClick(line, side)}
-          >
+          <DiffTableCell kind="number" tone={line.type}>
             {line.oldLineNumber}
           </DiffTableCell>
-          <DiffTableCell
-            kind="number"
-            tone={line.type}
-            onClick={() => renderer.onLineNumberClick(line, side)}
-          >
+          <DiffTableCell kind="number" tone={line.type}>
             {line.newLineNumber}
           </DiffTableCell>
           <DiffTableCell kind="code" tone={line.type}>

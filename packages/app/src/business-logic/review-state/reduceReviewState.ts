@@ -19,35 +19,6 @@ export default function reduceReviewState(
     }
     case "resetViewed":
       return { ...reviewState, viewedFingerprints: [] };
-    case "setIssueVerdict":
-      return {
-        ...reviewState,
-        issueVerdicts: {
-          ...reviewState.issueVerdicts,
-          [action.noteId]: action.issueVerdict,
-        },
-      };
-    case "addComment":
-      return {
-        ...reviewState,
-        comments: [...reviewState.comments, action.comment],
-      };
-    case "updateComment":
-      return {
-        ...reviewState,
-        comments: reviewState.comments.map((comment) =>
-          comment.id === action.commentId
-            ? { ...comment, body: action.body }
-            : comment,
-        ),
-      };
-    case "deleteComment":
-      return {
-        ...reviewState,
-        comments: reviewState.comments.filter(
-          (comment) => comment.id !== action.commentId,
-        ),
-      };
     case "replace":
       return action.reviewState;
   }

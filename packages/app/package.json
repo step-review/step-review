@@ -20,7 +20,6 @@
     "@mantine/core": "9.7.2",
     "@mantine/dropzone": "9.7.2",
     "@mantine/hooks": "9.7.2",
-    "@mantine/spotlight": "9.7.2",
     "@step-review/review-format": "workspace:*",
     "@tabler/icons-react": "3.49.0",
     "diff": "9.0.0",

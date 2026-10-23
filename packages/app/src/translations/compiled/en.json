@@ -11,42 +11,6 @@
       "value": "Skim"
     }
   ],
-  "CommentCard.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "CommentCard.tsx_vbDFvq": [
-    {
-      "type": 0,
-      "value": "Your comment"
-    }
-  ],
-  "CommentCard.tsx_wEQDC6": [
-    {
-      "type": 0,
-      "value": "Edit"
-    }
-  ],
-  "CommentEditor.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "CommentEditor.tsx_AIDV4F": [
-    {
-      "type": 0,
-      "value": "Save comment"
-    }
-  ],
-  "CommentEditor.tsx_Z9aaZ0": [
-    {
-      "type": 0,
-      "value": "Your comment, for the agent"
-    }
-  ],
   "CopyIconButton.tsx_p556q3": [
     {
       "type": 0,
@@ -57,36 +21,6 @@
     {
       "type": 0,
       "value": "Screenshot of a review step: the diff, with notes from the coding agent."
-    }
-  ],
-  "FeedbackModal.tsx_Ejhdi4": [
-    {
-      "type": 0,
-      "value": "Feedback"
-    }
-  ],
-  "FeedbackModal.tsx_JudhTj": [
-    {
-      "type": 0,
-      "value": "Download JSON"
-    }
-  ],
-  "FeedbackModal.tsx_VdMzek": [
-    {
-      "type": 0,
-      "value": "Your verdicts on the issues and your comments, as Markdown. Paste it into the conversation with your coding agent, or into a PR comment."
-    }
-  ],
-  "FeedbackModal.tsx_aRsvyM": [
-    {
-      "type": 0,
-      "value": "Copy as Markdown"
-    }
-  ],
-  "FeedbackModal.tsx_vdmu+g": [
-    {
-      "type": 0,
-      "value": "Download Markdown"
     }
   ],
   "FileCard.tsx_7pgZ/R": [
@@ -197,12 +131,6 @@
       "value": "Copy the path"
     }
   ],
-  "FileCardHeader.tsx_yqegxX": [
-    {
-      "type": 0,
-      "value": "Comment on the file"
-    }
-  ],
   "FileChangeBadge.tsx_5qWo1m": [
     {
       "type": 0,
@@ -265,12 +193,6 @@
       "value": "Modified"
     }
   ],
-  "FileTreeDrawer.tsx_m4vqJl": [
-    {
-      "type": 0,
-      "value": "Files"
-    }
-  ],
   "GapRow.tsx_p+3Agd": [
     {
       "type": 0,
@@ -285,46 +207,10 @@
       "value": " hidden lines"
     }
   ],
-  "IssueVerdictControls.tsx_9HU8vw": [
-    {
-      "type": 0,
-      "value": "Reply"
-    }
-  ],
-  "IssueVerdictControls.tsx_ORC+Rr": [
-    {
-      "type": 0,
-      "value": "Your reply, for the agent"
-    }
-  ],
-  "IssueVerdictControls.tsx_TDaF6J": [
-    {
-      "type": 0,
-      "value": "Dismiss"
-    }
-  ],
-  "IssueVerdictControls.tsx_sjzLbX": [
-    {
-      "type": 0,
-      "value": "Accept"
-    }
-  ],
-  "IssuesIndex.tsx_1MnSfo": [
-    {
-      "type": 0,
-      "value": "Dismissed"
-    }
-  ],
   "IssuesIndex.tsx_Wj5TbN": [
     {
       "type": 0,
       "value": "Issues"
-    }
-  ],
-  "IssuesIndex.tsx_aFyFm0": [
-    {
-      "type": 0,
-      "value": "Accepted"
     }
   ],
   "NextRoundModal.tsx_8qlI8r": [
@@ -563,16 +449,16 @@
       "value": "Drop the review file to open it"
     }
   ],
-  "ReviewMenu.tsx_4RPdv1": [
-    {
-      "type": 0,
-      "value": "Export viewed files and feedback"
-    }
-  ],
   "ReviewMenu.tsx_581Xwm": [
     {
       "type": 0,
       "value": "Reset viewed files"
+    }
+  ],
+  "ReviewMenu.tsx_CoNoGZ": [
+    {
+      "type": 0,
+      "value": "Export viewed files"
     }
   ],
   "ReviewMenu.tsx_Gy09SB": [
@@ -581,16 +467,16 @@
       "value": "The file is not a valid review state."
     }
   ],
-  "ReviewMenu.tsx_P5HOgu": [
-    {
-      "type": 0,
-      "value": "Import viewed files and feedback"
-    }
-  ],
   "ReviewMenu.tsx_S8/4ZI": [
     {
       "type": 0,
       "value": "More actions"
+    }
+  ],
+  "ReviewMenu.tsx_agxUAy": [
+    {
+      "type": 0,
+      "value": "Import viewed files"
     }
   ],
   "ReviewMenu.tsx_bhQL99": [
@@ -609,42 +495,6 @@
     {
       "type": 0,
       "value": "Prompt for the next round"
-    }
-  ],
-  "ReviewSearch.tsx_9BK0YE": [
-    {
-      "type": 0,
-      "value": "Files in no step"
-    }
-  ],
-  "ReviewSearch.tsx_bgFHH5": [
-    {
-      "type": 0,
-      "value": "Jump to"
-    }
-  ],
-  "ReviewSearch.tsx_bz4Mm+": [
-    {
-      "type": 0,
-      "value": "Nothing found"
-    }
-  ],
-  "ReviewSearch.tsx_vfoiY7": [
-    {
-      "type": 0,
-      "value": "Search steps, files and notes"
-    }
-  ],
-  "ReviewShell.tsx_Ejhdi4": [
-    {
-      "type": 0,
-      "value": "Feedback"
-    }
-  ],
-  "ReviewShell.tsx_peRgj6": [
-    {
-      "type": 0,
-      "value": "All files"
     }
   ],
   "ReviewWarnings.tsx_7oiKM4": [
@@ -791,12 +641,6 @@
     {
       "type": 0,
       "value": "see example"
-    }
-  ],
-  "StepHeader.tsx_7DgWhv": [
-    {
-      "type": 0,
-      "value": "Comment on the step"
     }
   ],
   "StepHeader.tsx_JENnli": [

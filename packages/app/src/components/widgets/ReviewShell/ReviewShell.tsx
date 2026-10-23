@@ -1,29 +1,13 @@
-import {
-  ActionIcon,
-  AppShell,
-  Box,
-  Burger,
-  Button,
-  Group,
-  ScrollArea,
-  Text,
-  Tooltip,
-} from "@mantine/core";
+import { AppShell, Burger, Group, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconFolders, IconMessages } from "@tabler/icons-react";
 import type { ReactNode } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import type RoundView from "../../../business-logic/rounds/RoundView.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
-import FeedbackModal from "../FeedbackModal/FeedbackModal.tsx";
-import FileTreeDrawer from "../FileTreeDrawer/FileTreeDrawer.tsx";
 import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
 import ReviewMenu from "../ReviewMenu/ReviewMenu.tsx";
-import ReviewSearch from "../ReviewSearch/ReviewSearch.tsx";
 import RoundSwitcher from "../RoundSwitcher/RoundSwitcher.tsx";
 import StepNavigation from "../StepNavigation/StepNavigation.tsx";
 import styles from "./ReviewShell.module.css";
@@ -41,16 +25,7 @@ export default function ReviewShell({
   activeStepId,
   children,
 }: Props) {
-  const intl = useIntl();
   const [isNavbarOpen, navbar] = useDisclosure(false);
-  const [isFileTreeOpen, fileTree] = useDisclosure(false);
-  const [isFeedbackOpen, feedback] = useDisclosure(false);
-  const { reviewState } = useReviewState();
-  const feedbackCount =
-    Object.values(reviewState.issueVerdicts).filter(
-      (issueVerdict) =>
-        issueVerdict.verdict !== null || issueVerdict.reply.trim() !== "",
-    ).length + reviewState.comments.length;
   return (
     <AppShell
       header={{ height: 52 }}
@@ -85,30 +60,6 @@ export default function ReviewShell({
             roundNumber={roundView.round.number}
           />
           <Group gap="xs" ml="auto" wrap="nowrap">
-            <ReviewSearch roundView={roundView} />
-            <Tooltip
-              label={<FormattedMessage defaultMessage="All files" />}
-              withArrow
-            >
-              <ActionIcon
-                variant="default"
-                onClick={fileTree.open}
-                aria-label={intl.formatMessage({ defaultMessage: "All files" })}
-              >
-                <IconFolders size={16} />
-              </ActionIcon>
-            </Tooltip>
-            <Button
-              variant="default"
-              size="xs"
-              leftSection={<IconMessages size={14} />}
-              onClick={feedback.open}
-            >
-              <Box component="span" visibleFrom="sm">
-                <FormattedMessage defaultMessage="Feedback" />
-              </Box>
-              &nbsp;({feedbackCount})
-            </Button>
             <ReviewMenu loadedReview={loadedReview} />
           </Group>
         </Group>
@@ -131,16 +82,6 @@ export default function ReviewShell({
         </AppShell.Section>
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
-      <FileTreeDrawer
-        roundView={roundView}
-        opened={isFileTreeOpen}
-        onClose={fileTree.close}
-      />
-      <FeedbackModal
-        loadedReview={loadedReview}
-        opened={isFeedbackOpen}
-        onClose={feedback.close}
-      />
       <ReloadDropzone />
     </AppShell>
   );

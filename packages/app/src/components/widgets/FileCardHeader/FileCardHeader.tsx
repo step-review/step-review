@@ -6,11 +6,7 @@ import {
   Text,
   Tooltip,
 } from "@mantine/core";
-import {
-  IconBrandGithub,
-  IconChevronDown,
-  IconMessagePlus,
-} from "@tabler/icons-react";
+import { IconBrandGithub, IconChevronDown } from "@tabler/icons-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import type StepFileView from "../../../business-logic/rounds/StepFileView.ts";
 import FileChangeBadge from "../../design-system/badges/FileChangeBadge.tsx";
@@ -26,7 +22,6 @@ interface Props {
   isViewed: boolean;
   onToggleCollapsed: () => void;
   onViewedChange: (isViewed: boolean) => void;
-  onAddComment: () => void;
 }
 
 export default function FileCardHeader({
@@ -37,7 +32,6 @@ export default function FileCardHeader({
   isViewed,
   onToggleCollapsed,
   onViewedChange,
-  onAddComment,
 }: Props) {
   const intl = useIntl();
   const { fileDiff } = stepFileView;
@@ -120,22 +114,6 @@ export default function FileCardHeader({
             />
           </Badge>
         )}
-        <Tooltip
-          label={<FormattedMessage defaultMessage="Comment on the file" />}
-          withArrow
-        >
-          <ActionIcon
-            variant="subtle"
-            color="gray"
-            size="sm"
-            onClick={onAddComment}
-            aria-label={intl.formatMessage({
-              defaultMessage: "Comment on the file",
-            })}
-          >
-            <IconMessagePlus size={14} />
-          </ActionIcon>
-        </Tooltip>
         <Checkbox
           size="xs"
           label={<FormattedMessage defaultMessage="Viewed" />}

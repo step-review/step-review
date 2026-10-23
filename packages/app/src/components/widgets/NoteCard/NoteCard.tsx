@@ -7,7 +7,6 @@ import { useLoadedReviewContext } from "../../../business-logic/review/LoadedRev
 import useNoteIndex from "../../../business-logic/rounds/useNoteIndex.ts";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
-import IssueVerdictControls from "../IssueVerdictControls/IssueVerdictControls.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
 import styles from "./NoteCard.module.css";
 
@@ -65,7 +64,6 @@ export default function NoteCard({
           )}
         </Group>
         <ReviewMarkdown>{note.body}</ReviewMarkdown>
-        {isIssue && <IssueVerdictControls noteId={note.id} />}
       </Stack>
     </Paper>
   );

@@ -7,9 +7,7 @@ A better way to review PRs.
 Your coding agent splits a PR into steps (by part of the system, by concern,
 mechanical changes apart…) and writes notes on the changes: explainers for the
 non-obvious parts, and issues to check. Step Review shows the review one step at
-a time, with the notes beside the diff, and lets you mark files as viewed,
-accept or dismiss issues, and comment on lines. Your feedback goes back to the
-agent as Markdown.
+a time, with the notes beside the diff, and lets you mark files as viewed.
 
 ## How it works
 

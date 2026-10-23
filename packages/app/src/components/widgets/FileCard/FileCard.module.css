@@ -6,15 +6,6 @@
   padding-bottom: 4px;
 }
 
-.comments {
-  padding-inline: var(--mantine-spacing-xs);
-  max-width: 760px;
-
-  &:empty {
-    display: none;
-  }
-}
-
 .rangeControl {
   align-self: flex-start;
 }

@@ -23,12 +23,7 @@ export default function SplitDiffRows({ rows, renderer }: Props) {
       ];
     }
     return [
-      <DiffTableCell
-        key="number"
-        kind="number"
-        tone={line.type}
-        onClick={() => renderer.onLineNumberClick(line, side)}
-      >
+      <DiffTableCell key="number" kind="number" tone={line.type}>
         {side === "old" ? line.oldLineNumber : line.newLineNumber}
       </DiffTableCell>,
       <DiffTableCell key="code" kind="code" tone={line.type}>

@@ -30,15 +30,6 @@
     padding: 0 6px;
   }
 
-  &[data-kind="number"][data-clickable] {
-    cursor: pointer;
-
-    &:hover {
-      color: var(--mantine-primary-color-filled);
-      text-decoration: underline;
-    }
-  }
-
   &[data-kind="full"] {
     padding: 6px 8px;
     font-family: var(--mantine-font-family);

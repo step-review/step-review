@@ -20,7 +20,6 @@ import DiffView from "../DiffView/DiffView.tsx";
 import FileCardHeader from "../FileCardHeader/FileCardHeader.tsx";
 import NoteCard from "../NoteCard/NoteCard.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
-import TargetComments from "../TargetComments/TargetComments.tsx";
 import styles from "./FileCard.module.css";
 
 interface Props {
@@ -38,7 +37,6 @@ export default function FileCard({
 }: Props) {
   const intl = useIntl();
   const roundView = useCurrentRoundView();
-  const roundNumber = roundView.round.number;
   const { dispatch } = useReviewState();
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
@@ -46,7 +44,6 @@ export default function FileCard({
   );
   const [diffRange, setDiffRange] = useState<"pr" | "previousRound">("pr");
   const [isSummaryDiffShown, setIsSummaryDiffShown] = useState(false);
-  const [isAddingComment, setIsAddingComment] = useState(false);
   const fragment = useFragment();
   const isTargeted =
     fragment === `file-${stepFileView.id}` ||
@@ -105,10 +102,6 @@ export default function FileCard({
         isViewed={isViewed}
         onToggleCollapsed={() => setIsCollapsed((collapsed) => !collapsed)}
         onViewedChange={setViewed}
-        onAddComment={() => {
-          setIsCollapsed(false);
-          setIsAddingComment(true);
-        }}
       />
       {!isCollapsed && (
         <Stack gap="xs" className={styles["body"]}>
@@ -119,18 +112,6 @@ export default function FileCard({
               ))}
             </Stack>
           )}
-          <div className={styles["comments"]}>
-            <TargetComments
-              roundNumber={roundNumber}
-              target={{
-                kind: "file",
-                stepId: stepView.id,
-                path: stepFileView.path,
-              }}
-              isAdding={isAddingComment}
-              onAddingDone={() => setIsAddingComment(false)}
-            />
-          </div>
           {stepFileView.interdiffHunks && (
             <SegmentedControl
               size="xs"
@@ -194,8 +175,6 @@ export default function FileCard({
           {showDiff && hunks.length > 0 && (
             <DiffView
               path={stepFileView.path}
-              stepId={stepView.id}
-              roundNumber={roundNumber}
               hunks={hunks}
               notes={lineNotes}
               layout={layout}

@@ -7,8 +7,7 @@ export default interface DiffRowRenderer {
   getSegments: (line: DiffLine) => LineSegment[];
   isHighlighted: (lineKeys: string[]) => boolean;
   onRowHoverChange: (lineKeys: string[], isHovered: boolean) => void;
-  onLineNumberClick: (line: DiffLine, side: "old" | "new") => void;
-  /** Notes and comments shown below the row, if any. */
+  /** Notes shown below the row, if any. */
   renderExtras: (lineKeys: string[], colSpan: number) => ReactNode;
   onExpandGap: (gapId: string) => void;
 }

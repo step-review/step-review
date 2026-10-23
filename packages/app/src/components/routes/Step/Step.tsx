@@ -86,7 +86,6 @@ function StepPage({ loadedReview, roundView, stepIndex }: StepPageProps) {
         <StepHeader
           stepView={stepView}
           stepCount={roundView.steps.length}
-          roundNumber={roundNumber}
           areExplainersHidden={preferences.explainers === "hidden"}
         />
         <StepToolbar
