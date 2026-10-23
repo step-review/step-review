@@ -1,7 +1,6 @@
 import formatjs from "@formatjs/unplugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import emitFileIcons from "./scripts/emitFileIcons.ts";
 import emitJsonSchema from "./scripts/emitJsonSchema.ts";
 
 export default defineConfig({
@@ -13,7 +12,6 @@ export default defineConfig({
       flatten: false,
     }),
     emitJsonSchema(),
-    emitFileIcons(),
   ],
   resolve: {
     dedupe: ["react", "react-dom"],

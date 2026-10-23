@@ -47,14 +47,14 @@ export default function StepNavigation({
         href={routeHref({ name: RouteName.Overview })}
         label={<FormattedMessage defaultMessage="Overview" />}
         description={
-          <ProgressRow progress={overall}>
+          <LinkStatus progress={overall}>
             <Text size="xs" c="dimmed">
               <FormattedMessage
                 defaultMessage="{viewedCount} of {totalCount} files viewed"
                 values={overall}
               />
             </Text>
-          </ProgressRow>
+          </LinkStatus>
         }
         leftSection={<IconHome size={16} />}
         active={activeStepId === null}
@@ -82,9 +82,9 @@ export default function StepNavigation({
               </>
             }
             description={
-              <ProgressRow progress={progress}>
+              <LinkStatus progress={progress}>
                 <AttentionBadge attention={step.attention} size="xs" />
-              </ProgressRow>
+              </LinkStatus>
             }
           >
             {step.files.map((file) => {
@@ -102,7 +102,7 @@ export default function StepNavigation({
                   onClick={go(step.id, fileFragment)}
                   noWrap
                   title={file.path}
-                  leftSection={<FileIcon path={file.path} size={14} />}
+                  leftSection={<FileIcon path={file.path} />}
                   label={
                     // Viewed files are dimmed; the directory follows the name
                     // on the same line, cut off when it doesn't fit.
@@ -123,27 +123,26 @@ export default function StepNavigation({
   );
 }
 
-interface ProgressRowProps {
+interface LinkStatusProps {
   progress: { viewedCount: number; totalCount: number };
   children: ReactNode;
 }
 
 /**
- * Viewed files as a bar, followed by a detail. The row keeps its height when
- * the detail is empty, so every link has the same height.
+ * A detail line, then the viewed files as a bar. The detail line keeps its
+ * height when empty, so every link has the same height.
  */
-function ProgressRow({ progress, children }: ProgressRowProps) {
+function LinkStatus({ progress, children }: LinkStatusProps) {
   return (
-    <Group gap="xs" mt={4} h={16} wrap="nowrap">
+    <Stack gap={6} mt={4}>
+      <Group h={16}>{children}</Group>
       <Progress
-        flex={1}
         size={4}
         value={(progress.viewedCount / Math.max(progress.totalCount, 1)) * 100}
         color={
           progress.viewedCount === progress.totalCount ? "success" : "brand"
         }
       />
-      {children}
-    </Group>
+    </Stack>
   );
 }
