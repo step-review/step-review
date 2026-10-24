@@ -1,20 +1,26 @@
 .card {
-  scroll-margin-top: calc(var(--app-shell-header-offset, 0px) + 8px);
+  scroll-margin-top: var(--base-size-8);
+  border: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
 }
 
 .body {
-  padding-bottom: 4px;
+  padding-bottom: var(--base-size-4);
 }
 
-.comments {
-  padding-inline: var(--mantine-spacing-xs);
+.fileNotes {
   max-width: 760px;
-
-  &:empty {
-    display: none;
-  }
+  padding: var(--base-size-8) var(--base-size-8) 0;
 }
 
-.rangeControl {
-  align-self: flex-start;
+.summary {
+  width: auto;
+  margin-inline: var(--base-size-8);
+}
+
+.message {
+  margin: 0;
+  padding: 0 var(--base-size-8) var(--base-size-8);
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-medium);
 }

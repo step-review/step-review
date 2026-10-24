@@ -1,0 +1,41 @@
+.recap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+}
+
+.fileName {
+  min-width: 0;
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-medium);
+  font-weight: var(--base-text-weight-semibold);
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stats {
+  min-width: 0;
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+/* The negative margin lines the icon, inset in its button, up with the end of
+   the progress bar above. */
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  margin-inline-end: calc(
+    (var(--base-size-16) - var(--control-small-size)) / 2
+  );
+}

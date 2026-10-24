@@ -1,10 +1,12 @@
-import type StepFileView from "../rounds/StepFileView.ts";
-import type StepView from "../rounds/StepView.ts";
+type FileTreeNode<File> =
+  | {
+      kind: "folder";
+      /** Full path of the folder, unique in the tree. */
+      path: string;
+      /** One or more path segments, e.g. `src/components`. */
+      label: string;
+      children: FileTreeNode<File>[];
+    }
+  | { kind: "file"; label: string; file: File };
 
-export default interface FileTreeNode {
-  value: string;
-  label: string;
-  children: FileTreeNode[];
-  /** Set on leaves: a file in a step. */
-  file: { stepView: StepView; stepFileView: StepFileView } | null;
-}
+export default FileTreeNode;

@@ -1,13 +1,12 @@
-import { Group, Paper, Stack, Text } from "@mantine/core";
+import { AlertIcon, LightBulbIcon } from "@primer/octicons-react";
+import { Stack } from "@primer/react";
 import type { Note } from "@step-review/review-format";
-import { IconBulb, IconAlertTriangle } from "@tabler/icons-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import createNoteReference from "../../../business-logic/notes/createNoteReference.ts";
+import useNoteIndex from "../../../business-logic/review-view/useNoteIndex.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
-import useNoteIndex from "../../../business-logic/rounds/useNoteIndex.ts";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
-import IssueVerdictControls from "../IssueVerdictControls/IssueVerdictControls.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
 import styles from "./NoteCard.module.css";
 
@@ -26,35 +25,31 @@ export default function NoteCard({
   const intl = useIntl();
   const { loadedReview } = useLoadedReviewContext();
   const noteLocation = useNoteIndex().get(note.id);
-  const isIssue = note.kind === "issue";
   return (
-    <Paper
+    <div
       id={`note-${note.id}`}
-      withBorder
-      p="xs"
       className={styles["card"]}
       data-kind={note.kind}
       data-highlighted={isHighlighted || undefined}
       onMouseEnter={() => onHoverChange?.(true)}
       onMouseLeave={() => onHoverChange?.(false)}
     >
-      <Stack gap={6}>
-        <Group gap={6} wrap="nowrap">
-          {isIssue ? (
-            <IconAlertTriangle size={14} className={styles["issueIcon"]} />
-          ) : (
-            <IconBulb size={14} className={styles["explainerIcon"]} />
-          )}
+      <Stack gap="condensed">
+        <div className={styles["header"]}>
           {note.kind === "issue" ? (
-            <SeverityBadge severity={note.severity} />
+            <>
+              <AlertIcon size={14} className={styles["icon"]} />
+              <SeverityBadge severity={note.severity} />
+            </>
           ) : (
-            <Text size="xs" fw={600} c="dimmed">
-              <FormattedMessage defaultMessage="Note" />
-            </Text>
+            <>
+              <LightBulbIcon size={14} className={styles["icon"]} />
+              <span className={styles["kind"]}>
+                <FormattedMessage defaultMessage="Note" />
+              </span>
+            </>
           )}
-          <Text size="xs" c="dimmed" ff="monospace" ml="auto">
-            {note.id}
-          </Text>
+          <span className={styles["id"]}>{note.id}</span>
           {loadedReview && noteLocation && (
             <CopyIconButton
               value={createNoteReference(loadedReview.fileName, noteLocation)}
@@ -63,10 +58,9 @@ export default function NoteCard({
               })}
             />
           )}
-        </Group>
+        </div>
         <ReviewMarkdown>{note.body}</ReviewMarkdown>
-        {isIssue && <IssueVerdictControls noteId={note.id} />}
       </Stack>
-    </Paper>
+    </div>
   );
 }

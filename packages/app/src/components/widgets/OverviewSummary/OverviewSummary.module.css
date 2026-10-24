@@ -1,0 +1,10 @@
+/* 32px from the header, counting the gap of the stack around it, as on the
+   step page. */
+.summary {
+  max-width: 800px;
+  margin-top: var(--base-size-8);
+}
+
+.readingPlanTitle {
+  margin-bottom: 6px;
+}

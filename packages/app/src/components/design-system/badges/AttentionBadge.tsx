@@ -1,24 +1,23 @@
-import { Badge } from "@mantine/core";
+import { Label } from "@primer/react";
 import type { Attention } from "@step-review/review-format";
 import { FormattedMessage } from "react-intl";
 
 interface Props {
   attention: Attention;
-  size?: "xs" | "sm";
 }
 
 /** Shows how much attention a step needs; nothing for `normal`. */
-export default function AttentionBadge({ attention, size = "sm" }: Props) {
+export default function AttentionBadge({ attention }: Props) {
   if (attention === "normal") {
     return null;
   }
   return attention === "high" ? (
-    <Badge miw="max-content" color="attention" variant="light" size={size}>
+    <Label variant="attention">
       <FormattedMessage defaultMessage="Read carefully" />
-    </Badge>
+    </Label>
   ) : (
-    <Badge miw="max-content" color="gray" variant="light" size={size}>
+    <Label variant="secondary">
       <FormattedMessage defaultMessage="Skim" />
-    </Badge>
+    </Label>
   );
 }

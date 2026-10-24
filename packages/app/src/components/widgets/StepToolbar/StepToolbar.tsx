@@ -1,73 +1,60 @@
-import { Button, Group, SegmentedControl, Switch } from "@mantine/core";
-import { IconChecks } from "@tabler/icons-react";
+import { ChecklistIcon } from "@primer/octicons-react";
+import { Button, ButtonGroup, Checkbox, FormControl } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import type DiffPreferences from "../../../business-logic/preferences/DiffPreferences.ts";
+import styles from "./StepToolbar.module.css";
 
 interface Props {
   preferences: DiffPreferences;
-  previousRoundNumber: number | null;
   onMarkAllViewed: () => void;
 }
 
-export default function StepToolbar({
-  preferences,
-  previousRoundNumber,
-  onMarkAllViewed,
-}: Props) {
+export default function StepToolbar({ preferences, onMarkAllViewed }: Props) {
   const intl = useIntl();
   return (
-    <Group gap="md" wrap="wrap">
-      <SegmentedControl
-        size="xs"
-        value={preferences.layout}
-        onChange={(value) => preferences.setLayout(value)}
-        data={[
-          {
-            value: "unified",
-            label: intl.formatMessage({ defaultMessage: "Unified" }),
-          },
-          {
-            value: "split",
-            label: intl.formatMessage({ defaultMessage: "Split" }),
-          },
-        ]}
-      />
-      <Switch
-        size="xs"
-        label={<FormattedMessage defaultMessage="Only issues" />}
-        checked={preferences.explainers === "hidden"}
-        onChange={(event) =>
-          preferences.setExplainers(
-            event.currentTarget.checked ? "hidden" : "shown",
-          )
-        }
-      />
-      {previousRoundNumber !== null && (
-        <Switch
-          size="xs"
-          label={
-            <FormattedMessage
-              defaultMessage="Only files changed since round {roundNumber}"
-              values={{ roundNumber: previousRoundNumber }}
-            />
-          }
-          checked={preferences.fileFilter === "changed"}
+    <div className={styles["toolbar"]}>
+      <ButtonGroup
+        role="group"
+        aria-label={intl.formatMessage({ defaultMessage: "Diff layout" })}
+      >
+        <Button
+          size="small"
+          className={styles["layoutButton"]}
+          aria-pressed={preferences.layout === "unified"}
+          onClick={() => preferences.setLayout("unified")}
+        >
+          <FormattedMessage defaultMessage="Unified" />
+        </Button>
+        <Button
+          size="small"
+          className={styles["layoutButton"]}
+          aria-pressed={preferences.layout === "split"}
+          onClick={() => preferences.setLayout("split")}
+        >
+          <FormattedMessage defaultMessage="Split" />
+        </Button>
+      </ButtonGroup>
+      <FormControl>
+        <Checkbox
+          checked={preferences.explainers === "hidden"}
           onChange={(event) =>
-            preferences.setFileFilter(
-              event.currentTarget.checked ? "changed" : "all",
+            preferences.setExplainers(
+              event.currentTarget.checked ? "hidden" : "shown",
             )
           }
         />
-      )}
+        <FormControl.Label>
+          <FormattedMessage defaultMessage="Only issues" />
+        </FormControl.Label>
+      </FormControl>
       <Button
-        size="xs"
-        variant="light"
-        ml="auto"
-        leftSection={<IconChecks size={14} />}
+        size="small"
+        leadingVisual={ChecklistIcon}
+        className={styles["markAllViewed"]}
         onClick={onMarkAllViewed}
       >
         <FormattedMessage defaultMessage="Mark all as viewed" />
       </Button>
-    </Group>
+    </div>
   );
 }

@@ -4,13 +4,13 @@
 }
 
 .background {
-  fill: var(--mantine-primary-color-filled);
+  fill: var(--bgColor-accent-emphasis);
 }
 
 .bars {
-  fill: var(--mantine-primary-color-contrast);
+  fill: var(--fgColor-onEmphasis);
 }
 
 .marks {
-  stroke: var(--mantine-primary-color-contrast);
+  stroke: var(--fgColor-onEmphasis);
 }

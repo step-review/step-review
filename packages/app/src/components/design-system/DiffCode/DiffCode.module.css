@@ -3,25 +3,25 @@
   overflow-wrap: anywhere;
 }
 
-.segment {
-  color: var(--light-color, inherit);
-  border-radius: var(--mantine-radius-default);
+/* The `+` or `-` of the line, in the code cell's left padding. */
+.marker {
+  position: absolute;
+  left: 8px;
+  user-select: none;
+}
 
-  @mixin dark {
-    color: var(--dark-color, inherit);
-  }
+.segment {
+  color: light-dark(
+    var(--light-color, currentColor),
+    var(--dark-color, currentColor)
+  );
+  border-radius: var(--borderRadius-small);
 
   &[data-changed="addition"] {
-    background: light-dark(
-      alpha(var(--mantine-color-addition-8), 0.3),
-      alpha(var(--mantine-color-addition-8), 0.45)
-    );
+    background: var(--diffBlob-additionWord-bgColor);
   }
 
   &[data-changed="deletion"] {
-    background: light-dark(
-      alpha(var(--mantine-color-removal-6), 0.3),
-      alpha(var(--mantine-color-removal-6), 0.45)
-    );
+    background: var(--diffBlob-deletionWord-bgColor);
   }
 }

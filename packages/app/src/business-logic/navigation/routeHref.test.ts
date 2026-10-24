@@ -7,7 +7,7 @@ it("builds a step URL that parses back to the same route", () => {
   // Setup SUT
   const route = {
     name: RouteName.Step,
-    roundNumber: 3,
+    reviewId: "3f9a0c21b7e4d2",
     stepId: "ids/v2",
   } as const;
 

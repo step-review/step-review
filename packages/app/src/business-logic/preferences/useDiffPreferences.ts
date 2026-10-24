@@ -12,17 +12,5 @@ export default function useDiffPreferences() {
     ["shown", "hidden"],
     "shown",
   );
-  const [fileFilter, setFileFilter] = useStoredPreference(
-    "step-review:file-filter",
-    ["all", "changed"],
-    "all",
-  );
-  return {
-    layout,
-    setLayout,
-    explainers,
-    setExplainers,
-    fileFilter,
-    setFileFilter,
-  };
+  return { layout, setLayout, explainers, setExplainers };
 }

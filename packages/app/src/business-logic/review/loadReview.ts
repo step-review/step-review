@@ -16,22 +16,17 @@ export default function loadReview(
   if (!result.success) {
     return result;
   }
-  const firstRound = result.reviewFile.rounds[0]!.data;
-  // Later rounds are appended, so the first one identifies the review.
-  const storageKey = hashString(
-    JSON.stringify([
-      firstRound.target.url ?? firstRound.target.title,
-      firstRound.target.baseCommit,
-      firstRound.createdAt,
-    ]),
-  );
+  const { target } = result.reviewFile.data;
+  // Reviews written again after the PR changed share the key, so files whose
+  // changes are the same stay viewed.
+  const reviewId = hashString(target.url ?? target.title);
   return {
     success: true,
     loadedReview: {
+      reviewId,
       fileName,
       reviewFile: result.reviewFile,
       warnings: checkReviewFile(result.reviewFile),
-      storageKey,
     },
   };
 }

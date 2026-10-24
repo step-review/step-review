@@ -1,4 +1,5 @@
-import { Badge } from "@mantine/core";
+import { Label } from "@primer/react";
+import type { LabelColorOptions } from "@primer/react";
 import type { FileDiffStatus } from "@step-review/review-format";
 import { FormattedMessage } from "react-intl";
 
@@ -6,17 +7,17 @@ interface Props {
   status: FileDiffStatus;
 }
 
-const colors: Record<FileDiffStatus, string> = {
-  added: "addition",
-  deleted: "removal",
-  modified: "gray",
-  renamed: "gray",
-  copied: "gray",
+const variants: Record<FileDiffStatus, LabelColorOptions> = {
+  added: "success",
+  deleted: "danger",
+  modified: "secondary",
+  renamed: "secondary",
+  copied: "secondary",
 };
 
 export default function FileStatusBadge({ status }: Props) {
   return (
-    <Badge miw="max-content" color={colors[status]} variant="light" size="sm">
+    <Label variant={variants[status]}>
       {status === "added" ? (
         <FormattedMessage defaultMessage="Added" />
       ) : status === "deleted" ? (
@@ -28,6 +29,6 @@ export default function FileStatusBadge({ status }: Props) {
       ) : (
         <FormattedMessage defaultMessage="Modified" />
       )}
-    </Badge>
+    </Label>
   );
 }

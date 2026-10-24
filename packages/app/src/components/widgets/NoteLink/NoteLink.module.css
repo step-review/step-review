@@ -1,0 +1,4 @@
+.id {
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-medium);
+}

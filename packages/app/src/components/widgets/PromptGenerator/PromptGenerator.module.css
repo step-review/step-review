@@ -2,27 +2,38 @@
   position: relative;
 }
 
-.input {
-  --input-bg: light-dark(
-    var(--mantine-color-gray-0),
-    var(--mantine-color-dark-6)
-  );
-  box-sizing: border-box;
-  border-width: 1px;
-  padding-block: var(--mantine-spacing-xs);
-  padding-inline-start: var(--mantine-spacing-sm);
-  font-family: var(--mantine-font-family-monospace);
-  font-size: rem(15px);
+.textarea,
+.prompt {
+  padding-block: var(--base-size-8);
+  padding-inline: var(--base-size-12) 52px;
+  background: var(--bgColor-muted);
+  font-family: var(--fontStack-monospace);
+  font-size: var(--prompt-font-size, 15px);
 }
 
-.copyButtonSection {
-  align-items: flex-start;
-  padding-top: var(--mantine-spacing-sm);
+.prompt {
+  margin: 0;
+  padding-block: var(--base-size-12);
+  padding-inline-start: var(--base-size-16);
+  border: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
+  overflow-wrap: anywhere;
+}
+
+.copyButton {
+  position: absolute;
+  top: var(--base-size-8);
+  right: var(--base-size-8);
 }
 
 /* Positioned outside the flow so that it doesn't shift the page. */
 .copiedMessage {
   position: absolute;
   top: 100%;
-  margin-top: var(--mantine-spacing-xs);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--base-size-8);
+  color: var(--fgColor-success);
+  font-size: calc(var(--text-body-size-medium) * var(--content-font-scale, 1));
 }

@@ -1,0 +1,38 @@
+.diffstat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
+  white-space: nowrap;
+}
+
+.additions {
+  color: var(--fgColor-success);
+}
+
+.deletions {
+  color: var(--fgColor-danger);
+}
+
+.blocks {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.block {
+  width: 8px;
+  height: 8px;
+
+  &[data-block="added"] {
+    background: var(--bgColor-success-emphasis);
+  }
+
+  &[data-block="deleted"] {
+    background: var(--bgColor-danger-emphasis);
+  }
+
+  &[data-block="neutral"] {
+    background: var(--bgColor-neutral-muted);
+  }
+}

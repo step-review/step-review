@@ -10,36 +10,43 @@ it("routes the root path to the start page", () => {
   expect(route).toEqual({ name: RouteName.Start });
 });
 
-it.each(["/rounds/2", "/rounds/2/"])(
-  "routes %s to the overview of round 2",
+it.each(["/r/3f9a0c21b7e4d2/overview", "/r/3f9a0c21b7e4d2/overview/"])(
+  "routes %s to the review's overview",
   (pathname) => {
     // Exercise
     const route = parseRoute(pathname);
 
     // Verify
-    expect(route).toEqual({ name: RouteName.Overview, roundNumber: 2 });
+    expect(route).toEqual({
+      name: RouteName.Overview,
+      reviewId: "3f9a0c21b7e4d2",
+    });
   },
 );
 
-it("routes a step path to the step, decoding its ID", () => {
+it("routes a step path to the review's step, decoding its ID", () => {
   // Exercise
-  const route = parseRoute("/rounds/1/steps/sync%20buckets");
+  const route = parseRoute("/r/3f9a0c21b7e4d2/steps/sync%20buckets");
 
   // Verify
   expect(route).toEqual({
     name: RouteName.Step,
-    roundNumber: 1,
+    reviewId: "3f9a0c21b7e4d2",
     stepId: "sync buckets",
   });
 });
 
-it.each(["/rounds/0", "/rounds/abc", "/steps/one", "/rounds/1/steps"])(
-  "routes %s to not found",
-  (pathname) => {
-    // Exercise
-    const route = parseRoute(pathname);
+it.each([
+  "/overview",
+  "/steps/one",
+  "/r/3f9a0c21b7e4d2",
+  "/r/3f9a0c21b7e4d2/steps",
+  "/r/3f9a0c21b7e4d2/steps/one/two",
+  "/r/3f9a0c21b7e4d2/overview/steps/one",
+])("routes %s to not found", (pathname) => {
+  // Exercise
+  const route = parseRoute(pathname);
 
-    // Verify
-    expect(route).toEqual({ name: RouteName.NotFound });
-  },
-);
+  // Verify
+  expect(route).toEqual({ name: RouteName.NotFound });
+});

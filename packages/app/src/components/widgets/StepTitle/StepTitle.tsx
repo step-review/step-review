@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import type StepView from "../../../business-logic/rounds/StepView.ts";
+import type StepView from "../../../business-logic/review-view/StepView.ts";
 
 interface Props {
   step: StepView;

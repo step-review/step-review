@@ -1,78 +1,82 @@
+/* Metrics of GitHub's diff view. */
 .table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-family: var(--mantine-font-family-monospace);
-  font-size: 12px;
-  line-height: 1.6;
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
+  line-height: 20px;
 }
 
 .numberColumn {
-  width: 4.5em;
+  width: 50px;
 }
 
 .row {
+  /* Tints the whole line over its tone, like GitHub's selected lines. */
   &[data-highlighted] > td {
-    box-shadow:
-      inset 0 1px 0 var(--mantine-primary-color-filled),
-      inset 0 -1px 0 var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 100vmax var(--bgColor-attention-muted);
   }
 }
 
 .cell {
   vertical-align: top;
-  padding: 0 8px;
+  padding: 0 10px;
 
   &[data-kind="number"] {
     text-align: right;
-    color: var(--mantine-color-dimmed);
+    color: var(--fgColor-muted);
     user-select: none;
-    padding: 0 6px;
   }
 
-  &[data-kind="number"][data-clickable] {
-    cursor: pointer;
-
-    &:hover {
-      color: var(--mantine-primary-color-filled);
-      text-decoration: underline;
-    }
+  &[data-kind="code"] {
+    position: relative;
+    padding-left: 22px;
   }
 
   &[data-kind="full"] {
-    padding: 6px 8px;
-    font-family: var(--mantine-font-family);
-    font-size: var(--mantine-font-size-sm);
-    line-height: var(--mantine-line-height);
+    padding: 6px 10px;
+    font-family: var(--fontStack-sansSerif);
+    font-size: var(--text-body-size-medium);
+    line-height: var(--text-body-lineHeight-medium);
   }
 
   &[data-tone="addition"] {
-    background: light-dark(
-      alpha(var(--mantine-color-addition-8), 0.12),
-      alpha(var(--mantine-color-addition-8), 0.18)
-    );
+    background: var(--diffBlob-additionLine-bgColor);
+    color: var(--diffBlob-additionLine-fgColor);
+
+    &[data-kind="number"] {
+      background: var(--diffBlob-additionNum-bgColor);
+      color: var(--diffBlob-additionNum-fgColor);
+    }
   }
 
   &[data-tone="deletion"] {
-    background: light-dark(
-      alpha(var(--mantine-color-removal-6), 0.12),
-      alpha(var(--mantine-color-removal-6), 0.18)
-    );
+    background: var(--diffBlob-deletionLine-bgColor);
+    color: var(--diffBlob-deletionLine-fgColor);
+
+    &[data-kind="number"] {
+      background: var(--diffBlob-deletionNum-bgColor);
+      color: var(--diffBlob-deletionNum-fgColor);
+    }
   }
 
   &[data-tone="empty"] {
-    background: light-dark(
-      var(--mantine-color-gray-0),
-      var(--mantine-color-dark-7)
-    );
+    background: var(--diffBlob-emptyLine-bgColor);
+
+    &[data-kind="number"] {
+      background: var(--diffBlob-emptyNum-bgColor);
+    }
   }
 
   &[data-tone="hunk"],
   &[data-tone="gap"] {
-    background: light-dark(
-      var(--mantine-color-brand-0),
-      alpha(var(--mantine-color-brand-4), 0.12)
-    );
-    color: var(--mantine-color-dimmed);
+    background: var(--diffBlob-hunkLine-bgColor);
+    color: var(--diffBlob-hunkLine-fgColor);
+
+    &[data-kind="number"] {
+      background: var(--diffBlob-hunkNum-bgColor-rest);
+      color: var(--diffBlob-hunkNum-fgColor-rest);
+    }
   }
 }

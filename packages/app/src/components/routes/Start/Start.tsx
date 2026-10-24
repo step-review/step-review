@@ -1,59 +1,96 @@
-import { Alert, Container, Group, Stack, Text, Title } from "@mantine/core";
-import { IconInfoCircle } from "@tabler/icons-react";
-import { FormattedMessage } from "react-intl";
-import Logo from "../../design-system/Logo/Logo.tsx";
+import { Banner, Heading, Stack, Text } from "@primer/react";
+import { FormattedMessage, useIntl } from "react-intl";
+import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
+import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
-import ExampleReviewPreview from "../../widgets/ExampleReviewPreview/ExampleReviewPreview.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
 import ReviewDropzone from "../../widgets/ReviewDropzone/ReviewDropzone.tsx";
+import StoredReviewList from "../../widgets/StoredReviewList/StoredReviewList.tsx";
 import styles from "./Start.module.css";
 
 interface Props {
-  /** Set when a review page was opened without a loaded review. */
+  /** Set when a review page was opened for a review that isn't stored. */
   isReviewMissing?: boolean;
 }
 
+/**
+ * Walks new users through the steps, with the example review. Users with stored
+ * reviews get just what they work with.
+ */
 export default function Start({ isReviewMissing = false }: Props) {
+  const intl = useIntl();
+  const storedReviews = useStoredReviews();
+  // Being read from the browser's storage, which takes a moment.
+  if (storedReviews === undefined) {
+    return null;
+  }
+  const hasStoredReviews = storedReviews.length > 0;
   return (
     <div className={styles["page"]}>
-      <Group
-        component="header"
-        justify="center"
-        gap="md"
-        wrap="nowrap"
-        className={styles["header"]}
+      <div
+        className={styles["content"]}
+        data-new-user={!hasStoredReviews || undefined}
       >
-        <Logo size={56} />
-        <div>
-          <Title order={2} lh={1.2}>
-            Step Review
-          </Title>
-          <Text size="lg" c="dimmed" lh={1.3}>
-            <FormattedMessage defaultMessage="A better way to review PRs" />
-          </Text>
-        </div>
-      </Group>
-      <Container size={696} className={styles["container"]}>
-        <Stack gap={32} className={styles["content"]}>
+        <Stack
+          gap="spacious"
+          className={styles["steps"]}
+          data-new-user={!hasStoredReviews || undefined}
+        >
           {isReviewMissing && (
-            <Alert icon={<IconInfoCircle />}>
-              <FormattedMessage defaultMessage="Load the review file again to continue where you were." />
-            </Alert>
+            <Banner
+              variant="info"
+              title={intl.formatMessage({ defaultMessage: "Review not found" })}
+              hideTitle
+              description={
+                <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
+              }
+            />
           )}
-          <Stack gap="sm">
-            <Title order={4}>
-              <FormattedMessage defaultMessage="1. Send this prompt" />
-            </Title>
-            <PromptGenerator />
+          {!hasStoredReviews && (
+            <Stack gap="normal" className={styles["intro"]}>
+              <Text as="p">
+                <FormattedMessage
+                  defaultMessage="When AI writes the code, <strong>PRs get too large to read in full</strong>."
+                  values={{ strong: (chunks) => <strong>{chunks}</strong> }}
+                />
+              </Text>
+              <Text as="p">
+                <FormattedMessage
+                  defaultMessage="Step Review <strong>breaks them down into logical steps</strong>, so you can <strong>actually understand them</strong>, and keep a handle on your codebase. Try it:"
+                  values={{ strong: (chunks) => <strong>{chunks}</strong> }}
+                />
+              </Text>
+            </Stack>
+          )}
+          <Stack gap="condensed">
+            <Heading as="h2" variant="small" className={styles["stepHeading"]}>
+              {hasStoredReviews ? (
+                <FormattedMessage defaultMessage="Prompt" />
+              ) : (
+                <FormattedMessage defaultMessage="1. Give this prompt to your agent" />
+              )}
+            </Heading>
+            <PromptGenerator editable={hasStoredReviews} />
           </Stack>
-          <Stack gap="sm">
-            <Title order={4}>
-              <FormattedMessage defaultMessage="2. Open the review file" />
-            </Title>
+          <Stack gap="condensed">
+            <Heading as="h2" variant="small" className={styles["stepHeading"]}>
+              {hasStoredReviews ? (
+                <FormattedMessage defaultMessage="Review file" />
+              ) : (
+                <FormattedMessage defaultMessage="2. Open the review file it produces" />
+              )}
+            </Heading>
             <ReviewDropzone />
           </Stack>
-          <Stack gap="sm" className={styles["exampleSection"]}>
-            <Title order={4}>
+          {hasStoredReviews ? (
+            <Stack gap="condensed" className={styles["pastReviews"]}>
+              <Heading as="h2" variant="small">
+                <FormattedMessage defaultMessage="Past reviews" />
+              </Heading>
+              <StoredReviewList storedReviews={storedReviews} />
+            </Stack>
+          ) : (
+            <Heading as="h2" variant="small" className={styles["stepHeading"]}>
               <FormattedMessage
                 defaultMessage="3. Go through the PR ({exampleLink})"
                 values={{
@@ -64,13 +101,13 @@ export default function Start({ isReviewMissing = false }: Props) {
                   ),
                 }}
               />
-            </Title>
-            <div className={styles["example"]}>
-              <ExampleReviewPreview />
-            </div>
-          </Stack>
+            </Heading>
+          )}
         </Stack>
-      </Container>
+        <footer className={styles["brand"]}>
+          <AppBrand />
+        </footer>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,6 @@ interface Props {
   tone?: "context" | "addition" | "deletion" | "empty" | "hunk" | "gap";
   colSpan?: number;
   title?: string;
-  onClick?: () => void;
   children?: ReactNode;
 }
 
@@ -15,7 +14,6 @@ export default function DiffTableCell({
   tone = "context",
   colSpan,
   title,
-  onClick,
   children,
 }: Props) {
   return (
@@ -23,10 +21,8 @@ export default function DiffTableCell({
       className={styles["cell"]}
       data-kind={kind}
       data-tone={tone}
-      data-clickable={onClick ? true : undefined}
       colSpan={colSpan}
       title={title}
-      onClick={onClick}
     >
       {children}
     </td>

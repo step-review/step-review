@@ -1,26 +1,16 @@
-import {
-  Alert,
-  Button,
-  Paper,
-  SegmentedControl,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Banner, Stack } from "@primer/react";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
-import githubFileUrl from "../../../business-logic/rounds/githubFileUrl.ts";
-import { useCurrentRoundView } from "../../../business-logic/rounds/RoundViewProvider.tsx";
-import splitFileNotes from "../../../business-logic/rounds/splitFileNotes.ts";
-import type StepFileView from "../../../business-logic/rounds/StepFileView.ts";
-import type StepView from "../../../business-logic/rounds/StepView.ts";
+import splitFileNotes from "../../../business-logic/review-view/splitFileNotes.ts";
+import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
+import type StepView from "../../../business-logic/review-view/StepView.ts";
 import DiffView from "../DiffView/DiffView.tsx";
 import FileCardHeader from "../FileCardHeader/FileCardHeader.tsx";
 import NoteCard from "../NoteCard/NoteCard.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";
-import TargetComments from "../TargetComments/TargetComments.tsx";
 import styles from "./FileCard.module.css";
 
 interface Props {
@@ -37,16 +27,12 @@ export default function FileCard({
   areExplainersHidden,
 }: Props) {
   const intl = useIntl();
-  const roundView = useCurrentRoundView();
-  const roundNumber = roundView.round.number;
   const { dispatch } = useReviewState();
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
     isViewed || stepView.attention === "low",
   );
-  const [diffRange, setDiffRange] = useState<"pr" | "previousRound">("pr");
   const [isSummaryDiffShown, setIsSummaryDiffShown] = useState(false);
-  const [isAddingComment, setIsAddingComment] = useState(false);
   const fragment = useFragment();
   const isTargeted =
     fragment === `file-${stepFileView.id}` ||
@@ -61,18 +47,11 @@ export default function FileCard({
       setIsCollapsed(false);
     }
   }, [isTargeted]);
-  const isSincePreviousRound =
-    diffRange === "previousRound" && stepFileView.interdiffHunks !== null;
-  const hunks = isSincePreviousRound
-    ? stepFileView.interdiffHunks!
-    : stepFileView.hunks;
+  const { hunks } = stepFileView;
   const visibleNotes = stepFileView.notes.filter(
     (note) => !areExplainersHidden || note.kind === "issue",
   );
-  const { lineNotes, fileNotes } = splitFileNotes(
-    visibleNotes,
-    isSincePreviousRound ? [] : hunks,
-  );
+  const { lineNotes, fileNotes } = splitFileNotes(visibleNotes, hunks);
   const cardRef = useRef<HTMLDivElement>(null);
   const setViewed = (viewed: boolean) => {
     dispatch({
@@ -88,114 +67,63 @@ export default function FileCard({
   };
   const showDiff = !stepFileView.summary || isSummaryDiffShown;
   return (
-    <Paper
+    <div
       ref={cardRef}
-      withBorder
       id={`file-${stepFileView.id}`}
       className={styles["card"]}
     >
       <FileCardHeader
         stepFileView={stepFileView}
-        previousRoundNumber={roundView.previousRound?.number ?? null}
-        githubUrl={githubFileUrl(
-          roundView.round.data.target,
-          stepFileView.path,
-        )}
         isCollapsed={isCollapsed}
         isViewed={isViewed}
         onToggleCollapsed={() => setIsCollapsed((collapsed) => !collapsed)}
         onViewedChange={setViewed}
-        onAddComment={() => {
-          setIsCollapsed(false);
-          setIsAddingComment(true);
-        }}
       />
       {!isCollapsed && (
-        <Stack gap="xs" className={styles["body"]}>
+        <Stack gap="condensed" className={styles["body"]}>
           {fileNotes.length > 0 && (
-            <Stack gap={6} p="xs" pb={0} maw={760}>
+            <Stack gap="condensed" className={styles["fileNotes"]}>
               {fileNotes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}
             </Stack>
           )}
-          <div className={styles["comments"]}>
-            <TargetComments
-              roundNumber={roundNumber}
-              target={{
-                kind: "file",
-                stepId: stepView.id,
-                path: stepFileView.path,
-              }}
-              isAdding={isAddingComment}
-              onAddingDone={() => setIsAddingComment(false)}
-            />
-          </div>
-          {stepFileView.interdiffHunks && (
-            <SegmentedControl
-              size="xs"
-              ml="xs"
-              className={styles["rangeControl"]}
-              value={diffRange}
-              onChange={(value) => setDiffRange(value)}
-              data={[
-                {
-                  value: "pr",
-                  label: intl.formatMessage({ defaultMessage: "Whole PR" }),
-                },
-                {
-                  value: "previousRound",
-                  label: intl.formatMessage(
-                    { defaultMessage: "Since round {roundNumber}" },
-                    { roundNumber: roundView.previousRound?.number ?? 0 },
-                  ),
-                },
-              ]}
-            />
-          )}
-          {isSincePreviousRound && (
-            <Text size="xs" c="dimmed" px="xs">
-              <FormattedMessage defaultMessage="Only the changes since the previous round. Line notes are on the whole-PR diff." />
-            </Text>
-          )}
           {stepFileView.summary && (
-            <Alert
-              color="gray"
-              mx="xs"
-              title={
-                <FormattedMessage defaultMessage="Summary instead of the diff" />
+            <Banner
+              variant="info"
+              className={styles["summary"]}
+              title={intl.formatMessage({
+                defaultMessage: "Summary instead of the diff",
+              })}
+              description={
+                <ReviewMarkdown>{stepFileView.summary}</ReviewMarkdown>
               }
-            >
-              <ReviewMarkdown>{stepFileView.summary}</ReviewMarkdown>
-              <Button
-                size="compact-xs"
-                variant="subtle"
-                mt="xs"
-                onClick={() => setIsSummaryDiffShown((shown) => !shown)}
-              >
-                {isSummaryDiffShown ? (
-                  <FormattedMessage defaultMessage="Hide the diff" />
-                ) : (
-                  <FormattedMessage defaultMessage="Show the diff" />
-                )}
-              </Button>
-            </Alert>
+              primaryAction={
+                <Banner.PrimaryAction
+                  onClick={() => setIsSummaryDiffShown((shown) => !shown)}
+                >
+                  {isSummaryDiffShown ? (
+                    <FormattedMessage defaultMessage="Hide the diff" />
+                  ) : (
+                    <FormattedMessage defaultMessage="Show the diff" />
+                  )}
+                </Banner.PrimaryAction>
+              }
+            />
           )}
           {showDiff && stepFileView.fileDiff.binary && (
-            <Text size="sm" c="dimmed" px="xs" pb="xs">
+            <p className={styles["message"]}>
               <FormattedMessage defaultMessage="Binary file: no diff to show." />
-            </Text>
+            </p>
           )}
           {showDiff && !stepFileView.fileDiff.binary && hunks.length === 0 && (
-            <Text size="sm" c="dimmed" px="xs" pb="xs">
+            <p className={styles["message"]}>
               <FormattedMessage defaultMessage="No content changes." />
-            </Text>
+            </p>
           )}
           {showDiff && hunks.length > 0 && (
             <DiffView
               path={stepFileView.path}
-              stepId={stepView.id}
-              roundNumber={roundNumber}
               hunks={hunks}
               notes={lineNotes}
               layout={layout}
@@ -203,6 +131,6 @@ export default function FileCard({
           )}
         </Stack>
       )}
-    </Paper>
+    </div>
   );
 }

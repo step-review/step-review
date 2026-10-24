@@ -3,34 +3,32 @@ import { useState } from "react";
 import navigateTo from "../navigation/navigateTo.ts";
 import parseRoute from "../navigation/parseRoute.ts";
 import RouteName from "../navigation/RouteName.ts";
-import { useLoadedReviewContext } from "./LoadedReviewProvider.tsx";
+import routeReviewId from "../navigation/routeReviewId.ts";
+import saveReview from "../review-store/saveReview.ts";
 import loadReview from "./loadReview.ts";
 
 /**
- * Reads and loads a review file. Stays on the current review page (e.g. after a
- * reload), otherwise opens the latest round.
+ * Reads a review file and keeps it in the browser. Stays on the current page of
+ * the same review (e.g. after the agent reviewed the PR again), otherwise opens
+ * the review's overview.
  */
 export default function useOpenReviewFile() {
-  const { setLoadedReview } = useLoadedReviewContext();
   const [problems, setProblems] = useState<ReviewFileProblem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const openReviewFile = async (file: File) => {
     setIsLoading(true);
     try {
-      const result = loadReview(file.name, await file.text());
+      const text = await file.text();
+      const result = loadReview(file.name, text);
       if (!result.success) {
         setProblems(result.problems);
         return;
       }
       setProblems([]);
-      setLoadedReview(result.loadedReview);
-      const route = parseRoute(window.location.pathname);
-      const roundCount = result.loadedReview.reviewFile.rounds.length;
-      const isReviewRoute =
-        (route.name === RouteName.Overview || route.name === RouteName.Step) &&
-        route.roundNumber <= roundCount;
-      if (!isReviewRoute) {
-        navigateTo({ name: RouteName.Overview, roundNumber: roundCount });
+      const { reviewId } = result.loadedReview;
+      await saveReview(result.loadedReview, text);
+      if (routeReviewId(parseRoute(window.location.pathname)) !== reviewId) {
+        navigateTo({ name: RouteName.Overview, reviewId });
       }
     } finally {
       setIsLoading(false);

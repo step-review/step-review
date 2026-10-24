@@ -6,8 +6,8 @@ export default function routeHref(route: NavigableRoute): string {
     case RouteName.Start:
       return "/";
     case RouteName.Overview:
-      return `/rounds/${route.roundNumber}`;
+      return `/r/${encodeURIComponent(route.reviewId)}/overview`;
     case RouteName.Step:
-      return `/rounds/${route.roundNumber}/steps/${encodeURIComponent(route.stepId)}`;
+      return `/r/${encodeURIComponent(route.reviewId)}/steps/${encodeURIComponent(route.stepId)}`;
   }
 }

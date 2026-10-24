@@ -1,0 +1,43 @@
+/* 32px from the description, counting the gap of the stack around it, as on
+   the step page. */
+.issuesByStep {
+  max-width: 800px;
+  margin-top: var(--base-size-8);
+}
+
+.title {
+  margin-bottom: var(--base-size-8);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-body-size-large);
+
+  & th,
+  & td {
+    padding: 6px var(--base-size-8);
+    border-bottom: var(--borderWidth-default) solid var(--borderColor-muted);
+  }
+
+  & th {
+    color: var(--fgColor-muted);
+    font-size: var(--text-body-size-medium);
+    font-weight: var(--base-text-weight-semibold);
+  }
+}
+
+.stepHeader {
+  text-align: left;
+}
+
+.countHeader,
+.countCell {
+  width: 1%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.stepLink {
+  color: var(--fgColor-default);
+}

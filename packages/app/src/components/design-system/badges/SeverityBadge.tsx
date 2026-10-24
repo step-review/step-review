@@ -1,26 +1,15 @@
-import { Badge } from "@mantine/core";
+import { Label } from "@primer/react";
 import type { IssueSeverity } from "@step-review/review-format";
 import { FormattedMessage } from "react-intl";
+import severityLabelVariants from "./severityLabelVariants.ts";
 
 interface Props {
   severity: IssueSeverity;
 }
 
-const colors: Record<IssueSeverity, string> = {
-  blocker: "danger",
-  concern: "attention",
-  question: "question",
-  nit: "gray",
-};
-
 export default function SeverityBadge({ severity }: Props) {
   return (
-    <Badge
-      miw="max-content"
-      color={colors[severity]}
-      variant="filled"
-      size="xs"
-    >
+    <Label variant={severityLabelVariants[severity]}>
       {severity === "blocker" ? (
         <FormattedMessage defaultMessage="Blocker" />
       ) : severity === "concern" ? (
@@ -30,6 +19,6 @@ export default function SeverityBadge({ severity }: Props) {
       ) : (
         <FormattedMessage defaultMessage="Nit" />
       )}
-    </Badge>
+    </Label>
   );
 }

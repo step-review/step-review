@@ -6,19 +6,20 @@ export default function parseRoute(pathname: string): Route {
   if (normalizedPathname === "/") {
     return { name: RouteName.Start };
   }
-  const match = /^\/rounds\/([1-9]\d{0,3})(?:\/steps\/([^/]+))?$/u.exec(
-    normalizedPathname,
-  );
-  if (!match) {
-    return { name: RouteName.NotFound };
+  const overviewMatch = /^\/r\/([^/]+)\/overview$/u.exec(normalizedPathname);
+  if (overviewMatch) {
+    return {
+      name: RouteName.Overview,
+      reviewId: decodeURIComponent(overviewMatch[1]!),
+    };
   }
-  const roundNumber = Number(match[1]);
-  if (match[2] === undefined) {
-    return { name: RouteName.Overview, roundNumber };
+  const stepMatch = /^\/r\/([^/]+)\/steps\/([^/]+)$/u.exec(normalizedPathname);
+  if (stepMatch) {
+    return {
+      name: RouteName.Step,
+      reviewId: decodeURIComponent(stepMatch[1]!),
+      stepId: decodeURIComponent(stepMatch[2]!),
+    };
   }
-  return {
-    name: RouteName.Step,
-    roundNumber,
-    stepId: decodeURIComponent(match[2]),
-  };
+  return { name: RouteName.NotFound };
 }

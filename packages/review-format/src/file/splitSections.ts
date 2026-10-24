@@ -3,7 +3,7 @@ import type Section from "./Section.ts";
 import type SectionKind from "./SectionKind.ts";
 import sectionMarkerPrefix from "./sectionMarkerPrefix.ts";
 
-const sectionKinds: SectionKind[] = ["round", "diff", "interdiff"];
+const sectionKinds: SectionKind[] = ["review", "diff"];
 
 export default function splitSections(text: string): {
   sections: Section[];
@@ -26,7 +26,7 @@ export default function splitSections(text: string): {
         contentLines.push(line);
       } else if (line.trim() !== "") {
         problems.push({
-          message: `The file must start with a \`${sectionMarkerPrefix}round\` line.`,
+          message: `The file must start with a \`${sectionMarkerPrefix}review\` line.`,
           location: `line ${index + 1}`,
         });
         return { sections, problems };

@@ -13,26 +13,31 @@ interface Props {
   renderer: DiffRowRenderer;
 }
 
-const prefixes = { context: " ", addition: "+", deletion: "-" };
-
 export default function UnifiedDiffRows({ rows, renderer }: Props) {
   return rows.map((row) => {
     if (row.kind === "hunk") {
-      return <HunkHeaderRow key={row.id} hunk={row.hunk} colSpan={3} />;
+      return (
+        <HunkHeaderRow
+          key={row.id}
+          hunk={row.hunk}
+          numberColSpan={2}
+          codeColSpan={1}
+        />
+      );
     }
     if (row.kind === "gap") {
       return (
         <GapRow
           key={row.id}
           hiddenLineCount={row.hiddenLines.length}
-          colSpan={3}
+          numberColSpan={2}
+          codeColSpan={1}
           onExpand={() => renderer.onExpandGap(row.id)}
         />
       );
     }
     const { line } = row;
     const keys = lineKeys(line);
-    const side = line.type === "deletion" ? "old" : "new";
     return (
       <Fragment key={row.id}>
         <DiffTableRow
@@ -42,22 +47,13 @@ export default function UnifiedDiffRows({ rows, renderer }: Props) {
             renderer.onRowHoverChange(keys, isHovered)
           }
         >
-          <DiffTableCell
-            kind="number"
-            tone={line.type}
-            onClick={() => renderer.onLineNumberClick(line, side)}
-          >
+          <DiffTableCell kind="number" tone={line.type}>
             {line.oldLineNumber}
           </DiffTableCell>
-          <DiffTableCell
-            kind="number"
-            tone={line.type}
-            onClick={() => renderer.onLineNumberClick(line, side)}
-          >
+          <DiffTableCell kind="number" tone={line.type}>
             {line.newLineNumber}
           </DiffTableCell>
           <DiffTableCell kind="code" tone={line.type}>
-            {prefixes[line.type]}
             <DiffCode segments={renderer.getSegments(line)} tone={line.type} />
           </DiffTableCell>
         </DiffTableRow>

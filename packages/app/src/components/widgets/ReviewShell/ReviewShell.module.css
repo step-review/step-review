@@ -1,4 +1,53 @@
-.brand {
-  cursor: pointer;
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+.headerBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fgColor-default);
+  font: inherit;
+  font-weight: var(--base-text-weight-semibold);
   white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Fills the pane, keeping the recap at its bottom. */
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  /* Beside the content, the pane is as tall as the viewport, even on short
+     pages, and only the steps scroll, between the brand and the recap. */
+  @media (min-width: 48rem) {
+    height: 100vh;
+  }
+}
+
+/* The recap and the brand line up with the text of the steps. */
+.recap {
+  padding: var(--base-size-16) var(--base-size-24);
+  border-top: var(--borderWidth-default) solid var(--borderColor-default);
+}
+
+.navigation {
+  flex: 1;
+  padding: var(--base-size-8);
+
+  @media (min-width: 48rem) {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+.brand {
+  padding: var(--base-size-24);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
 }

@@ -23,12 +23,7 @@ export default function SplitDiffRows({ rows, renderer }: Props) {
       ];
     }
     return [
-      <DiffTableCell
-        key="number"
-        kind="number"
-        tone={line.type}
-        onClick={() => renderer.onLineNumberClick(line, side)}
-      >
+      <DiffTableCell key="number" kind="number" tone={line.type}>
         {side === "old" ? line.oldLineNumber : line.newLineNumber}
       </DiffTableCell>,
       <DiffTableCell key="code" kind="code" tone={line.type}>
@@ -38,14 +33,22 @@ export default function SplitDiffRows({ rows, renderer }: Props) {
   };
   return rows.map((row) => {
     if (row.kind === "hunk") {
-      return <HunkHeaderRow key={row.id} hunk={row.hunk} colSpan={4} />;
+      return (
+        <HunkHeaderRow
+          key={row.id}
+          hunk={row.hunk}
+          numberColSpan={1}
+          codeColSpan={3}
+        />
+      );
     }
     if (row.kind === "gap") {
       return (
         <GapRow
           key={row.id}
           hiddenLineCount={row.hiddenLines.length}
-          colSpan={4}
+          numberColSpan={1}
+          codeColSpan={3}
           onExpand={() => renderer.onExpandGap(row.id)}
         />
       );

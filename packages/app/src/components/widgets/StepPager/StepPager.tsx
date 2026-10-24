@@ -1,30 +1,29 @@
-import { Button, Group } from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@primer/octicons-react";
+import { Button, Stack } from "@primer/react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import type RoundView from "../../../business-logic/rounds/RoundView.ts";
+import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 
 interface Props {
-  roundView: RoundView;
+  reviewView: ReviewView;
   stepIndex: number;
 }
 
-export default function StepPager({ roundView, stepIndex }: Props) {
-  const roundNumber = roundView.round.number;
-  const previousStep = roundView.steps[stepIndex - 1];
-  const nextStep = roundView.steps[stepIndex + 1];
+export default function StepPager({ reviewView, stepIndex }: Props) {
+  const { reviewId } = reviewView;
+  const previousStep = reviewView.steps[stepIndex - 1];
+  const nextStep = reviewView.steps[stepIndex + 1];
   return (
-    <Group justify="space-between">
+    <Stack direction="horizontal" justify="space-between" wrap="wrap">
       <Button
-        variant="default"
-        leftSection={<IconArrowLeft size={16} />}
+        leadingVisual={ArrowLeftIcon}
         onClick={() =>
           navigateTo(
             previousStep
-              ? { name: RouteName.Step, roundNumber, stepId: previousStep.id }
-              : { name: RouteName.Overview, roundNumber },
+              ? { name: RouteName.Step, reviewId, stepId: previousStep.id }
+              : { name: RouteName.Overview, reviewId },
           )
         }
       >
@@ -36,18 +35,15 @@ export default function StepPager({ roundView, stepIndex }: Props) {
       </Button>
       {nextStep && (
         <Button
-          rightSection={<IconArrowRight size={16} />}
+          variant="primary"
+          trailingVisual={ArrowRightIcon}
           onClick={() =>
-            navigateTo({
-              name: RouteName.Step,
-              roundNumber,
-              stepId: nextStep.id,
-            })
+            navigateTo({ name: RouteName.Step, reviewId, stepId: nextStep.id })
           }
         >
           <StepTitle step={nextStep} />
         </Button>
       )}
-    </Group>
+    </Stack>
   );
 }

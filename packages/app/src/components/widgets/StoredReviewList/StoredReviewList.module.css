@@ -1,0 +1,46 @@
+/* Shrinks to the height its container leaves, keeping one review visible. */
+.list {
+  min-height: 3.5rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--bgColor-default);
+  border: var(--borderWidth-thin) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-medium);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  padding: var(--base-size-8) var(--base-size-12);
+
+  & + & {
+    border-top: var(--borderWidth-thin) solid var(--borderColor-muted);
+  }
+}
+
+.details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  min-width: 0;
+  font-weight: var(--base-text-weight-semibold);
+}
+
+.fileName {
+  min-width: 0;
+  color: var(--fgColor-muted);
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
+}
+
+.deleteButton {
+  --button-invisible-iconColor-rest: var(--fgColor-danger);
+  --button-invisible-iconColor-hover: var(--fgColor-danger);
+}

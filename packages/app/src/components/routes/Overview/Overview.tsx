@@ -1,75 +1,59 @@
-import { Stack, Title } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
-import { FormattedMessage } from "react-intl";
+import { Stack } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
+import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
+import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
-import RoundViewProvider from "../../../business-logic/rounds/RoundViewProvider.tsx";
-import useRoundView from "../../../business-logic/rounds/useRoundView.ts";
-import IssuesIndex from "../../widgets/IssuesIndex/IssuesIndex.tsx";
+import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
+import IssuesByStep from "../../widgets/IssuesByStep/IssuesByStep.tsx";
 import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
 import OverviewSummary from "../../widgets/OverviewSummary/OverviewSummary.tsx";
-import PreviousRoundSummary from "../../widgets/PreviousRoundSummary/PreviousRoundSummary.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
 import ReviewWarnings from "../../widgets/ReviewWarnings/ReviewWarnings.tsx";
-import StepList from "../../widgets/StepList/StepList.tsx";
-import NotFound from "../NotFound/NotFound.tsx";
 import Start from "../Start/Start.tsx";
+import styles from "./Overview.module.css";
 
-interface Props {
-  roundNumber: number;
-}
-
-export default function Overview({ roundNumber }: Props) {
+export default function Overview() {
   const { loadedReview } = useLoadedReviewContext();
-  const roundView = useRoundView(roundNumber);
+  const reviewView = useReviewView();
   useScrollToFragment();
   useHotkeys([
     [
       "ArrowRight",
       () => {
-        const firstStep = roundView?.steps[0];
+        const firstStep = reviewView?.steps[0];
         if (firstStep) {
           navigateTo({
             name: RouteName.Step,
-            roundNumber,
+            reviewId: reviewView.reviewId,
             stepId: firstStep.id,
           });
         }
       },
     ],
   ]);
-  if (!loadedReview) {
+  // Being read from the browser's storage, which takes a moment.
+  if (loadedReview === undefined) {
+    return null;
+  }
+  if (!loadedReview || !reviewView) {
     return <Start isReviewMissing />;
   }
-  if (!roundView) {
-    return <NotFound />;
-  }
   return (
-    <RoundViewProvider roundView={roundView}>
+    <ReviewViewProvider reviewView={reviewView}>
       <ReviewShell
         loadedReview={loadedReview}
-        roundView={roundView}
+        reviewView={reviewView}
         activeStepId={null}
       >
-        <Stack gap="xl" maw={1100}>
+        <Stack gap="spacious" className={styles["content"]}>
           <OverviewHeader />
-          <ReviewWarnings
-            loadedReview={loadedReview}
-            roundNumber={roundNumber}
-          />
+          <ReviewWarnings loadedReview={loadedReview} />
           <OverviewSummary />
-          <PreviousRoundSummary />
-          <Stack gap="sm">
-            <Title order={3}>
-              <FormattedMessage defaultMessage="Steps" />
-            </Title>
-            <StepList />
-          </Stack>
-          <IssuesIndex />
+          <IssuesByStep />
         </Stack>
       </ReviewShell>
-    </RoundViewProvider>
+    </ReviewViewProvider>
   );
 }

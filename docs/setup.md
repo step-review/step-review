@@ -18,7 +18,7 @@ After cloning the repository:
 
 Run `pnpm dev` and open the URL printed by Vite (normally
 `http://127.0.0.1:5173`). The dev server also serves `/SKILL.md` and
-`/schema/v1.json`.
+`/schema/v3.json`.
 
 To try the app, have a coding agent write a review of any repository (see
 `packages/app/public/SKILL.md`), then drop the file on the start page.
@@ -39,9 +39,6 @@ From the repository root:
 - `pnpm test`
 - `pnpm qa`: all of the above checks.
 - `pnpm --filter <package> <script>`: run a package's script.
-- `pnpm --filter @step-review/app capture-screenshots`: recapture the start
-  page's screenshots of the example review (`packages/app/public/examples/`).
-  Run it after visible changes to the review pages.
 
 ## Editor setup
 

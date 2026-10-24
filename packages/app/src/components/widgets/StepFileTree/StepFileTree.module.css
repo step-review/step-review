@@ -1,0 +1,17 @@
+.tree {
+  /* Mona Sans tucks the dot of `worker.ts` under the `r`. */
+  font-kerning: none;
+}
+
+.fileName {
+  display: block;
+  min-width: 0;
+
+  &[data-viewed] {
+    color: var(--fgColor-muted);
+  }
+}
+
+.viewedIcon {
+  color: var(--fgColor-success);
+}

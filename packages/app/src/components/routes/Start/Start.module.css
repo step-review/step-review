@@ -1,56 +1,94 @@
-/* Fills the viewport without scrolling: when the content doesn't fit, the
-   example screenshot shrinks to the height the other sections leave. */
 .page {
-  /* Mantine's dimmed text is too faint for the start page's key lines. */
-  --mantine-color-dimmed: light-dark(
-    color-mix(
-      in srgb,
-      var(--mantine-color-gray-6),
-      var(--mantine-color-gray-7)
-    ),
-    color-mix(in srgb, var(--mantine-color-dark-1), var(--mantine-color-dark-2))
-  );
   background: light-dark(
-    color-mix(
-      in srgb,
-      var(--mantine-color-blue-0) 40%,
-      var(--mantine-color-white)
-    ),
-    var(--mantine-color-body)
+    color-mix(in srgb, var(--bgColor-accent-muted) 40%, var(--bgColor-default)),
+    var(--bgColor-default)
   );
   display: flex;
   flex-direction: column;
-  gap: calc(var(--mantine-spacing-xl) * 1.5);
-  height: 100dvh;
-  padding-block: calc(var(--mantine-spacing-xl) * 1.5);
+  min-height: 100dvh;
+
+  /* Fills the viewport without scrolling: when the content doesn't fit, the
+     past reviews shrink to the height the other sections leave. When they
+     can't shrink enough, the page scrolls itself, so its background still fills
+     the viewport. */
+  @media (min-width: 48rem) {
+    height: 100dvh;
+    overflow-y: auto;
+  }
 }
 
-.header {
+/* As in the sidebar at its default width, at the bottom. */
+.brand {
+  grid-row: 4;
   flex: none;
-  margin-bottom: var(--mantine-spacing-xl);
+  box-sizing: border-box;
+  width: 360px;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: var(--base-size-24) 0;
+
+  /* On narrow screens, it lines up with the content instead, as the column
+     isn't wide enough for the sidebar's padding. */
+  @media (min-width: 48rem) {
+    padding-inline: var(--base-size-24);
+  }
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  flex: 0 1 auto;
-  width: 100%;
-  min-height: 0;
+.intro {
+  line-height: var(--base-text-lineHeight-normal);
+  margin-block-end: var(--base-size-16);
+
+  & p {
+    margin: 0;
+  }
 }
 
 .content {
-  flex: 0 1 auto;
-  min-height: 0;
-}
-
-.exampleSection {
-  flex: 0 1 auto;
-  min-height: 10rem;
-}
-
-.example {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  gap: var(--base-size-24);
+  box-sizing: border-box;
   width: 100%;
+  max-width: calc(696px + 2 * var(--base-size-16));
+  min-height: 0;
+  margin-inline: auto;
+  padding: var(--base-size-40) var(--base-size-16) var(--base-size-16);
+
+  &[data-new-user] {
+    --content-font-scale: 1.5;
+    --prompt-font-size: calc(var(--base-size-16) + var(--base-size-2));
+    --step-heading-font-size: calc(var(--base-size-20) + var(--base-size-2));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) max-content minmax(0, 2fr) max-content;
+    row-gap: var(--base-size-8);
+    font-size: calc(var(--base-size-16) * var(--content-font-scale));
+
+    @media (width < 48rem) {
+      --content-font-scale: 1.375;
+      --prompt-font-size: var(--base-size-16);
+      --step-heading-font-size: var(--base-size-20);
+    }
+  }
+}
+
+.stepHeading {
+  font-size: var(--step-heading-font-size, var(--text-title-size-small));
+}
+
+.steps {
+  flex: 1 1 auto;
+  min-height: min-content;
+
+  &[data-new-user] {
+    grid-row: 2;
+    flex: none;
+    row-gap: var(--base-size-40);
+  }
+}
+
+.pastReviews {
+  flex: 0 1 auto;
   min-height: 0;
 }

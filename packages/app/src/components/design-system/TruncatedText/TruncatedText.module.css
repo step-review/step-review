@@ -1,0 +1,12 @@
+.text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  /* A right-to-left box puts the ellipsis at the start. */
+  &[data-truncate-from="start"] {
+    direction: rtl;
+    text-align: left;
+  }
+}

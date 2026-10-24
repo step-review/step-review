@@ -1,6 +1,6 @@
+import type LineRange from "../data/types/LineRange.ts";
 import type FileDiff from "../diff/FileDiff.ts";
 import type Hunk from "../diff/Hunk.ts";
-import type LineRange from "../round/types/LineRange.ts";
 
 /**
  * Returns the hunks of a file that a step shows: all of them without ranges,

@@ -1,0 +1,40 @@
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--base-size-12);
+  font-size: var(--text-body-size-medium);
+}
+
+.pullRequestLabel {
+  color: var(--fgColor-muted);
+  font-size: var(--text-title-size-medium);
+}
+
+.refs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--base-size-4);
+  color: var(--fgColor-muted);
+}
+
+.branch {
+  display: inline-flex;
+  align-items: center;
+}
+
+.lineCounts {
+  display: inline-flex;
+  gap: var(--base-size-4);
+}
+
+.additions {
+  color: var(--fgColor-success);
+  font-weight: var(--base-text-weight-semibold);
+}
+
+.deletions {
+  color: var(--fgColor-danger);
+  font-weight: var(--base-text-weight-semibold);
+}

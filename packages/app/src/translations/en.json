@@ -1,51 +1,21 @@
 {
+  "AppBrand.tsx_c5UR7r": {
+    "defaultMessage": "A better way to review PRs"
+  },
   "AttentionBadge.tsx_HRTugO": {
     "defaultMessage": "Read carefully"
   },
   "AttentionBadge.tsx_v5MVrw": {
     "defaultMessage": "Skim"
   },
-  "CommentCard.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
+  "AttentionIcon.tsx_HRTugO": {
+    "defaultMessage": "Read carefully"
   },
-  "CommentCard.tsx_vbDFvq": {
-    "defaultMessage": "Your comment"
-  },
-  "CommentCard.tsx_wEQDC6": {
-    "defaultMessage": "Edit"
-  },
-  "CommentEditor.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "CommentEditor.tsx_AIDV4F": {
-    "defaultMessage": "Save comment"
-  },
-  "CommentEditor.tsx_Z9aaZ0": {
-    "defaultMessage": "Your comment, for the agent"
+  "AttentionIcon.tsx_v5MVrw": {
+    "defaultMessage": "Skim"
   },
   "CopyIconButton.tsx_p556q3": {
     "defaultMessage": "Copied"
-  },
-  "ExampleReviewPreview.tsx_ft40Bq": {
-    "defaultMessage": "Screenshot of a review step: the diff, with notes from the coding agent."
-  },
-  "FeedbackModal.tsx_Ejhdi4": {
-    "defaultMessage": "Feedback"
-  },
-  "FeedbackModal.tsx_JudhTj": {
-    "defaultMessage": "Download JSON"
-  },
-  "FeedbackModal.tsx_VdMzek": {
-    "defaultMessage": "Your verdicts on the issues and your comments, as Markdown. Paste it into the conversation with your coding agent, or into a PR comment."
-  },
-  "FeedbackModal.tsx_aRsvyM": {
-    "defaultMessage": "Copy as Markdown"
-  },
-  "FeedbackModal.tsx_vdmu+g": {
-    "defaultMessage": "Download Markdown"
-  },
-  "FileCard.tsx_7pgZ/R": {
-    "defaultMessage": "Since round {roundNumber}"
   },
   "FileCard.tsx_DMq9Ip": {
     "defaultMessage": "Binary file: no diff to show."
@@ -56,12 +26,6 @@
   "FileCard.tsx_LOz1a8": {
     "defaultMessage": "No content changes."
   },
-  "FileCard.tsx_OrgU+P": {
-    "defaultMessage": "Whole PR"
-  },
-  "FileCard.tsx_ijGqbf": {
-    "defaultMessage": "Only the changes since the previous round. Line notes are on the whole-PR diff."
-  },
   "FileCard.tsx_sTeP5e": {
     "defaultMessage": "Show the diff"
   },
@@ -71,32 +35,11 @@
   "FileCardHeader.tsx_173lRp": {
     "defaultMessage": "Show or hide the diff"
   },
-  "FileCardHeader.tsx_4U8CMv": {
-    "defaultMessage": "Open on GitHub"
-  },
   "FileCardHeader.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
   },
-  "FileCardHeader.tsx_GpV+Pi": {
-    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
-  },
   "FileCardHeader.tsx_s3aLc+": {
     "defaultMessage": "Copy the path"
-  },
-  "FileCardHeader.tsx_yqegxX": {
-    "defaultMessage": "Comment on the file"
-  },
-  "FileChangeBadge.tsx_5qWo1m": {
-    "defaultMessage": "Changed since round {roundNumber}"
-  },
-  "FileChangeBadge.tsx_PLUzwy": {
-    "defaultMessage": "Changed"
-  },
-  "FileChangeBadge.tsx_bW7B87": {
-    "defaultMessage": "New"
-  },
-  "FileChangeBadge.tsx_hDl8xv": {
-    "defaultMessage": "Not in the PR at round {roundNumber}"
   },
   "FileStatusBadge.tsx_KQvWvD": {
     "defaultMessage": "Deleted"
@@ -113,41 +56,29 @@
   "FileStatusBadge.tsx_tOxzip": {
     "defaultMessage": "Modified"
   },
-  "FileTreeDrawer.tsx_m4vqJl": {
-    "defaultMessage": "Files"
+  "GapRow.tsx_0oLj/t": {
+    "defaultMessage": "Expand"
   },
-  "GapRow.tsx_p+3Agd": {
-    "defaultMessage": "Show {hiddenLineCount} hidden lines"
+  "GapRow.tsx_phtN15": {
+    "defaultMessage": "{hiddenLineCount, plural, one {# hidden line} other {# hidden lines}}"
   },
-  "IssueVerdictControls.tsx_9HU8vw": {
-    "defaultMessage": "Reply"
+  "IssuesByStep.tsx_KV/9Hv": {
+    "defaultMessage": "Questions"
   },
-  "IssueVerdictControls.tsx_ORC+Rr": {
-    "defaultMessage": "Your reply, for the agent"
+  "IssuesByStep.tsx_NhIxVx": {
+    "defaultMessage": "Nits"
   },
-  "IssueVerdictControls.tsx_TDaF6J": {
-    "defaultMessage": "Dismiss"
+  "IssuesByStep.tsx_jXd/F7": {
+    "defaultMessage": "Step"
   },
-  "IssueVerdictControls.tsx_sjzLbX": {
-    "defaultMessage": "Accept"
+  "IssuesByStep.tsx_ngW8nc": {
+    "defaultMessage": "Issue breakdown"
   },
-  "IssuesIndex.tsx_1MnSfo": {
-    "defaultMessage": "Dismissed"
+  "IssuesByStep.tsx_qeNrfT": {
+    "defaultMessage": "Blockers"
   },
-  "IssuesIndex.tsx_Wj5TbN": {
-    "defaultMessage": "Issues"
-  },
-  "IssuesIndex.tsx_aFyFm0": {
-    "defaultMessage": "Accepted"
-  },
-  "NextRoundModal.tsx_8qlI8r": {
-    "defaultMessage": "When the PR changes, ask your agent to add a round to the review file, then drop the file here again."
-  },
-  "NextRoundModal.tsx_c+pa/J": {
-    "defaultMessage": "Copy the prompt"
-  },
-  "NextRoundModal.tsx_gWQUre": {
-    "defaultMessage": "Prompt for the next round"
+  "IssuesByStep.tsx_xg6/fp": {
+    "defaultMessage": "Concerns"
   },
   "NotFound.tsx_osJs96": {
     "defaultMessage": "Page not found."
@@ -161,35 +92,29 @@
   "NoteCard.tsx_qMePPG": {
     "defaultMessage": "Note"
   },
-  "Overview.tsx_huCHmk": {
-    "defaultMessage": "Steps"
+  "NoteCounts.tsx_7hxyNF": {
+    "defaultMessage": "{issueCount, plural, one {# issue} other {# issues}}"
   },
-  "OverviewHeader.tsx_4RJvam": {
-    "defaultMessage": "Overview · round {roundNumber} · {date}"
+  "NoteCounts.tsx_cr9pr9": {
+    "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
   },
-  "OverviewHeader.tsx_GpV+Pi": {
-    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
+  "OverviewHeader.tsx_3PcNZ7": {
+    "defaultMessage": "Copy \"{branchName}\""
   },
   "OverviewHeader.tsx_Nvd511": {
     "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
   },
+  "OverviewHeader.tsx_VsxSiL": {
+    "defaultMessage": "<link>PR</link> review"
+  },
+  "OverviewHeader.tsx_ZLnOd3": {
+    "defaultMessage": "<link>PR {pullRequestNumber, number, ::group-off}</link> review"
+  },
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"
   },
-  "PreviousRoundSummary.tsx_5SYu/g": {
-    "defaultMessage": "Since round {roundNumber} ({commit})"
-  },
-  "PreviousRoundSummary.tsx_6KhoSk": {
-    "defaultMessage": "Still open"
-  },
-  "PreviousRoundSummary.tsx_W6nSYE": {
-    "defaultMessage": "Resolved"
-  },
-  "PreviousRoundSummary.tsx_Y+zA1G": {
-    "defaultMessage": "Obsolete"
-  },
-  "PreviousRoundSummary.tsx_dodTBy": {
-    "defaultMessage": "No longer in the PR"
+  "ProjectCredits.tsx_wTNySU": {
+    "defaultMessage": "by"
   },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
@@ -203,9 +128,6 @@
   "ReloadDropzone.tsx_/YcyUn": {
     "defaultMessage": "Drop the review file to reload it"
   },
-  "ReviewDropzone.tsx_4yZKai": {
-    "defaultMessage": "or drop it anywhere here"
-  },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
   },
@@ -218,59 +140,62 @@
   "ReviewDropzone.tsx_p5lOej": {
     "defaultMessage": "Drop the review file to open it"
   },
-  "ReviewMenu.tsx_4RPdv1": {
-    "defaultMessage": "Export viewed files and feedback"
+  "ReviewDropzone.tsx_pF/caX": {
+    "defaultMessage": "or drop it anywhere on this page"
   },
-  "ReviewMenu.tsx_581Xwm": {
-    "defaultMessage": "Reset viewed files"
+  "ReviewRecap.tsx_2pwM03": {
+    "defaultMessage": "Export review state"
   },
-  "ReviewMenu.tsx_Gy09SB": {
+  "ReviewRecap.tsx_Gy09SB": {
     "defaultMessage": "The file is not a valid review state."
   },
-  "ReviewMenu.tsx_P5HOgu": {
-    "defaultMessage": "Import viewed files and feedback"
+  "ReviewRecap.tsx_JzmbIf": {
+    "defaultMessage": "Reset review state"
   },
-  "ReviewMenu.tsx_S8/4ZI": {
-    "defaultMessage": "More actions"
+  "ReviewRecap.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
   },
-  "ReviewMenu.tsx_bhQL99": {
-    "defaultMessage": "Mark every file as not viewed?"
+  "ReviewRecap.tsx_Kx622U": {
+    "defaultMessage": "Import review state"
   },
-  "ReviewMenu.tsx_cNrFsL": {
+  "ReviewRecap.tsx_OLCgvh": {
+    "defaultMessage": "The review file and its review state will be removed from this browser."
+  },
+  "ReviewRecap.tsx_OtMych": {
+    "defaultMessage": "Delete review"
+  },
+  "ReviewRecap.tsx_R+J5ox": {
+    "defaultMessage": "Review"
+  },
+  "ReviewRecap.tsx_agjgCY": {
+    "defaultMessage": "Every file will be marked as not viewed."
+  },
+  "ReviewRecap.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
   },
-  "ReviewMenu.tsx_gWQUre": {
-    "defaultMessage": "Prompt for the next round"
+  "ReviewRecap.tsx_jbbK0Z": {
+    "defaultMessage": "Delete review?"
   },
-  "ReviewSearch.tsx_9BK0YE": {
-    "defaultMessage": "Files in no step"
+  "ReviewRecap.tsx_jm/spn": {
+    "defaultMessage": "Reset"
   },
-  "ReviewSearch.tsx_bgFHH5": {
-    "defaultMessage": "Jump to"
+  "ReviewRecap.tsx_kvdGU5": {
+    "defaultMessage": "Review actions"
   },
-  "ReviewSearch.tsx_bz4Mm+": {
-    "defaultMessage": "Nothing found"
+  "ReviewRecap.tsx_qjGckA": {
+    "defaultMessage": "Reset review state?"
   },
-  "ReviewSearch.tsx_vfoiY7": {
-    "defaultMessage": "Search steps, files and notes"
+  "ReviewShell.tsx_huCHmk": {
+    "defaultMessage": "Steps"
   },
-  "ReviewShell.tsx_Ejhdi4": {
-    "defaultMessage": "Feedback"
-  },
-  "ReviewShell.tsx_peRgj6": {
-    "defaultMessage": "All files"
+  "ReviewShell.tsx_zGgSXZ": {
+    "defaultMessage": "Show or hide the steps"
   },
   "ReviewWarnings.tsx_7oiKM4": {
     "defaultMessage": "Copy for your agent"
   },
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
-  },
-  "RoundSwitcher.tsx_dzFlGY": {
-    "defaultMessage": "Review round"
-  },
-  "RoundSwitcher.tsx_mfqFtN": {
-    "defaultMessage": "Round {roundNumber} · {date} · {commit}"
   },
   "SeverityBadge.tsx_9eQkfo": {
     "defaultMessage": "Concern"
@@ -284,26 +209,44 @@
   "SeverityBadge.tsx_mjXHSf": {
     "defaultMessage": "Blocker"
   },
-  "Start.tsx_/cghO8": {
-    "defaultMessage": "Load the review file again to continue where you were."
+  "Start.tsx_3sbmjt": {
+    "defaultMessage": "Past reviews"
   },
-  "Start.tsx_Aetvq9": {
-    "defaultMessage": "1. Send this prompt"
+  "Start.tsx_5jA9ee": {
+    "defaultMessage": "2. Open the review file it produces"
+  },
+  "Start.tsx_NGb5sK": {
+    "defaultMessage": "Step Review <strong>breaks them down into logical steps</strong>, so you can <strong>actually understand them</strong>, and keep a handle on your codebase. Try it:"
   },
   "Start.tsx_Reg+fk": {
     "defaultMessage": "3. Go through the PR ({exampleLink})"
   },
-  "Start.tsx_c5UR7r": {
-    "defaultMessage": "A better way to review PRs"
+  "Start.tsx_dqEFrF": {
+    "defaultMessage": "Review not found"
   },
-  "Start.tsx_i0i2E6": {
-    "defaultMessage": "2. Open the review file"
+  "Start.tsx_g8X9UN": {
+    "defaultMessage": "When AI writes the code, <strong>PRs get too large to read in full</strong>."
+  },
+  "Start.tsx_gkJvs5": {
+    "defaultMessage": "This review isn't saved in this browser. Open its file to continue."
+  },
+  "Start.tsx_iWKE8s": {
+    "defaultMessage": "Prompt"
+  },
+  "Start.tsx_jAabSp": {
+    "defaultMessage": "Review file"
+  },
+  "Start.tsx_rJ2mF8": {
+    "defaultMessage": "1. Give this prompt to your agent"
   },
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
   },
-  "StepHeader.tsx_7DgWhv": {
-    "defaultMessage": "Comment on the step"
+  "StepFileTree.tsx_D/0ALU": {
+    "defaultMessage": "Viewed"
+  },
+  "StepFileTree.tsx_hvXAqx": {
+    "defaultMessage": "Files of the step"
   },
   "StepHeader.tsx_JENnli": {
     "defaultMessage": "These files changed in the PR, but the review doesn't assign them to a step."
@@ -311,20 +254,11 @@
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
   },
-  "StepList.tsx_XfsLLb": {
-    "defaultMessage": "{changedCount} changed"
+  "StepNavigation.tsx_/O2KYl": {
+    "defaultMessage": "0. Overview"
   },
-  "StepList.tsx_heFjBO": {
-    "defaultMessage": "{viewedCount} / {totalCount} viewed"
-  },
-  "StepNavigation.tsx_9uOFF3": {
-    "defaultMessage": "Overview"
-  },
-  "StepNavigation.tsx_XfsLLb": {
-    "defaultMessage": "{changedCount} changed"
-  },
-  "StepNavigation.tsx_kqGsf4": {
-    "defaultMessage": "{viewedCount} of {totalCount} files viewed"
+  "StepNavigation.tsx_huCHmk": {
+    "defaultMessage": "Steps"
   },
   "StepPager.tsx_9uOFF3": {
     "defaultMessage": "Overview"
@@ -338,13 +272,28 @@
   "StepToolbar.tsx_I5Wd5l": {
     "defaultMessage": "Mark all as viewed"
   },
-  "StepToolbar.tsx_LTHsul": {
-    "defaultMessage": "Only files changed since round {roundNumber}"
-  },
   "StepToolbar.tsx_LzD3TV": {
     "defaultMessage": "Unified"
   },
   "StepToolbar.tsx_Nm1nyY": {
     "defaultMessage": "Only issues"
+  },
+  "StepToolbar.tsx_dUFzeV": {
+    "defaultMessage": "Diff layout"
+  },
+  "StoredReviewList.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "StoredReviewList.tsx_OLCgvh": {
+    "defaultMessage": "The review file and its review state will be removed from this browser."
+  },
+  "StoredReviewList.tsx_OtMych": {
+    "defaultMessage": "Delete review"
+  },
+  "StoredReviewList.tsx_jbbK0Z": {
+    "defaultMessage": "Delete review?"
+  },
+  "ViewedAndNoteCounts.tsx_zz6max": {
+    "defaultMessage": "{viewedCount}/{totalCount} viewed"
   }
 }

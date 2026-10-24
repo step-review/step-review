@@ -1,50 +1,47 @@
-import type RoundView from "../rounds/RoundView.ts";
 import type FileTreeNode from "./FileTreeNode.ts";
 
+type FolderNode<File> = Extract<FileTreeNode<File>, { kind: "folder" }>;
+
 /**
- * Builds the tree of the round's files. Folders with a single child folder are
- * merged (`src/components`), as in most code hosts.
+ * Arranges files in a tree of folders, keeping their order. A folder whose only
+ * child is a folder is merged with it (`src/components`), as GitHub does.
  */
-export default function buildFileTree(roundView: RoundView): FileTreeNode[] {
-  const root: FileTreeNode = { value: "", label: "", children: [], file: null };
-  for (const step of roundView.steps) {
-    for (const file of step.files) {
-      const segments = file.path.split("/");
-      let parent = root;
-      for (const [index, segment] of segments.entries()) {
-        const isFile = index === segments.length - 1;
-        const value = isFile
-          ? `file:${file.id}`
-          : `dir:${segments.slice(0, index + 1).join("/")}`;
-        let node = parent.children.find((child) => child.value === value);
-        if (!node) {
-          node = {
-            value,
-            label: segment,
-            children: [],
-            file: isFile ? { stepView: step, stepFileView: file } : null,
-          };
-          parent.children.push(node);
-        }
-        parent = node;
+export default function buildFileTree<File>(
+  files: File[],
+  getPath: (file: File) => string,
+): FileTreeNode<File>[] {
+  const root: FileTreeNode<File>[] = [];
+  for (const file of files) {
+    const segments = getPath(file).split("/");
+    let children = root;
+    for (const [index, segment] of segments.slice(0, -1).entries()) {
+      const path = segments.slice(0, index + 1).join("/");
+      let folder = children.find(
+        (node): node is FolderNode<File> =>
+          node.kind === "folder" && node.path === path,
+      );
+      if (!folder) {
+        folder = { kind: "folder", path, label: segment, children: [] };
+        children.push(folder);
       }
+      children = folder.children;
     }
+    children.push({ kind: "file", label: segments.at(-1)!, file });
   }
-  return root.children.map(mergeSingleChildFolders);
+  return root.map(mergeSingleChildFolders);
 }
 
-function mergeSingleChildFolders(node: FileTreeNode): FileTreeNode {
-  let current = node;
-  while (
-    !current.file &&
-    current.children.length === 1 &&
-    !current.children[0]!.file
-  ) {
-    const child = current.children[0]!;
-    current = { ...child, label: `${current.label}/${child.label}` };
+function mergeSingleChildFolders<File>(
+  node: FileTreeNode<File>,
+): FileTreeNode<File> {
+  if (node.kind === "file") {
+    return node;
   }
-  return {
-    ...current,
-    children: current.children.map(mergeSingleChildFolders),
-  };
+  let folder = node;
+  let onlyChild = folder.children.length === 1 ? folder.children[0] : null;
+  while (onlyChild?.kind === "folder") {
+    folder = { ...onlyChild, label: `${folder.label}/${onlyChild.label}` };
+    onlyChild = folder.children.length === 1 ? folder.children[0] : null;
+  }
+  return { ...folder, children: folder.children.map(mergeSingleChildFolders) };
 }

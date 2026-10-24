@@ -1,0 +1,14 @@
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+.warnings {
+  margin: 0;
+  padding-left: var(--base-size-20);
+
+  & > li + li {
+    margin-top: 2px;
+  }
+}

@@ -1,0 +1,41 @@
+/* The credits go below the name only when the pane is too narrow for both. */
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--base-size-8);
+}
+
+/* Measured at its narrowest when deciding whether the credits fit. */
+.home {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-12);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fgColor-default);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: var(--text-body-size-large);
+  font-weight: var(--base-text-weight-semibold);
+  line-height: var(--base-text-lineHeight-tight);
+  white-space: nowrap;
+}
+
+.tagline {
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+  white-space: nowrap;
+}

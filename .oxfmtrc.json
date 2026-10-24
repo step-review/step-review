@@ -17,6 +17,7 @@
     "**/node_modules/**",
     "**/dist/**",
     "**/coverage/**",
+    "packages/app/vendor/**",
     "pnpm-lock.yaml"
   ],
   "overrides": [
