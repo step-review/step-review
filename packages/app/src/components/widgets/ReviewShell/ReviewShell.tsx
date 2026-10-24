@@ -8,9 +8,9 @@ import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
+import AppBrand from "../AppBrand/AppBrand.tsx";
 import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
 import ReviewRecap from "../ReviewRecap/ReviewRecap.tsx";
-import SidebarBrand from "../SidebarBrand/SidebarBrand.tsx";
 import StepNavigation from "../StepNavigation/StepNavigation.tsx";
 import styles from "./ReviewShell.module.css";
 
@@ -57,13 +57,13 @@ export default function ReviewShell({
           padding="none"
           resizable
           widthStorageKey="step-review:navigation-width"
-          width={{ min: "256px", default: "340px", max: "600px" }}
+          width={{ min: "256px", default: "360px", max: "600px" }}
           hidden={{ narrow: !isNavigationOpen }}
           aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
         >
           <div className={styles["pane"]}>
             <div className={styles["brand"]}>
-              <SidebarBrand />
+              <AppBrand />
             </div>
             <div className={styles["navigation"]}>
               <StepNavigation

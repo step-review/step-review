@@ -1,4 +1,10 @@
 {
+  "AppBrand.tsx_c5UR7r": [
+    {
+      "type": 0,
+      "value": "A better way to review PRs"
+    }
+  ],
   "AttentionBadge.tsx_HRTugO": [
     {
       "type": 0,
@@ -27,12 +33,6 @@
     {
       "type": 0,
       "value": "Copied"
-    }
-  ],
-  "ExampleReviewPreview.tsx_ft40Bq": [
-    {
-      "type": 0,
-      "value": "Screenshot of a review step: the diff, with notes from the coding agent."
     }
   ],
   "FileCard.tsx_DMq9Ip": [
@@ -405,12 +405,6 @@
       "value": "Drop the review file to reload it"
     }
   ],
-  "ReviewDropzone.tsx_4yZKai": [
-    {
-      "type": 0,
-      "value": "or drop it anywhere here"
-    }
-  ],
   "ReviewDropzone.tsx_LsFoKe": [
     {
       "type": 0,
@@ -433,6 +427,12 @@
     {
       "type": 0,
       "value": "Drop the review file to open it"
+    }
+  ],
+  "ReviewDropzone.tsx_pF/caX": [
+    {
+      "type": 0,
+      "value": "or drop it anywhere on this page"
     }
   ],
   "ReviewRecap.tsx_2pwM03": [
@@ -601,22 +601,50 @@
       "value": "Blocker"
     }
   ],
-  "SidebarBrand.tsx_c5UR7r": [
-    {
-      "type": 0,
-      "value": "A better way to review PRs"
-    }
-  ],
   "Start.tsx_3sbmjt": [
     {
       "type": 0,
       "value": "Past reviews"
     }
   ],
-  "Start.tsx_Aetvq9": [
+  "Start.tsx_5jA9ee": [
     {
       "type": 0,
-      "value": "1. Send this prompt"
+      "value": "2. Open the review file it produces"
+    }
+  ],
+  "Start.tsx_NGb5sK": [
+    {
+      "type": 0,
+      "value": "Step Review "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "breaks them down into logical steps"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", so you can "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "actually understand them"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", and keep a handle on your codebase. Try it:"
     }
   ],
   "Start.tsx_Reg+fk": [
@@ -633,28 +661,36 @@
       "value": ")"
     }
   ],
-  "Start.tsx_c5UR7r": [
-    {
-      "type": 0,
-      "value": "A better way to review PRs"
-    }
-  ],
   "Start.tsx_dqEFrF": [
     {
       "type": 0,
       "value": "Review not found"
     }
   ],
+  "Start.tsx_g8X9UN": [
+    {
+      "type": 0,
+      "value": "When AI writes the code, "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "PRs get too large to read in full"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "Start.tsx_gkJvs5": [
     {
       "type": 0,
       "value": "This review isn't saved in this browser. Open its file to continue."
-    }
-  ],
-  "Start.tsx_i0i2E6": [
-    {
-      "type": 0,
-      "value": "2. Open the review file"
     }
   ],
   "Start.tsx_iWKE8s": [
@@ -667,6 +703,12 @@
     {
       "type": 0,
       "value": "Review file"
+    }
+  ],
+  "Start.tsx_rJ2mF8": [
+    {
+      "type": 0,
+      "value": "1. Give this prompt to your agent"
     }
   ],
   "Start.tsx_tM2s2t": [

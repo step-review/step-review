@@ -33,13 +33,14 @@ export default function ReviewDropzone() {
           }}
         />
         <Button
+          size="medium"
           leadingVisual={UploadIcon}
           onClick={() => fileInputRef.current?.click()}
         >
           <FormattedMessage defaultMessage="Open file" />
         </Button>
         <span className={styles["hint"]}>
-          <FormattedMessage defaultMessage="or drop it anywhere here" />
+          <FormattedMessage defaultMessage="or drop it anywhere on this page" />
         </span>
       </div>
       <FullScreenDropzone

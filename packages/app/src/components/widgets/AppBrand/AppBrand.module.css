@@ -1,5 +1,4 @@
-/* The credits go below the name only when the pane is too narrow for both,
-   even with the tagline wrapped. */
+/* The credits go below the name only when the pane is too narrow for both. */
 .brand {
   display: flex;
   flex-wrap: wrap;
@@ -38,4 +37,5 @@
 .tagline {
   color: var(--fgColor-muted);
   font-size: var(--text-body-size-small);
+  white-space: nowrap;
 }

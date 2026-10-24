@@ -21,6 +21,9 @@
   }
 
   &:hover {
+    /* Overrides BaseStyles' underline on hovered links, which outranks the
+       `text-decoration` above. */
+    text-decoration: none;
     transform: scale(1.035);
   }
 
