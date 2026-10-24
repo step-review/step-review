@@ -19,14 +19,14 @@ export default function loadReview(
   const { target } = result.reviewFile.data;
   // Reviews written again after the PR changed share the key, so files whose
   // changes are the same stay viewed.
-  const storageKey = hashString(target.url ?? target.title);
+  const reviewId = hashString(target.url ?? target.title);
   return {
     success: true,
     loadedReview: {
+      reviewId,
       fileName,
       reviewFile: result.reviewFile,
       warnings: checkReviewFile(result.reviewFile),
-      storageKey,
     },
   };
 }

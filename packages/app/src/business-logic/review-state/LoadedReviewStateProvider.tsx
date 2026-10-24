@@ -14,8 +14,8 @@ export default function LoadedReviewStateProvider({ children }: Props) {
   }
   return (
     <ReviewStateProvider
-      key={loadedReview.storageKey}
-      storageKey={loadedReview.storageKey}
+      key={loadedReview.reviewId}
+      reviewId={loadedReview.reviewId}
     >
       {children}
     </ReviewStateProvider>

@@ -6,12 +6,20 @@ export default function parseRoute(pathname: string): Route {
   if (normalizedPathname === "/") {
     return { name: RouteName.Start };
   }
-  if (normalizedPathname === "/overview") {
-    return { name: RouteName.Overview };
+  const overviewMatch = /^\/r\/([^/]+)\/overview$/u.exec(normalizedPathname);
+  if (overviewMatch) {
+    return {
+      name: RouteName.Overview,
+      reviewId: decodeURIComponent(overviewMatch[1]!),
+    };
   }
-  const match = /^\/steps\/([^/]+)$/u.exec(normalizedPathname);
-  if (!match) {
-    return { name: RouteName.NotFound };
+  const stepMatch = /^\/r\/([^/]+)\/steps\/([^/]+)$/u.exec(normalizedPathname);
+  if (stepMatch) {
+    return {
+      name: RouteName.Step,
+      reviewId: decodeURIComponent(stepMatch[1]!),
+      stepId: decodeURIComponent(stepMatch[2]!),
+    };
   }
-  return { name: RouteName.Step, stepId: decodeURIComponent(match[1]!) };
+  return { name: RouteName.NotFound };
 }

@@ -1,5 +1,6 @@
 /* Fills the viewport without scrolling: when the content doesn't fit, the
-   example screenshot shrinks to the height the other sections leave. */
+   example screenshot or the past reviews shrink to the height the other
+   sections leave. */
 .page {
   background: light-dark(
     color-mix(in srgb, var(--bgColor-accent-muted) 40%, var(--bgColor-default)),
@@ -12,11 +13,23 @@
   padding: var(--base-size-40) var(--base-size-16);
 }
 
+/* As wide as the content, with the credits at its end, as in the sidebar. They
+   go below the name only when the page is too narrow for both. */
 .header {
   flex: none;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: var(--base-size-16);
+  width: 100%;
+  max-width: 696px;
+  margin-inline: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
   gap: var(--base-size-16);
 }
 
@@ -42,13 +55,14 @@
   min-height: 10rem;
 }
 
+.pastReviews {
+  flex: 0 1 auto;
+  min-height: 0;
+}
+
 .example {
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 0;
-}
-
-.footer {
-  flex: none;
 }

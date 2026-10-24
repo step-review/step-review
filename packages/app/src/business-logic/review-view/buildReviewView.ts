@@ -9,7 +9,10 @@ import type StepFileView from "./StepFileView.ts";
 import type StepView from "./StepView.ts";
 import unassignedStepId from "./unassignedStepId.ts";
 
-export default function buildReviewView(reviewFile: ReviewFile): ReviewView {
+export default function buildReviewView(
+  reviewId: string,
+  reviewFile: ReviewFile,
+): ReviewView {
   const steps: StepView[] = reviewFile.data.steps.map((step, index) => ({
     id: step.id,
     number: index + 1,
@@ -40,5 +43,10 @@ export default function buildReviewView(reviewFile: ReviewFile): ReviewView {
       ),
     });
   }
-  return { data: reviewFile.data, diff: reviewFile.diff, steps };
+  return {
+    reviewId,
+    data: reviewFile.data,
+    diff: reviewFile.diff,
+    steps,
+  };
 }

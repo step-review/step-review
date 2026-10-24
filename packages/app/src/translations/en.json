@@ -143,14 +143,26 @@
   "ReviewDropzone.tsx_p5lOej": {
     "defaultMessage": "Drop the review file to open it"
   },
-  "ReviewRecap.tsx_581Xwm": {
-    "defaultMessage": "Reset viewed files"
-  },
-  "ReviewRecap.tsx_CoNoGZ": {
-    "defaultMessage": "Export viewed files"
+  "ReviewRecap.tsx_2pwM03": {
+    "defaultMessage": "Export review state"
   },
   "ReviewRecap.tsx_Gy09SB": {
     "defaultMessage": "The file is not a valid review state."
+  },
+  "ReviewRecap.tsx_JzmbIf": {
+    "defaultMessage": "Reset review state"
+  },
+  "ReviewRecap.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "ReviewRecap.tsx_Kx622U": {
+    "defaultMessage": "Import review state"
+  },
+  "ReviewRecap.tsx_OLCgvh": {
+    "defaultMessage": "The review file and its review state will be removed from this browser."
+  },
+  "ReviewRecap.tsx_OtMych": {
+    "defaultMessage": "Delete review"
   },
   "ReviewRecap.tsx_R+J5ox": {
     "defaultMessage": "Review"
@@ -158,11 +170,11 @@
   "ReviewRecap.tsx_agjgCY": {
     "defaultMessage": "Every file will be marked as not viewed."
   },
-  "ReviewRecap.tsx_agxUAy": {
-    "defaultMessage": "Import viewed files"
-  },
   "ReviewRecap.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
+  },
+  "ReviewRecap.tsx_jbbK0Z": {
+    "defaultMessage": "Delete review?"
   },
   "ReviewRecap.tsx_jm/spn": {
     "defaultMessage": "Reset"
@@ -170,8 +182,8 @@
   "ReviewRecap.tsx_kvdGU5": {
     "defaultMessage": "Review actions"
   },
-  "ReviewRecap.tsx_uJKVLY": {
-    "defaultMessage": "Reset viewed files?"
+  "ReviewRecap.tsx_qjGckA": {
+    "defaultMessage": "Reset review state?"
   },
   "ReviewShell.tsx_huCHmk": {
     "defaultMessage": "Steps"
@@ -200,14 +212,11 @@
   "SidebarBrand.tsx_c5UR7r": {
     "defaultMessage": "A better way to review PRs"
   },
-  "Start.tsx_/cghO8": {
-    "defaultMessage": "Load the review file again to continue where you were."
+  "Start.tsx_3sbmjt": {
+    "defaultMessage": "Past reviews"
   },
   "Start.tsx_Aetvq9": {
     "defaultMessage": "1. Send this prompt"
-  },
-  "Start.tsx_MlSLND": {
-    "defaultMessage": "Review not loaded"
   },
   "Start.tsx_Reg+fk": {
     "defaultMessage": "3. Go through the PR ({exampleLink})"
@@ -215,8 +224,20 @@
   "Start.tsx_c5UR7r": {
     "defaultMessage": "A better way to review PRs"
   },
+  "Start.tsx_dqEFrF": {
+    "defaultMessage": "Review not found"
+  },
+  "Start.tsx_gkJvs5": {
+    "defaultMessage": "This review isn't saved in this browser. Open its file to continue."
+  },
   "Start.tsx_i0i2E6": {
     "defaultMessage": "2. Open the review file"
+  },
+  "Start.tsx_iWKE8s": {
+    "defaultMessage": "Prompt"
+  },
+  "Start.tsx_jAabSp": {
+    "defaultMessage": "Review file"
   },
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
@@ -259,6 +280,18 @@
   },
   "StepToolbar.tsx_dUFzeV": {
     "defaultMessage": "Diff layout"
+  },
+  "StoredReviewList.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "StoredReviewList.tsx_OLCgvh": {
+    "defaultMessage": "The review file and its review state will be removed from this browser."
+  },
+  "StoredReviewList.tsx_OtMych": {
+    "defaultMessage": "Delete review"
+  },
+  "StoredReviewList.tsx_jbbK0Z": {
+    "defaultMessage": "Delete review?"
   },
   "ViewedAndNoteCounts.tsx_zz6max": {
     "defaultMessage": "{viewedCount}/{totalCount} viewed"

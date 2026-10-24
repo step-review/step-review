@@ -1,23 +1,17 @@
 /* oxlint-disable architecture/public-exports -- Keep the review state context and its hook together. */
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
-import type { ActionDispatch, ReactNode } from "react";
-import readStorage from "../storage/readStorage.ts";
-import writeStorage from "../storage/writeStorage.ts";
+import { createContext, useContext, useMemo, useReducer } from "react";
+import type { ReactNode } from "react";
+import updateReviewState from "../review-store/updateReviewState.ts";
+import useStoredReviewState from "../review-store/useStoredReviewState.ts";
+import exampleReviewId from "../review/exampleReviewId.ts";
 import emptyReviewState from "./emptyReviewState.ts";
-import parseReviewState from "./parseReviewState.ts";
 import reduceReviewState from "./reduceReviewState.ts";
 import type ReviewState from "./ReviewState.ts";
 import type ReviewStateAction from "./ReviewStateAction.ts";
 
 interface ReviewStateContextValue {
   reviewState: ReviewState;
-  dispatch: ActionDispatch<[action: ReviewStateAction]>;
+  dispatch: (action: ReviewStateAction) => void;
 }
 
 const ReviewStateContext = createContext<ReviewStateContextValue>({
@@ -26,22 +20,64 @@ const ReviewStateContext = createContext<ReviewStateContextValue>({
 });
 
 interface Props {
-  storageKey: string;
+  reviewId: string;
   children: ReactNode;
 }
 
-/** Keeps the reviewer's state for one review, persisted in local storage. */
-export default function ReviewStateProvider({ storageKey, children }: Props) {
-  const storageItemKey = `step-review:review:${storageKey}`;
+/**
+ * Keeps the reviewer's state for one review, persisted in the browser. The
+ * example review isn't stored, so its state is only kept in memory.
+ */
+export default function ReviewStateProvider({ reviewId, children }: Props) {
+  return reviewId === exampleReviewId ? (
+    <MemoryReviewStateProvider>{children}</MemoryReviewStateProvider>
+  ) : (
+    <StoredReviewStateProvider reviewId={reviewId}>
+      {children}
+    </StoredReviewStateProvider>
+  );
+}
+
+interface MemoryReviewStateProviderProps {
+  children: ReactNode;
+}
+
+function MemoryReviewStateProvider({
+  children,
+}: MemoryReviewStateProviderProps) {
   const [reviewState, dispatch] = useReducer(
     reduceReviewState,
-    storageItemKey,
-    (key) => parseReviewState(readStorage(key)) ?? emptyReviewState(),
+    undefined,
+    emptyReviewState,
   );
-  useEffect(() => {
-    writeStorage(storageItemKey, JSON.stringify(reviewState));
-  }, [storageItemKey, reviewState]);
   const value = useMemo(() => ({ reviewState, dispatch }), [reviewState]);
+  return <ReviewStateContext value={value}>{children}</ReviewStateContext>;
+}
+
+interface StoredReviewStateProviderProps {
+  reviewId: string;
+  children: ReactNode;
+}
+
+/** Renders its children once the state is read, so they don't show it empty. */
+function StoredReviewStateProvider({
+  reviewId,
+  children,
+}: StoredReviewStateProviderProps) {
+  const reviewState = useStoredReviewState(reviewId);
+  const value = useMemo(
+    () =>
+      reviewState && {
+        reviewState,
+        dispatch: (action: ReviewStateAction) => {
+          void updateReviewState(reviewId, action);
+        },
+      },
+    [reviewId, reviewState],
+  );
+  if (!value) {
+    return null;
+  }
   return <ReviewStateContext value={value}>{children}</ReviewStateContext>;
 }
 

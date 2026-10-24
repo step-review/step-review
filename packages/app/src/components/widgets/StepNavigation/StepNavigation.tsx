@@ -29,11 +29,12 @@ export default function StepNavigation({
 }: Props) {
   const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
+  const { reviewId } = reviewView;
   const go = (stepId: string | null, fileFragment?: string) => {
     navigateTo(
       stepId === null
-        ? { name: RouteName.Overview }
-        : { name: RouteName.Step, stepId },
+        ? { name: RouteName.Overview, reviewId }
+        : { name: RouteName.Step, reviewId, stepId },
       fileFragment,
     );
     onNavigate();
@@ -50,7 +51,7 @@ export default function StepNavigation({
     >
       <ActionList>
         <ActionList.LinkItem
-          href={routeHref({ name: RouteName.Overview })}
+          href={routeHref({ name: RouteName.Overview, reviewId })}
           active={activeStepId === null}
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
@@ -67,7 +68,11 @@ export default function StepNavigation({
           <div key={step.id}>
             <ActionList>
               <ActionList.LinkItem
-                href={routeHref({ name: RouteName.Step, stepId: step.id })}
+                href={routeHref({
+                  name: RouteName.Step,
+                  reviewId,
+                  stepId: step.id,
+                })}
                 active={isActive}
                 aria-current={isActive ? "page" : undefined}
                 onClick={goOnClick(step.id)}

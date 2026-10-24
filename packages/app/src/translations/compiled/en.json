@@ -435,22 +435,46 @@
       "value": "Drop the review file to open it"
     }
   ],
-  "ReviewRecap.tsx_581Xwm": [
+  "ReviewRecap.tsx_2pwM03": [
     {
       "type": 0,
-      "value": "Reset viewed files"
-    }
-  ],
-  "ReviewRecap.tsx_CoNoGZ": [
-    {
-      "type": 0,
-      "value": "Export viewed files"
+      "value": "Export review state"
     }
   ],
   "ReviewRecap.tsx_Gy09SB": [
     {
       "type": 0,
       "value": "The file is not a valid review state."
+    }
+  ],
+  "ReviewRecap.tsx_JzmbIf": [
+    {
+      "type": 0,
+      "value": "Reset review state"
+    }
+  ],
+  "ReviewRecap.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "ReviewRecap.tsx_Kx622U": [
+    {
+      "type": 0,
+      "value": "Import review state"
+    }
+  ],
+  "ReviewRecap.tsx_OLCgvh": [
+    {
+      "type": 0,
+      "value": "The review file and its review state will be removed from this browser."
+    }
+  ],
+  "ReviewRecap.tsx_OtMych": [
+    {
+      "type": 0,
+      "value": "Delete review"
     }
   ],
   "ReviewRecap.tsx_R+J5ox": [
@@ -465,16 +489,16 @@
       "value": "Every file will be marked as not viewed."
     }
   ],
-  "ReviewRecap.tsx_agxUAy": [
-    {
-      "type": 0,
-      "value": "Import viewed files"
-    }
-  ],
   "ReviewRecap.tsx_cNrFsL": [
     {
       "type": 0,
       "value": "Open another review"
+    }
+  ],
+  "ReviewRecap.tsx_jbbK0Z": [
+    {
+      "type": 0,
+      "value": "Delete review?"
     }
   ],
   "ReviewRecap.tsx_jm/spn": [
@@ -489,10 +513,10 @@
       "value": "Review actions"
     }
   ],
-  "ReviewRecap.tsx_uJKVLY": [
+  "ReviewRecap.tsx_qjGckA": [
     {
       "type": 0,
-      "value": "Reset viewed files?"
+      "value": "Reset review state?"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -583,22 +607,16 @@
       "value": "A better way to review PRs"
     }
   ],
-  "Start.tsx_/cghO8": [
+  "Start.tsx_3sbmjt": [
     {
       "type": 0,
-      "value": "Load the review file again to continue where you were."
+      "value": "Past reviews"
     }
   ],
   "Start.tsx_Aetvq9": [
     {
       "type": 0,
       "value": "1. Send this prompt"
-    }
-  ],
-  "Start.tsx_MlSLND": [
-    {
-      "type": 0,
-      "value": "Review not loaded"
     }
   ],
   "Start.tsx_Reg+fk": [
@@ -621,10 +639,34 @@
       "value": "A better way to review PRs"
     }
   ],
+  "Start.tsx_dqEFrF": [
+    {
+      "type": 0,
+      "value": "Review not found"
+    }
+  ],
+  "Start.tsx_gkJvs5": [
+    {
+      "type": 0,
+      "value": "This review isn't saved in this browser. Open its file to continue."
+    }
+  ],
   "Start.tsx_i0i2E6": [
     {
       "type": 0,
       "value": "2. Open the review file"
+    }
+  ],
+  "Start.tsx_iWKE8s": [
+    {
+      "type": 0,
+      "value": "Prompt"
+    }
+  ],
+  "Start.tsx_jAabSp": [
+    {
+      "type": 0,
+      "value": "Review file"
     }
   ],
   "Start.tsx_tM2s2t": [
@@ -721,6 +763,30 @@
     {
       "type": 0,
       "value": "Diff layout"
+    }
+  ],
+  "StoredReviewList.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "StoredReviewList.tsx_OLCgvh": [
+    {
+      "type": 0,
+      "value": "The review file and its review state will be removed from this browser."
+    }
+  ],
+  "StoredReviewList.tsx_OtMych": [
+    {
+      "type": 0,
+      "value": "Delete review"
+    }
+  ],
+  "StoredReviewList.tsx_jbbK0Z": [
+    {
+      "type": 0,
+      "value": "Delete review?"
     }
   ],
   "ViewedAndNoteCounts.tsx_zz6max": [

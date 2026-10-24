@@ -5,7 +5,10 @@ import buildReviewView from "./buildReviewView.ts";
 export default function useReviewView() {
   const { loadedReview } = useLoadedReviewContext();
   return useMemo(
-    () => (loadedReview ? buildReviewView(loadedReview.reviewFile) : null),
+    () =>
+      loadedReview
+        ? buildReviewView(loadedReview.reviewId, loadedReview.reviewFile)
+        : null,
     [loadedReview],
   );
 }

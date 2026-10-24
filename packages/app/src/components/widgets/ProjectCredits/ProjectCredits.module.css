@@ -1,28 +1,21 @@
+/* Large, scaled as the start page's title is to the sidebar's name (20px to
+   16px), so it has the same proportions beside it. */
 .credits {
+  --credits-scale: 1;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: baseline;
   gap: var(--base-size-4);
 
-  &[data-align="center"] {
-    align-items: center;
-  }
-
-  &[data-layout="inline"] {
-    flex-direction: row;
-    align-items: baseline;
+  &[data-size="large"] {
+    --credits-scale: 1.25;
   }
 }
 
 .caption {
   color: var(--fgColor-muted);
-  font-size: var(--text-body-size-small);
+  font-size: calc(var(--text-body-size-small) * var(--credits-scale));
 }
 
 .logo {
-  font-size: 1.125rem;
-
-  [data-layout="inline"] > & {
-    font-size: var(--text-body-size-medium);
-  }
+  font-size: calc(var(--text-body-size-medium) * var(--credits-scale));
 }

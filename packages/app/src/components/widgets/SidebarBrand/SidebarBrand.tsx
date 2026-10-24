@@ -22,7 +22,7 @@ export default function SidebarBrand() {
           </span>
         </span>
       </button>
-      <ProjectCredits layout="inline" />
+      <ProjectCredits />
     </div>
   );
 }

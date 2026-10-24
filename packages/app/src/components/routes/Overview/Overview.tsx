@@ -24,11 +24,19 @@ export default function Overview() {
       () => {
         const firstStep = reviewView?.steps[0];
         if (firstStep) {
-          navigateTo({ name: RouteName.Step, stepId: firstStep.id });
+          navigateTo({
+            name: RouteName.Step,
+            reviewId: reviewView.reviewId,
+            stepId: firstStep.id,
+          });
         }
       },
     ],
   ]);
+  // Being read from the browser's storage, which takes a moment.
+  if (loadedReview === undefined) {
+    return null;
+  }
   if (!loadedReview || !reviewView) {
     return <Start isReviewMissing />;
   }

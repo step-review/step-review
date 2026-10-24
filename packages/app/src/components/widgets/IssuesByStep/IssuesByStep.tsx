@@ -18,7 +18,7 @@ import styles from "./IssuesByStep.module.css";
  */
 export default function IssuesByStep() {
   const intl = useIntl();
-  const { steps } = useCurrentReviewView();
+  const { reviewId, steps } = useCurrentReviewView();
   const totalCounts = countNotes(collectNotes(steps)).issueCountsBySeverity;
   const presentSeverities = issueSeverities.filter(
     (severity) => totalCounts[severity] > 0,
@@ -65,6 +65,7 @@ export default function IssuesByStep() {
             ).issueCountsBySeverity;
             const route: NavigableRoute = {
               name: RouteName.Step,
+              reviewId,
               stepId: step.id,
             };
             return (

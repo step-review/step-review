@@ -26,6 +26,10 @@ interface Props {
 export default function Step({ stepId }: Props) {
   const { loadedReview } = useLoadedReviewContext();
   const reviewView = useReviewView();
+  // Being read from the browser's storage, which takes a moment.
+  if (loadedReview === undefined) {
+    return null;
+  }
   if (!loadedReview || !reviewView) {
     return <Start isReviewMissing />;
   }
@@ -52,15 +56,16 @@ interface StepPageProps {
 
 function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
   const stepView = reviewView.steps[stepIndex]!;
+  const { reviewId } = reviewView;
   const preferences = useDiffPreferences();
   const { dispatch } = useReviewState();
   useScrollToFragment();
   const goToStep = (index: number) => {
     const step = reviewView.steps[index];
     if (step) {
-      navigateTo({ name: RouteName.Step, stepId: step.id });
+      navigateTo({ name: RouteName.Step, reviewId, stepId: step.id });
     } else if (index < 0) {
-      navigateTo({ name: RouteName.Overview });
+      navigateTo({ name: RouteName.Overview, reviewId });
     }
   };
   useHotkeys([

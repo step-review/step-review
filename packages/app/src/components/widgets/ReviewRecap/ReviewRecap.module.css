@@ -30,17 +30,12 @@
   gap: var(--base-size-8);
 }
 
-/* The negative margin lines the icons, inset in their buttons, up with the
-   end of the progress bar above. */
+/* The negative margin lines the icon, inset in its button, up with the end of
+   the progress bar above. */
 .actions {
   display: flex;
   flex-shrink: 0;
   margin-inline-end: calc(
     (var(--base-size-16) - var(--control-small-size)) / 2
   );
-}
-
-.resetButton {
-  --button-invisible-iconColor-rest: var(--fgColor-danger);
-  --button-invisible-iconColor-hover: var(--fgColor-danger);
 }

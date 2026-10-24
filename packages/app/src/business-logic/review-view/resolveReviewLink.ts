@@ -22,6 +22,7 @@ export default function resolveReviewLink(
         ? {
             route: {
               name: RouteName.Step,
+              reviewId: reviewView.reviewId,
               stepId: noteLocation.stepId,
             },
             fragment: `note-${target}`,
@@ -31,7 +32,11 @@ export default function resolveReviewLink(
     case "step":
       return reviewView.steps.some((step) => step.id === target)
         ? {
-            route: { name: RouteName.Step, stepId: target },
+            route: {
+              name: RouteName.Step,
+              reviewId: reviewView.reviewId,
+              stepId: target,
+            },
             fragment: null,
           }
         : null;
@@ -40,7 +45,11 @@ export default function resolveReviewLink(
         const file = step.files.find((stepFile) => stepFile.path === target);
         if (file) {
           return {
-            route: { name: RouteName.Step, stepId: step.id },
+            route: {
+              name: RouteName.Step,
+              reviewId: reviewView.reviewId,
+              stepId: step.id,
+            },
             fragment: `file-${file.id}`,
           };
         }
