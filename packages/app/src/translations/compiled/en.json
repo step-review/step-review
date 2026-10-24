@@ -501,7 +501,7 @@
       "value": "A better way to review PRs"
     }
   ],
-  "SidebarBrand.tsx_phrT6e": [
+  "SidebarBrand.tsx_xl4ULq": [
     {
       "type": 8,
       "value": "project",
@@ -517,14 +517,8 @@
       "value": " by "
     },
     {
-      "type": 8,
-      "value": "author",
-      "children": [
-        {
-          "type": 0,
-          "value": "pscanf"
-        }
-      ]
+      "type": 1,
+      "value": "author"
     }
   ],
   "Start.tsx_/cghO8": [

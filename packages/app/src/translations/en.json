@@ -173,8 +173,8 @@
   "SidebarBrand.tsx_c5UR7r": {
     "defaultMessage": "A better way to review PRs"
   },
-  "SidebarBrand.tsx_phrT6e": {
-    "defaultMessage": "<project>A project</project> by <author>pscanf</author>"
+  "SidebarBrand.tsx_xl4ULq": {
+    "defaultMessage": "<project>A project</project> by {author}"
   },
   "Start.tsx_/cghO8": {
     "defaultMessage": "Load the review file again to continue where you were."

@@ -187,6 +187,9 @@ importers:
       '@fontsource-variable/mona-sans':
         specifier: 5.3.0
         version: 5.3.0
+      '@fontsource/cousine':
+        specifier: 5.3.0
+        version: 5.3.0
       '@primer/octicons-react':
         specifier: 19.41.0
         version: 19.41.0(react@19.3.1)
@@ -535,6 +538,9 @@ packages:
 
   '@fontsource-variable/mona-sans@5.3.0':
     resolution: {integrity: sha512-PkxRB3KI4z9Gjpk7vVqgO3GMSyQuOIIj4TaRDbvbcDj8SzWwI38jvLTQxJM/cTRorhcT7h8qjcllR+qjRtM/Fg==}
+
+  '@fontsource/cousine@5.3.0':
+    resolution: {integrity: sha512-EhVes1KpHrmPwGVCoVxYpdiIi/L2LRGxbAuv07m3TdY76f9Vmwyhd/TNqi2RC0NOvMCNt2FtYPJcAfFfkK9DoQ==}
 
   '@formatjs/cli-native-darwin-arm64@1.1.29':
     resolution: {integrity: sha512-kh+l/SZGTpDEH/aLjwbH9CqHaSW7htGiwljZ4vOobhtQbJXriQRRHzA/LAgJ+798QMflP6HjR74hK0BJPucqAw==}
@@ -2774,6 +2780,8 @@ snapshots:
     optional: true
 
   '@fontsource-variable/mona-sans@5.3.0': {}
+
+  '@fontsource/cousine@5.3.0': {}
 
   '@formatjs/cli-native-darwin-arm64@1.1.29':
     optional: true

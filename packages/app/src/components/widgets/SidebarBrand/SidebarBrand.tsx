@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import Floor0Logo from "../../design-system/Floor0Logo/Floor0Logo.tsx";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import styles from "./SidebarBrand.module.css";
 
 const repositoryUrl = "https://github.com/step-review/step-review";
-const authorUrl = "https://github.com/pscanf";
 
 /** The app's name and tagline, leading to the start page, and its credits. */
 export default function SidebarBrand() {
@@ -28,18 +28,14 @@ export default function SidebarBrand() {
       </button>
       <p className={styles["credits"]}>
         <FormattedMessage
-          defaultMessage="<project>A project</project> by <author>pscanf</author>"
+          defaultMessage="<project>A project</project> by {author}"
           values={{
             project: (chunks: ReactNode[]) => (
               <Link href={repositoryUrl} target="_blank" rel="noreferrer">
                 {chunks}
               </Link>
             ),
-            author: (chunks: ReactNode[]) => (
-              <Link href={authorUrl} target="_blank" rel="noreferrer">
-                {chunks}
-              </Link>
-            ),
+            author: <Floor0Logo />,
           }}
         />
       </p>

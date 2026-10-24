@@ -2,6 +2,7 @@
 @import "@primer/primitives/dist/css/functional/themes/light.css";
 @import "@primer/primitives/dist/css/functional/themes/dark.css";
 @import "@fontsource-variable/mona-sans";
+@import "@fontsource/cousine/400.css";
 
 /* Primer's stacks expect GitHub's own build of Mona Sans. */
 :root {
