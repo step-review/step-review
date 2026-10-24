@@ -66,9 +66,11 @@
     font-size: calc(var(--base-size-16) * var(--content-font-scale));
 
     @media (width < 48rem) {
-      --content-font-scale: 1.375;
-      --prompt-font-size: var(--base-size-16);
-      --step-heading-font-size: var(--base-size-20);
+      --content-font-scale: 1.125;
+      --prompt-font-size: var(--text-body-size-medium);
+      --step-heading-font-size: calc(var(--base-size-16) + var(--base-size-2));
+      /* Fits beside the button on 360px-wide phones. */
+      --dropzone-hint-font-size: var(--text-body-size-medium);
     }
   }
 }
