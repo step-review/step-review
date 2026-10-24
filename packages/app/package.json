@@ -18,11 +18,11 @@
   "dependencies": {
     "@fontsource-variable/mona-sans": "5.3.0",
     "@fontsource/cousine": "5.3.0",
-    "@primer/octicons-react": "19.41.0",
+    "@primer/octicons-react": "19.42.0",
     "@primer/primitives": "11.10.0",
     "@primer/react": "38.43.0",
     "@step-review/review-format": "workspace:*",
-    "dexie": "4.4.6",
+    "dexie": "4.4.7",
     "dexie-react-hooks": "4.4.0",
     "diff": "9.0.0",
     "react": "19.3.1",
