@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import type LoadedReview from "../review/LoadedReview.ts";
-import loadReview from "../review/loadReview.ts";
-import decryptReviewFile from "./decryptReviewFile.ts";
-import fetchReviewVersion from "./fetchReviewVersion.ts";
+import fetchSharedReview from "./fetchSharedReview.ts";
 import fetchShareInfo from "./fetchShareInfo.ts";
 
 /**
@@ -43,21 +41,15 @@ export default function useSharedLoadedReview(
       return;
     }
     let isCurrent = true;
-    void (async () => {
-      const sharedReviewFile = await decryptReviewFile(
-        shareKey,
-        shareId,
-        await fetchReviewVersion(apiOrigin, shareId, versionId),
-      );
-      const result =
-        sharedReviewFile &&
-        loadReview(sharedReviewFile.fileName, sharedReviewFile.text);
-      if (isCurrent) {
-        setLoadedReview(result?.success ? result.loadedReview : null);
-      }
-    })().catch(() => {
-      // A newer version replaced this one meanwhile: the session names it.
-    });
+    void fetchSharedReview(apiOrigin, shareId, shareKey, versionId)
+      .then((fetchedReview) => {
+        if (isCurrent) {
+          setLoadedReview(fetchedReview);
+        }
+      })
+      .catch(() => {
+        // A newer version replaced this one meanwhile: the session names it.
+      });
     return () => {
       isCurrent = false;
     };

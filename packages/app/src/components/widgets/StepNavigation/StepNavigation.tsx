@@ -12,6 +12,7 @@ import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
+import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 import styles from "./StepNavigation.module.css";
@@ -58,6 +59,7 @@ export default function StepNavigation({
         >
           <span className={styles["stepLabel"]}>
             <FormattedMessage defaultMessage="0. Overview" />
+            <ParticipantsHere stepId={null} />
           </span>
         </ActionList.LinkItem>
       </ActionList>
@@ -83,7 +85,10 @@ export default function StepNavigation({
                   <span>
                     {step.number}. <StepTitle step={step} />
                   </span>
-                  <AttentionIcon attention={step.attention} />
+                  <span className={styles["stepMarks"]}>
+                    <ParticipantsHere stepId={step.id} />
+                    <AttentionIcon attention={step.attention} />
+                  </span>
                 </span>
                 <ActionList.Description
                   variant="block"

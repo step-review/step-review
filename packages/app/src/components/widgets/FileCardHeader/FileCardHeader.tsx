@@ -9,6 +9,7 @@ import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.ts
 import Diffstat from "../../design-system/Diffstat/Diffstat.tsx";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
+import FileViewers from "../FileViewers/FileViewers.tsx";
 import styles from "./FileCardHeader.module.css";
 
 interface Props {
@@ -69,6 +70,7 @@ export default function FileCardHeader({
           )}
         />
         <NoteCounts {...noteKindCounts} />
+        <FileViewers fingerprint={stepFileView.fingerprint} />
         {/* GitHub's checkbox styled as a button. */}
         <label className={styles["viewed"]} data-viewed={isViewed || undefined}>
           <Checkbox

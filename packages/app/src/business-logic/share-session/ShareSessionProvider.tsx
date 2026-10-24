@@ -7,6 +7,8 @@ import type ShareSessionSnapshot from "./ShareSessionSnapshot.ts";
 
 interface ShareSessionContextValue {
   shareBookmark: ShareBookmark;
+  /** The imported key of the share, e.g. to upload a new version. */
+  shareKey: CryptoKey;
   shareSession: ShareSession;
   shareSessionSnapshot: ShareSessionSnapshot;
 }

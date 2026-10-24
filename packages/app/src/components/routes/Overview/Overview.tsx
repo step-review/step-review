@@ -15,7 +15,7 @@ import Start from "../Start/Start.tsx";
 import styles from "./Overview.module.css";
 
 export default function Overview() {
-  const { loadedReview } = useLoadedReviewContext();
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
   const reviewView = useReviewView();
   useScrollToFragment();
   useHotkeys([
@@ -38,7 +38,7 @@ export default function Overview() {
     return null;
   }
   if (!loadedReview || !reviewView) {
-    return <Start isReviewMissing />;
+    return <Start missingReview={reviewAddress?.kind ?? "local"} />;
   }
   return (
     <ReviewViewProvider reviewView={reviewView}>

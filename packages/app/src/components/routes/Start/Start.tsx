@@ -1,6 +1,7 @@
 import { Banner, Heading, Stack, Text } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
+import useShareBookmarks from "../../../business-logic/share-store/useShareBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
@@ -9,22 +10,27 @@ import StoredReviewList from "../../widgets/StoredReviewList/StoredReviewList.ts
 import styles from "./Start.module.css";
 
 interface Props {
-  /** Set when a review page was opened for a review that isn't stored. */
-  isReviewMissing?: boolean;
+  /**
+   * Set when a review page was opened for a review that can't be loaded: one
+   * that isn't stored, or a share that doesn't exist (anymore).
+   */
+  missingReview?: "local" | "shared";
 }
 
 /**
  * Walks new users through the steps, with the example review. Users with stored
  * reviews get just what they work with.
  */
-export default function Start({ isReviewMissing = false }: Props) {
+export default function Start({ missingReview }: Props) {
   const intl = useIntl();
   const storedReviews = useStoredReviews();
+  const shareBookmarks = useShareBookmarks();
   // Being read from the browser's storage, which takes a moment.
-  if (storedReviews === undefined) {
+  if (storedReviews === undefined || shareBookmarks === undefined) {
     return null;
   }
-  const hasStoredReviews = storedReviews.length > 0;
+  const hasStoredReviews =
+    storedReviews.length > 0 || shareBookmarks.length > 0;
   return (
     <div className={styles["page"]}>
       <div
@@ -36,13 +42,17 @@ export default function Start({ isReviewMissing = false }: Props) {
           className={styles["steps"]}
           data-new-user={!hasStoredReviews || undefined}
         >
-          {isReviewMissing && (
+          {missingReview && (
             <Banner
               variant="info"
               title={intl.formatMessage({ defaultMessage: "Review not found" })}
               hideTitle
               description={
-                <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
+                missingReview === "local" ? (
+                  <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
+                ) : (
+                  <FormattedMessage defaultMessage="This shared review can't be opened: it was deleted or expired, or its link is incomplete." />
+                )
               }
             />
           )}
@@ -87,7 +97,10 @@ export default function Start({ isReviewMissing = false }: Props) {
               <Heading as="h2" variant="small">
                 <FormattedMessage defaultMessage="Past reviews" />
               </Heading>
-              <StoredReviewList storedReviews={storedReviews} />
+              <StoredReviewList
+                storedReviews={storedReviews}
+                shareBookmarks={shareBookmarks}
+              />
             </Stack>
           ) : (
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>

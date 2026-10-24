@@ -11,7 +11,7 @@ import useShareSession from "../share-session/useShareSession.ts";
 import type ShareBookmark from "../share-store/ShareBookmark.ts";
 import updateShareBookmark from "../share-store/updateShareBookmark.ts";
 import useShareBookmark from "../share-store/useShareBookmark.ts";
-import joinShare from "./joinShare.ts";
+import useJoinLinkedShare from "./useJoinLinkedShare.ts";
 import useSharedLoadedReview from "./useSharedLoadedReview.ts";
 
 type SharedReviewAddress = Extract<ReviewAddress, { kind: "shared" }>;
@@ -32,15 +32,11 @@ export default function SharedReviewProvider({
 }: Props) {
   const { shareId, shareKey: linkShareKey } = reviewAddress;
   const shareBookmark = useShareBookmark(shareId);
-  useEffect(() => {
-    if (
-      shareBookmark !== undefined &&
-      linkShareKey !== null &&
-      shareBookmark?.shareKey !== linkShareKey
-    ) {
-      void joinShare(shareId, linkShareKey, shareBookmark);
-    }
-  }, [shareId, linkShareKey, shareBookmark]);
+  const isLinkUnusable = useJoinLinkedShare(
+    shareId,
+    linkShareKey,
+    shareBookmark,
+  );
   const { route, fragment } = useLocationParts();
   const bookmarkedShareKey = shareBookmark?.shareKey ?? null;
   useEffect(() => {
@@ -69,7 +65,7 @@ export default function SharedReviewProvider({
     () => ({ kind: "shared", shareId, shareKey: bookmarkedShareKey }),
     [shareId, bookmarkedShareKey],
   );
-  if (shareBookmark === null && linkShareKey === null) {
+  if ((shareBookmark === null && linkShareKey === null) || isLinkUnusable) {
     return (
       <LoadedReviewValue
         loadedReview={null}
@@ -208,8 +204,8 @@ function ShareSessionValue({
     }
   }, [shareBookmark.shareId, title]);
   const value = useMemo(
-    () => ({ shareBookmark, shareSession, shareSessionSnapshot }),
-    [shareBookmark, shareSession, shareSessionSnapshot],
+    () => ({ shareBookmark, shareKey, shareSession, shareSessionSnapshot }),
+    [shareBookmark, shareKey, shareSession, shareSessionSnapshot],
   );
   return (
     <ShareSessionProvider value={value}>

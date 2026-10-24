@@ -24,14 +24,14 @@ interface Props {
 }
 
 export default function Step({ stepId }: Props) {
-  const { loadedReview } = useLoadedReviewContext();
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
   const reviewView = useReviewView();
   // Being read from the browser's storage, which takes a moment.
   if (loadedReview === undefined) {
     return null;
   }
   if (!loadedReview || !reviewView) {
-    return <Start isReviewMissing />;
+    return <Start missingReview={reviewAddress?.kind ?? "local"} />;
   }
   const stepIndex = reviewView.steps.findIndex((step) => step.id === stepId);
   if (stepIndex === -1) {

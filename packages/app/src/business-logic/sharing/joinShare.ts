@@ -10,16 +10,17 @@ import updateShareBookmark from "../share-store/updateShareBookmark.ts";
 export default async function joinShare(
   shareId: string,
   shareKey: string,
+  title: string,
   shareBookmark: ShareBookmark | null,
 ): Promise<void> {
   if (shareBookmark) {
-    await updateShareBookmark(shareId, { shareKey });
+    await updateShareBookmark(shareId, { shareKey, title });
     return;
   }
   await saveShareBookmark({
     shareId,
     shareKey,
-    title: "",
+    title,
     openedAt: Date.now(),
     participantId: randomBase64Url(16),
     participantSecret: randomBase64Url(32),
