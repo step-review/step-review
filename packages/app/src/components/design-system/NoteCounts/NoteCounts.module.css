@@ -1,0 +1,14 @@
+.counts {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--base-size-4);
+}
+
+.compactLabel {
+  height: var(--base-size-16);
+  /* The font's line box has more room below the baseline than above the
+     lowercase letters, which at this size leaves the text visibly low. */
+  padding: 0 var(--base-size-4) 2px;
+  font-size: 10px;
+}

@@ -1,0 +1,15 @@
+/* Not inline, where the line box around it would add to its height. */
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  /* Lines the text up with the text in the pills, which sits higher in its
+     box than plain text in its line. */
+  align-items: baseline;
+  gap: var(--base-size-8);
+}
+
+/* A line no taller than the text, so that aligning its baseline with the
+   pills' doesn't push them down. */
+.viewed {
+  line-height: 1;
+}

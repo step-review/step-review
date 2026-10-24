@@ -5,9 +5,12 @@ import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
+import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
+import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
+import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
@@ -77,7 +80,14 @@ export default function StepNavigation({
                   </span>
                   <AttentionIcon attention={step.attention} />
                 </span>
-                <ActionList.Description variant="block">
+                <ActionList.Description
+                  variant="block"
+                  className={styles["description"]}
+                >
+                  <ViewedAndNoteCounts
+                    {...progress}
+                    noteKindCounts={countNotes(collectNotes([step]))}
+                  />
                   <span className={styles["progress"]}>
                     <ViewedProgressBar {...progress} />
                   </span>

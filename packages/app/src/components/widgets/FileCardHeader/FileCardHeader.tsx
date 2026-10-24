@@ -1,11 +1,13 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@primer/octicons-react";
-import { Checkbox, IconButton, Label } from "@primer/react";
+import { Checkbox, IconButton } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import diffstatBlocks from "../../../business-logic/diff-layout/diffstatBlocks.ts";
+import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import FileStatusBadge from "../../design-system/badges/FileStatusBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import Diffstat from "../../design-system/Diffstat/Diffstat.tsx";
+import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import styles from "./FileCardHeader.module.css";
 
@@ -27,7 +29,7 @@ export default function FileCardHeader({
 }: Props) {
   const intl = useIntl();
   const { fileDiff } = stepFileView;
-  const noteCount = stepFileView.notes.length;
+  const noteKindCounts = countNotes(stepFileView.notes);
   const displayedPath = fileDiff.oldPath
     ? `${fileDiff.oldPath} → ${stepFileView.path}`
     : stepFileView.path;
@@ -66,14 +68,7 @@ export default function FileCardHeader({
             stepFileView.deletions,
           )}
         />
-        {noteCount > 0 && (
-          <Label variant="secondary">
-            <FormattedMessage
-              defaultMessage="{noteCount, plural, one {# note} other {# notes}}"
-              values={{ noteCount }}
-            />
-          </Label>
-        )}
+        <NoteCounts {...noteKindCounts} />
         {/* GitHub's checkbox styled as a button. */}
         <label className={styles["viewed"]} data-viewed={isViewed || undefined}>
           <Checkbox

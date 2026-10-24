@@ -1,10 +1,16 @@
+/* The credits go below the name only when the pane is too narrow for both,
+   even with the tagline wrapped. */
 .brand {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--base-size-8);
 }
 
+/* Measured at its narrowest when deciding whether the credits fit. */
 .home {
+  flex: 1 1 0;
   display: flex;
   align-items: center;
   gap: var(--base-size-12);
@@ -26,15 +32,10 @@
   font-size: var(--text-body-size-large);
   font-weight: var(--base-text-weight-semibold);
   line-height: var(--base-text-lineHeight-tight);
+  white-space: nowrap;
 }
 
 .tagline {
-  color: var(--fgColor-muted);
-  font-size: var(--text-body-size-small);
-}
-
-.credits {
-  margin: 0;
   color: var(--fgColor-muted);
   font-size: var(--text-body-size-small);
 }

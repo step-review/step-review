@@ -77,38 +77,6 @@
       "value": "Viewed"
     }
   ],
-  "FileCardHeader.tsx_GpV+Pi": [
-    {
-      "type": 6,
-      "value": "noteCount",
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 7
-            },
-            {
-              "type": 0,
-              "value": " note"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 7
-            },
-            {
-              "type": 0,
-              "value": " notes"
-            }
-          ]
-        }
-      },
-      "offset": 0,
-      "pluralType": "cardinal"
-    }
-  ],
   "FileCardHeader.tsx_s3aLc+": [
     {
       "type": 0,
@@ -183,10 +151,40 @@
       "pluralType": "cardinal"
     }
   ],
-  "IssuesIndex.tsx_Wj5TbN": [
+  "IssuesByStep.tsx_KV/9Hv": [
     {
       "type": 0,
-      "value": "Issues"
+      "value": "Questions"
+    }
+  ],
+  "IssuesByStep.tsx_NhIxVx": [
+    {
+      "type": 0,
+      "value": "Nits"
+    }
+  ],
+  "IssuesByStep.tsx_jXd/F7": [
+    {
+      "type": 0,
+      "value": "Step"
+    }
+  ],
+  "IssuesByStep.tsx_ngW8nc": [
+    {
+      "type": 0,
+      "value": "Issue breakdown"
+    }
+  ],
+  "IssuesByStep.tsx_qeNrfT": [
+    {
+      "type": 0,
+      "value": "Blockers"
+    }
+  ],
+  "IssuesByStep.tsx_xg6/fp": [
+    {
+      "type": 0,
+      "value": "Concerns"
     }
   ],
   "NotFound.tsx_osJs96": [
@@ -213,10 +211,42 @@
       "value": "Note"
     }
   ],
-  "OverviewHeader.tsx_GpV+Pi": [
+  "NoteCounts.tsx_7hxyNF": [
     {
       "type": 6,
-      "value": "noteCount",
+      "value": "issueCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issue"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issues"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "NoteCounts.tsx_cr9pr9": [
+    {
+      "type": 6,
+      "value": "explainerCount",
       "options": {
         "one": {
           "value": [
@@ -243,6 +273,20 @@
       },
       "offset": 0,
       "pluralType": "cardinal"
+    }
+  ],
+  "OverviewHeader.tsx_3PcNZ7": [
+    {
+      "type": 0,
+      "value": "Copy \""
+    },
+    {
+      "type": 1,
+      "value": "branchName"
+    },
+    {
+      "type": 0,
+      "value": "\""
     }
   ],
   "OverviewHeader.tsx_Nvd511": [
@@ -277,20 +321,64 @@
       "pluralType": "cardinal"
     }
   ],
-  "OverviewHeader.tsx_k+RvCX": [
+  "OverviewHeader.tsx_VsxSiL": [
     {
-      "type": 0,
-      "value": "Overview · "
+      "type": 8,
+      "value": "link",
+      "children": [
+        {
+          "type": 0,
+          "value": "PR"
+        }
+      ]
     },
     {
-      "type": 1,
-      "value": "date"
+      "type": 0,
+      "value": " review"
+    }
+  ],
+  "OverviewHeader.tsx_ZLnOd3": [
+    {
+      "type": 8,
+      "value": "link",
+      "children": [
+        {
+          "type": 0,
+          "value": "PR "
+        },
+        {
+          "type": 2,
+          "value": "pullRequestNumber",
+          "style": {
+            "type": 0,
+            "tokens": [
+              {
+                "stem": "group-off",
+                "options": []
+              }
+            ],
+            "parsedOptions": {
+              "useGrouping": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " review"
     }
   ],
   "OverviewSummary.tsx_NNdqGL": [
     {
       "type": 0,
       "value": "How to read this review"
+    }
+  ],
+  "ProjectCredits.tsx_wTNySU": [
+    {
+      "type": 0,
+      "value": "by"
     }
   ],
   "PromptGenerator.tsx_c+pa/J": [
@@ -371,16 +459,16 @@
       "value": "Review"
     }
   ],
+  "ReviewRecap.tsx_agjgCY": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed."
+    }
+  ],
   "ReviewRecap.tsx_agxUAy": [
     {
       "type": 0,
       "value": "Import viewed files"
-    }
-  ],
-  "ReviewRecap.tsx_bhQL99": [
-    {
-      "type": 0,
-      "value": "Mark every file as not viewed?"
     }
   ],
   "ReviewRecap.tsx_cNrFsL": [
@@ -389,28 +477,22 @@
       "value": "Open another review"
     }
   ],
-  "ReviewRecap.tsx_kqGsf4": [
-    {
-      "type": 1,
-      "value": "viewedCount"
-    },
+  "ReviewRecap.tsx_jm/spn": [
     {
       "type": 0,
-      "value": " of "
-    },
-    {
-      "type": 1,
-      "value": "totalCount"
-    },
-    {
-      "type": 0,
-      "value": " files viewed"
+      "value": "Reset"
     }
   ],
   "ReviewRecap.tsx_kvdGU5": [
     {
       "type": 0,
       "value": "Review actions"
+    }
+  ],
+  "ReviewRecap.tsx_uJKVLY": [
+    {
+      "type": 0,
+      "value": "Reset viewed files?"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -499,26 +581,6 @@
     {
       "type": 0,
       "value": "A better way to review PRs"
-    }
-  ],
-  "SidebarBrand.tsx_xl4ULq": [
-    {
-      "type": 8,
-      "value": "project",
-      "children": [
-        {
-          "type": 0,
-          "value": "A project"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " by "
-    },
-    {
-      "type": 1,
-      "value": "author"
     }
   ],
   "Start.tsx_/cghO8": [
@@ -659,6 +721,24 @@
     {
       "type": 0,
       "value": "Diff layout"
+    }
+  ],
+  "ViewedAndNoteCounts.tsx_zz6max": [
+    {
+      "type": 1,
+      "value": "viewedCount"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "totalCount"
+    },
+    {
+      "type": 0,
+      "value": " viewed"
     }
   ]
 }

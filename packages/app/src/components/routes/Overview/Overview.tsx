@@ -6,7 +6,7 @@ import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewPr
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
-import IssuesIndex from "../../widgets/IssuesIndex/IssuesIndex.tsx";
+import IssuesByStep from "../../widgets/IssuesByStep/IssuesByStep.tsx";
 import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
 import OverviewSummary from "../../widgets/OverviewSummary/OverviewSummary.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
@@ -43,7 +43,7 @@ export default function Overview() {
           <OverviewHeader />
           <ReviewWarnings loadedReview={loadedReview} />
           <OverviewSummary />
-          <IssuesIndex />
+          <IssuesByStep />
         </Stack>
       </ReviewShell>
     </ReviewViewProvider>

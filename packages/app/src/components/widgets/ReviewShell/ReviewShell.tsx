@@ -57,16 +57,13 @@ export default function ReviewShell({
           padding="none"
           resizable
           widthStorageKey="step-review:navigation-width"
-          width={{ min: "256px", default: "300px", max: "600px" }}
+          width={{ min: "256px", default: "340px", max: "600px" }}
           hidden={{ narrow: !isNavigationOpen }}
           aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
         >
           <div className={styles["pane"]}>
-            <div className={styles["recap"]}>
-              <ReviewRecap
-                loadedReview={loadedReview}
-                reviewView={reviewView}
-              />
+            <div className={styles["brand"]}>
+              <SidebarBrand />
             </div>
             <div className={styles["navigation"]}>
               <StepNavigation
@@ -75,8 +72,11 @@ export default function ReviewShell({
                 onNavigate={() => setIsNavigationOpen(false)}
               />
             </div>
-            <div className={styles["brand"]}>
-              <SidebarBrand />
+            <div className={styles["recap"]}>
+              <ReviewRecap
+                loadedReview={loadedReview}
+                reviewView={reviewView}
+              />
             </div>
           </div>
         </SplitPageLayout.Pane>

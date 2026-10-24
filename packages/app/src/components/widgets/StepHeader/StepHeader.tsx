@@ -32,13 +32,15 @@ export default function StepHeader({
       <Heading as="h1" variant="large" className={styles["title"]}>
         <StepTitle step={stepView} />
       </Heading>
-      {stepView.intro ? (
-        <ReviewMarkdown size="large">{stepView.intro}</ReviewMarkdown>
-      ) : (
-        <p className={styles["noIntro"]}>
-          <FormattedMessage defaultMessage="These files changed in the PR, but the review doesn't assign them to a step." />
-        </p>
-      )}
+      <div className={styles["intro"]}>
+        {stepView.intro ? (
+          <ReviewMarkdown size="large">{stepView.intro}</ReviewMarkdown>
+        ) : (
+          <p className={styles["noIntro"]}>
+            <FormattedMessage defaultMessage="These files changed in the PR, but the review doesn't assign them to a step." />
+          </p>
+        )}
+      </div>
       {stepView.notes
         .filter((note) => !areExplainersHidden || note.kind === "issue")
         .map((note) => (

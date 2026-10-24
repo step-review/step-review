@@ -18,29 +18,36 @@
   cursor: pointer;
 }
 
-/* Fills the pane, which scrolls, keeping the brand at its bottom. */
+/* Fills the pane, keeping the recap at its bottom. */
 .pane {
   display: flex;
   flex-direction: column;
   min-height: 100%;
 
-  /* Beside the content, the pane spans the viewport even on short pages. */
+  /* Beside the content, the pane is as tall as the viewport, even on short
+     pages, and only the steps scroll, between the brand and the recap. */
   @media (min-width: 48rem) {
-    min-height: 100vh;
+    height: 100vh;
   }
 }
 
 /* The recap and the brand line up with the text of the steps. */
 .recap {
   padding: var(--base-size-16) var(--base-size-24);
-  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
+  border-top: var(--borderWidth-default) solid var(--borderColor-default);
 }
 
 .navigation {
   flex: 1;
   padding: var(--base-size-8);
+
+  @media (min-width: 48rem) {
+    min-height: 0;
+    overflow-y: auto;
+  }
 }
 
 .brand {
   padding: var(--base-size-24);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
 }

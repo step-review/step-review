@@ -38,9 +38,6 @@
   "FileCardHeader.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
   },
-  "FileCardHeader.tsx_GpV+Pi": {
-    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
-  },
   "FileCardHeader.tsx_s3aLc+": {
     "defaultMessage": "Copy the path"
   },
@@ -65,8 +62,23 @@
   "GapRow.tsx_phtN15": {
     "defaultMessage": "{hiddenLineCount, plural, one {# hidden line} other {# hidden lines}}"
   },
-  "IssuesIndex.tsx_Wj5TbN": {
-    "defaultMessage": "Issues"
+  "IssuesByStep.tsx_KV/9Hv": {
+    "defaultMessage": "Questions"
+  },
+  "IssuesByStep.tsx_NhIxVx": {
+    "defaultMessage": "Nits"
+  },
+  "IssuesByStep.tsx_jXd/F7": {
+    "defaultMessage": "Step"
+  },
+  "IssuesByStep.tsx_ngW8nc": {
+    "defaultMessage": "Issue breakdown"
+  },
+  "IssuesByStep.tsx_qeNrfT": {
+    "defaultMessage": "Blockers"
+  },
+  "IssuesByStep.tsx_xg6/fp": {
+    "defaultMessage": "Concerns"
   },
   "NotFound.tsx_osJs96": {
     "defaultMessage": "Page not found."
@@ -80,17 +92,29 @@
   "NoteCard.tsx_qMePPG": {
     "defaultMessage": "Note"
   },
-  "OverviewHeader.tsx_GpV+Pi": {
-    "defaultMessage": "{noteCount, plural, one {# note} other {# notes}}"
+  "NoteCounts.tsx_7hxyNF": {
+    "defaultMessage": "{issueCount, plural, one {# issue} other {# issues}}"
+  },
+  "NoteCounts.tsx_cr9pr9": {
+    "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
+  },
+  "OverviewHeader.tsx_3PcNZ7": {
+    "defaultMessage": "Copy \"{branchName}\""
   },
   "OverviewHeader.tsx_Nvd511": {
     "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
   },
-  "OverviewHeader.tsx_k+RvCX": {
-    "defaultMessage": "Overview · {date}"
+  "OverviewHeader.tsx_VsxSiL": {
+    "defaultMessage": "<link>PR</link> review"
+  },
+  "OverviewHeader.tsx_ZLnOd3": {
+    "defaultMessage": "<link>PR {pullRequestNumber, number, ::group-off}</link> review"
   },
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"
+  },
+  "ProjectCredits.tsx_wTNySU": {
+    "defaultMessage": "by"
   },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
@@ -131,20 +155,23 @@
   "ReviewRecap.tsx_R+J5ox": {
     "defaultMessage": "Review"
   },
+  "ReviewRecap.tsx_agjgCY": {
+    "defaultMessage": "Every file will be marked as not viewed."
+  },
   "ReviewRecap.tsx_agxUAy": {
     "defaultMessage": "Import viewed files"
-  },
-  "ReviewRecap.tsx_bhQL99": {
-    "defaultMessage": "Mark every file as not viewed?"
   },
   "ReviewRecap.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
   },
-  "ReviewRecap.tsx_kqGsf4": {
-    "defaultMessage": "{viewedCount} of {totalCount} files viewed"
+  "ReviewRecap.tsx_jm/spn": {
+    "defaultMessage": "Reset"
   },
   "ReviewRecap.tsx_kvdGU5": {
     "defaultMessage": "Review actions"
+  },
+  "ReviewRecap.tsx_uJKVLY": {
+    "defaultMessage": "Reset viewed files?"
   },
   "ReviewShell.tsx_huCHmk": {
     "defaultMessage": "Steps"
@@ -172,9 +199,6 @@
   },
   "SidebarBrand.tsx_c5UR7r": {
     "defaultMessage": "A better way to review PRs"
-  },
-  "SidebarBrand.tsx_xl4ULq": {
-    "defaultMessage": "<project>A project</project> by {author}"
   },
   "Start.tsx_/cghO8": {
     "defaultMessage": "Load the review file again to continue where you were."
@@ -235,5 +259,8 @@
   },
   "StepToolbar.tsx_dUFzeV": {
     "defaultMessage": "Diff layout"
+  },
+  "ViewedAndNoteCounts.tsx_zz6max": {
+    "defaultMessage": "{viewedCount}/{totalCount} viewed"
   }
 }

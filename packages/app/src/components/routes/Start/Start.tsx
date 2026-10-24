@@ -3,6 +3,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
 import ExampleReviewPreview from "../../widgets/ExampleReviewPreview/ExampleReviewPreview.tsx";
+import ProjectCredits from "../../widgets/ProjectCredits/ProjectCredits.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
 import ReviewDropzone from "../../widgets/ReviewDropzone/ReviewDropzone.tsx";
 import styles from "./Start.module.css";
@@ -68,6 +69,9 @@ export default function Start({ isReviewMissing = false }: Props) {
           </div>
         </Stack>
       </Stack>
+      <footer className={styles["footer"]}>
+        <ProjectCredits align="center" />
+      </footer>
     </div>
   );
 }

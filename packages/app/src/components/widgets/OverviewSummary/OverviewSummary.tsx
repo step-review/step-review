@@ -7,8 +7,8 @@ import styles from "./OverviewSummary.module.css";
 export default function OverviewSummary() {
   const { overview } = useCurrentReviewView().data;
   return (
-    <Stack gap="normal">
-      <ReviewMarkdown>{overview.summary}</ReviewMarkdown>
+    <Stack gap="normal" className={styles["summary"]}>
+      <ReviewMarkdown size="large">{overview.summary}</ReviewMarkdown>
       {overview.readingPlan && (
         <div>
           <Heading
@@ -18,7 +18,7 @@ export default function OverviewSummary() {
           >
             <FormattedMessage defaultMessage="How to read this review" />
           </Heading>
-          <ReviewMarkdown>{overview.readingPlan}</ReviewMarkdown>
+          <ReviewMarkdown size="large">{overview.readingPlan}</ReviewMarkdown>
         </div>
       )}
     </Stack>

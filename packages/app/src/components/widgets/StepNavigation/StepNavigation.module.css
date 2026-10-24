@@ -13,7 +13,13 @@
   gap: var(--base-size-8);
 }
 
+/* Adds to the gap Primer leaves under the label, so that the label, the
+   counts and the progress bar don't feel cramped. */
+.description {
+  margin-top: var(--base-size-4);
+}
+
 .progress {
   display: block;
-  margin-top: 6px;
+  margin-top: var(--base-size-8);
 }
