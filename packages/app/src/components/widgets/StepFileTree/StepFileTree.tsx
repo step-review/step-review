@@ -1,3 +1,4 @@
+import { CheckIcon } from "@primer/octicons-react";
 import { TreeView } from "@primer/react";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -42,6 +43,7 @@ interface FileTreeNodesProps {
 }
 
 function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
+  const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
   const fragment = useFragment();
   return nodes.map((node) => {
@@ -64,6 +66,7 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
     }
     const stepFileView = node.file;
     const fileFragment = `file-${stepFileView.id}`;
+    const isViewed = viewedFingerprints.has(stepFileView.fingerprint);
     return (
       <TreeView.Item
         key={stepFileView.id}
@@ -77,14 +80,19 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
         {/* Viewed files are dimmed. */}
         <span
           className={styles["fileName"]}
-          data-viewed={
-            viewedFingerprints.has(stepFileView.fingerprint) || undefined
-          }
+          data-viewed={isViewed || undefined}
         >
           <TruncatedText tooltip={stepFileView.path}>
             {node.label}
           </TruncatedText>
         </span>
+        {isViewed && (
+          <TreeView.TrailingVisual
+            label={intl.formatMessage({ defaultMessage: "Viewed" })}
+          >
+            <CheckIcon className={styles["viewedIcon"]} />
+          </TreeView.TrailingVisual>
+        )}
       </TreeView.Item>
     );
   });

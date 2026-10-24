@@ -4,8 +4,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
-import githubFileUrl from "../../../business-logic/review-view/githubFileUrl.ts";
-import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import splitFileNotes from "../../../business-logic/review-view/splitFileNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
@@ -29,7 +27,6 @@ export default function FileCard({
   areExplainersHidden,
 }: Props) {
   const intl = useIntl();
-  const reviewView = useCurrentReviewView();
   const { dispatch } = useReviewState();
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
@@ -77,7 +74,6 @@ export default function FileCard({
     >
       <FileCardHeader
         stepFileView={stepFileView}
-        githubUrl={githubFileUrl(reviewView.data.target, stepFileView.path)}
         isCollapsed={isCollapsed}
         isViewed={isViewed}
         onToggleCollapsed={() => setIsCollapsed((collapsed) => !collapsed)}

@@ -1,5 +1,6 @@
 .header {
   max-width: 900px;
+  padding-block: var(--base-size-16);
 }
 
 .eyebrow {

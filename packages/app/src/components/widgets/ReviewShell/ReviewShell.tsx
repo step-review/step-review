@@ -9,7 +9,8 @@ import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
-import ReviewMenu from "../ReviewMenu/ReviewMenu.tsx";
+import ReviewRecap from "../ReviewRecap/ReviewRecap.tsx";
+import SidebarBrand from "../SidebarBrand/SidebarBrand.tsx";
 import StepNavigation from "../StepNavigation/StepNavigation.tsx";
 import styles from "./ReviewShell.module.css";
 
@@ -32,7 +33,7 @@ export default function ReviewShell({
   return (
     <>
       {/* On narrow screens the navigation is above the content, so a header
-          shows or hides it. Wider screens always show it, with the brand. */}
+          shows or hides it. Wider screens always show it. */}
       <SplitPageLayout>
         <SplitPageLayout.Header
           padding="condensed"
@@ -61,8 +62,11 @@ export default function ReviewShell({
           aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
         >
           <div className={styles["pane"]}>
-            <div className={styles["paneBrand"]}>
-              <Brand onClick={goToStart} />
+            <div className={styles["recap"]}>
+              <ReviewRecap
+                loadedReview={loadedReview}
+                reviewView={reviewView}
+              />
             </div>
             <div className={styles["navigation"]}>
               <StepNavigation
@@ -71,8 +75,8 @@ export default function ReviewShell({
                 onNavigate={() => setIsNavigationOpen(false)}
               />
             </div>
-            <div className={styles["footer"]}>
-              <ReviewMenu loadedReview={loadedReview} />
+            <div className={styles["brand"]}>
+              <SidebarBrand />
             </div>
           </div>
         </SplitPageLayout.Pane>
@@ -91,7 +95,7 @@ interface BrandProps {
 
 function Brand({ onClick }: BrandProps) {
   return (
-    <button type="button" className={styles["brand"]} onClick={onClick}>
+    <button type="button" className={styles["headerBrand"]} onClick={onClick}>
       <Logo size={24} />
       Step Review
     </button>

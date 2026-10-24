@@ -4,20 +4,16 @@
   gap: var(--base-size-4);
 }
 
-.overview {
-  margin-bottom: var(--base-size-12);
-}
-
-.progress {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: var(--base-size-4);
-}
-
+/* Semibold like Primer's labels with a description, for the overview too. */
 .stepLabel {
   display: flex;
+  font-weight: var(--base-text-weight-semibold);
   justify-content: space-between;
   align-items: baseline;
   gap: var(--base-size-8);
+}
+
+.progress {
+  display: block;
+  margin-top: 6px;
 }

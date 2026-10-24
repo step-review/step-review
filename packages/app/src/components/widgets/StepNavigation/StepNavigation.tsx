@@ -1,4 +1,4 @@
-import { ActionList, ProgressBar } from "@primer/react";
+import { ActionList } from "@primer/react";
 import type { MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -8,6 +8,7 @@ import useViewedFingerprints from "../../../business-logic/review-state/useViewe
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
+import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 import styles from "./StepNavigation.module.css";
@@ -25,7 +26,6 @@ export default function StepNavigation({
 }: Props) {
   const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
-  const overall = countViewedFiles(reviewView.steps, viewedFingerprints);
   const go = (stepId: string | null, fileFragment?: string) => {
     navigateTo(
       stepId === null
@@ -45,23 +45,16 @@ export default function StepNavigation({
       aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
       className={styles["navigation"]}
     >
-      <ActionList className={styles["overview"]}>
+      <ActionList>
         <ActionList.LinkItem
           href={routeHref({ name: RouteName.Overview })}
           active={activeStepId === null}
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
         >
-          <FormattedMessage defaultMessage="Overview" />
-          <ActionList.Description variant="block">
-            <span className={styles["progress"]}>
-              <FormattedMessage
-                defaultMessage="{viewedCount} of {totalCount} files viewed"
-                values={overall}
-              />
-              <ViewedProgress progress={overall} />
-            </span>
-          </ActionList.Description>
+          <span className={styles["stepLabel"]}>
+            <FormattedMessage defaultMessage="0. Overview" />
+          </span>
         </ActionList.LinkItem>
       </ActionList>
       {reviewView.steps.map((step) => {
@@ -86,7 +79,7 @@ export default function StepNavigation({
                 </span>
                 <ActionList.Description variant="block">
                   <span className={styles["progress"]}>
-                    <ViewedProgress progress={progress} />
+                    <ViewedProgressBar {...progress} />
                   </span>
                 </ActionList.Description>
               </ActionList.LinkItem>
@@ -101,24 +94,5 @@ export default function StepNavigation({
         );
       })}
     </nav>
-  );
-}
-
-interface ViewedProgressProps {
-  progress: { viewedCount: number; totalCount: number };
-}
-
-function ViewedProgress({ progress }: ViewedProgressProps) {
-  return (
-    <ProgressBar
-      barSize="small"
-      aria-hidden
-      progress={(progress.viewedCount / Math.max(progress.totalCount, 1)) * 100}
-      bg={
-        progress.viewedCount === progress.totalCount
-          ? "success.emphasis"
-          : "accent.emphasis"
-      }
-    />
   );
 }

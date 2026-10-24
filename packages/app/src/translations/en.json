@@ -35,9 +35,6 @@
   "FileCardHeader.tsx_173lRp": {
     "defaultMessage": "Show or hide the diff"
   },
-  "FileCardHeader.tsx_4U8CMv": {
-    "defaultMessage": "Open on GitHub"
-  },
   "FileCardHeader.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
   },
@@ -122,23 +119,32 @@
   "ReviewDropzone.tsx_p5lOej": {
     "defaultMessage": "Drop the review file to open it"
   },
-  "ReviewMenu.tsx_581Xwm": {
+  "ReviewRecap.tsx_581Xwm": {
     "defaultMessage": "Reset viewed files"
   },
-  "ReviewMenu.tsx_CoNoGZ": {
+  "ReviewRecap.tsx_CoNoGZ": {
     "defaultMessage": "Export viewed files"
   },
-  "ReviewMenu.tsx_Gy09SB": {
+  "ReviewRecap.tsx_Gy09SB": {
     "defaultMessage": "The file is not a valid review state."
   },
-  "ReviewMenu.tsx_agxUAy": {
+  "ReviewRecap.tsx_R+J5ox": {
+    "defaultMessage": "Review"
+  },
+  "ReviewRecap.tsx_agxUAy": {
     "defaultMessage": "Import viewed files"
   },
-  "ReviewMenu.tsx_bhQL99": {
+  "ReviewRecap.tsx_bhQL99": {
     "defaultMessage": "Mark every file as not viewed?"
   },
-  "ReviewMenu.tsx_cNrFsL": {
+  "ReviewRecap.tsx_cNrFsL": {
     "defaultMessage": "Open another review"
+  },
+  "ReviewRecap.tsx_kqGsf4": {
+    "defaultMessage": "{viewedCount} of {totalCount} files viewed"
+  },
+  "ReviewRecap.tsx_kvdGU5": {
+    "defaultMessage": "Review actions"
   },
   "ReviewShell.tsx_huCHmk": {
     "defaultMessage": "Steps"
@@ -164,6 +170,12 @@
   "SeverityBadge.tsx_mjXHSf": {
     "defaultMessage": "Blocker"
   },
+  "SidebarBrand.tsx_c5UR7r": {
+    "defaultMessage": "A better way to review PRs"
+  },
+  "SidebarBrand.tsx_phrT6e": {
+    "defaultMessage": "<project>A project</project> by <author>pscanf</author>"
+  },
   "Start.tsx_/cghO8": {
     "defaultMessage": "Load the review file again to continue where you were."
   },
@@ -185,6 +197,9 @@
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
   },
+  "StepFileTree.tsx_D/0ALU": {
+    "defaultMessage": "Viewed"
+  },
   "StepFileTree.tsx_hvXAqx": {
     "defaultMessage": "Files of the step"
   },
@@ -194,14 +209,11 @@
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
   },
-  "StepNavigation.tsx_9uOFF3": {
-    "defaultMessage": "Overview"
+  "StepNavigation.tsx_/O2KYl": {
+    "defaultMessage": "0. Overview"
   },
   "StepNavigation.tsx_huCHmk": {
     "defaultMessage": "Steps"
-  },
-  "StepNavigation.tsx_kqGsf4": {
-    "defaultMessage": "{viewedCount} of {totalCount} files viewed"
   },
   "StepPager.tsx_9uOFF3": {
     "defaultMessage": "Overview"

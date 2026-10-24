@@ -1,4 +1,4 @@
-import { EyeIcon, SkipIcon } from "@primer/octicons-react";
+import { ReportIcon, ZapIcon } from "@primer/octicons-react";
 import type { Attention } from "@step-review/review-format";
 import { useRef, useState } from "react";
 import { useIntl } from "react-intl";
@@ -21,7 +21,7 @@ export default function AttentionIcon({ attention }: Props) {
   const label = isHigh
     ? intl.formatMessage({ defaultMessage: "Read carefully" })
     : intl.formatMessage({ defaultMessage: "Skim" });
-  const Icon = isHigh ? EyeIcon : SkipIcon;
+  const Icon = isHigh ? ReportIcon : ZapIcon;
   return (
     <>
       <span

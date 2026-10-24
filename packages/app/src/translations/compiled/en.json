@@ -71,12 +71,6 @@
       "value": "Show or hide the diff"
     }
   ],
-  "FileCardHeader.tsx_4U8CMv": [
-    {
-      "type": 0,
-      "value": "Open on GitHub"
-    }
-  ],
   "FileCardHeader.tsx_D/0ALU": [
     {
       "type": 0,
@@ -353,40 +347,70 @@
       "value": "Drop the review file to open it"
     }
   ],
-  "ReviewMenu.tsx_581Xwm": [
+  "ReviewRecap.tsx_581Xwm": [
     {
       "type": 0,
       "value": "Reset viewed files"
     }
   ],
-  "ReviewMenu.tsx_CoNoGZ": [
+  "ReviewRecap.tsx_CoNoGZ": [
     {
       "type": 0,
       "value": "Export viewed files"
     }
   ],
-  "ReviewMenu.tsx_Gy09SB": [
+  "ReviewRecap.tsx_Gy09SB": [
     {
       "type": 0,
       "value": "The file is not a valid review state."
     }
   ],
-  "ReviewMenu.tsx_agxUAy": [
+  "ReviewRecap.tsx_R+J5ox": [
+    {
+      "type": 0,
+      "value": "Review"
+    }
+  ],
+  "ReviewRecap.tsx_agxUAy": [
     {
       "type": 0,
       "value": "Import viewed files"
     }
   ],
-  "ReviewMenu.tsx_bhQL99": [
+  "ReviewRecap.tsx_bhQL99": [
     {
       "type": 0,
       "value": "Mark every file as not viewed?"
     }
   ],
-  "ReviewMenu.tsx_cNrFsL": [
+  "ReviewRecap.tsx_cNrFsL": [
     {
       "type": 0,
       "value": "Open another review"
+    }
+  ],
+  "ReviewRecap.tsx_kqGsf4": [
+    {
+      "type": 1,
+      "value": "viewedCount"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "totalCount"
+    },
+    {
+      "type": 0,
+      "value": " files viewed"
+    }
+  ],
+  "ReviewRecap.tsx_kvdGU5": [
+    {
+      "type": 0,
+      "value": "Review actions"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -471,6 +495,38 @@
       "value": "Blocker"
     }
   ],
+  "SidebarBrand.tsx_c5UR7r": [
+    {
+      "type": 0,
+      "value": "A better way to review PRs"
+    }
+  ],
+  "SidebarBrand.tsx_phrT6e": [
+    {
+      "type": 8,
+      "value": "project",
+      "children": [
+        {
+          "type": 0,
+          "value": "A project"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": " by "
+    },
+    {
+      "type": 8,
+      "value": "author",
+      "children": [
+        {
+          "type": 0,
+          "value": "pscanf"
+        }
+      ]
+    }
+  ],
   "Start.tsx_/cghO8": [
     {
       "type": 0,
@@ -521,6 +577,12 @@
       "value": "see example"
     }
   ],
+  "StepFileTree.tsx_D/0ALU": [
+    {
+      "type": 0,
+      "value": "Viewed"
+    }
+  ],
   "StepFileTree.tsx_hvXAqx": [
     {
       "type": 0,
@@ -551,34 +613,16 @@
       "value": "stepCount"
     }
   ],
-  "StepNavigation.tsx_9uOFF3": [
+  "StepNavigation.tsx_/O2KYl": [
     {
       "type": 0,
-      "value": "Overview"
+      "value": "0. Overview"
     }
   ],
   "StepNavigation.tsx_huCHmk": [
     {
       "type": 0,
       "value": "Steps"
-    }
-  ],
-  "StepNavigation.tsx_kqGsf4": [
-    {
-      "type": 1,
-      "value": "viewedCount"
-    },
-    {
-      "type": 0,
-      "value": " of "
-    },
-    {
-      "type": 1,
-      "value": "totalCount"
-    },
-    {
-      "type": 0,
-      "value": " files viewed"
     }
   ],
   "StepPager.tsx_9uOFF3": [

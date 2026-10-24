@@ -11,3 +11,7 @@
     color: var(--fgColor-muted);
   }
 }
+
+.viewedIcon {
+  color: var(--fgColor-success);
+}

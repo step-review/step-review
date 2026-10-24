@@ -4,7 +4,7 @@
   gap: var(--base-size-8);
 }
 
-.brand {
+.headerBrand {
   display: inline-flex;
   align-items: center;
   gap: var(--base-size-8);
@@ -18,7 +18,7 @@
   cursor: pointer;
 }
 
-/* Fills the pane, which scrolls, keeping the menu at its bottom. */
+/* Fills the pane, which scrolls, keeping the brand at its bottom. */
 .pane {
   display: flex;
   flex-direction: column;
@@ -30,13 +30,10 @@
   }
 }
 
-.paneBrand {
-  padding: var(--base-size-16) var(--base-size-16) var(--base-size-8);
-
-  /* Primer's narrow viewports, where the header holds the brand. */
-  @media (max-width: calc(48rem - 0.02px)) {
-    display: none;
-  }
+/* The recap and the brand line up with the text of the steps. */
+.recap {
+  padding: var(--base-size-16) var(--base-size-24);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
 }
 
 .navigation {
@@ -44,10 +41,6 @@
   padding: var(--base-size-8);
 }
 
-.footer {
-  position: sticky;
-  bottom: 0;
-  padding: var(--base-size-8);
-  border-top: var(--borderWidth-default) solid var(--borderColor-default);
-  background: var(--bgColor-default);
+.brand {
+  padding: var(--base-size-24);
 }

@@ -1,0 +1,40 @@
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-12);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fgColor-default);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: var(--text-body-size-large);
+  font-weight: var(--base-text-weight-semibold);
+  line-height: var(--base-text-lineHeight-tight);
+}
+
+.tagline {
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+}
+
+.credits {
+  margin: 0;
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+}

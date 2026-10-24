@@ -1,8 +1,4 @@
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  MarkGithubIcon,
-} from "@primer/octicons-react";
+import { ChevronDownIcon, ChevronRightIcon } from "@primer/octicons-react";
 import { Checkbox, IconButton, Label } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import diffstatBlocks from "../../../business-logic/diff-layout/diffstatBlocks.ts";
@@ -15,7 +11,6 @@ import styles from "./FileCardHeader.module.css";
 
 interface Props {
   stepFileView: StepFileView;
-  githubUrl: string | null;
   isCollapsed: boolean;
   isViewed: boolean;
   onToggleCollapsed: () => void;
@@ -25,7 +20,6 @@ interface Props {
 /** The header of a file's diff, laid out like GitHub's. */
 export default function FileCardHeader({
   stepFileView,
-  githubUrl,
   isCollapsed,
   isViewed,
   onToggleCollapsed,
@@ -63,20 +57,6 @@ export default function FileCardHeader({
         value={stepFileView.path}
         label={intl.formatMessage({ defaultMessage: "Copy the path" })}
       />
-      {githubUrl && (
-        <IconButton
-          as="a"
-          href={githubUrl}
-          target="_blank"
-          rel="noreferrer"
-          variant="invisible"
-          size="small"
-          icon={MarkGithubIcon}
-          aria-label={intl.formatMessage({
-            defaultMessage: "Open on GitHub",
-          })}
-        />
-      )}
       <div className={styles["trailing"]}>
         <Diffstat
           additions={stepFileView.additions}

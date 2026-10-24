@@ -1,0 +1,23 @@
+.recap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+}
+
+.fileName {
+  min-width: 0;
+  font-family: var(--fontStack-monospace);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressLabel {
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+}

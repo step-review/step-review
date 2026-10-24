@@ -10,8 +10,15 @@
     border-left-color: var(--borderColor-neutral-emphasis);
   }
 
+  /* Primer's attention background is too strong behind body text, and it
+     has no lighter one. */
   &[data-kind="issue"] {
     border-left-color: var(--borderColor-attention-emphasis);
+    background: color-mix(
+      in srgb,
+      var(--bgColor-attention-muted) 40%,
+      var(--bgColor-default)
+    );
   }
 
   &[data-highlighted] {
