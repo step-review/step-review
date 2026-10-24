@@ -4,7 +4,7 @@ import type { Note } from "@step-review/review-format";
 import { FormattedMessage, useIntl } from "react-intl";
 import createNoteReference from "../../../business-logic/notes/createNoteReference.ts";
 import useNoteIndex from "../../../business-logic/review-view/useNoteIndex.ts";
-import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
+import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewValue.tsx";
 import SeverityBadge from "../../design-system/badges/SeverityBadge.tsx";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import ReviewMarkdown from "../ReviewMarkdown/ReviewMarkdown.tsx";

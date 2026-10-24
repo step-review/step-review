@@ -27,7 +27,7 @@ export default function ReviewMarkdown({ children, size }: Props) {
         return (
           <Link
             inline
-            href={`${routeHref(resolved.route)}${fragment ? `#${encodeURIComponent(fragment)}` : ""}`}
+            href={routeHref(resolved.route, fragment)}
             onClick={(event) => {
               event.preventDefault();
               navigateTo(resolved.route, fragment);

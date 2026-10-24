@@ -1,14 +1,14 @@
 import { useMemo } from "react";
-import { useLoadedReviewContext } from "../review/LoadedReviewProvider.tsx";
+import { useLoadedReviewContext } from "../review/LoadedReviewValue.tsx";
 import buildReviewView from "./buildReviewView.ts";
 
 export default function useReviewView() {
-  const { loadedReview } = useLoadedReviewContext();
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
   return useMemo(
     () =>
-      loadedReview
-        ? buildReviewView(loadedReview.reviewId, loadedReview.reviewFile)
+      loadedReview && reviewAddress
+        ? buildReviewView(reviewAddress, loadedReview.reviewFile)
         : null,
-    [loadedReview],
+    [loadedReview, reviewAddress],
   );
 }

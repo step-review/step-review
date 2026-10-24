@@ -37,7 +37,7 @@ function StoredReviewItem({ storedReview }: StoredReviewItemProps) {
   const confirm = useConfirm();
   const route: NavigableRoute = {
     name: RouteName.Overview,
-    reviewId: storedReview.reviewId,
+    reviewAddress: { kind: "local", reviewId: storedReview.reviewId },
   };
   const deleteStoredReview = async () => {
     const isConfirmed = await confirm({

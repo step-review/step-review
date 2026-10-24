@@ -7,7 +7,6 @@ import reviewDatabase from "./reviewDatabase.ts";
  */
 export default async function saveReview(
   loadedReview: LoadedReview,
-  text: string,
 ): Promise<void> {
   await reviewDatabase.transaction(
     "rw",
@@ -20,7 +19,10 @@ export default async function saveReview(
         fileName: loadedReview.fileName,
         openedAt: Date.now(),
       });
-      await reviewDatabase.reviewFiles.put(text, loadedReview.reviewId);
+      await reviewDatabase.reviewFiles.put(
+        loadedReview.text,
+        loadedReview.reviewId,
+      );
     },
   );
 }

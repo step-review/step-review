@@ -1,17 +1,6 @@
-import { useSyncExternalStore } from "react";
+import useLocationParts from "./useLocationParts.ts";
 
-function subscribe(onChange: () => void) {
-  window.addEventListener("popstate", onChange);
-  window.addEventListener("hashchange", onChange);
-  return () => {
-    window.removeEventListener("popstate", onChange);
-    window.removeEventListener("hashchange", onChange);
-  };
-}
-
-/** The decoded URL fragment, without `#`. */
+/** The ID of the element the URL scrolls to, if any. */
 export default function useFragment(): string {
-  return useSyncExternalStore(subscribe, () =>
-    decodeURIComponent(window.location.hash.slice(1)),
-  );
+  return useLocationParts().fragment;
 }

@@ -22,6 +22,7 @@
     "@primer/primitives": "11.10.0",
     "@primer/react": "38.43.0",
     "@step-review/review-format": "workspace:*",
+    "@step-review/share-server": "workspace:*",
     "dexie": "4.4.7",
     "dexie-react-hooks": "4.4.0",
     "diff": "9.0.0",

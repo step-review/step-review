@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function StepPager({ reviewView, stepIndex }: Props) {
-  const { reviewId } = reviewView;
+  const { reviewAddress } = reviewView;
   const previousStep = reviewView.steps[stepIndex - 1];
   const nextStep = reviewView.steps[stepIndex + 1];
   return (
@@ -22,8 +22,8 @@ export default function StepPager({ reviewView, stepIndex }: Props) {
         onClick={() =>
           navigateTo(
             previousStep
-              ? { name: RouteName.Step, reviewId, stepId: previousStep.id }
-              : { name: RouteName.Overview, reviewId },
+              ? { name: RouteName.Step, reviewAddress, stepId: previousStep.id }
+              : { name: RouteName.Overview, reviewAddress },
           )
         }
       >
@@ -38,7 +38,11 @@ export default function StepPager({ reviewView, stepIndex }: Props) {
           variant="primary"
           trailingVisual={ArrowRightIcon}
           onClick={() =>
-            navigateTo({ name: RouteName.Step, reviewId, stepId: nextStep.id })
+            navigateTo({
+              name: RouteName.Step,
+              reviewAddress,
+              stepId: nextStep.id,
+            })
           }
         >
           <StepTitle step={nextStep} />

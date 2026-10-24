@@ -1,9 +1,11 @@
 /* oxlint-disable architecture/public-exports -- Keep the review state context and its hook together. */
 import { createContext, useContext, useMemo, useReducer } from "react";
 import type { ReactNode } from "react";
+import type ReviewAddress from "../navigation/ReviewAddress.ts";
 import updateReviewState from "../review-store/updateReviewState.ts";
 import useStoredReviewState from "../review-store/useStoredReviewState.ts";
 import exampleReviewId from "../review/exampleReviewId.ts";
+import { useShareSessionContext } from "../share-session/ShareSessionProvider.tsx";
 import emptyReviewState from "./emptyReviewState.ts";
 import reduceReviewState from "./reduceReviewState.ts";
 import type ReviewState from "./ReviewState.ts";
@@ -20,19 +22,26 @@ const ReviewStateContext = createContext<ReviewStateContextValue>({
 });
 
 interface Props {
-  reviewId: string;
+  reviewAddress: ReviewAddress;
   children: ReactNode;
 }
 
 /**
- * Keeps the reviewer's state for one review, persisted in the browser. The
- * example review isn't stored, so its state is only kept in memory.
+ * Keeps the reviewer's state for one review: persisted in the browser, or by
+ * the share for a shared review. The example review isn't stored, so its state
+ * is only kept in memory.
  */
-export default function ReviewStateProvider({ reviewId, children }: Props) {
-  return reviewId === exampleReviewId ? (
+export default function ReviewStateProvider({
+  reviewAddress,
+  children,
+}: Props) {
+  if (reviewAddress.kind === "shared") {
+    return <SharedReviewStateProvider>{children}</SharedReviewStateProvider>;
+  }
+  return reviewAddress.reviewId === exampleReviewId ? (
     <MemoryReviewStateProvider>{children}</MemoryReviewStateProvider>
   ) : (
-    <StoredReviewStateProvider reviewId={reviewId}>
+    <StoredReviewStateProvider reviewId={reviewAddress.reviewId}>
       {children}
     </StoredReviewStateProvider>
   );
@@ -75,6 +84,34 @@ function StoredReviewStateProvider({
       },
     [reviewId, reviewState],
   );
+  if (!value) {
+    return null;
+  }
+  return <ReviewStateContext value={value}>{children}</ReviewStateContext>;
+}
+
+interface SharedReviewStateProviderProps {
+  children: ReactNode;
+}
+
+/** The participant's own state in the share being displayed. */
+function SharedReviewStateProvider({
+  children,
+}: SharedReviewStateProviderProps) {
+  const shareSessionContext = useShareSessionContext();
+  const shareSession = shareSessionContext?.shareSession;
+  const viewedFingerprints =
+    shareSessionContext?.shareSessionSnapshot.ownState.viewedFingerprints;
+  const value = useMemo(
+    () =>
+      shareSession &&
+      viewedFingerprints && {
+        reviewState: { viewedFingerprints },
+        dispatch: (action: ReviewStateAction) => shareSession.dispatch(action),
+      },
+    [shareSession, viewedFingerprints],
+  );
+  // The review only loads within its share session.
   if (!value) {
     return null;
   }
