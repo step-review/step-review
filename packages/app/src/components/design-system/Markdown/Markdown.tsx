@@ -5,6 +5,8 @@ import styles from "./Markdown.module.css";
 
 interface Props {
   children: string;
+  /** Large for prominent text, like a step's introduction. */
+  size?: "medium" | "large";
   /**
    * Renders links with a custom protocol (e.g. `note:n12`); return `null` to
    * render them as plain text.
@@ -15,9 +17,13 @@ interface Props {
 const customLinkPattern = /^[a-z]+:(?!\/\/)/u;
 
 /** Renders untrusted Markdown: raw HTML is shown as text, never rendered. */
-export default function Markdown({ children, renderCustomLink }: Props) {
+export default function Markdown({
+  children,
+  size = "medium",
+  renderCustomLink,
+}: Props) {
   return (
-    <div className={styles["root"]}>
+    <div className={styles["root"]} data-size={size}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         urlTransform={(url) =>

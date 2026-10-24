@@ -29,11 +29,11 @@ export default function StepHeader({
         </span>
         <AttentionBadge attention={stepView.attention} />
       </div>
-      <Heading as="h1" variant="large">
+      <Heading as="h1" variant="large" className={styles["title"]}>
         <StepTitle step={stepView} />
       </Heading>
       {stepView.intro ? (
-        <ReviewMarkdown>{stepView.intro}</ReviewMarkdown>
+        <ReviewMarkdown size="large">{stepView.intro}</ReviewMarkdown>
       ) : (
         <p className={styles["noIntro"]}>
           <FormattedMessage defaultMessage="These files changed in the PR, but the review doesn't assign them to a step." />

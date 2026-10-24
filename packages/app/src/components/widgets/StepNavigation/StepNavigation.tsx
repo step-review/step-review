@@ -76,10 +76,14 @@ export default function StepNavigation({
                 aria-current={isActive ? "page" : undefined}
                 onClick={goOnClick(step.id)}
               >
-                {step.number}. <StepTitle step={step} />
-                <ActionList.TrailingVisual>
+                {/* In the label, not a trailing visual, so that the
+                    progress bar below spans the whole item. */}
+                <span className={styles["stepLabel"]}>
+                  <span>
+                    {step.number}. <StepTitle step={step} />
+                  </span>
                   <AttentionIcon attention={step.attention} />
-                </ActionList.TrailingVisual>
+                </span>
                 <ActionList.Description variant="block">
                   <span className={styles["progress"]}>
                     <ViewedProgress progress={progress} />

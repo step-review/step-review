@@ -8,14 +8,16 @@ import Markdown from "../../design-system/Markdown/Markdown.tsx";
 
 interface Props {
   children: string;
+  size?: "medium" | "large";
 }
 
 /** Markdown from the review, with links to notes, steps and files. */
-export default function ReviewMarkdown({ children }: Props) {
+export default function ReviewMarkdown({ children, size }: Props) {
   const reviewView = useCurrentReviewView();
   const noteIndex = useNoteIndex();
   return (
     <Markdown
+      size={size}
       renderCustomLink={(href, linkChildren) => {
         const resolved = resolveReviewLink(href, reviewView, noteIndex);
         if (!resolved) {

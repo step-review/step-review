@@ -8,3 +8,9 @@
 .markAllViewed {
   margin-left: auto;
 }
+
+/* The current layout, like GitHub's selected buttons in a group. */
+.layoutButton[aria-pressed="true"] {
+  background-color: var(--button-default-bgColor-selected);
+  font-weight: var(--base-text-weight-semibold);
+}

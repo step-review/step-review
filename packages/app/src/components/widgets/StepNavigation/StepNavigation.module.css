@@ -14,3 +14,10 @@
   gap: 6px;
   margin-top: var(--base-size-4);
 }
+
+.stepLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--base-size-8);
+}

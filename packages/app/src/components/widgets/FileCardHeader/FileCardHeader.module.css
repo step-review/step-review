@@ -35,6 +35,41 @@
   margin-left: auto;
 }
 
-.viewedIcon {
-  color: var(--fgColor-accent);
+/* GitHub doesn't highlight the toggle of an open diff. */
+.collapseButton[aria-expanded="true"] {
+  background-color: var(--button-invisible-bgColor-rest);
+
+  &:hover {
+    background-color: var(--button-invisible-bgColor-hover);
+  }
+}
+
+/* A small Primer button. */
+.viewed {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--control-small-gap);
+  height: var(--control-small-size);
+  padding-inline: var(--control-small-paddingInline-condensed);
+  border: var(--borderWidth-default) solid
+    var(--button-default-borderColor-rest);
+  border-radius: var(--borderRadius-medium);
+  background: var(--button-default-bgColor-rest);
+  box-shadow: var(--button-default-shadow-resting);
+  color: var(--button-default-fgColor-rest);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: var(--button-default-bgColor-hover);
+    border-color: var(--button-default-borderColor-hover);
+  }
+
+  &[data-viewed] {
+    background: var(--bgColor-accent-muted);
+    border-color: var(--borderColor-accent-muted);
+  }
 }

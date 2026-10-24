@@ -4,6 +4,11 @@
   line-height: var(--text-body-lineHeight-medium);
   overflow-wrap: anywhere;
 
+  &[data-size="large"] {
+    font-size: var(--text-body-size-large);
+    line-height: var(--text-body-lineHeight-large);
+  }
+
   & > :first-child {
     margin-top: 0;
   }

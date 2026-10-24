@@ -11,9 +11,7 @@
   }
 
   &[data-kind="issue"] {
-    border-color: var(--borderColor-attention-muted);
     border-left-color: var(--borderColor-attention-emphasis);
-    background: var(--bgColor-attention-muted);
   }
 
   &[data-highlighted] {

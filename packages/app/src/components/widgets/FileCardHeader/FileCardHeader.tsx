@@ -1,11 +1,9 @@
 import {
-  CheckboxFillIcon,
   ChevronDownIcon,
   ChevronRightIcon,
   MarkGithubIcon,
-  SquareIcon,
 } from "@primer/octicons-react";
-import { Button, IconButton, Label } from "@primer/react";
+import { Checkbox, IconButton, Label } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import diffstatBlocks from "../../../business-logic/diff-layout/diffstatBlocks.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
@@ -45,6 +43,7 @@ export default function FileCardHeader({
         variant="invisible"
         size="small"
         icon={isCollapsed ? ChevronRightIcon : ChevronDownIcon}
+        className={styles["collapseButton"]}
         onClick={onToggleCollapsed}
         aria-label={intl.formatMessage({
           defaultMessage: "Show or hide the diff",
@@ -95,19 +94,15 @@ export default function FileCardHeader({
             />
           </Label>
         )}
-        <Button
-          size="small"
-          aria-pressed={isViewed}
-          onClick={() => onViewedChange(!isViewed)}
-          leadingVisual={isViewed ? ViewedIcon : SquareIcon}
-        >
+        {/* GitHub's checkbox styled as a button. */}
+        <label className={styles["viewed"]} data-viewed={isViewed || undefined}>
+          <Checkbox
+            checked={isViewed}
+            onChange={(event) => onViewedChange(event.currentTarget.checked)}
+          />
           <FormattedMessage defaultMessage="Viewed" />
-        </Button>
+        </label>
       </div>
     </div>
   );
-}
-
-function ViewedIcon() {
-  return <CheckboxFillIcon className={styles["viewedIcon"]} />;
 }
