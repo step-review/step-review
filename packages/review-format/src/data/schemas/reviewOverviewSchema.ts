@@ -6,17 +6,6 @@ export default v.strictObject({
     markdownSchema,
     v.description("What the changes do, in a paragraph or two."),
   ),
-  areas: v.optional(
-    v.pipe(
-      v.array(
-        v.strictObject({
-          title: v.pipe(v.string(), v.minLength(1)),
-          points: v.pipe(v.array(markdownSchema), v.minLength(1)),
-        }),
-      ),
-      v.description("The main areas of change, with their key points."),
-    ),
-  ),
   readingPlan: v.optional(
     v.pipe(
       markdownSchema,

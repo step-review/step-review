@@ -9,24 +9,6 @@ export default function OverviewSummary() {
   return (
     <Stack gap="normal">
       <ReviewMarkdown>{overview.summary}</ReviewMarkdown>
-      {overview.areas && overview.areas.length > 0 && (
-        <div className={styles["areas"]}>
-          {overview.areas.map((area, index) => (
-            <section key={index} className={styles["area"]}>
-              <Heading as="h3" variant="small" className={styles["areaTitle"]}>
-                {area.title}
-              </Heading>
-              <ul className={styles["points"]}>
-                {area.points.map((point, pointIndex) => (
-                  <li key={pointIndex}>
-                    <ReviewMarkdown>{point}</ReviewMarkdown>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-      )}
       {overview.readingPlan && (
         <div>
           <Heading

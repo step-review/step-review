@@ -16,7 +16,7 @@ it("finds no problems in a consistent review", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -70,7 +70,7 @@ it("warns about a note anchored to a line outside the diff", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -125,7 +125,7 @@ it("warns about a note whose line text does not match the diff", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -180,7 +180,7 @@ it("warns about files that are in no step", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",

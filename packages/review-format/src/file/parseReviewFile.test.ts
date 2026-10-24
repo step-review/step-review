@@ -7,7 +7,7 @@ it("parses the review data and the diff", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -73,7 +73,7 @@ it("reports schema problems with their location", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",
@@ -143,7 +143,7 @@ it("reports a diff problem with its line in the review file", () => {
     [
       "#step-review:review",
       JSON.stringify({
-        version: 2,
+        version: 3,
         createdAt: "2026-10-11T09:30:00Z",
         target: {
           title: "Fix sum",

@@ -119,12 +119,12 @@ on the 20 lines of context.
 
 ## JSON format
 
-The JSON Schema is at https://step-review.dev/schema/v2.json. Example:
+The JSON Schema is at https://step-review.dev/schema/v3.json. Example:
 
 ```json
 {
-  "$schema": "https://step-review.dev/schema/v2.json",
-  "version": 2,
+  "$schema": "https://step-review.dev/schema/v3.json",
+  "version": 3,
   "createdAt": "2026-10-11T09:30:00Z",
   "target": {
     "title": "Validate IDs in the API",
@@ -136,12 +136,6 @@ The JSON Schema is at https://step-review.dev/schema/v2.json. Example:
   },
   "overview": {
     "summary": "What the changes do, in a paragraph or two.",
-    "areas": [
-      {
-        "title": "API: validation",
-        "points": ["`parseId` rejects malformed IDs with a 400."]
-      }
-    ],
     "readingPlan": "Steps 1–3 cover the logic; step 4 is a mechanical rename."
   },
   "steps": [

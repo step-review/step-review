@@ -6,7 +6,7 @@ import stepSchema from "./stepSchema.ts";
 export default v.pipe(
   v.strictObject({
     $schema: v.optional(v.string()),
-    version: v.literal(2),
+    version: v.literal(3),
     createdAt: v.pipe(
       v.string(),
       v.isoTimestamp(),

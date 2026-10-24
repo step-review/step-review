@@ -27,7 +27,7 @@ a time, with the notes beside the diff, and lets you mark files as viewed.
 A review file is a JSON section written by the agent (overview, steps, notes)
 followed by the `git diff` of the PR, so the agent never writes diff content
 itself. See [`@step-review/review-format`](packages/review-format/README.md) for
-the format, and `step-review.dev/schema/v2.json` for its JSON Schema.
+the format, and `step-review.dev/schema/v3.json` for its JSON Schema.
 
 ## Development
 

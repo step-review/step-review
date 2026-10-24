@@ -1,7 +1,7 @@
 #step-review:review
 {
-  "$schema": "https://step-review.dev/schema/v2.json",
-  "version": 2,
+  "$schema": "https://step-review.dev/schema/v3.json",
+  "version": 3,
   "createdAt": "2026-10-12T09:00:00Z",
   "target": {
     "title": "Keep open links private",
@@ -13,31 +13,6 @@
   },
   "overview": {
     "summary": "Web links to Superego resources used to carry collection, document, version and app IDs in the URL path of `open.superego.dev`, so every click sent them to the server. This PR moves them into the URL fragment, which browsers never send: the CLI now generates `https://open.superego.dev/#deepLink=…` links, and the Open Worker serves a static page whose inline script reads the fragment and opens the `superego://` link.\n\nThe rest of the PR is CI: preview deployments for the Open Worker, production deploys on every push to `main`, and tighter permissions for the workflows.",
-    "areas": [
-      {
-        "title": "CLI: link generation",
-        "points": [
-          "`get-deep-link` defaults to web links, now fragment-based.",
-          "`desktop` still returns plain `superego://` links."
-        ]
-      },
-      {
-        "title": "Open Worker",
-        "points": [
-          "The server-side redirect is replaced by a client-side opener page.",
-          "HTML responses get a strict Content Security Policy.",
-          "Every path except `/`, `/privacy` and `/robots.txt` now returns 404."
-        ]
-      },
-      {
-        "title": "CI",
-        "points": [
-          "PRs deploy an Open Worker preview, linked in the preview comment.",
-          "Pushes to `main` deploy the website, demo and Open Worker; tags also build Electron.",
-          "Jobs get read-only permissions and don't persist checkout credentials."
-        ]
-      }
-    ],
     "readingPlan": "Steps 1 and 2 are the privacy fix and deserve the most attention. Steps 3 and 4 are deployment plumbing. Step 5 removes the Worker's tests and can be skimmed, but see its note."
   },
   "steps": [
