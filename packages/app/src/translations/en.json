@@ -56,6 +56,9 @@
   "FileStatusBadge.tsx_tOxzip": {
     "defaultMessage": "Modified"
   },
+  "FileViewers.tsx_Z7S0/N": {
+    "defaultMessage": "Viewed by {names}"
+  },
   "GapRow.tsx_0oLj/t": {
     "defaultMessage": "Expand"
   },
@@ -113,6 +116,15 @@
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"
   },
+  "ParticipantNameDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "ParticipantNameDialog.tsx_vlKhIl": {
+    "defaultMessage": "Your name"
+  },
+  "ParticipantsHere.tsx_im4lxq": {
+    "defaultMessage": "{count, plural, one {{names} is here} other {{names} are here}}"
+  },
   "ProjectCredits.tsx_wTNySU": {
     "defaultMessage": "by"
   },
@@ -127,6 +139,12 @@
   },
   "ReloadDropzone.tsx_/YcyUn": {
     "defaultMessage": "Drop the review file to reload it"
+  },
+  "ReloadDropzone.tsx_cOIKjV": {
+    "defaultMessage": "Drop the review file to update the shared review"
+  },
+  "ReloadDropzone.tsx_udEDck": {
+    "defaultMessage": "The shared review couldn't be updated. Try again later."
   },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
@@ -167,6 +185,12 @@
   "ReviewRecap.tsx_R+J5ox": {
     "defaultMessage": "Review"
   },
+  "ReviewRecap.tsx_SguXs0": {
+    "defaultMessage": "Leave the review"
+  },
+  "ReviewRecap.tsx_WhiGBX": {
+    "defaultMessage": "Stop sharing"
+  },
   "ReviewRecap.tsx_agjgCY": {
     "defaultMessage": "Every file will be marked as not viewed."
   },
@@ -182,8 +206,14 @@
   "ReviewRecap.tsx_kvdGU5": {
     "defaultMessage": "Review actions"
   },
+  "ReviewRecap.tsx_qEZHWw": {
+    "defaultMessage": "Invite to the review"
+  },
   "ReviewRecap.tsx_qjGckA": {
     "defaultMessage": "Reset review state?"
+  },
+  "ReviewRecap.tsx_rOSpQP": {
+    "defaultMessage": "Share the review"
   },
   "ReviewShell.tsx_huCHmk": {
     "defaultMessage": "Steps"
@@ -208,6 +238,111 @@
   },
   "SeverityBadge.tsx_mjXHSf": {
     "defaultMessage": "Blocker"
+  },
+  "ShareLinkDialog.tsx_JXdbo8": {
+    "defaultMessage": "Done"
+  },
+  "ShareLinkDialog.tsx_qEZHWw": {
+    "defaultMessage": "Invite to the review"
+  },
+  "ShareLinkField.tsx_JBWS0c": {
+    "defaultMessage": "Link"
+  },
+  "ShareLinkField.tsx_JSXm7k": {
+    "defaultMessage": "Anyone with the link can open the review and join it. The key that decrypts it is in the link only."
+  },
+  "ShareLinkField.tsx_zXYcAr": {
+    "defaultMessage": "Copy the link"
+  },
+  "ShareParticipantsPanel.tsx_0JXAsk": {
+    "defaultMessage": "Away"
+  },
+  "ShareParticipantsPanel.tsx_3H1+9V": {
+    "defaultMessage": "Join the review"
+  },
+  "ShareParticipantsPanel.tsx_46Kg+h": {
+    "defaultMessage": "The other participants will see the new name."
+  },
+  "ShareParticipantsPanel.tsx_7YjYX+": {
+    "defaultMessage": "Change your name"
+  },
+  "ShareParticipantsPanel.tsx_9uOFF3": {
+    "defaultMessage": "Overview"
+  },
+  "ShareParticipantsPanel.tsx_Dn82AL": {
+    "defaultMessage": "Live"
+  },
+  "ShareParticipantsPanel.tsx_LVhU8V": {
+    "defaultMessage": "Step {stepNumber}"
+  },
+  "ShareParticipantsPanel.tsx_P6PLpi": {
+    "defaultMessage": "Join"
+  },
+  "ShareParticipantsPanel.tsx_PrtHNc": {
+    "defaultMessage": "The connection to the shared review failed. Reload the page to try again."
+  },
+  "ShareParticipantsPanel.tsx_PuU15u": {
+    "defaultMessage": "Not connected"
+  },
+  "ShareParticipantsPanel.tsx_QH2s4N": {
+    "defaultMessage": "The review has too many participants to join it. Changes aren't saved."
+  },
+  "ShareParticipantsPanel.tsx_YtxGgO": {
+    "defaultMessage": "Connecting…"
+  },
+  "ShareParticipantsPanel.tsx_ccU6l/": {
+    "defaultMessage": "Online"
+  },
+  "ShareParticipantsPanel.tsx_jvo0vs": {
+    "defaultMessage": "Save"
+  },
+  "ShareParticipantsPanel.tsx_oID+Is": {
+    "defaultMessage": "The review is no longer shared: it was deleted, or expired. Changes aren't saved."
+  },
+  "ShareParticipantsPanel.tsx_pK7uFW": {
+    "defaultMessage": "This browser can't join the review as before. Changes aren't saved."
+  },
+  "ShareParticipantsPanel.tsx_vFA0iR": {
+    "defaultMessage": "The other participants will see your name, the files you viewed, and where you are."
+  },
+  "ShareParticipantsPanel.tsx_zx0myy": {
+    "defaultMessage": "Participants"
+  },
+  "ShareReviewDialog.tsx_1pllGg": {
+    "defaultMessage": "Create a link"
+  },
+  "ShareReviewDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "ShareReviewDialog.tsx_MFYa+V": {
+    "defaultMessage": "The review couldn't be uploaded. Try again later."
+  },
+  "ShareReviewDialog.tsx_Qw3ad0": {
+    "defaultMessage": "Open the shared review"
+  },
+  "ShareReviewDialog.tsx_r1bBFq": {
+    "defaultMessage": "The key is in the link only, so the server can't read the review. It is deleted after 30 days without activity."
+  },
+  "ShareReviewDialog.tsx_r4Blpt": {
+    "defaultMessage": "Review shared"
+  },
+  "ShareReviewDialog.tsx_r4YXET": {
+    "defaultMessage": "Sharing failed"
+  },
+  "ShareReviewDialog.tsx_rOSpQP": {
+    "defaultMessage": "Share the review"
+  },
+  "ShareReviewDialog.tsx_rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "ShareReviewDialog.tsx_vlKhIl": {
+    "defaultMessage": "Your name"
+  },
+  "ShareReviewDialog.tsx_wiJcF8": {
+    "defaultMessage": "The review is encrypted in your browser and uploaded with your progress. Whoever opens its link reviews it with you: you'll see each other's progress, and where you are."
+  },
+  "ShareReviewDialog.tsx_x4TTpt": {
+    "defaultMessage": "Shown to the others."
   },
   "Start.tsx_3sbmjt": {
     "defaultMessage": "Past reviews"
@@ -241,6 +376,9 @@
   },
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
+  },
+  "Start.tsx_ux96LJ": {
+    "defaultMessage": "This shared review can't be opened: it was deleted or expired, or its link is incomplete."
   },
   "StepFileTree.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
@@ -281,8 +419,20 @@
   "StepToolbar.tsx_dUFzeV": {
     "defaultMessage": "Diff layout"
   },
+  "StoredReviewList.tsx_7fx3Mw": {
+    "defaultMessage": "Shared with you"
+  },
+  "StoredReviewList.tsx_DXd/yu": {
+    "defaultMessage": "Shared by you"
+  },
+  "StoredReviewList.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
   "StoredReviewList.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
+  },
+  "StoredReviewList.tsx_K82lwB": {
+    "defaultMessage": "Remove the shared review"
   },
   "StoredReviewList.tsx_OLCgvh": {
     "defaultMessage": "The review file and its review state will be removed from this browser."
@@ -290,10 +440,49 @@
   "StoredReviewList.tsx_OtMych": {
     "defaultMessage": "Delete review"
   },
+  "StoredReviewList.tsx_T6ZOmZ": {
+    "defaultMessage": "Remove the shared review?"
+  },
+  "StoredReviewList.tsx_ZZw/Iw": {
+    "defaultMessage": "It will be removed from this browser, but stay shared until it expires: you won't be able to update it or stop sharing it. To delete it for everyone, stop sharing it from the review instead."
+  },
   "StoredReviewList.tsx_jbbK0Z": {
     "defaultMessage": "Delete review?"
   },
+  "StoredReviewList.tsx_qbbNEM": {
+    "defaultMessage": "It will be removed from this browser. You can join it again with its link, as a new participant."
+  },
+  "StoredReviewList.tsx_utaicf": {
+    "defaultMessage": "Shared review"
+  },
   "ViewedAndNoteCounts.tsx_zz6max": {
     "defaultMessage": "{viewedCount}/{totalCount} viewed"
+  },
+  "useLeaveSharedReview.ts_4yMAWe": {
+    "defaultMessage": "Leave the review?"
+  },
+  "useLeaveSharedReview.ts_5+HaBc": {
+    "defaultMessage": "The review couldn't be deleted. Try again later."
+  },
+  "useLeaveSharedReview.ts_WhiGBX": {
+    "defaultMessage": "Stop sharing"
+  },
+  "useLeaveSharedReview.ts_ePgmeH": {
+    "defaultMessage": "Stop sharing?"
+  },
+  "useLeaveSharedReview.ts_fnihsY": {
+    "defaultMessage": "Leave"
+  },
+  "useLeaveSharedReview.ts_hzmKWb": {
+    "defaultMessage": "The review and every participant's progress will be deleted from the server. Its links will stop working."
+  },
+  "useLeaveSharedReview.ts_slzWn+": {
+    "defaultMessage": "The review will be removed from this browser. You can join it again with its link, as a new participant."
+  },
+  "useParticipantLabel.ts_LXxsbk": {
+    "defaultMessage": "Anonymous"
+  },
+  "useParticipantLabel.ts_OKhxcB": {
+    "defaultMessage": "{name} (you)"
   }
 }

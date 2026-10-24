@@ -18,7 +18,9 @@ After cloning the repository:
 
 Run `pnpm dev` and open the URL printed by Vite (normally
 `http://127.0.0.1:5173`). The dev server also serves `/SKILL.md` and
-`/schema/v3.json`.
+`/schema/v3.json`, and proxies `/api/` to the share server, which `pnpm dev`
+runs locally with Wrangler on port 8787 (`SHARE_SERVER_PORT` changes it). Its
+shares are kept in `packages/share-server/.wrangler`.
 
 To try the app, have a coding agent write a review of any repository (see
 `packages/app/public/SKILL.md`), then drop the file on the start page.
@@ -49,7 +51,10 @@ linting errors in the editor, and configure it to format on save.
 ## Deployment
 
 The app is a static site, deployed to Cloudflare as a Worker with static assets.
-GitHub Actions deploy:
+The same Worker runs the share server for the requests under `/api/`: the deploy
+script merges `packages/share-server/wrangler.json` into the app's
+configuration. Each Worker has its own Durable Objects, so PR previews don't
+share data with production. GitHub Actions deploy:
 
 - `main` to `https://step-review.dev` (`.github/workflows/main.yml`);
 - each internal PR to `https://pr-<number>.step-review.dev`, removed when the PR

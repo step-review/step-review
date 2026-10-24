@@ -1,0 +1,12 @@
+/* Stretched: FormControl aligns its children at the start. */
+.field {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}

@@ -31,7 +31,13 @@
   }
 }
 
-/* The recap and the brand line up with the text of the steps. */
+/* The participants, the recap and the brand line up with the text of the
+   steps. */
+.participants {
+  padding: var(--base-size-16) var(--base-size-24);
+  border-top: var(--borderWidth-default) solid var(--borderColor-default);
+}
+
 .recap {
   padding: var(--base-size-16) var(--base-size-24);
   border-top: var(--borderWidth-default) solid var(--borderColor-default);

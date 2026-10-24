@@ -8,7 +8,7 @@ import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
-import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
+import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewValue.tsx";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import FileCard from "../../widgets/FileCard/FileCard.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
@@ -24,14 +24,14 @@ interface Props {
 }
 
 export default function Step({ stepId }: Props) {
-  const { loadedReview } = useLoadedReviewContext();
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
   const reviewView = useReviewView();
   // Being read from the browser's storage, which takes a moment.
   if (loadedReview === undefined) {
     return null;
   }
   if (!loadedReview || !reviewView) {
-    return <Start isReviewMissing />;
+    return <Start missingReview={reviewAddress?.kind ?? "local"} />;
   }
   const stepIndex = reviewView.steps.findIndex((step) => step.id === stepId);
   if (stepIndex === -1) {
@@ -56,16 +56,16 @@ interface StepPageProps {
 
 function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
   const stepView = reviewView.steps[stepIndex]!;
-  const { reviewId } = reviewView;
+  const { reviewAddress } = reviewView;
   const preferences = useDiffPreferences();
   const { dispatch } = useReviewState();
   useScrollToFragment();
   const goToStep = (index: number) => {
     const step = reviewView.steps[index];
     if (step) {
-      navigateTo({ name: RouteName.Step, reviewId, stepId: step.id });
+      navigateTo({ name: RouteName.Step, reviewAddress, stepId: step.id });
     } else if (index < 0) {
-      navigateTo({ name: RouteName.Overview, reviewId });
+      navigateTo({ name: RouteName.Overview, reviewAddress });
     }
   };
   useHotkeys([

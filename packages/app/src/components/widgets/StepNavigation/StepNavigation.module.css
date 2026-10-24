@@ -13,6 +13,13 @@
   gap: var(--base-size-8);
 }
 
+.stepMarks {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--base-size-4);
+}
+
 /* Adds to the gap Primer leaves under the label, so that the label, the
    counts and the progress bar don't feel cramped. */
 .description {

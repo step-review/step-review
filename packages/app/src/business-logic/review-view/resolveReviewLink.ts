@@ -22,7 +22,7 @@ export default function resolveReviewLink(
         ? {
             route: {
               name: RouteName.Step,
-              reviewId: reviewView.reviewId,
+              reviewAddress: reviewView.reviewAddress,
               stepId: noteLocation.stepId,
             },
             fragment: `note-${target}`,
@@ -34,7 +34,7 @@ export default function resolveReviewLink(
         ? {
             route: {
               name: RouteName.Step,
-              reviewId: reviewView.reviewId,
+              reviewAddress: reviewView.reviewAddress,
               stepId: target,
             },
             fragment: null,
@@ -47,7 +47,7 @@ export default function resolveReviewLink(
           return {
             route: {
               name: RouteName.Step,
-              reviewId: reviewView.reviewId,
+              reviewAddress: reviewView.reviewAddress,
               stepId: step.id,
             },
             fragment: `file-${file.id}`,

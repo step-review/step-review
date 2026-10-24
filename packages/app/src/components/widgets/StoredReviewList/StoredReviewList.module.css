@@ -33,11 +33,14 @@
   font-weight: var(--base-text-weight-semibold);
 }
 
-.fileName {
+.detail {
   min-width: 0;
   color: var(--fgColor-muted);
-  font-family: var(--fontStack-monospace);
   font-size: var(--text-body-size-small);
+}
+
+.detail[data-file-name] {
+  font-family: var(--fontStack-monospace);
 }
 
 .deleteButton {

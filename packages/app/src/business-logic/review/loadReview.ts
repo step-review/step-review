@@ -25,6 +25,7 @@ export default function loadReview(
     loadedReview: {
       reviewId,
       fileName,
+      text,
       reviewFile: result.reviewFile,
       warnings: checkReviewFile(result.reviewFile),
     },

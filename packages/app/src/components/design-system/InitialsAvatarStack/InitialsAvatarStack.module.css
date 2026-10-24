@@ -1,0 +1,20 @@
+.stack {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+}
+
+.item {
+  display: inline-flex;
+}
+
+/* Overlapping. */
+.item + .item {
+  margin-inline-start: calc(-1 * var(--base-size-4));
+}
+
+.hiddenCount {
+  margin-inline-start: var(--base-size-4);
+  color: var(--fgColor-muted);
+  font: var(--text-caption-shorthand);
+}

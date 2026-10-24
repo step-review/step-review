@@ -14,12 +14,13 @@ it("keeps the review state when a review file is saved again", async () => {
   const loadedReview = {
     reviewId: "3f9a0c21b7e4d2",
     fileName: "login.step-review",
+    text: "first version",
     reviewFile: {
       data: { target: { title: "Add login" } },
     } as unknown as ReviewFile,
     warnings: [],
   };
-  await saveReview(loadedReview, "first version");
+  await saveReview(loadedReview);
   await updateReviewState("3f9a0c21b7e4d2", {
     type: "setViewed",
     fingerprints: ["a1"],
@@ -27,7 +28,7 @@ it("keeps the review state when a review file is saved again", async () => {
   });
 
   // Exercise
-  await saveReview(loadedReview, "second version");
+  await saveReview({ ...loadedReview, text: "second version" });
 
   // Verify
   expect(await reviewDatabase.reviewFiles.get("3f9a0c21b7e4d2")).toBe(
@@ -40,17 +41,15 @@ it("keeps the review state when a review file is saved again", async () => {
 
 it("removes the file, the state, and the listing when deleting a review", async () => {
   // Setup SUT
-  await saveReview(
-    {
-      reviewId: "3f9a0c21b7e4d2",
-      fileName: "login.step-review",
-      reviewFile: {
-        data: { target: { title: "Add login" } },
-      } as unknown as ReviewFile,
-      warnings: [],
-    },
-    "review text",
-  );
+  await saveReview({
+    reviewId: "3f9a0c21b7e4d2",
+    fileName: "login.step-review",
+    text: "review text",
+    reviewFile: {
+      data: { target: { title: "Add login" } },
+    } as unknown as ReviewFile,
+    warnings: [],
+  });
   await updateReviewState("3f9a0c21b7e4d2", {
     type: "setViewed",
     fingerprints: ["a1"],
