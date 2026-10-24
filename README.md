@@ -22,6 +22,15 @@ a time, with the notes beside the diff, and lets you mark files as viewed.
 4. When the PR changes, ask the agent to review it again. Files whose changes
    are the same stay marked as viewed.
 
+## Sharing a review
+
+From a review's menu, share it to review it with others. The review is encrypted
+in your browser and uploaded with a key that only its link holds, so the server
+can't read it. Participants see each other's names, the files each viewed, and
+the step each is on, live. Whoever shared it can update it by dropping a new
+review file, or stop sharing it. Shares are deleted after 30 days without
+activity.
+
 ## Review files
 
 A review file is a JSON section written by the agent (overview, steps, notes)
@@ -36,6 +45,8 @@ pnpm monorepo:
 - [`packages/app`](packages/app): the web app (Vite, React, Primer).
 - [`packages/review-format`](packages/review-format): the review file format:
   schemas, parser and consistency checks.
+- [`packages/share-server`](packages/share-server): the server of shared reviews
+  (a Cloudflare Worker with Durable Objects), and its protocol.
 - [`packages/tooling/oxlint-custom-rules`](packages/tooling/oxlint-custom-rules):
   architecture lint rules.
 

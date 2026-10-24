@@ -1,11 +1,16 @@
 import { appendFileSync, unlinkSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import shareServerWranglerConfig from "../../share-server/wrangler.json" with { type: "json" };
 import wranglerConfig from "../wrangler.json" with { type: "json" };
 import DeployTarget from "./DeployTarget.ts";
 import shell from "./shell.ts";
 
 await deploy();
 
-/** Deploys the built app (`dist`) as a static-assets Worker. */
+/**
+ * Deploys the built app (`dist`) as a static-assets Worker, which also runs the
+ * share server for the requests under `/api/`.
+ */
 async function deploy(): Promise<void> {
   const deployTarget = new DeployTarget(process.argv.slice(2));
   output(false);
@@ -17,7 +22,10 @@ async function deploy(): Promise<void> {
   writeFileSync(
     configPath,
     JSON.stringify({
+      ...shareServerWranglerConfig,
       ...wranglerConfig,
+      // Relative to this configuration, written next to the app's.
+      main: join("../share-server", shareServerWranglerConfig.main),
       name: deployTarget.workerName,
       routes: [{ pattern: deployTarget.hostname, custom_domain: true }],
     }),

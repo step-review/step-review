@@ -24,5 +24,12 @@ export default defineConfig({
     host: "127.0.0.1",
     // Lets parallel dev servers run on assigned ports.
     port: process.env["PORT"] ? Number(process.env["PORT"]) : 5173,
+    // The share API, served by `pnpm --filter @step-review/share-server dev`.
+    proxy: {
+      "/api/": {
+        target: `http://127.0.0.1:${process.env["SHARE_SERVER_PORT"] ?? 8787}`,
+        ws: true,
+      },
+    },
   },
 });
