@@ -63,7 +63,7 @@
 /* Adds to the gap Primer leaves after the marker, to set the title apart. */
 .marker {
   display: flex;
-  padding-inline-end: var(--base-size-8);
+  padding-inline-end: var(--base-size-4);
 }
 
 .progress {
@@ -78,7 +78,7 @@
 
 /* Clears the timeline's line. */
 .fileTree {
-  padding-inline-start: var(--base-size-48);
+  padding-inline-start: calc(var(--base-size-40) + var(--base-size-4));
 }
 
 /* Centered on the timeline's line. */
