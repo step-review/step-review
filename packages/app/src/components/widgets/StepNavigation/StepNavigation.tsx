@@ -113,9 +113,10 @@ export default function StepNavigation({
           </div>
         );
       })}
-      {/* Not a step: shows that the list ended, as the overview starts it. */}
-      <p className={styles["end"]}>
-        <FormattedMessage defaultMessage="End" />
+      {/* Not a step: shows that the list ended. Decorative, so hidden from
+          assistive technology, for which the list ends anyway. */}
+      <p className={styles["end"]} aria-hidden>
+        ~
       </p>
     </nav>
   );
