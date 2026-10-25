@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
-import useOwnViewedFingerprints from "../../../business-logic/review-state/useOwnViewedFingerprints.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import splitFileNotes from "../../../business-logic/review-view/splitFileNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
@@ -29,9 +28,8 @@ export default function FileCard({
 }: Props) {
   const intl = useIntl();
   const { dispatch } = useReviewState();
-  // Viewed by anyone, while the checkbox only marks the own view.
+  // Viewed by anyone, while the checkbox only changes the own view.
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
-  const isOwnViewed = useOwnViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
     isViewed || stepView.attention === "low",
   );
@@ -78,7 +76,7 @@ export default function FileCard({
       <FileCardHeader
         stepFileView={stepFileView}
         isCollapsed={isCollapsed}
-        isViewed={isOwnViewed}
+        isViewed={isViewed}
         onToggleCollapsed={() => setIsCollapsed((collapsed) => !collapsed)}
         onViewedChange={setViewed}
       />

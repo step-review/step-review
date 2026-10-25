@@ -4,8 +4,8 @@ import mergeViewedFingerprints from "./mergeViewedFingerprints.ts";
 import { useReviewState } from "./ReviewStateProvider.tsx";
 
 /**
- * The files counted as viewed, e.g. in progress: in a shared review, those that
- * any participant viewed. See `useOwnViewedFingerprints` for the own ones.
+ * The files counted as viewed: in a shared review, those that any participant
+ * viewed. Changes only apply to the own state, through `useReviewState`.
  */
 export default function useViewedFingerprints(): Set<string> {
   const { reviewState } = useReviewState();
