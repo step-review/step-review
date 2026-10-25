@@ -807,6 +807,12 @@
       "value": "This browser can't join the review as before. Changes aren't saved."
     }
   ],
+  "SessionNotices.tsx_sACAMl": [
+    {
+      "type": 0,
+      "value": "Your progress is too large to be saved in the session. Changes aren't saved."
+    }
+  ],
   "SessionNotices.tsx_vFA0iR": [
     {
       "type": 0,

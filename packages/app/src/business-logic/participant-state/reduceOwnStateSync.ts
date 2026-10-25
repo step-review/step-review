@@ -21,6 +21,8 @@ export default function reduceOwnStateSync(
       };
     case "writeStored": {
       const { inFlightWrite } = ownStateSync;
+      // The server isn't trusted: a misbehaving one could acknowledge a write
+      // that was never sent.
       if (!inFlightWrite) {
         return ownStateSync;
       }

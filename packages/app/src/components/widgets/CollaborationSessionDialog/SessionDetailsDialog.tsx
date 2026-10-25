@@ -37,10 +37,18 @@ export default function SessionDetailsDialog() {
   const leaveLabel = isOwner
     ? intl.formatMessage({ defaultMessage: "End session" })
     : intl.formatMessage({ defaultMessage: "Leave session" });
-  const rename = (newName: string) => {
-    setName(newName);
-    sessionConnection.rename(newName.trim());
-    writeStorage(participantNameStorageKey, newName.trim());
+  // Saved once typed, rather than on every keystroke: each rename writes the
+  // whole state, for every participant to receive.
+  const saveName = () => {
+    const trimmedName = name.trim();
+    if (trimmedName !== sessionConnectionSnapshot.ownState.name) {
+      sessionConnection.rename(trimmedName);
+      writeStorage(participantNameStorageKey, trimmedName);
+    }
+  };
+  const closeDialog = () => {
+    saveName();
+    close();
   };
   return (
     <Dialog
@@ -51,7 +59,7 @@ export default function SessionDetailsDialog() {
             ? intl.formatMessage({ defaultMessage: "End the session?" })
             : intl.formatMessage({ defaultMessage: "Leave the session?" })
       }
-      onClose={close}
+      onClose={closeDialog}
       // Buttons keyed by what they do: rendered by Primer, those in the same
       // place would keep the previous step's styles.
       renderFooter={() => (
@@ -78,7 +86,7 @@ export default function SessionDetailsDialog() {
               >
                 {leaveLabel}
               </Button>
-              <Button key="done" variant="primary" onClick={close}>
+              <Button key="done" variant="primary" onClick={closeDialog}>
                 <FormattedMessage defaultMessage="Done" />
               </Button>
             </>
@@ -104,14 +112,15 @@ export default function SessionDetailsDialog() {
               block
               value={name}
               maxLength={participantNameMaxLength}
-              onChange={(event) => rename(event.currentTarget.value)}
+              onChange={(event) => setName(event.currentTarget.value)}
+              onBlur={saveName}
             />
           </FormControl>
           <SessionLinkField
             link={link}
             isInitiallyCopied={link === copiedLink}
           />
-          <SessionParticipantList onFollow={close} />
+          <SessionParticipantList onFollow={closeDialog} />
         </Stack>
       )}
     </Dialog>

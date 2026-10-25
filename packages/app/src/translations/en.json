@@ -296,6 +296,9 @@
   "SessionNotices.tsx_pK7uFW": {
     "defaultMessage": "This browser can't join the review as before. Changes aren't saved."
   },
+  "SessionNotices.tsx_sACAMl": {
+    "defaultMessage": "Your progress is too large to be saved in the session. Changes aren't saved."
+  },
   "SessionNotices.tsx_vFA0iR": {
     "defaultMessage": "The other participants will see your name, the files you viewed, and where you are."
   },

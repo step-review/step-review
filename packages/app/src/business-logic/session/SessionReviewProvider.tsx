@@ -41,10 +41,10 @@ export default function SessionReviewProvider({
   const { route, fragment } = useLocationParts();
   const bookmarkedSessionKey = sessionBookmark?.sessionKey ?? null;
   useEffect(() => {
-    // E.g. a URL copied without its fragment: put the key back, so that the
-    // URL can be passed on.
+    // E.g. a URL copied without its fragment, or cut short: put the working key
+    // back, so that the URL can be passed on.
     if (
-      linkSessionKey === null &&
+      (linkSessionKey === null || isLinkUnusable) &&
       bookmarkedSessionKey !== null &&
       (route.name === RouteName.Overview || route.name === RouteName.Step)
     ) {
@@ -61,12 +61,19 @@ export default function SessionReviewProvider({
         { replace: true },
       );
     }
-  }, [sessionId, linkSessionKey, bookmarkedSessionKey, route, fragment]);
+  }, [
+    sessionId,
+    linkSessionKey,
+    isLinkUnusable,
+    bookmarkedSessionKey,
+    route,
+    fragment,
+  ]);
   const resolvedReviewAddress = useMemo<SessionReviewAddress>(
     () => ({ kind: "session", sessionId, sessionKey: bookmarkedSessionKey }),
     [sessionId, bookmarkedSessionKey],
   );
-  if ((sessionBookmark === null && linkSessionKey === null) || isLinkUnusable) {
+  if (sessionBookmark === null && (linkSessionKey === null || isLinkUnusable)) {
     return (
       <LoadedReviewValue
         loadedReview={null}
@@ -76,10 +83,13 @@ export default function SessionReviewProvider({
       </LoadedReviewValue>
     );
   }
-  // Until joining stores the link's key in the bookmark.
+  // Until joining stores the link's key in the bookmark. A link that can't
+  // open the session leaves the bookmarked key.
   if (
     !sessionBookmark ||
-    (linkSessionKey !== null && sessionBookmark.sessionKey !== linkSessionKey)
+    (linkSessionKey !== null &&
+      sessionBookmark.sessionKey !== linkSessionKey &&
+      !isLinkUnusable)
   ) {
     return (
       <LoadedReviewValue

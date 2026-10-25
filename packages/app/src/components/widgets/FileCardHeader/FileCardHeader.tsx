@@ -19,10 +19,7 @@ interface Props {
   /** Whether anyone viewed the file. */
   isViewed: boolean;
   onToggleCollapsed: () => void;
-  /**
-   * Changes the own view only: unchecked, the file stays viewed if another
-   * participant viewed it.
-   */
+  /** In a session, marks the file viewed or not for every participant. */
   onViewedChange: (isViewed: boolean) => void;
 }
 

@@ -68,6 +68,10 @@ function EndReasonBanner({ endReason }: EndReasonBannerProps) {
       defaultMessage:
         "The review has too many participants to join it. Changes aren't saved.",
     }),
+    stateTooLarge: intl.formatMessage({
+      defaultMessage:
+        "Your progress is too large to be saved in the session. Changes aren't saved.",
+    }),
     failed: intl.formatMessage({
       defaultMessage:
         "The connection to the session failed. Reload the page to try again.",

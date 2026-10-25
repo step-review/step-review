@@ -360,3 +360,38 @@ it("ends the connection to a session that doesn't exist", async () => {
   );
   expect(snapshot.endReason).toBe("notFound");
 });
+
+it("ends the connection when the own state is too large to store", async () => {
+  // Setup SUT
+  const { apiOrigin, sessionId, sessionKey } = await createTestSession();
+  const sessionConnection = new SessionConnection({
+    apiOrigin,
+    sessionId,
+    sessionKey,
+    participantId: randomBase64Url(16),
+    participantSecret: randomBase64Url(32),
+  });
+  onTestFinished(() => sessionConnection.close());
+  await waitForSessionConnection(
+    sessionConnection,
+    (sessionConnectionSnapshot) =>
+      sessionConnectionSnapshot.connectionStatus === "connected",
+  );
+
+  // Exercise
+  sessionConnection.dispatch({
+    type: "setViewed",
+    fingerprints: Array.from({ length: 5000 }, (_, index) =>
+      hashString(`file-${index}`),
+    ),
+    viewed: true,
+  });
+
+  // Verify
+  const snapshot = await waitForSessionConnection(
+    sessionConnection,
+    (sessionConnectionSnapshot) =>
+      sessionConnectionSnapshot.connectionStatus === "ended",
+  );
+  expect(snapshot.endReason).toBe("stateTooLarge");
+});

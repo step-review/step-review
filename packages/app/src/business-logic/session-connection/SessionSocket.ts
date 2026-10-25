@@ -62,6 +62,12 @@ export default class SessionSocket {
     this.webSocket?.close();
   }
 
+  /** Closes the connection for good, for a reason found in the browser. */
+  end(endReason: SessionEndReason): void {
+    this.close();
+    this.handlers.onEnded(endReason);
+  }
+
   private connect(): void {
     const { apiOrigin, sessionId, participantId, participantSecret } =
       this.options;
@@ -102,13 +108,14 @@ export default class SessionSocket {
     const wasJoined = this.isJoined;
     this.webSocket = null;
     this.isJoined = false;
+    // Closed by the browser, e.g. ended: nothing to tell or reconnect.
+    if (this.isClosed) {
+      return;
+    }
     this.handlers.onDisconnected();
     const endReason = sessionEndReasons.get(code);
     if (endReason) {
       this.handlers.onEnded(endReason);
-      return;
-    }
-    if (this.isClosed) {
       return;
     }
     // A socket to a missing session fails to open, with no close code to tell.

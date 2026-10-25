@@ -1,4 +1,4 @@
-import type { ServerMessage } from "@step-review/session-server";
+import { sessionLimits, type ServerMessage } from "@step-review/session-server";
 import currentOwnState from "../participant-state/currentOwnState.ts";
 import emptyOwnStateSync from "../participant-state/emptyOwnStateSync.ts";
 import mergeViewedMarks from "../participant-state/mergeViewedMarks.ts";
@@ -206,6 +206,13 @@ export default class SessionConnection {
       write.participantState,
       sessionAdditionalData.participantState(sessionId, participantId),
     );
+    // The server would close the socket for it, and reconnecting would send it
+    // again.
+    if (state.length > sessionLimits.maxStateLength) {
+      this.presenceSender.cancel();
+      this.sessionSocket.end("stateTooLarge");
+      return;
+    }
     this.sessionSocket.send(connectionNumber, {
       type: "writeState",
       revision: write.revision,
