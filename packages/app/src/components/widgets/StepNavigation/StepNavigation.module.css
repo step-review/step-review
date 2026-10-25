@@ -34,6 +34,14 @@
   gap: var(--base-size-8);
 }
 
+/* As tall as the marker and centered on it: the overview has no
+   description, so its marker can't center on the whole item. */
+.overviewLabel {
+  composes: stepLabel;
+  align-items: center;
+  min-height: var(--base-size-24);
+}
+
 .stepMarks {
   display: inline-flex;
   flex: none;
@@ -45,6 +53,17 @@
    counts and the progress bar don't feel cramped. */
 .description {
   margin-top: var(--base-size-4);
+}
+
+/* Centered on the whole step, not only its title. */
+.markerSlot {
+  align-self: center;
+}
+
+/* Adds to the gap Primer leaves after the marker, to set the title apart. */
+.marker {
+  display: flex;
+  padding-inline-end: var(--base-size-8);
 }
 
 .progress {
@@ -59,7 +78,7 @@
 
 /* Clears the timeline's line. */
 .fileTree {
-  padding-inline-start: var(--base-size-40);
+  padding-inline-start: var(--base-size-48);
 }
 
 /* Centered on the timeline's line. */

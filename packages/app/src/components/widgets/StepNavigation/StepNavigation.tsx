@@ -59,10 +59,12 @@ export default function StepNavigation({
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
         >
-          <ActionList.LeadingVisual>
-            <StepMarker number={0} isActive={activeStepId === null} />
+          <ActionList.LeadingVisual className={styles["markerSlot"]}>
+            <span className={styles["marker"]}>
+              <StepMarker number={0} isActive={activeStepId === null} />
+            </span>
           </ActionList.LeadingVisual>
-          <span className={styles["stepLabel"]}>
+          <span className={styles["overviewLabel"]}>
             <FormattedMessage defaultMessage="Overview" />
             <ParticipantsHere stepId={null} />
           </span>
@@ -84,8 +86,10 @@ export default function StepNavigation({
                 aria-current={isActive ? "page" : undefined}
                 onClick={goOnClick(step.id)}
               >
-                <ActionList.LeadingVisual>
-                  <StepMarker number={step.number} isActive={isActive} />
+                <ActionList.LeadingVisual className={styles["markerSlot"]}>
+                  <span className={styles["marker"]}>
+                    <StepMarker number={step.number} isActive={isActive} />
+                  </span>
                 </ActionList.LeadingVisual>
                 {/* In the label, not a trailing visual, so that the
                     progress bar below spans the whole item. */}
