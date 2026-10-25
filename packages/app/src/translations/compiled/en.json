@@ -203,16 +203,16 @@
       "value": "Live collaboration"
     }
   ],
+  "LiveCollaborationDialog.tsx_3scjcG": [
+    {
+      "type": 0,
+      "value": "The key to decrypt it is in the link, so anyone with the link can read it (but we can't)."
+    }
+  ],
   "LiveCollaborationDialog.tsx_A5AvFO": [
     {
       "type": 0,
       "value": "Couldn't start the session"
-    }
-  ],
-  "LiveCollaborationDialog.tsx_J9JF+p": [
-    {
-      "type": 0,
-      "value": "Start session"
     }
   ],
   "LiveCollaborationDialog.tsx_JXdbo8": [
@@ -221,16 +221,16 @@
       "value": "Done"
     }
   ],
+  "LiveCollaborationDialog.tsx_K31T5O": [
+    {
+      "type": 0,
+      "value": "The session is deleted after 30 days without activity."
+    }
+  ],
   "LiveCollaborationDialog.tsx_MFYa+V": [
     {
       "type": 0,
       "value": "The review couldn't be uploaded. Try again later."
-    }
-  ],
-  "LiveCollaborationDialog.tsx_MQQMCj": [
-    {
-      "type": 0,
-      "value": "The review is uploaded to our servers encrypted. The key to decrypt it is in the link, so anyone with the link can read it, and we can't. It's deleted after 30 days without activity."
     }
   ],
   "LiveCollaborationDialog.tsx_dmhZKW": [
@@ -243,6 +243,18 @@
     {
       "type": 0,
       "value": "End session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_o9kbW/": [
+    {
+      "type": 0,
+      "value": "Start live collaboration session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_rcmAMG": [
+    {
+      "type": 0,
+      "value": "The review is uploaded to our servers encrypted."
     }
   ],
   "LiveCollaborationDialog.tsx_vlKhIl": [

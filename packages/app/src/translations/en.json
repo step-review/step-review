@@ -86,26 +86,32 @@
   "LiveCollaborationDialog.tsx_/fpETR": {
     "defaultMessage": "Live collaboration"
   },
+  "LiveCollaborationDialog.tsx_3scjcG": {
+    "defaultMessage": "The key to decrypt it is in the link, so anyone with the link can read it (but we can't)."
+  },
   "LiveCollaborationDialog.tsx_A5AvFO": {
     "defaultMessage": "Couldn't start the session"
-  },
-  "LiveCollaborationDialog.tsx_J9JF+p": {
-    "defaultMessage": "Start session"
   },
   "LiveCollaborationDialog.tsx_JXdbo8": {
     "defaultMessage": "Done"
   },
+  "LiveCollaborationDialog.tsx_K31T5O": {
+    "defaultMessage": "The session is deleted after 30 days without activity."
+  },
   "LiveCollaborationDialog.tsx_MFYa+V": {
     "defaultMessage": "The review couldn't be uploaded. Try again later."
-  },
-  "LiveCollaborationDialog.tsx_MQQMCj": {
-    "defaultMessage": "The review is uploaded to our servers encrypted. The key to decrypt it is in the link, so anyone with the link can read it, and we can't. It's deleted after 30 days without activity."
   },
   "LiveCollaborationDialog.tsx_dmhZKW": {
     "defaultMessage": "Leave session"
   },
   "LiveCollaborationDialog.tsx_iIenp6": {
     "defaultMessage": "End session"
+  },
+  "LiveCollaborationDialog.tsx_o9kbW/": {
+    "defaultMessage": "Start live collaboration session"
+  },
+  "LiveCollaborationDialog.tsx_rcmAMG": {
+    "defaultMessage": "The review is uploaded to our servers encrypted."
   },
   "LiveCollaborationDialog.tsx_vlKhIl": {
     "defaultMessage": "Your name"

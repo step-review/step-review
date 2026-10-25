@@ -1,4 +1,10 @@
+.start {
+  display: flex;
+  justify-content: center;
+}
+
 /* Spaced by the stack's gap alone: margins would add to it. */
-.paragraph {
+.points {
   margin: 0;
+  padding-inline-start: var(--base-size-20);
 }

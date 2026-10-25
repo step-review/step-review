@@ -1,9 +1,9 @@
 import {
   Banner,
+  Button,
   Dialog,
   FormControl,
   Stack,
-  Text,
   TextInput,
 } from "@primer/react";
 import { useState } from "react";
@@ -78,19 +78,17 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
     <Dialog
       title={intl.formatMessage({ defaultMessage: "Live collaboration" })}
       onClose={() => setIsOpen(false)}
-      footerButtons={[
-        {
-          buttonType: "primary",
-          content: intl.formatMessage({ defaultMessage: "Start session" }),
-          loading: status === "starting",
-          onClick: () => void start(),
-        },
-      ]}
     >
       <Stack gap="normal">
-        <Text as="p" className={styles["paragraph"]}>
-          <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted. The key to decrypt it is in the link, so anyone with the link can read it, and we can't. It's deleted after 30 days without activity." />
-        </Text>
+        <div className={styles["start"]}>
+          <Button
+            variant="primary"
+            loading={status === "starting"}
+            onClick={() => void start()}
+          >
+            <FormattedMessage defaultMessage="Start live collaboration session" />
+          </Button>
+        </div>
         {status === "failed" && (
           <Banner
             variant="critical"
@@ -103,6 +101,17 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
             }
           />
         )}
+        <ul className={styles["points"]}>
+          <li>
+            <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
+          </li>
+          <li>
+            <FormattedMessage defaultMessage="The key to decrypt it is in the link, so anyone with the link can read it (but we can't)." />
+          </li>
+          <li>
+            <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
+          </li>
+        </ul>
       </Stack>
     </Dialog>
   );
