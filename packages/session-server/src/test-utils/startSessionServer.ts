@@ -9,6 +9,14 @@ import { unstable_startWorker } from "wrangler";
 export default async function startSessionServer(project: TestProject) {
   const worker = await unstable_startWorker({
     config: fileURLToPath(new URL("../../wrangler.json", import.meta.url)),
+    bindings: {
+      // The tests upload more reviews than the production limit allows.
+      REVIEW_UPLOADS: {
+        type: "ratelimit",
+        namespace_id: "1001",
+        simple: { limit: 1000, period: 60 },
+      },
+    },
     dev: {
       inspector: false,
       persist: false,

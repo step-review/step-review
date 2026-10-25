@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import type LoadedReview from "../review/LoadedReview.ts";
 import fetchSessionInfo from "./fetchSessionInfo.ts";
 import fetchSessionReview from "./fetchSessionReview.ts";
+import SessionApiError from "./SessionApiError.ts";
+
+/** How long to wait before fetching a version again, in milliseconds. */
+const retryDelay = 5000;
 
 /**
  * Loads a session's review: the version the connection names, or else the
@@ -41,17 +45,30 @@ export default function useSessionLoadedReview(
       return;
     }
     let isCurrent = true;
-    void fetchSessionReview(apiOrigin, sessionId, sessionKey, versionId)
-      .then((fetchedReview) => {
-        if (isCurrent) {
-          setLoadedReview(fetchedReview);
-        }
-      })
-      .catch(() => {
-        // A newer version replaced this one meanwhile: the connection names it.
-      });
+    let retryTimeout: ReturnType<typeof setTimeout> | undefined;
+    const load = () => {
+      void fetchSessionReview(apiOrigin, sessionId, sessionKey, versionId)
+        .then((fetchedReview) => {
+          if (isCurrent) {
+            setLoadedReview(fetchedReview);
+          }
+        })
+        .catch((error: unknown) => {
+          // Not found: a newer version replaced this one meanwhile, and the
+          // connection names it. Otherwise, e.g. offline, the same version
+          // is fetched again.
+          if (
+            isCurrent &&
+            !(error instanceof SessionApiError && error.status === 404)
+          ) {
+            retryTimeout = setTimeout(load, retryDelay);
+          }
+        });
+    };
+    load();
     return () => {
       isCurrent = false;
+      clearTimeout(retryTimeout);
     };
   }, [apiOrigin, sessionId, sessionKey, versionId]);
   return loadedReview;

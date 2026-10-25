@@ -1,6 +1,5 @@
 import envelopeFormatVersion from "./envelopeFormatVersion.ts";
-
-const ivBytes = 12;
+import envelopeIvBytes from "./envelopeIvBytes.ts";
 
 /**
  * Encrypts with AES-GCM, as the format version, a random IV and the ciphertext.
@@ -12,7 +11,7 @@ export default async function encryptEnvelope(
   plaintext: Uint8Array<ArrayBuffer>,
   additionalData: string,
 ): Promise<Uint8Array<ArrayBuffer>> {
-  const iv = crypto.getRandomValues(new Uint8Array(ivBytes));
+  const iv = crypto.getRandomValues(new Uint8Array(envelopeIvBytes));
   const ciphertext = await crypto.subtle.encrypt(
     {
       name: "AES-GCM",
@@ -22,9 +21,9 @@ export default async function encryptEnvelope(
     sessionKey,
     plaintext,
   );
-  const envelope = new Uint8Array(1 + ivBytes + ciphertext.byteLength);
+  const envelope = new Uint8Array(1 + envelopeIvBytes + ciphertext.byteLength);
   envelope[0] = envelopeFormatVersion;
   envelope.set(iv, 1);
-  envelope.set(new Uint8Array(ciphertext), 1 + ivBytes);
+  envelope.set(new Uint8Array(ciphertext), 1 + envelopeIvBytes);
   return envelope;
 }

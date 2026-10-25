@@ -147,6 +147,27 @@ it("deletes the session when the owner asks", async () => {
   expect(sessionResponse.status).toBe(404);
 });
 
+it("refuses to create a deleted session again", async () => {
+  // Setup SUT
+  const sessionId = randomTestId();
+  const ownerSecret = randomTestId(32);
+  await putTestReview(sessionId, ownerSecret, new Uint8Array([1]));
+  await sessionServerFetch(sessionApiPaths.session(sessionId), {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${ownerSecret}` },
+  });
+
+  // Exercise
+  const response = await putTestReview(
+    sessionId,
+    randomTestId(32),
+    new Uint8Array([2]),
+  );
+
+  // Verify
+  expect(response.status).toBe(403);
+});
+
 it("refuses to delete the session without the owner secret", async () => {
   // Setup SUT
   const sessionId = randomTestId();

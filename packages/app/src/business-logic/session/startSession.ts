@@ -39,6 +39,9 @@ export default async function startSession(
     },
     { fileName: loadedReview.fileName, text: loadedReview.text },
   );
+  // Saved before storing the state, so that closing the page meanwhile doesn't
+  // lose the owner secret, the only way to update or end the session.
+  await saveSessionBookmark(sessionBookmark);
   const sessionConnection = new SessionConnection({
     apiOrigin,
     sessionId: sessionBookmark.sessionId,
@@ -54,6 +57,5 @@ export default async function startSession(
   // Not stored (e.g. sockets are blocked), the owner joins as anyone does.
   await waitForStoredState(sessionConnection, storeStateTimeout);
   sessionConnection.close();
-  await saveSessionBookmark(sessionBookmark);
   return sessionBookmark;
 }

@@ -41,8 +41,9 @@ export default function SessionNotices() {
           submitLabel={intl.formatMessage({ defaultMessage: "Join" })}
           initialName={readParticipantName()}
           onSubmit={rename}
-          // Joins without a name, so that it isn't asked again.
-          onClose={() => rename("")}
+          // Joins without a name, so that it isn't asked again, and keeps the
+          // name suggested for the next session.
+          onClose={() => sessionConnection.rename("")}
         />
       )}
     </>

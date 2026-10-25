@@ -1,8 +1,8 @@
 import type { ServerMessage } from "@step-review/session-server";
 import currentOwnState from "../participant-state/currentOwnState.ts";
+import emptyOwnStateSync from "../participant-state/emptyOwnStateSync.ts";
 import mergeViewedMarks from "../participant-state/mergeViewedMarks.ts";
 import nextOwnStateWrite from "../participant-state/nextOwnStateWrite.ts";
-import type OwnStateSync from "../participant-state/OwnStateSync.ts";
 import type OwnStateSyncEvent from "../participant-state/OwnStateSyncEvent.ts";
 import type ParticipantStateAction from "../participant-state/ParticipantStateAction.ts";
 import reduceOwnStateSync from "../participant-state/reduceOwnStateSync.ts";
@@ -26,12 +26,7 @@ import SessionSocket from "./SessionSocket.ts";
 export default class SessionConnection {
   private options: SessionConnectionOptions;
   private snapshot: SessionConnectionSnapshot;
-  private ownStateSync: OwnStateSync = {
-    revision: 0,
-    storedState: null,
-    pendingActions: [],
-    inFlightWrite: null,
-  };
+  private ownStateSync = emptyOwnStateSync();
   private listeners = new Set<() => void>();
   private sessionSocket: SessionSocket;
   private presenceSender: PresenceSender;
@@ -235,8 +230,9 @@ export default class SessionConnection {
   }
 
   private update(changes: Partial<SessionConnectionSnapshot>): void {
+    const { ownState } = this.snapshot;
     this.snapshot = { ...this.snapshot, ...changes };
-    if (changes.ownState || changes.otherParticipantStates) {
+    if (this.snapshot.ownState !== ownState || changes.otherParticipantStates) {
       this.snapshot.fileViewedStatuses = mergeViewedMarks([
         [this.options.participantId, this.snapshot.ownState],
         ...this.snapshot.otherParticipantStates,

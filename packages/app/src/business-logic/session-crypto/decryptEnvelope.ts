@@ -1,6 +1,5 @@
 import envelopeFormatVersion from "./envelopeFormatVersion.ts";
-
-const ivBytes = 12;
+import envelopeIvBytes from "./envelopeIvBytes.ts";
 
 /**
  * Decrypts an envelope made by `encryptEnvelope`. `null` when it can't be:
@@ -18,11 +17,11 @@ export default async function decryptEnvelope(
     const plaintext = await crypto.subtle.decrypt(
       {
         name: "AES-GCM",
-        iv: envelope.subarray(1, 1 + ivBytes),
+        iv: envelope.subarray(1, 1 + envelopeIvBytes),
         additionalData: new TextEncoder().encode(additionalData),
       },
       sessionKey,
-      envelope.subarray(1 + ivBytes),
+      envelope.subarray(1 + envelopeIvBytes),
     );
     return new Uint8Array(plaintext);
   } catch {

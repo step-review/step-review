@@ -28,8 +28,7 @@ export default class SessionObject extends DurableObject {
     review: ArrayBuffer,
   ): Promise<SessionInfo | null> {
     const ownerSecretHash = await hashSecret(ownerSecret);
-    const session = this.sessionStore.readSession();
-    if (session && session.ownerSecretHash !== ownerSecretHash) {
+    if (!this.sessionStore.canSaveReview(ownerSecretHash)) {
       return null;
     }
     const versionId = randomId();
@@ -228,6 +227,7 @@ export default class SessionObject extends DurableObject {
     }
     await this.ctx.storage.deleteAlarm();
     await this.ctx.storage.deleteAll();
+    this.sessionStore.markEnded();
   }
 
   /** Sends a message to the joined connections, but the given one. */

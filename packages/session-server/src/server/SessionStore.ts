@@ -8,8 +8,9 @@ const reviewChunkBytes = 1024 * 1024;
 
 /**
  * The stored data of a session: its owner, the latest version of its encrypted
- * review, and its participants' encrypted states. Tables are only created when
- * the session is, so that looking up an unknown session stores nothing.
+ * review, and its participants' encrypted states, or, once it ended, only that
+ * it did. Tables are only created when the session is, so that looking up an
+ * unknown session stores nothing.
  */
 export default class SessionStore {
   private storage: DurableObjectStorage;
@@ -19,12 +20,29 @@ export default class SessionStore {
   }
 
   exists(): boolean {
-    return (
-      this.storage.sql
-        .exec(
-          "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'session'",
-        )
-        .toArray().length > 0
+    return this.hasTable("session");
+  }
+
+  /**
+   * Whether the owner secret's hash can save a review: the owner's, or any to
+   * create the session. An ended session isn't created again: its participants
+   * still hold its key, so any of them could otherwise pass off a review as the
+   * owner's.
+   */
+  canSaveReview(ownerSecretHash: string): boolean {
+    const session = this.readSession();
+    return session
+      ? session.ownerSecretHash === ownerSecretHash
+      : !this.hasTable("ended");
+  }
+
+  /**
+   * Marks the session as ended, once its data is deleted: the table is the
+   * mark.
+   */
+  markEnded(): void {
+    this.storage.sql.exec(
+      "CREATE TABLE IF NOT EXISTS ended (singleton INTEGER PRIMARY KEY)",
     );
   }
 
@@ -170,5 +188,16 @@ export default class SessionStore {
         revision: row.revision,
         state: row.state,
       }));
+  }
+
+  private hasTable(name: string): boolean {
+    return (
+      this.storage.sql
+        .exec(
+          "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+          name,
+        )
+        .toArray().length > 0
+    );
   }
 }
