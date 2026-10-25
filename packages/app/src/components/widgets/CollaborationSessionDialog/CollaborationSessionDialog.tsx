@@ -1,4 +1,4 @@
-import { Banner, Dialog, Stack } from "@primer/react";
+import { Banner, Dialog, Stack, Text } from "@primer/react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -101,20 +101,25 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
       ]}
     >
       <Stack gap="normal">
-        <ul className={styles["points"]}>
-          <li>
-            <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
-          </li>
-          <li>
-            <FormattedMessage defaultMessage="The key to decrypt it is in the link, and is never sent to our servers." />
-          </li>
-          <li>
-            <FormattedMessage defaultMessage="Anyone with the link can read the review." />
-          </li>
-          <li>
-            <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
-          </li>
-        </ul>
+        <div>
+          <Text as="p" className={styles["intro"]}>
+            <FormattedMessage defaultMessage="What to know:" />
+          </Text>
+          <ul className={styles["points"]}>
+            <li>
+              <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
+            </li>
+            <li>
+              <FormattedMessage defaultMessage="The key to decrypt it is in the link, and is never sent to our servers." />
+            </li>
+            <li>
+              <FormattedMessage defaultMessage="Anyone with the link can read the review." />
+            </li>
+            <li>
+              <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
+            </li>
+          </ul>
+        </div>
         {status === "failed" && (
           <Banner
             variant="critical"

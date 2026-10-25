@@ -1,3 +1,8 @@
+/* Close to the points it introduces. */
+.intro {
+  margin: 0 0 var(--base-size-4);
+}
+
 /* Spaced by the stack's gap alone: margins would add to it. */
 .points {
   margin: 0;
