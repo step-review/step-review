@@ -1,21 +1,17 @@
-import { Banner, Dialog, FormControl, Stack, TextInput } from "@primer/react";
+import { Banner, Dialog, Stack } from "@primer/react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.ts";
-import participantNameMaxLength from "../../../business-logic/participant-state/participantNameMaxLength.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
-import participantNameStorageKey from "../../../business-logic/session-store/participantNameStorageKey.ts";
 import readParticipantName from "../../../business-logic/session-store/readParticipantName.ts";
 import sessionLink from "../../../business-logic/session/sessionLink.ts";
 import startSession from "../../../business-logic/session/startSession.ts";
-import writeStorage from "../../../business-logic/storage/writeStorage.ts";
-import SessionLinkField from "../SessionLinkField/SessionLinkField.tsx";
 import styles from "./CollaborationSessionDialog.module.css";
 import { useCollaborationSessionDialogState } from "./CollaborationSessionDialogProvider.tsx";
-import useLeaveSession from "./useLeaveSession.ts";
+import SessionDetailsDialog from "./SessionDetailsDialog.tsx";
 
 interface Props {
   loadedReview: LoadedReview;
@@ -25,14 +21,14 @@ interface Props {
 
 /**
  * Starts a collaboration session for a review kept in the browser, or, in a
- * session, gives its link and the own name.
+ * session, shows it.
  */
 export default function CollaborationSessionDialog({
   loadedReview,
   viewedFingerprints,
 }: Props) {
   return useSessionConnectionContext() ? (
-    <SessionDetails />
+    <SessionDetailsDialog />
   ) : (
     <SessionStart
       loadedReview={loadedReview}
@@ -131,57 +127,6 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
             }
           />
         )}
-      </Stack>
-    </Dialog>
-  );
-}
-
-function SessionDetails() {
-  const intl = useIntl();
-  const { close, copiedLink } = useCollaborationSessionDialogState();
-  const { sessionBookmark, sessionConnection, sessionConnectionSnapshot } =
-    useSessionConnectionContext()!;
-  const [name, setName] = useState(sessionConnectionSnapshot.ownState.name);
-  const link = sessionLink(window.location.origin, sessionBookmark);
-  const leaveSession = useLeaveSession(sessionBookmark, close);
-  const rename = (newName: string) => {
-    setName(newName);
-    sessionConnection.rename(newName.trim());
-    writeStorage(participantNameStorageKey, newName.trim());
-  };
-  return (
-    <Dialog
-      title={intl.formatMessage({ defaultMessage: "Collaboration session" })}
-      onClose={close}
-      footerButtons={[
-        {
-          buttonType: "danger",
-          content:
-            sessionBookmark.ownerSecret === null
-              ? intl.formatMessage({ defaultMessage: "Leave session" })
-              : intl.formatMessage({ defaultMessage: "End session" }),
-          onClick: () => void leaveSession(),
-        },
-        {
-          buttonType: "primary",
-          content: intl.formatMessage({ defaultMessage: "Done" }),
-          onClick: close,
-        },
-      ]}
-    >
-      <Stack gap="normal">
-        <FormControl>
-          <FormControl.Label>
-            <FormattedMessage defaultMessage="Your name" />
-          </FormControl.Label>
-          <TextInput
-            block
-            value={name}
-            maxLength={participantNameMaxLength}
-            onChange={(event) => rename(event.currentTarget.value)}
-          />
-        </FormControl>
-        <SessionLinkField link={link} isCopied={link === copiedLink} />
       </Stack>
     </Dialog>
   );

@@ -23,14 +23,8 @@
   "CollaborationSessionDialog.tsx_J9JF+p": {
     "defaultMessage": "Start session"
   },
-  "CollaborationSessionDialog.tsx_JXdbo8": {
-    "defaultMessage": "Done"
-  },
   "CollaborationSessionDialog.tsx_K31T5O": {
     "defaultMessage": "The session is deleted after 30 days without activity."
-  },
-  "CollaborationSessionDialog.tsx_KahVNL": {
-    "defaultMessage": "Collaboration session"
   },
   "CollaborationSessionDialog.tsx_MFYa+V": {
     "defaultMessage": "The review couldn't be uploaded. Try again later."
@@ -38,20 +32,11 @@
   "CollaborationSessionDialog.tsx_XCceQP": {
     "defaultMessage": "Start collaboration session"
   },
-  "CollaborationSessionDialog.tsx_dmhZKW": {
-    "defaultMessage": "Leave session"
-  },
   "CollaborationSessionDialog.tsx_evE0sn": {
     "defaultMessage": "Anyone with the link can read the review."
   },
-  "CollaborationSessionDialog.tsx_iIenp6": {
-    "defaultMessage": "End session"
-  },
   "CollaborationSessionDialog.tsx_rcmAMG": {
     "defaultMessage": "The review is uploaded to our servers encrypted."
-  },
-  "CollaborationSessionDialog.tsx_vlKhIl": {
-    "defaultMessage": "Your name"
   },
   "CopyIconButton.tsx_p556q3": {
     "defaultMessage": "Copied"
@@ -212,9 +197,6 @@
   "ReviewRecap.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
-  "ReviewRecap.tsx_KahVNL": {
-    "defaultMessage": "Collaboration session"
-  },
   "ReviewRecap.tsx_Kx622U": {
     "defaultMessage": "Import review state"
   },
@@ -226,6 +208,9 @@
   },
   "ReviewRecap.tsx_R+J5ox": {
     "defaultMessage": "Review"
+  },
+  "ReviewRecap.tsx_XCceQP": {
+    "defaultMessage": "Start collaboration session"
   },
   "ReviewRecap.tsx_aN434T": {
     "defaultMessage": "Every file will be marked as not viewed, for every participant."
@@ -260,50 +245,77 @@
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
   },
+  "SessionDetailsDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "SessionDetailsDialog.tsx_JXdbo8": {
+    "defaultMessage": "Done"
+  },
+  "SessionDetailsDialog.tsx_KahVNL": {
+    "defaultMessage": "Collaboration session"
+  },
+  "SessionDetailsDialog.tsx_NFDO56": {
+    "defaultMessage": "Leave the session?"
+  },
+  "SessionDetailsDialog.tsx_dVpNza": {
+    "defaultMessage": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
+  },
+  "SessionDetailsDialog.tsx_dmhZKW": {
+    "defaultMessage": "Leave session"
+  },
+  "SessionDetailsDialog.tsx_iIenp6": {
+    "defaultMessage": "End session"
+  },
+  "SessionDetailsDialog.tsx_vT1p72": {
+    "defaultMessage": "The review will be removed from this browser. You can join again with the link, as a new participant."
+  },
+  "SessionDetailsDialog.tsx_vlKhIl": {
+    "defaultMessage": "Your name"
+  },
+  "SessionDetailsDialog.tsx_xqCAKC": {
+    "defaultMessage": "End the session?"
+  },
   "SessionLinkField.tsx_JBWS0c": {
     "defaultMessage": "Link"
-  },
-  "SessionLinkField.tsx_emDtLh": {
-    "defaultMessage": "Copied to the clipboard."
   },
   "SessionLinkField.tsx_zXYcAr": {
     "defaultMessage": "Copy the link"
   },
-  "SessionParticipantsPanel.tsx_46Kg+h": {
-    "defaultMessage": "The other participants will see the new name."
-  },
-  "SessionParticipantsPanel.tsx_7YjYX+": {
-    "defaultMessage": "Change your name"
-  },
-  "SessionParticipantsPanel.tsx_ABUgKT": {
+  "SessionNotices.tsx_ABUgKT": {
     "defaultMessage": "Join the session"
   },
-  "SessionParticipantsPanel.tsx_P6PLpi": {
+  "SessionNotices.tsx_P6PLpi": {
     "defaultMessage": "Join"
   },
-  "SessionParticipantsPanel.tsx_PuU15u": {
+  "SessionNotices.tsx_PuU15u": {
     "defaultMessage": "Not connected"
   },
-  "SessionParticipantsPanel.tsx_QH2s4N": {
+  "SessionNotices.tsx_QH2s4N": {
     "defaultMessage": "The review has too many participants to join it. Changes aren't saved."
   },
-  "SessionParticipantsPanel.tsx_TNjWaR": {
+  "SessionNotices.tsx_TNjWaR": {
     "defaultMessage": "The connection to the session failed. Reload the page to try again."
   },
-  "SessionParticipantsPanel.tsx_jvo0vs": {
-    "defaultMessage": "Save"
-  },
-  "SessionParticipantsPanel.tsx_pK7uFW": {
+  "SessionNotices.tsx_pK7uFW": {
     "defaultMessage": "This browser can't join the review as before. Changes aren't saved."
   },
-  "SessionParticipantsPanel.tsx_vFA0iR": {
+  "SessionNotices.tsx_vFA0iR": {
     "defaultMessage": "The other participants will see your name, the files you viewed, and where you are."
   },
-  "SessionParticipantsPanel.tsx_wd79hm": {
+  "SessionNotices.tsx_wd79hm": {
     "defaultMessage": "The session ended, or expired. Changes aren't saved."
   },
-  "SessionParticipantsPanel.tsx_zx0myy": {
+  "SessionParticipantList.tsx_7UOvbT": {
+    "defaultMessage": "Offline"
+  },
+  "SessionParticipantList.tsx_vM4QPQ": {
+    "defaultMessage": "Go to where {name} is"
+  },
+  "SessionParticipantList.tsx_zx0myy": {
     "defaultMessage": "Participants"
+  },
+  "SessionParticipantsButton.tsx_uP1HHN": {
+    "defaultMessage": "Collaboration session: {count, plural, one {# participant} other {# participants}}"
   },
   "SeverityBadge.tsx_9eQkfo": {
     "defaultMessage": "Concern"
@@ -437,26 +449,8 @@
   "useLeaveSession.ts_FjpI/y": {
     "defaultMessage": "The session couldn't be ended. Try again later."
   },
-  "useLeaveSession.ts_NFDO56": {
-    "defaultMessage": "Leave the session?"
-  },
   "useLeaveSession.ts_OAlCD8": {
     "defaultMessage": "The session couldn't be removed from this browser. Try again later."
-  },
-  "useLeaveSession.ts_dVpNza": {
-    "defaultMessage": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
-  },
-  "useLeaveSession.ts_dmhZKW": {
-    "defaultMessage": "Leave session"
-  },
-  "useLeaveSession.ts_iIenp6": {
-    "defaultMessage": "End session"
-  },
-  "useLeaveSession.ts_vT1p72": {
-    "defaultMessage": "The review will be removed from this browser. You can join again with the link, as a new participant."
-  },
-  "useLeaveSession.ts_xqCAKC": {
-    "defaultMessage": "End the session?"
   },
   "useParticipantLabel.ts_LXxsbk": {
     "defaultMessage": "Anonymous"

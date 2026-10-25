@@ -7,12 +7,11 @@ import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
-import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import AppBrand from "../AppBrand/AppBrand.tsx";
 import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
 import ReviewRecap from "../ReviewRecap/ReviewRecap.tsx";
-import SessionParticipantsPanel from "../SessionParticipantsPanel/SessionParticipantsPanel.tsx";
+import SessionNotices from "../SessionNotices/SessionNotices.tsx";
 import StepNavigation from "../StepNavigation/StepNavigation.tsx";
 import styles from "./ReviewShell.module.css";
 
@@ -31,7 +30,6 @@ export default function ReviewShell({
 }: Props) {
   const intl = useIntl();
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
-  const isInSession = useSessionConnectionContext() !== null;
   const goToStart = () => navigateTo({ name: RouteName.Start });
   return (
     <>
@@ -81,11 +79,7 @@ export default function ReviewShell({
                 reviewView={reviewView}
               />
             </div>
-            {isInSession && (
-              <div className={styles["participants"]}>
-                <SessionParticipantsPanel />
-              </div>
-            )}
+            <SessionNotices />
           </div>
         </SplitPageLayout.Pane>
         <SplitPageLayout.Content width="full">

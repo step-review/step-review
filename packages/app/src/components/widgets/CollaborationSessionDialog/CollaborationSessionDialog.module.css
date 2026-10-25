@@ -3,3 +3,8 @@
   margin: 0;
   padding-inline-start: var(--base-size-20);
 }
+
+/* The only content: its margins would add to the dialog's padding. */
+.paragraph {
+  margin: 0;
+}

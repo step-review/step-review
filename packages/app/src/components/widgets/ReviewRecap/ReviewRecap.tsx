@@ -31,6 +31,7 @@ import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedA
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import CollaborationSessionDialog from "../CollaborationSessionDialog/CollaborationSessionDialog.tsx";
 import { useCollaborationSessionDialogState } from "../CollaborationSessionDialog/CollaborationSessionDialogProvider.tsx";
+import SessionParticipantsButton from "../SessionParticipantsButton/SessionParticipantsButton.tsx";
 import styles from "./ReviewRecap.module.css";
 
 interface Props {
@@ -123,6 +124,22 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
             />
           </span>
           <div className={styles["actions"]}>
+            {isInSession ? (
+              <SessionParticipantsButton
+                onClick={collaborationSessionDialogState.open}
+              />
+            ) : (
+              <IconButton
+                tooltipDirection="n"
+                variant="invisible"
+                size="small"
+                icon={PeopleIcon}
+                aria-label={intl.formatMessage({
+                  defaultMessage: "Start collaboration session",
+                })}
+                onClick={collaborationSessionDialogState.open}
+              />
+            )}
             <ActionMenu>
               <ActionMenu.Anchor>
                 <IconButton
@@ -146,14 +163,6 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                       <FileDirectoryOpenFillIcon />
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Open another review" />
-                  </ActionList.Item>
-                  <ActionList.Item
-                    onSelect={collaborationSessionDialogState.open}
-                  >
-                    <ActionList.LeadingVisual>
-                      <PeopleIcon />
-                    </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Collaboration session" />
                   </ActionList.Item>
                   <ActionList.Divider />
                   <ActionList.Item onSelect={exportState}>

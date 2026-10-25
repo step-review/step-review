@@ -31,13 +31,8 @@
   }
 }
 
-/* The participants, the recap and the brand line up with the steps'
-   markers, which sit at Primer's item margin and padding, 16px in. */
-/* Under the recap, without a border: the recap's padding separates them. */
-.participants {
-  padding: 0 var(--base-size-16) var(--base-size-16);
-}
-
+/* The recap and the brand line up with the steps' markers, which sit at
+   Primer's item margin and padding, 16px in. */
 .recap {
   padding: var(--base-size-16);
   border-top: var(--borderWidth-default) solid var(--borderColor-default);

@@ -1,0 +1,4 @@
+/* Under the recap, lined up with it: the recap's padding is above. */
+.banner {
+  padding: 0 var(--base-size-16) var(--base-size-16);
+}

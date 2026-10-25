@@ -1,0 +1,34 @@
+/* As tall as the small icon button beside it. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--base-size-4);
+  height: var(--control-small-size);
+  padding: 0 var(--base-size-4) 0 var(--base-size-2);
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--control-transparent-bgColor-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.avatars {
+  display: inline-flex;
+}
+
+.avatar {
+  display: inline-flex;
+}
+
+/* Overlapping. */
+.avatar + .avatar {
+  margin-inline-start: calc(-1 * var(--base-size-6));
+}

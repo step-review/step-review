@@ -47,22 +47,10 @@
       "value": "Start session"
     }
   ],
-  "CollaborationSessionDialog.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Done"
-    }
-  ],
   "CollaborationSessionDialog.tsx_K31T5O": [
     {
       "type": 0,
       "value": "The session is deleted after 30 days without activity."
-    }
-  ],
-  "CollaborationSessionDialog.tsx_KahVNL": [
-    {
-      "type": 0,
-      "value": "Collaboration session"
     }
   ],
   "CollaborationSessionDialog.tsx_MFYa+V": [
@@ -77,34 +65,16 @@
       "value": "Start collaboration session"
     }
   ],
-  "CollaborationSessionDialog.tsx_dmhZKW": [
-    {
-      "type": 0,
-      "value": "Leave session"
-    }
-  ],
   "CollaborationSessionDialog.tsx_evE0sn": [
     {
       "type": 0,
       "value": "Anyone with the link can read the review."
     }
   ],
-  "CollaborationSessionDialog.tsx_iIenp6": [
-    {
-      "type": 0,
-      "value": "End session"
-    }
-  ],
   "CollaborationSessionDialog.tsx_rcmAMG": [
     {
       "type": 0,
       "value": "The review is uploaded to our servers encrypted."
-    }
-  ],
-  "CollaborationSessionDialog.tsx_vlKhIl": [
-    {
-      "type": 0,
-      "value": "Your name"
     }
   ],
   "CopyIconButton.tsx_p556q3": [
@@ -605,12 +575,6 @@
       "value": "Delete"
     }
   ],
-  "ReviewRecap.tsx_KahVNL": [
-    {
-      "type": 0,
-      "value": "Collaboration session"
-    }
-  ],
   "ReviewRecap.tsx_Kx622U": [
     {
       "type": 0,
@@ -633,6 +597,12 @@
     {
       "type": 0,
       "value": "Review"
+    }
+  ],
+  "ReviewRecap.tsx_XCceQP": [
+    {
+      "type": 0,
+      "value": "Start collaboration session"
     }
   ],
   "ReviewRecap.tsx_aN434T": [
@@ -735,16 +705,70 @@
       "pluralType": "cardinal"
     }
   ],
+  "SessionDetailsDialog.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "SessionDetailsDialog.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "SessionDetailsDialog.tsx_KahVNL": [
+    {
+      "type": 0,
+      "value": "Collaboration session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_NFDO56": [
+    {
+      "type": 0,
+      "value": "Leave the session?"
+    }
+  ],
+  "SessionDetailsDialog.tsx_dVpNza": [
+    {
+      "type": 0,
+      "value": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
+    }
+  ],
+  "SessionDetailsDialog.tsx_dmhZKW": [
+    {
+      "type": 0,
+      "value": "Leave session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_iIenp6": [
+    {
+      "type": 0,
+      "value": "End session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_vT1p72": [
+    {
+      "type": 0,
+      "value": "The review will be removed from this browser. You can join again with the link, as a new participant."
+    }
+  ],
+  "SessionDetailsDialog.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
+  "SessionDetailsDialog.tsx_xqCAKC": [
+    {
+      "type": 0,
+      "value": "End the session?"
+    }
+  ],
   "SessionLinkField.tsx_JBWS0c": [
     {
       "type": 0,
       "value": "Link"
-    }
-  ],
-  "SessionLinkField.tsx_emDtLh": [
-    {
-      "type": 0,
-      "value": "Copied to the clipboard."
     }
   ],
   "SessionLinkField.tsx_zXYcAr": [
@@ -753,76 +777,114 @@
       "value": "Copy the link"
     }
   ],
-  "SessionParticipantsPanel.tsx_46Kg+h": [
-    {
-      "type": 0,
-      "value": "The other participants will see the new name."
-    }
-  ],
-  "SessionParticipantsPanel.tsx_7YjYX+": [
-    {
-      "type": 0,
-      "value": "Change your name"
-    }
-  ],
-  "SessionParticipantsPanel.tsx_ABUgKT": [
+  "SessionNotices.tsx_ABUgKT": [
     {
       "type": 0,
       "value": "Join the session"
     }
   ],
-  "SessionParticipantsPanel.tsx_P6PLpi": [
+  "SessionNotices.tsx_P6PLpi": [
     {
       "type": 0,
       "value": "Join"
     }
   ],
-  "SessionParticipantsPanel.tsx_PuU15u": [
+  "SessionNotices.tsx_PuU15u": [
     {
       "type": 0,
       "value": "Not connected"
     }
   ],
-  "SessionParticipantsPanel.tsx_QH2s4N": [
+  "SessionNotices.tsx_QH2s4N": [
     {
       "type": 0,
       "value": "The review has too many participants to join it. Changes aren't saved."
     }
   ],
-  "SessionParticipantsPanel.tsx_TNjWaR": [
+  "SessionNotices.tsx_TNjWaR": [
     {
       "type": 0,
       "value": "The connection to the session failed. Reload the page to try again."
     }
   ],
-  "SessionParticipantsPanel.tsx_jvo0vs": [
-    {
-      "type": 0,
-      "value": "Save"
-    }
-  ],
-  "SessionParticipantsPanel.tsx_pK7uFW": [
+  "SessionNotices.tsx_pK7uFW": [
     {
       "type": 0,
       "value": "This browser can't join the review as before. Changes aren't saved."
     }
   ],
-  "SessionParticipantsPanel.tsx_vFA0iR": [
+  "SessionNotices.tsx_vFA0iR": [
     {
       "type": 0,
       "value": "The other participants will see your name, the files you viewed, and where you are."
     }
   ],
-  "SessionParticipantsPanel.tsx_wd79hm": [
+  "SessionNotices.tsx_wd79hm": [
     {
       "type": 0,
       "value": "The session ended, or expired. Changes aren't saved."
     }
   ],
-  "SessionParticipantsPanel.tsx_zx0myy": [
+  "SessionParticipantList.tsx_7UOvbT": [
+    {
+      "type": 0,
+      "value": "Offline"
+    }
+  ],
+  "SessionParticipantList.tsx_vM4QPQ": [
+    {
+      "type": 0,
+      "value": "Go to where "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " is"
+    }
+  ],
+  "SessionParticipantList.tsx_zx0myy": [
     {
       "type": 0,
       "value": "Participants"
+    }
+  ],
+  "SessionParticipantsButton.tsx_uP1HHN": [
+    {
+      "type": 0,
+      "value": "Collaboration session: "
+    },
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " participant"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " participants"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "SeverityBadge.tsx_9eQkfo": [
@@ -1163,46 +1225,10 @@
       "value": "The session couldn't be ended. Try again later."
     }
   ],
-  "useLeaveSession.ts_NFDO56": [
-    {
-      "type": 0,
-      "value": "Leave the session?"
-    }
-  ],
   "useLeaveSession.ts_OAlCD8": [
     {
       "type": 0,
       "value": "The session couldn't be removed from this browser. Try again later."
-    }
-  ],
-  "useLeaveSession.ts_dVpNza": [
-    {
-      "type": 0,
-      "value": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
-    }
-  ],
-  "useLeaveSession.ts_dmhZKW": [
-    {
-      "type": 0,
-      "value": "Leave session"
-    }
-  ],
-  "useLeaveSession.ts_iIenp6": [
-    {
-      "type": 0,
-      "value": "End session"
-    }
-  ],
-  "useLeaveSession.ts_vT1p72": [
-    {
-      "type": 0,
-      "value": "The review will be removed from this browser. You can join again with the link, as a new participant."
-    }
-  ],
-  "useLeaveSession.ts_xqCAKC": [
-    {
-      "type": 0,
-      "value": "End the session?"
     }
   ],
   "useParticipantLabel.ts_LXxsbk": [
