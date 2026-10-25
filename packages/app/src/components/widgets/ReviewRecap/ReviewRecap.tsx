@@ -74,9 +74,14 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const resetState = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({ defaultMessage: "Reset review state?" }),
-      content: intl.formatMessage({
-        defaultMessage: "Every file will be marked as not viewed.",
-      }),
+      content: shareBookmark
+        ? intl.formatMessage({
+            defaultMessage:
+              "Your views will be removed. The files other participants viewed still count as viewed.",
+          })
+        : intl.formatMessage({
+            defaultMessage: "Every file will be marked as not viewed.",
+          }),
       confirmButtonContent: intl.formatMessage({ defaultMessage: "Reset" }),
       confirmButtonType: "danger",
     });

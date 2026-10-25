@@ -16,6 +16,7 @@ import styles from "./FileCardHeader.module.css";
 interface Props {
   stepFileView: StepFileView;
   isCollapsed: boolean;
+  /** Whether the own participant viewed the file, whoever else did. */
   isViewed: boolean;
   onToggleCollapsed: () => void;
   onViewedChange: (isViewed: boolean) => void;

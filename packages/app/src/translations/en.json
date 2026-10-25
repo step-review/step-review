@@ -164,6 +164,9 @@
   "ReviewRecap.tsx_2pwM03": {
     "defaultMessage": "Export review state"
   },
+  "ReviewRecap.tsx_5rCF+T": {
+    "defaultMessage": "Your views will be removed. The files other participants viewed still count as viewed."
+  },
   "ReviewRecap.tsx_Gy09SB": {
     "defaultMessage": "The file is not a valid review state."
   },
