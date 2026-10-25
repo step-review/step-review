@@ -7,7 +7,7 @@ it("applies a dispatched action to the stored state right away", () => {
   // Setup SUT
   const ownStateSync = {
     revision: 3,
-    storedState: { name: "Ada", viewedFingerprints: ["a1"] },
+    storedState: { name: "Ada", viewedMarks: [] },
     pendingActions: [],
     inFlightWrite: null,
   };
@@ -15,13 +15,13 @@ it("applies a dispatched action to the stored state right away", () => {
   // Exercise
   const dispatchedOwnStateSync = reduceOwnStateSync(ownStateSync, {
     type: "actionDispatched",
-    action: { type: "setViewed", fingerprints: ["b2"], viewed: true },
+    action: { type: "rename", name: "Ada L." },
   });
 
   // Verify
   expect(currentOwnState(dispatchedOwnStateSync)).toEqual({
-    name: "Ada",
-    viewedFingerprints: ["a1", "b2"],
+    name: "Ada L.",
+    viewedMarks: [],
   });
 });
 
@@ -29,7 +29,7 @@ it("writes the changes based on the stored revision", () => {
   // Setup SUT
   const ownStateSync = {
     revision: 3,
-    storedState: { name: "Ada", viewedFingerprints: [] },
+    storedState: { name: "Ada", viewedMarks: [] },
     pendingActions: [{ type: "rename", name: "Ada L." } as const],
     inFlightWrite: null,
   };
@@ -40,7 +40,7 @@ it("writes the changes based on the stored revision", () => {
   // Verify
   expect(write).toEqual({
     revision: 3,
-    participantState: { name: "Ada L.", viewedFingerprints: [] },
+    participantState: { name: "Ada L.", viewedMarks: [] },
   });
 });
 
@@ -55,7 +55,7 @@ it("doesn't write again while a write is in flight", () => {
     },
     {
       type: "writeSent",
-      participantState: { name: "Ada", viewedFingerprints: [] },
+      participantState: { name: "Ada", viewedMarks: [] },
     },
   );
 
@@ -77,12 +77,15 @@ it("keeps the actions dispatched during a write pending once it is stored", () =
     },
     {
       type: "writeSent",
-      participantState: { name: "Ada", viewedFingerprints: [] },
+      participantState: { name: "Ada", viewedMarks: [] },
     },
   );
   const dispatchedOwnStateSync = reduceOwnStateSync(sentOwnStateSync, {
     type: "actionDispatched",
-    action: { type: "setViewed", fingerprints: ["a1"], viewed: true },
+    action: {
+      type: "addViewedMarks",
+      viewedMarks: [{ fingerprint: "a1", viewed: true, at: 1000 }],
+    },
   });
 
   // Exercise
@@ -94,8 +97,13 @@ it("keeps the actions dispatched during a write pending once it is stored", () =
   // Verify
   expect(storedOwnStateSync).toEqual({
     revision: 1,
-    storedState: { name: "Ada", viewedFingerprints: [] },
-    pendingActions: [{ type: "setViewed", fingerprints: ["a1"], viewed: true }],
+    storedState: { name: "Ada", viewedMarks: [] },
+    pendingActions: [
+      {
+        type: "addViewedMarks",
+        viewedMarks: [{ fingerprint: "a1", viewed: true, at: 1000 }],
+      },
+    ],
     inFlightWrite: null,
   });
 });
@@ -105,15 +113,21 @@ it("applies the pending actions again to the newer state when a write is rejecte
   const sentOwnStateSync = reduceOwnStateSync(
     {
       revision: 1,
-      storedState: { name: "Ada", viewedFingerprints: [] },
+      storedState: { name: "Ada", viewedMarks: [] },
       pendingActions: [
-        { type: "setViewed", fingerprints: ["a1"], viewed: true },
+        {
+          type: "addViewedMarks",
+          viewedMarks: [{ fingerprint: "a1", viewed: true, at: 1000 }],
+        },
       ],
       inFlightWrite: null,
     },
     {
       type: "writeSent",
-      participantState: { name: "Ada", viewedFingerprints: ["a1"] },
+      participantState: {
+        name: "Ada",
+        viewedMarks: [{ fingerprint: "a1", viewed: true, at: 1000 }],
+      },
     },
   );
 
@@ -121,13 +135,22 @@ it("applies the pending actions again to the newer state when a write is rejecte
   const rejectedOwnStateSync = reduceOwnStateSync(sentOwnStateSync, {
     type: "writeRejected",
     revision: 2,
-    storedState: { name: "Ada", viewedFingerprints: ["b2"] },
+    storedState: {
+      name: "Ada",
+      viewedMarks: [{ fingerprint: "b2", viewed: true, at: 900 }],
+    },
   });
 
   // Verify
   expect(nextOwnStateWrite(rejectedOwnStateSync)).toEqual({
     revision: 2,
-    participantState: { name: "Ada", viewedFingerprints: ["b2", "a1"] },
+    participantState: {
+      name: "Ada",
+      viewedMarks: [
+        { fingerprint: "b2", viewed: true, at: 900 },
+        { fingerprint: "a1", viewed: true, at: 1000 },
+      ],
+    },
   });
 });
 
@@ -135,7 +158,10 @@ it("ignores a received state older than the stored one", () => {
   // Setup SUT
   const ownStateSync = {
     revision: 4,
-    storedState: { name: "Ada", viewedFingerprints: ["a1"] },
+    storedState: {
+      name: "Ada",
+      viewedMarks: [{ fingerprint: "a1", viewed: true, at: 1000 }],
+    },
     pendingActions: [],
     inFlightWrite: null,
   };
@@ -144,7 +170,7 @@ it("ignores a received state older than the stored one", () => {
   const receivedOwnStateSync = reduceOwnStateSync(ownStateSync, {
     type: "stateReceived",
     revision: 3,
-    storedState: { name: "Ada", viewedFingerprints: [] },
+    storedState: { name: "Ada", viewedMarks: [] },
   });
 
   // Verify
@@ -162,7 +188,7 @@ it("sends the pending actions again after disconnecting during a write", () => {
     },
     {
       type: "writeSent",
-      participantState: { name: "Ada", viewedFingerprints: [] },
+      participantState: { name: "Ada", viewedMarks: [] },
     },
   );
 
@@ -174,6 +200,6 @@ it("sends the pending actions again after disconnecting during a write", () => {
   // Verify
   expect(nextOwnStateWrite(disconnectedOwnStateSync)).toEqual({
     revision: 0,
-    participantState: { name: "Ada", viewedFingerprints: [] },
+    participantState: { name: "Ada", viewedMarks: [] },
   });
 });

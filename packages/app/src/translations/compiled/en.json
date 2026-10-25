@@ -509,12 +509,6 @@
       "value": "Export review state"
     }
   ],
-  "ReviewRecap.tsx_5rCF+T": [
-    {
-      "type": 0,
-      "value": "Your views will be removed. The files other participants viewed still count as viewed."
-    }
-  ],
   "ReviewRecap.tsx_Gy09SB": [
     {
       "type": 0,
@@ -567,6 +561,12 @@
     {
       "type": 0,
       "value": "Stop sharing"
+    }
+  ],
+  "ReviewRecap.tsx_aN434T": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed, for every participant."
     }
   ],
   "ReviewRecap.tsx_agjgCY": [

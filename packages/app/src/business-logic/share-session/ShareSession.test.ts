@@ -5,6 +5,7 @@ import hashString from "../review/hashString.ts";
 import randomBase64Url from "../share-crypto/randomBase64Url.ts";
 import deleteShare from "../sharing/deleteShare.ts";
 import ShareSession from "./ShareSession.ts";
+import type ShareSessionSnapshot from "./ShareSessionSnapshot.ts";
 
 it("shows a participant's stored state to the others", async () => {
   // Setup SUT
@@ -18,7 +19,7 @@ it("shows a participant's stored state to the others", async () => {
     participantSecret: randomBase64Url(32),
   });
   onTestFinished(() => aliceShareSession.close());
-  aliceShareSession.dispatch({ type: "rename", name: "Alice" });
+  aliceShareSession.rename("Alice");
   aliceShareSession.dispatch({
     type: "setViewed",
     fingerprints: ["a1"],
@@ -47,9 +48,65 @@ it("shows a participant's stored state to the others", async () => {
   );
   expect(bobSnapshot.otherParticipantStates).toEqual(
     new Map([
-      [aliceParticipantId, { name: "Alice", viewedFingerprints: ["a1"] }],
+      [
+        aliceParticipantId,
+        {
+          name: "Alice",
+          viewedMarks: [
+            {
+              fingerprint: "a1",
+              viewed: true,
+              at: expect.any(Number) as number,
+            },
+          ],
+        },
+      ],
     ]),
   );
+});
+
+it("marks a file as not viewed for everyone when another participant marks it so", async () => {
+  // Setup SUT
+  const { apiOrigin, shareId, shareKey } = await createTestShare();
+  const aliceShareSession = new ShareSession({
+    apiOrigin,
+    shareId,
+    shareKey,
+    participantId: randomBase64Url(16),
+    participantSecret: randomBase64Url(32),
+  });
+  onTestFinished(() => aliceShareSession.close());
+  const bobShareSession = new ShareSession({
+    apiOrigin,
+    shareId,
+    shareKey,
+    participantId: randomBase64Url(16),
+    participantSecret: randomBase64Url(32),
+  });
+  onTestFinished(() => bobShareSession.close());
+  aliceShareSession.dispatch({
+    type: "setViewed",
+    fingerprints: ["a1"],
+    viewed: true,
+  });
+  await waitForShareSession(
+    bobShareSession,
+    (snapshot) => snapshot.fileViewedStatuses.get("a1")?.viewed === true,
+  );
+
+  // Exercise
+  bobShareSession.dispatch({
+    type: "setViewed",
+    fingerprints: ["a1"],
+    viewed: false,
+  });
+
+  // Verify
+  const aliceSnapshot = await waitForShareSession(
+    aliceShareSession,
+    (snapshot) => snapshot.fileViewedStatuses.get("a1")?.viewed === false,
+  );
+  expect(aliceSnapshot.fileViewedStatuses.get("a1")?.viewerIds).toEqual([]);
 });
 
 it("tells that a participant is new until they change their state", async () => {
@@ -118,23 +175,21 @@ it("keeps the changes made at once in two tabs of the same participant", async (
   });
 
   // Verify
-  const hasBothFingerprints = (viewedFingerprints: string[]) =>
-    viewedFingerprints.includes("a1") && viewedFingerprints.includes("b2");
+  const markedFingerprints = (snapshot: ShareSessionSnapshot) =>
+    snapshot.ownState.viewedMarks
+      .map((viewedMark) => viewedMark.fingerprint)
+      .toSorted();
   const snapshots = await Promise.all(
     [firstTabShareSession, secondTabShareSession].map((shareSession) =>
       waitForShareSession(
         shareSession,
         (snapshot) =>
           !snapshot.hasPendingChanges &&
-          hasBothFingerprints(snapshot.ownState.viewedFingerprints),
+          markedFingerprints(snapshot).length === 2,
       ),
     ),
   );
-  expect(
-    snapshots.map((snapshot) =>
-      snapshot.ownState.viewedFingerprints.toSorted(),
-    ),
-  ).toEqual([
+  expect(snapshots.map(markedFingerprints)).toEqual([
     ["a1", "b2"],
     ["a1", "b2"],
   ]);

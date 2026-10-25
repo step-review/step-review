@@ -38,6 +38,18 @@ export default function buildShareParticipants(
     }
     locationsByParticipant.set(participantId, locations);
   }
+  const viewedFingerprintsByParticipant = new Map<string, Set<string>>();
+  for (const [
+    fingerprint,
+    { viewerIds },
+  ] of shareSessionSnapshot.fileViewedStatuses) {
+    for (const viewerId of viewerIds) {
+      const viewedFingerprints =
+        viewedFingerprintsByParticipant.get(viewerId) ?? new Set<string>();
+      viewedFingerprints.add(fingerprint);
+      viewedFingerprintsByParticipant.set(viewerId, viewedFingerprints);
+    }
+  }
   const otherParticipants = [
     ...shareSessionSnapshot.otherParticipantStates.entries(),
   ].map(([participantId, participantState]): ShareParticipantView => {
@@ -49,7 +61,8 @@ export default function buildShareParticipants(
       isSelf: false,
       isOnline: locations !== undefined,
       locations: locations ? [...locations.values()] : [],
-      viewedFingerprints: new Set(participantState.viewedFingerprints),
+      viewedFingerprints:
+        viewedFingerprintsByParticipant.get(participantId) ?? new Set(),
     };
   });
   otherParticipants.sort(
@@ -66,7 +79,8 @@ export default function buildShareParticipants(
       isSelf: true,
       isOnline: connectionStatus === "connected",
       locations: [],
-      viewedFingerprints: new Set(ownState.viewedFingerprints),
+      viewedFingerprints:
+        viewedFingerprintsByParticipant.get(ownParticipantId) ?? new Set(),
     },
     ...otherParticipants,
   ];

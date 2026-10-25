@@ -1,3 +1,4 @@
+import type FileViewedStatus from "../participant-state/FileViewedStatus.ts";
 import type ParticipantState from "../participant-state/ParticipantState.ts";
 import type Presence from "../participant-state/Presence.ts";
 import type ShareEndReason from "./ShareEndReason.ts";
@@ -19,6 +20,11 @@ export default interface ShareSessionSnapshot {
   isNewParticipant: boolean;
   /** The other participants' states, by participant ID. */
   otherParticipantStates: Map<string, ParticipantState>;
+  /**
+   * The viewed status of the files any participant marked, by fingerprint: the
+   * review's state, shared by every participant.
+   */
+  fileViewedStatuses: Map<string, FileViewedStatus>;
   /** The other connections' presences, by connection ID. */
   otherPresences: Map<string, { participantId: string; presence: Presence }>;
 }

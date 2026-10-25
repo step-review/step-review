@@ -30,7 +30,7 @@ export default function ShareParticipantsPanel() {
   }
   const { shareSession, shareSessionSnapshot } = shareSessionContext;
   const rename = (name: string) => {
-    shareSession.dispatch({ type: "rename", name });
+    shareSession.rename(name);
     writeStorage(participantNameStorageKey, name);
     setIsRenaming(false);
   };

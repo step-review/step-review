@@ -45,7 +45,7 @@ export default async function createShare(
     participantId: shareBookmark.participantId,
     participantSecret: shareBookmark.participantSecret,
   });
-  shareSession.dispatch({ type: "rename", name: participant.name });
+  shareSession.rename(participant.name);
   shareSession.dispatch({
     type: "replace",
     reviewState: { viewedFingerprints: participant.viewedFingerprints },

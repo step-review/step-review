@@ -1,9 +1,12 @@
 import * as v from "valibot";
-import reviewStateSchema from "../review-state/reviewStateSchema.ts";
 import participantNameMaxLength from "./participantNameMaxLength.ts";
+import viewedMarkSchema from "./viewedMarkSchema.ts";
 
-/** What a participant shares: their name, and the files they viewed. */
+/**
+ * What a participant shares: their name, and their latest mark of each file
+ * they marked. Merged with the others' marks, they make the review's state.
+ */
 export default v.object({
-  ...reviewStateSchema.entries,
   name: v.pipe(v.string(), v.maxLength(participantNameMaxLength)),
+  viewedMarks: v.array(viewedMarkSchema),
 });

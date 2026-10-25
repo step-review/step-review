@@ -94,22 +94,26 @@ interface SharedReviewStateProviderProps {
   children: ReactNode;
 }
 
-/** The participant's own state in the share being displayed. */
+/** The state of the share being displayed, shared by every participant. */
 function SharedReviewStateProvider({
   children,
 }: SharedReviewStateProviderProps) {
   const shareSessionContext = useShareSessionContext();
   const shareSession = shareSessionContext?.shareSession;
-  const viewedFingerprints =
-    shareSessionContext?.shareSessionSnapshot.ownState.viewedFingerprints;
+  const fileViewedStatuses =
+    shareSessionContext?.shareSessionSnapshot.fileViewedStatuses;
   const value = useMemo(
     () =>
       shareSession &&
-      viewedFingerprints && {
-        reviewState: { viewedFingerprints },
+      fileViewedStatuses && {
+        reviewState: {
+          viewedFingerprints: [...fileViewedStatuses]
+            .filter(([, fileViewedStatus]) => fileViewedStatus.viewed)
+            .map(([fingerprint]) => fingerprint),
+        },
         dispatch: (action: ReviewStateAction) => shareSession.dispatch(action),
       },
-    [shareSession, viewedFingerprints],
+    [shareSession, fileViewedStatuses],
   );
   // The review only loads within its share session.
   if (!value) {

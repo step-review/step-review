@@ -14,5 +14,6 @@ export default interface ShareParticipantView {
    * participant, who is wherever the page is.
    */
   locations: PresenceLocation[];
+  /** The files they marked viewed since the files were last marked not viewed. */
   viewedFingerprints: Set<string>;
 }

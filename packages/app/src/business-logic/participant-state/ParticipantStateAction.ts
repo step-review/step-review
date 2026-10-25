@@ -1,7 +1,7 @@
-import type ReviewStateAction from "../review-state/ReviewStateAction.ts";
+import type ViewedMark from "./ViewedMark.ts";
 
 type ParticipantStateAction =
-  | ReviewStateAction
-  | { type: "rename"; name: string };
+  | { type: "rename"; name: string }
+  | { type: "addViewedMarks"; viewedMarks: ViewedMark[] };
 
 export default ParticipantStateAction;

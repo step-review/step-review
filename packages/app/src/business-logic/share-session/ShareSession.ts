@@ -1,24 +1,23 @@
 import type { ServerMessage } from "@step-review/share-server";
 import currentOwnState from "../participant-state/currentOwnState.ts";
+import mergeViewedMarks from "../participant-state/mergeViewedMarks.ts";
 import nextOwnStateWrite from "../participant-state/nextOwnStateWrite.ts";
 import type OwnStateSync from "../participant-state/OwnStateSync.ts";
 import type OwnStateSyncEvent from "../participant-state/OwnStateSyncEvent.ts";
 import type ParticipantStateAction from "../participant-state/ParticipantStateAction.ts";
 import reduceOwnStateSync from "../participant-state/reduceOwnStateSync.ts";
+import viewedMarksForAction from "../participant-state/viewedMarksForAction.ts";
+import type ReviewStateAction from "../review-state/ReviewStateAction.ts";
 import encryptJson from "../share-crypto/encryptJson.ts";
 import shareAdditionalData from "../share-crypto/shareAdditionalData.ts";
 import decryptJoinedMessage from "./decryptJoinedMessage.ts";
 import decryptParticipantState from "./decryptParticipantState.ts";
 import decryptPresence from "./decryptPresence.ts";
-import encryptPresence from "./encryptPresence.ts";
 import type PresenceLocation from "./PresenceLocation.ts";
+import PresenceSender from "./PresenceSender.ts";
 import type ShareSessionOptions from "./ShareSessionOptions.ts";
 import type ShareSessionSnapshot from "./ShareSessionSnapshot.ts";
 import ShareSocket from "./ShareSocket.ts";
-import Throttle from "./Throttle.ts";
-
-/** The least time between two presences, which change while scrolling. */
-const presenceInterval = 500;
 
 /**
  * A live connection to a share: keeps the own state stored, and the others'
@@ -35,12 +34,7 @@ export default class ShareSession {
   };
   private listeners = new Set<() => void>();
   private shareSocket: ShareSocket;
-  /** `undefined` until set. */
-  private presenceLocation: PresenceLocation | undefined;
-  private presenceThrottle = new Throttle(
-    () => void this.sendPresence(),
-    presenceInterval,
-  );
+  private presenceSender: PresenceSender;
 
   constructor(options: ShareSessionOptions) {
     this.options = options;
@@ -52,6 +46,7 @@ export default class ShareSession {
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map(),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map(),
     };
     this.shareSocket = new ShareSocket(options, {
@@ -67,6 +62,7 @@ export default class ShareSession {
       onEnded: (endReason) =>
         this.update({ connectionStatus: "ended", endReason }),
     });
+    this.presenceSender = new PresenceSender(options, this.shareSocket);
   }
 
   subscribe = (listener: () => void): (() => void) => {
@@ -76,19 +72,34 @@ export default class ShareSession {
 
   getSnapshot = (): ShareSessionSnapshot => this.snapshot;
 
-  dispatch(action: ParticipantStateAction): void {
-    this.updateOwnStateSync({ type: "actionDispatched", action });
-    void this.sendNextWrite();
+  /** Changes the review's state, for every participant. */
+  dispatch(reviewStateAction: ReviewStateAction): void {
+    this.apply({
+      type: "addViewedMarks",
+      viewedMarks: viewedMarksForAction(
+        reviewStateAction,
+        this.snapshot.fileViewedStatuses,
+        Date.now(),
+      ),
+    });
+  }
+
+  rename(name: string): void {
+    this.apply({ type: "rename", name });
   }
 
   setPresence(presenceLocation: PresenceLocation): void {
-    this.presenceLocation = presenceLocation;
-    this.presenceThrottle.request();
+    this.presenceSender.set(presenceLocation);
   }
 
   close(): void {
-    this.presenceThrottle.cancel();
+    this.presenceSender.cancel();
     this.shareSocket.close();
+  }
+
+  private apply(action: ParticipantStateAction): void {
+    this.updateOwnStateSync({ type: "actionDispatched", action });
+    void this.sendNextWrite();
   }
 
   private async receive(serverMessage: ServerMessage): Promise<void> {
@@ -110,7 +121,7 @@ export default class ShareSession {
           otherParticipantStates: joined.otherParticipantStates,
           otherPresences: joined.otherPresences,
         });
-        this.presenceThrottle.request();
+        this.presenceSender.resend();
         break;
       }
       case "stateWritten":
@@ -212,22 +223,6 @@ export default class ShareSession {
     });
   }
 
-  private async sendPresence(): Promise<void> {
-    const { presenceLocation } = this;
-    if (!this.shareSocket.isJoined || !presenceLocation) {
-      return;
-    }
-    const { connectionNumber } = this.shareSocket;
-    const { shareKey, shareId, participantId } = this.options;
-    const presence = await encryptPresence(
-      shareKey,
-      shareId,
-      participantId,
-      presenceLocation,
-    );
-    this.shareSocket.send(connectionNumber, { type: "setPresence", presence });
-  }
-
   private updateOwnStateSync(event: OwnStateSyncEvent): void {
     this.ownStateSync = reduceOwnStateSync(this.ownStateSync, event);
     this.update({
@@ -241,6 +236,12 @@ export default class ShareSession {
 
   private update(changes: Partial<ShareSessionSnapshot>): void {
     this.snapshot = { ...this.snapshot, ...changes };
+    if (changes.ownState || changes.otherParticipantStates) {
+      this.snapshot.fileViewedStatuses = mergeViewedMarks([
+        [this.options.participantId, this.snapshot.ownState],
+        ...this.snapshot.otherParticipantStates,
+      ]);
+    }
     for (const listener of this.listeners) {
       listener();
     }

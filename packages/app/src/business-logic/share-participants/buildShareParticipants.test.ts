@@ -16,12 +16,13 @@ it("places another participant on the step their presence names", () => {
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: ["a1"] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-tab",
@@ -54,14 +55,15 @@ it("lists the own participant first, then those online, then the others by name"
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Zoe", viewedFingerprints: [] },
+      ownState: { name: "Zoe", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["cleo", { name: "Cleo", viewedFingerprints: [] }],
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
-        ["dan", { name: "Dan", viewedFingerprints: [] }],
+        ["cleo", { name: "Cleo", viewedMarks: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
+        ["dan", { name: "Dan", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "dan-tab",
@@ -92,12 +94,13 @@ it("keeps a participant online on a step that isn't in the review", () => {
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-tab",
@@ -137,12 +140,13 @@ it("places another participant on the file their presence names", () => {
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-tab",
@@ -178,12 +182,13 @@ it("keeps another participant on their step when their file isn't in the review"
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-tab",
@@ -221,12 +226,13 @@ it("doesn't place another participant on a file of another step than theirs", ()
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-tab",
@@ -262,12 +268,13 @@ it("shows once a place another participant has open in two tabs", () => {
       connectionStatus: "connected",
       endReason: null,
       versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      ownState: { name: "Ada", viewedFingerprints: [] },
+      ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
       otherParticipantStates: new Map([
-        ["bob", { name: "Bob", viewedFingerprints: [] }],
+        ["bob", { name: "Bob", viewedMarks: [] }],
       ]),
+      fileViewedStatuses: new Map(),
       otherPresences: new Map([
         [
           "bob-first-tab",
@@ -298,5 +305,40 @@ it("shows once a place another participant has open in two tabs", () => {
   // Verify
   expect(shareParticipants[1]?.locations).toEqual([
     { stepId: "sync-buckets", fileId: "sync-buckets:src/buckets.ts" },
+  ]);
+});
+
+it("lists the files each participant viewed since they were last marked not viewed", () => {
+  // Exercise
+  const shareParticipants = buildShareParticipants(
+    {
+      connectionStatus: "connected",
+      endReason: null,
+      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
+      ownState: { name: "Ada", viewedMarks: [] },
+      hasPendingChanges: false,
+      isNewParticipant: false,
+      otherParticipantStates: new Map([
+        ["bob", { name: "Bob", viewedMarks: [] }],
+      ]),
+      fileViewedStatuses: new Map([
+        ["a1", { viewed: true, at: 1000, viewerIds: ["ada", "bob"] }],
+        ["b2", { viewed: true, at: 2000, viewerIds: ["bob"] }],
+      ]),
+      otherPresences: new Map(),
+    },
+    "ada",
+    [],
+  );
+
+  // Verify
+  expect(
+    shareParticipants.map((shareParticipant) => [
+      shareParticipant.participantId,
+      [...shareParticipant.viewedFingerprints],
+    ]),
+  ).toEqual([
+    ["ada", ["a1"]],
+    ["bob", ["a1", "b2"]],
   ]);
 });
