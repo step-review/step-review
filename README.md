@@ -22,12 +22,12 @@ a time, with the notes beside the diff, and lets you mark files as viewed.
 4. When the PR changes, ask the agent to review it again. Files whose changes
    are the same stay marked as viewed.
 
-## Live collaboration
+## Collaboration sessions
 
-From a review's menu, start a live collaboration session to review it with
-others. The review is encrypted in your browser and uploaded with a key that
-only its link holds, so the server can't read it. Participants see each other's
-names, the files each viewed, and the step each is on, live. Whoever started the
+From a review's menu, start a collaboration session to review it with others.
+The review is encrypted in your browser and uploaded with a key that only its
+link holds, so the server can't read it. Participants see each other's names,
+the files each viewed, and the step each is on, live. Whoever started the
 session can update the review by dropping a new review file, or end the session.
 Sessions are deleted after 30 days without activity.
 

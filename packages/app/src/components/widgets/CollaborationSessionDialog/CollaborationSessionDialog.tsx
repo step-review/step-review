@@ -13,8 +13,8 @@ import sessionLink from "../../../business-logic/session/sessionLink.ts";
 import startSession from "../../../business-logic/session/startSession.ts";
 import writeStorage from "../../../business-logic/storage/writeStorage.ts";
 import SessionLinkField from "../SessionLinkField/SessionLinkField.tsx";
-import styles from "./LiveCollaborationDialog.module.css";
-import { useLiveCollaborationDialogState } from "./LiveCollaborationDialogProvider.tsx";
+import styles from "./CollaborationSessionDialog.module.css";
+import { useCollaborationSessionDialogState } from "./CollaborationSessionDialogProvider.tsx";
 import useLeaveSession from "./useLeaveSession.ts";
 
 interface Props {
@@ -24,10 +24,10 @@ interface Props {
 }
 
 /**
- * Starts a live collaboration session for a review kept in the browser, or, in
- * a session, gives its link and the own name.
+ * Starts a collaboration session for a review kept in the browser, or, in a
+ * session, gives its link and the own name.
  */
-export default function LiveCollaborationDialog({
+export default function CollaborationSessionDialog({
   loadedReview,
   viewedFingerprints,
 }: Props) {
@@ -46,7 +46,7 @@ type SessionStartProps = Props;
 function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
   const intl = useIntl();
   const route = useNavigationState();
-  const [, setIsOpen] = useLiveCollaborationDialogState();
+  const [, setIsOpen] = useCollaborationSessionDialogState();
   const [status, setStatus] = useState<"idle" | "starting" | "failed">("idle");
   const start = async () => {
     setStatus("starting");
@@ -113,7 +113,7 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
 
 function SessionDetails() {
   const intl = useIntl();
-  const [, setIsOpen] = useLiveCollaborationDialogState();
+  const [, setIsOpen] = useCollaborationSessionDialogState();
   const close = () => setIsOpen(false);
   const { sessionBookmark, sessionConnection, sessionConnectionSnapshot } =
     useSessionConnectionContext()!;
@@ -126,7 +126,7 @@ function SessionDetails() {
   };
   return (
     <Dialog
-      title={intl.formatMessage({ defaultMessage: "Live collaboration" })}
+      title={intl.formatMessage({ defaultMessage: "Collaboration session" })}
       onClose={close}
       footerButtons={[
         {

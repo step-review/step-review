@@ -12,9 +12,10 @@ inferred from the code. Omit examples and descriptions of existing structure.
   versioned in `@step-review/review-format`. Changes must stay compatible with
   existing review files, or introduce a new format version.
 
-- Name things in the code as the interface names them. Reviewing together is
-  live collaboration, in a session that a review's owner starts and ends, and
-  that others join; a session connection is one browser's link to a session.
+- Name things in the code as the interface names them. Reviewing together
+  happens in a collaboration session (a session, for short) that a review's
+  owner starts and ends, and that others join; a session connection is one
+  browser's link to a session.
 
 - Avoid TypeScript’s `readonly` modifier unless an external API requires it.
 

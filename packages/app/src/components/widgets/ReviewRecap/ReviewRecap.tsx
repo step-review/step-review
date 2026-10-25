@@ -29,8 +29,8 @@ import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
-import LiveCollaborationDialog from "../LiveCollaborationDialog/LiveCollaborationDialog.tsx";
-import { useLiveCollaborationDialogState } from "../LiveCollaborationDialog/LiveCollaborationDialogProvider.tsx";
+import CollaborationSessionDialog from "../CollaborationSessionDialog/CollaborationSessionDialog.tsx";
+import { useCollaborationSessionDialogState } from "../CollaborationSessionDialog/CollaborationSessionDialogProvider.tsx";
 import styles from "./ReviewRecap.module.css";
 
 interface Props {
@@ -50,8 +50,10 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const noteKindCounts = countNotes(collectNotes(reviewView.steps));
   const stateFileInputRef = useRef<HTMLInputElement>(null);
   const isInSession = useSessionConnectionContext() !== null;
-  const [isLiveCollaborationDialogOpen, setIsLiveCollaborationDialogOpen] =
-    useLiveCollaborationDialogState();
+  const [
+    isCollaborationSessionDialogOpen,
+    setIsCollaborationSessionDialogOpen,
+  ] = useCollaborationSessionDialogState();
   const importState = async (file: File) => {
     const importedReviewState = parseReviewState(await file.text());
     if (!importedReviewState) {
@@ -149,12 +151,12 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     <FormattedMessage defaultMessage="Open another review" />
                   </ActionList.Item>
                   <ActionList.Item
-                    onSelect={() => setIsLiveCollaborationDialogOpen(true)}
+                    onSelect={() => setIsCollaborationSessionDialogOpen(true)}
                   >
                     <ActionList.LeadingVisual>
                       <PeopleIcon />
                     </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Live collaboration" />
+                    <FormattedMessage defaultMessage="Collaboration session" />
                   </ActionList.Item>
                   <ActionList.Divider />
                   <ActionList.Item onSelect={exportState}>
@@ -181,7 +183,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Reset review state" />
                   </ActionList.Item>
-                  {/* Sessions are left from the live collaboration dialog,
+                  {/* Sessions are left from the collaboration session dialog,
                       and the example review isn't stored. */}
                   {reviewView.reviewAddress.kind === "local" &&
                     reviewView.reviewAddress.reviewId !== exampleReviewId && (
@@ -201,8 +203,8 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
           </div>
         </div>
       </div>
-      {isLiveCollaborationDialogOpen && (
-        <LiveCollaborationDialog
+      {isCollaborationSessionDialogOpen && (
+        <CollaborationSessionDialog
           loadedReview={loadedReview}
           viewedFingerprints={reviewState.viewedFingerprints}
         />
