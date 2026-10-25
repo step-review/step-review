@@ -4,6 +4,7 @@ import { IntlProvider } from "react-intl";
 import LoadedReviewStateProvider from "./business-logic/review-state/LoadedReviewStateProvider.tsx";
 import LoadedReviewProvider from "./business-logic/review/LoadedReviewProvider.tsx";
 import Root from "./components/routes/Root/Root.tsx";
+import LiveCollaborationDialogProvider from "./components/widgets/LiveCollaborationDialog/LiveCollaborationDialogProvider.tsx";
 import getMessages from "./translations/getMessages.ts";
 
 export default function App() {
@@ -13,11 +14,13 @@ export default function App() {
           and portals get the theme too. */}
       <ThemeProvider colorMode="auto" contextOnly>
         <BaseStyles>
-          <LoadedReviewProvider>
-            <LoadedReviewStateProvider>
-              <Root />
-            </LoadedReviewStateProvider>
-          </LoadedReviewProvider>
+          <LiveCollaborationDialogProvider>
+            <LoadedReviewProvider>
+              <LoadedReviewStateProvider>
+                <Root />
+              </LoadedReviewStateProvider>
+            </LoadedReviewProvider>
+          </LiveCollaborationDialogProvider>
         </BaseStyles>
       </ThemeProvider>
     </IntlProvider>

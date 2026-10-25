@@ -77,7 +77,7 @@ function SessionReloadDropzone({
       window.alert(
         intl.formatMessage({
           defaultMessage:
-            "The shared review couldn't be updated. Try again later.",
+            "The review couldn't be updated for the session. Try again later.",
         }),
       );
     }
@@ -85,7 +85,7 @@ function SessionReloadDropzone({
   return (
     <FullScreenDropzone
       label={intl.formatMessage({
-        defaultMessage: "Drop the review file to update the shared review",
+        defaultMessage: "Drop the review file to update it for the session",
       })}
       onDrop={(file) => {
         void update(file);

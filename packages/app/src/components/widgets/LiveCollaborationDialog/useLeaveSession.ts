@@ -8,39 +8,37 @@ import endSession from "../../../business-logic/session/endSession.ts";
 
 /**
  * Leaves a session, once confirmed: the owner ends it, the others remove it
- * from this browser.
+ * from this browser. `onConfirm` runs before leaving the session's page.
  */
 export default function useLeaveSession(
-  sessionBookmark: SessionBookmark | null,
+  sessionBookmark: SessionBookmark,
+  onConfirm: () => void,
 ): () => Promise<void> {
   const intl = useIntl();
   const confirm = useConfirm();
   return async () => {
-    if (!sessionBookmark) {
-      return;
-    }
     const { ownerSecret } = sessionBookmark;
     const isConfirmed = await confirm(
       ownerSecret === null
         ? {
-            title: intl.formatMessage({ defaultMessage: "Leave the review?" }),
+            title: intl.formatMessage({ defaultMessage: "Leave the session?" }),
             content: intl.formatMessage({
               defaultMessage:
-                "The review will be removed from this browser. You can join it again with its link, as a new participant.",
+                "The review will be removed from this browser. You can join again with the link, as a new participant.",
             }),
             confirmButtonContent: intl.formatMessage({
-              defaultMessage: "Leave",
+              defaultMessage: "Leave session",
             }),
             confirmButtonType: "danger",
           }
         : {
-            title: intl.formatMessage({ defaultMessage: "Stop sharing?" }),
+            title: intl.formatMessage({ defaultMessage: "End the session?" }),
             content: intl.formatMessage({
               defaultMessage:
-                "The review and every participant's progress will be deleted from the server. Its links will stop working.",
+                "The review and everyone's progress will be deleted from our servers, and the link will stop working.",
             }),
             confirmButtonContent: intl.formatMessage({
-              defaultMessage: "Stop sharing",
+              defaultMessage: "End session",
             }),
             confirmButtonType: "danger",
           },
@@ -48,6 +46,7 @@ export default function useLeaveSession(
     if (!isConfirmed) {
       return;
     }
+    onConfirm();
     // Leave first: on the review's page, its link would join it again.
     navigateTo({ name: RouteName.Start });
     try {
@@ -61,9 +60,14 @@ export default function useLeaveSession(
       }
     } catch {
       window.alert(
-        intl.formatMessage({
-          defaultMessage: "The review couldn't be deleted. Try again later.",
-        }),
+        ownerSecret === null
+          ? intl.formatMessage({
+              defaultMessage:
+                "The session couldn't be removed from this browser. Try again later.",
+            })
+          : intl.formatMessage({
+              defaultMessage: "The session couldn't be ended. Try again later.",
+            }),
       );
     }
   };

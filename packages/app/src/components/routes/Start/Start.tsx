@@ -51,7 +51,7 @@ export default function Start({ missingReview }: Props) {
                 missingReview === "local" ? (
                   <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
                 ) : (
-                  <FormattedMessage defaultMessage="This shared review can't be opened: it was deleted or expired, or its link is incomplete." />
+                  <FormattedMessage defaultMessage="This session can't be joined: it ended or expired, or its link is incomplete." />
                 )
               }
             />

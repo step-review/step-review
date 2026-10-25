@@ -36,9 +36,6 @@ export default function SessionLinkField({ link }: Props) {
           label={intl.formatMessage({ defaultMessage: "Copy the link" })}
         />
       </div>
-      <FormControl.Caption>
-        <FormattedMessage defaultMessage="Anyone with the link can open the review and join it. The key that decrypts it is in the link only." />
-      </FormControl.Caption>
     </FormControl>
   );
 }

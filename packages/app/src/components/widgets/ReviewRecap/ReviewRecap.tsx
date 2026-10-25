@@ -2,14 +2,13 @@ import {
   DownloadIcon,
   FileDirectoryOpenFillIcon,
   KebabHorizontalIcon,
-  ShareIcon,
-  SignOutIcon,
+  PeopleIcon,
   TrashIcon,
   UndoIcon,
   UploadIcon,
 } from "@primer/octicons-react";
 import { ActionList, ActionMenu, IconButton, useConfirm } from "@primer/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import baseFileName from "../../../business-logic/files/baseFileName.ts";
 import downloadFile from "../../../business-logic/files/downloadFile.ts";
@@ -30,10 +29,9 @@ import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
-import SessionLinkDialog from "../SessionLinkDialog/SessionLinkDialog.tsx";
-import StartSessionDialog from "../StartSessionDialog/StartSessionDialog.tsx";
+import LiveCollaborationDialog from "../LiveCollaborationDialog/LiveCollaborationDialog.tsx";
+import { useLiveCollaborationDialogState } from "../LiveCollaborationDialog/LiveCollaborationDialogProvider.tsx";
 import styles from "./ReviewRecap.module.css";
-import useLeaveSession from "./useLeaveSession.ts";
 
 interface Props {
   loadedReview: LoadedReview;
@@ -51,10 +49,9 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const progress = countViewedFiles(reviewView.steps, useViewedFingerprints());
   const noteKindCounts = countNotes(collectNotes(reviewView.steps));
   const stateFileInputRef = useRef<HTMLInputElement>(null);
-  const sessionBookmark =
-    useSessionConnectionContext()?.sessionBookmark ?? null;
-  const [isSessionDialogOpen, setIsSessionDialogOpen] = useState(false);
-  const openSessionDialog = () => setIsSessionDialogOpen(true);
+  const isInSession = useSessionConnectionContext() !== null;
+  const [isLiveCollaborationDialogOpen, setIsLiveCollaborationDialogOpen] =
+    useLiveCollaborationDialogState();
   const importState = async (file: File) => {
     const importedReviewState = parseReviewState(await file.text());
     if (!importedReviewState) {
@@ -76,7 +73,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const resetState = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({ defaultMessage: "Reset review state?" }),
-      content: sessionBookmark
+      content: isInSession
         ? intl.formatMessage({
             defaultMessage:
               "Every file will be marked as not viewed, for every participant.",
@@ -91,7 +88,6 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
       dispatch({ type: "resetViewed" });
     }
   };
-  const leaveSession = useLeaveSession(sessionBookmark);
   const deleteLoadedReview = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({ defaultMessage: "Delete review?" }),
@@ -152,15 +148,13 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Open another review" />
                   </ActionList.Item>
-                  <ActionList.Item onSelect={openSessionDialog}>
+                  <ActionList.Item
+                    onSelect={() => setIsLiveCollaborationDialogOpen(true)}
+                  >
                     <ActionList.LeadingVisual>
-                      <ShareIcon />
+                      <PeopleIcon />
                     </ActionList.LeadingVisual>
-                    {sessionBookmark ? (
-                      <FormattedMessage defaultMessage="Invite to the review" />
-                    ) : (
-                      <FormattedMessage defaultMessage="Share the review" />
-                    )}
+                    <FormattedMessage defaultMessage="Live collaboration" />
                   </ActionList.Item>
                   <ActionList.Divider />
                   <ActionList.Item onSelect={exportState}>
@@ -187,27 +181,9 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Reset review state" />
                   </ActionList.Item>
-                  {sessionBookmark ? (
-                    <ActionList.Item
-                      variant="danger"
-                      onSelect={() => void leaveSession()}
-                    >
-                      <ActionList.LeadingVisual>
-                        {sessionBookmark.ownerSecret === null ? (
-                          <SignOutIcon />
-                        ) : (
-                          <TrashIcon />
-                        )}
-                      </ActionList.LeadingVisual>
-                      {sessionBookmark.ownerSecret === null ? (
-                        <FormattedMessage defaultMessage="Leave the review" />
-                      ) : (
-                        <FormattedMessage defaultMessage="Stop sharing" />
-                      )}
-                    </ActionList.Item>
-                  ) : (
-                    // The example review isn't stored.
-                    reviewView.reviewAddress.kind === "local" &&
+                  {/* Sessions are left from the live collaboration dialog,
+                      and the example review isn't stored. */}
+                  {reviewView.reviewAddress.kind === "local" &&
                     reviewView.reviewAddress.reviewId !== exampleReviewId && (
                       <ActionList.Item
                         variant="danger"
@@ -218,27 +194,19 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                         </ActionList.LeadingVisual>
                         <FormattedMessage defaultMessage="Delete review" />
                       </ActionList.Item>
-                    )
-                  )}
+                    )}
                 </ActionList>
               </ActionMenu.Overlay>
             </ActionMenu>
           </div>
         </div>
       </div>
-      {isSessionDialogOpen &&
-        (sessionBookmark ? (
-          <SessionLinkDialog
-            sessionBookmark={sessionBookmark}
-            onClose={() => setIsSessionDialogOpen(false)}
-          />
-        ) : (
-          <StartSessionDialog
-            loadedReview={loadedReview}
-            viewedFingerprints={reviewState.viewedFingerprints}
-            onClose={() => setIsSessionDialogOpen(false)}
-          />
-        ))}
+      {isLiveCollaborationDialogOpen && (
+        <LiveCollaborationDialog
+          loadedReview={loadedReview}
+          viewedFingerprints={reviewState.viewedFingerprints}
+        />
+      )}
       <HiddenFileInput
         ref={stateFileInputRef}
         accept="application/json"

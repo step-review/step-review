@@ -94,7 +94,7 @@ function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
   const removeSessionBookmark = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({
-        defaultMessage: "Remove the shared review?",
+        defaultMessage: "Remove the session?",
       }),
       content:
         sessionBookmark.ownerSecret === null
@@ -104,7 +104,7 @@ function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
             })
           : intl.formatMessage({
               defaultMessage:
-                "It will be removed from this browser, but stay shared until it expires: you won't be able to update it or stop sharing it. To delete it for everyone, stop sharing it from the review instead.",
+                "It will be removed from this browser, but stay available to the others until it expires: you won't be able to update the review or end the session. To delete it for everyone, end the session from the review instead.",
             }),
       confirmButtonContent: intl.formatMessage({ defaultMessage: "Remove" }),
       confirmButtonType: "danger",
@@ -122,15 +122,15 @@ function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
       }}
       title={
         sessionBookmark.title ||
-        intl.formatMessage({ defaultMessage: "Shared review" })
+        intl.formatMessage({ defaultMessage: "Session" })
       }
       detail={
         sessionBookmark.ownerSecret === null
-          ? intl.formatMessage({ defaultMessage: "Shared with you" })
-          : intl.formatMessage({ defaultMessage: "Shared by you" })
+          ? intl.formatMessage({ defaultMessage: "Joined session" })
+          : intl.formatMessage({ defaultMessage: "Started by you" })
       }
       removeLabel={intl.formatMessage({
-        defaultMessage: "Remove the shared review",
+        defaultMessage: "Remove the session",
       })}
       onRemove={() => void removeSessionBookmark()}
     />
@@ -140,7 +140,7 @@ function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
 interface ReviewItemProps {
   route: NavigableRoute;
   title: string;
-  /** The file name, or how the review is shared. */
+  /** The file name, or whose session it is. */
   detail: string;
   isDetailFileName?: boolean;
   removeLabel: string;

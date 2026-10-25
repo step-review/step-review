@@ -1,0 +1,4 @@
+/* Spaced by the stack's gap alone: margins would add to it. */
+.paragraph {
+  margin: 0;
+}

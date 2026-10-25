@@ -197,6 +197,60 @@
       "value": "Concerns"
     }
   ],
+  "LiveCollaborationDialog.tsx_/fpETR": [
+    {
+      "type": 0,
+      "value": "Live collaboration"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_A5AvFO": [
+    {
+      "type": 0,
+      "value": "Couldn't start the session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_J9JF+p": [
+    {
+      "type": 0,
+      "value": "Start session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_MFYa+V": [
+    {
+      "type": 0,
+      "value": "The review couldn't be uploaded. Try again later."
+    }
+  ],
+  "LiveCollaborationDialog.tsx_MQQMCj": [
+    {
+      "type": 0,
+      "value": "The review is uploaded to our servers encrypted. The key to decrypt it is in the link, so anyone with the link can read it, and we can't. It's deleted after 30 days without activity."
+    }
+  ],
+  "LiveCollaborationDialog.tsx_dmhZKW": [
+    {
+      "type": 0,
+      "value": "Leave session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_iIenp6": [
+    {
+      "type": 0,
+      "value": "End session"
+    }
+  ],
+  "LiveCollaborationDialog.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
   "NotFound.tsx_osJs96": [
     {
       "type": 0,
@@ -461,16 +515,16 @@
       "value": "Drop the review file to reload it"
     }
   ],
-  "ReloadDropzone.tsx_cOIKjV": [
+  "ReloadDropzone.tsx_/m0mpG": [
     {
       "type": 0,
-      "value": "Drop the review file to update the shared review"
+      "value": "The review couldn't be updated for the session. Try again later."
     }
   ],
-  "ReloadDropzone.tsx_udEDck": [
+  "ReloadDropzone.tsx_Eu0rWa": [
     {
       "type": 0,
-      "value": "The shared review couldn't be updated. Try again later."
+      "value": "Drop the review file to update it for the session"
     }
   ],
   "ReviewDropzone.tsx_LsFoKe": [
@@ -501,6 +555,12 @@
     {
       "type": 0,
       "value": "or drop it anywhere on this page"
+    }
+  ],
+  "ReviewRecap.tsx_/fpETR": [
+    {
+      "type": 0,
+      "value": "Live collaboration"
     }
   ],
   "ReviewRecap.tsx_2pwM03": [
@@ -551,18 +611,6 @@
       "value": "Review"
     }
   ],
-  "ReviewRecap.tsx_SguXs0": [
-    {
-      "type": 0,
-      "value": "Leave the review"
-    }
-  ],
-  "ReviewRecap.tsx_WhiGBX": [
-    {
-      "type": 0,
-      "value": "Stop sharing"
-    }
-  ],
   "ReviewRecap.tsx_aN434T": [
     {
       "type": 0,
@@ -599,22 +647,10 @@
       "value": "Review actions"
     }
   ],
-  "ReviewRecap.tsx_qEZHWw": [
-    {
-      "type": 0,
-      "value": "Invite to the review"
-    }
-  ],
   "ReviewRecap.tsx_qjGckA": [
     {
       "type": 0,
       "value": "Reset review state?"
-    }
-  ],
-  "ReviewRecap.tsx_rOSpQP": [
-    {
-      "type": 0,
-      "value": "Share the review"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -675,40 +711,16 @@
       "pluralType": "cardinal"
     }
   ],
-  "SessionLinkDialog.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Done"
-    }
-  ],
-  "SessionLinkDialog.tsx_qEZHWw": [
-    {
-      "type": 0,
-      "value": "Invite to the review"
-    }
-  ],
   "SessionLinkField.tsx_JBWS0c": [
     {
       "type": 0,
       "value": "Link"
     }
   ],
-  "SessionLinkField.tsx_JSXm7k": [
-    {
-      "type": 0,
-      "value": "Anyone with the link can open the review and join it. The key that decrypts it is in the link only."
-    }
-  ],
   "SessionLinkField.tsx_zXYcAr": [
     {
       "type": 0,
       "value": "Copy the link"
-    }
-  ],
-  "SessionParticipantsPanel.tsx_3H1+9V": [
-    {
-      "type": 0,
-      "value": "Join the review"
     }
   ],
   "SessionParticipantsPanel.tsx_46Kg+h": [
@@ -723,16 +735,16 @@
       "value": "Change your name"
     }
   ],
+  "SessionParticipantsPanel.tsx_ABUgKT": [
+    {
+      "type": 0,
+      "value": "Join the session"
+    }
+  ],
   "SessionParticipantsPanel.tsx_P6PLpi": [
     {
       "type": 0,
       "value": "Join"
-    }
-  ],
-  "SessionParticipantsPanel.tsx_PrtHNc": [
-    {
-      "type": 0,
-      "value": "The connection to the shared review failed. Reload the page to try again."
     }
   ],
   "SessionParticipantsPanel.tsx_PuU15u": [
@@ -747,16 +759,16 @@
       "value": "The review has too many participants to join it. Changes aren't saved."
     }
   ],
+  "SessionParticipantsPanel.tsx_TNjWaR": [
+    {
+      "type": 0,
+      "value": "The connection to the session failed. Reload the page to try again."
+    }
+  ],
   "SessionParticipantsPanel.tsx_jvo0vs": [
     {
       "type": 0,
       "value": "Save"
-    }
-  ],
-  "SessionParticipantsPanel.tsx_oID+Is": [
-    {
-      "type": 0,
-      "value": "The review is no longer shared: it was deleted, or expired. Changes aren't saved."
     }
   ],
   "SessionParticipantsPanel.tsx_pK7uFW": [
@@ -769,6 +781,12 @@
     {
       "type": 0,
       "value": "The other participants will see your name, the files you viewed, and where you are."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_wd79hm": [
+    {
+      "type": 0,
+      "value": "The session ended, or expired. Changes aren't saved."
     }
   ],
   "SessionParticipantsPanel.tsx_zx0myy": [
@@ -811,6 +829,12 @@
     {
       "type": 0,
       "value": "2. Open the review file it produces"
+    }
+  ],
+  "Start.tsx_BZvdW+": [
+    {
+      "type": 0,
+      "value": "This session can't be joined: it ended or expired, or its link is incomplete."
     }
   ],
   "Start.tsx_NGb5sK": [
@@ -917,84 +941,6 @@
       "value": "see example"
     }
   ],
-  "Start.tsx_ux96LJ": [
-    {
-      "type": 0,
-      "value": "This shared review can't be opened: it was deleted or expired, or its link is incomplete."
-    }
-  ],
-  "StartSessionDialog.tsx_1pllGg": [
-    {
-      "type": 0,
-      "value": "Create a link"
-    }
-  ],
-  "StartSessionDialog.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "StartSessionDialog.tsx_MFYa+V": [
-    {
-      "type": 0,
-      "value": "The review couldn't be uploaded. Try again later."
-    }
-  ],
-  "StartSessionDialog.tsx_Qw3ad0": [
-    {
-      "type": 0,
-      "value": "Open the shared review"
-    }
-  ],
-  "StartSessionDialog.tsx_r1bBFq": [
-    {
-      "type": 0,
-      "value": "The key is in the link only, so the server can't read the review. It is deleted after 30 days without activity."
-    }
-  ],
-  "StartSessionDialog.tsx_r4Blpt": [
-    {
-      "type": 0,
-      "value": "Review shared"
-    }
-  ],
-  "StartSessionDialog.tsx_r4YXET": [
-    {
-      "type": 0,
-      "value": "Sharing failed"
-    }
-  ],
-  "StartSessionDialog.tsx_rOSpQP": [
-    {
-      "type": 0,
-      "value": "Share the review"
-    }
-  ],
-  "StartSessionDialog.tsx_rbrahO": [
-    {
-      "type": 0,
-      "value": "Close"
-    }
-  ],
-  "StartSessionDialog.tsx_vlKhIl": [
-    {
-      "type": 0,
-      "value": "Your name"
-    }
-  ],
-  "StartSessionDialog.tsx_wiJcF8": [
-    {
-      "type": 0,
-      "value": "The review is encrypted in your browser and uploaded with your progress. Whoever opens its link reviews it with you: you'll see each other's progress, and where you are."
-    }
-  ],
-  "StartSessionDialog.tsx_x4TTpt": [
-    {
-      "type": 0,
-      "value": "Shown to the others."
-    }
-  ],
   "StepFileTree.tsx_D/0ALU": [
     {
       "type": 0,
@@ -1091,18 +1037,6 @@
       "value": "Diff layout"
     }
   ],
-  "StoredReviewList.tsx_7fx3Mw": [
-    {
-      "type": 0,
-      "value": "Shared with you"
-    }
-  ],
-  "StoredReviewList.tsx_DXd/yu": [
-    {
-      "type": 0,
-      "value": "Shared by you"
-    }
-  ],
   "StoredReviewList.tsx_G/yZLu": [
     {
       "type": 0,
@@ -1113,12 +1047,6 @@
     {
       "type": 0,
       "value": "Delete"
-    }
-  ],
-  "StoredReviewList.tsx_K82lwB": [
-    {
-      "type": 0,
-      "value": "Remove the shared review"
     }
   ],
   "StoredReviewList.tsx_OLCgvh": [
@@ -1133,16 +1061,40 @@
       "value": "Delete review"
     }
   ],
-  "StoredReviewList.tsx_T6ZOmZ": [
+  "StoredReviewList.tsx_Qdb174": [
     {
       "type": 0,
-      "value": "Remove the shared review?"
+      "value": "It will be removed from this browser, but stay available to the others until it expires: you won't be able to update the review or end the session. To delete it for everyone, end the session from the review instead."
     }
   ],
-  "StoredReviewList.tsx_ZZw/Iw": [
+  "StoredReviewList.tsx_YBUNQ3": [
     {
       "type": 0,
-      "value": "It will be removed from this browser, but stay shared until it expires: you won't be able to update it or stop sharing it. To delete it for everyone, stop sharing it from the review instead."
+      "value": "Remove the session?"
+    }
+  ],
+  "StoredReviewList.tsx_YnVaj4": [
+    {
+      "type": 0,
+      "value": "Joined session"
+    }
+  ],
+  "StoredReviewList.tsx_d3wbXx": [
+    {
+      "type": 0,
+      "value": "Session"
+    }
+  ],
+  "StoredReviewList.tsx_dwAISe": [
+    {
+      "type": 0,
+      "value": "Started by you"
+    }
+  ],
+  "StoredReviewList.tsx_esPulN": [
+    {
+      "type": 0,
+      "value": "Remove the session"
     }
   ],
   "StoredReviewList.tsx_jbbK0Z": [
@@ -1155,12 +1107,6 @@
     {
       "type": 0,
       "value": "It will be removed from this browser. You can join it again with its link, as a new participant."
-    }
-  ],
-  "StoredReviewList.tsx_utaicf": [
-    {
-      "type": 0,
-      "value": "Shared review"
     }
   ],
   "ViewedAndNoteCounts.tsx_zz6max": [
@@ -1181,46 +1127,52 @@
       "value": " viewed"
     }
   ],
-  "useLeaveSession.ts_4yMAWe": [
+  "useLeaveSession.ts_FjpI/y": [
     {
       "type": 0,
-      "value": "Leave the review?"
+      "value": "The session couldn't be ended. Try again later."
     }
   ],
-  "useLeaveSession.ts_5+HaBc": [
+  "useLeaveSession.ts_NFDO56": [
     {
       "type": 0,
-      "value": "The review couldn't be deleted. Try again later."
+      "value": "Leave the session?"
     }
   ],
-  "useLeaveSession.ts_WhiGBX": [
+  "useLeaveSession.ts_OAlCD8": [
     {
       "type": 0,
-      "value": "Stop sharing"
+      "value": "The session couldn't be removed from this browser. Try again later."
     }
   ],
-  "useLeaveSession.ts_ePgmeH": [
+  "useLeaveSession.ts_dVpNza": [
     {
       "type": 0,
-      "value": "Stop sharing?"
+      "value": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
     }
   ],
-  "useLeaveSession.ts_fnihsY": [
+  "useLeaveSession.ts_dmhZKW": [
     {
       "type": 0,
-      "value": "Leave"
+      "value": "Leave session"
     }
   ],
-  "useLeaveSession.ts_hzmKWb": [
+  "useLeaveSession.ts_iIenp6": [
     {
       "type": 0,
-      "value": "The review and every participant's progress will be deleted from the server. Its links will stop working."
+      "value": "End session"
     }
   ],
-  "useLeaveSession.ts_slzWn+": [
+  "useLeaveSession.ts_vT1p72": [
     {
       "type": 0,
-      "value": "The review will be removed from this browser. You can join it again with its link, as a new participant."
+      "value": "The review will be removed from this browser. You can join again with the link, as a new participant."
+    }
+  ],
+  "useLeaveSession.ts_xqCAKC": [
+    {
+      "type": 0,
+      "value": "End the session?"
     }
   ],
   "useParticipantLabel.ts_LXxsbk": [

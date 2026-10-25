@@ -10,7 +10,7 @@ import type SessionParticipantView from "../../../business-logic/session-partici
 import useParticipantLabel from "../../../business-logic/session-participants/useParticipantLabel.ts";
 import useSessionParticipants from "../../../business-logic/session-participants/useSessionParticipants.ts";
 import participantNameStorageKey from "../../../business-logic/session-store/participantNameStorageKey.ts";
-import readStorage from "../../../business-logic/storage/readStorage.ts";
+import readParticipantName from "../../../business-logic/session-store/readParticipantName.ts";
 import writeStorage from "../../../business-logic/storage/writeStorage.ts";
 import InitialsAvatar from "../../design-system/InitialsAvatar/InitialsAvatar.tsx";
 import ParticipantNameDialog from "../ParticipantNameDialog/ParticipantNameDialog.tsx";
@@ -55,13 +55,13 @@ export default function SessionParticipantsPanel() {
       </ul>
       {sessionConnectionSnapshot.isNewParticipant && (
         <ParticipantNameDialog
-          title={intl.formatMessage({ defaultMessage: "Join the review" })}
+          title={intl.formatMessage({ defaultMessage: "Join the session" })}
           description={intl.formatMessage({
             defaultMessage:
               "The other participants will see your name, the files you viewed, and where you are.",
           })}
           submitLabel={intl.formatMessage({ defaultMessage: "Join" })}
-          initialName={readStorage(participantNameStorageKey) ?? ""}
+          initialName={readParticipantName()}
           onSubmit={rename}
           // Joins without a name, so that it isn't asked again.
           onClose={() => rename("")}
@@ -142,8 +142,7 @@ function EndReasonBanner({ endReason }: EndReasonBannerProps) {
   const intl = useIntl();
   const description = {
     notFound: intl.formatMessage({
-      defaultMessage:
-        "The review is no longer shared: it was deleted, or expired. Changes aren't saved.",
+      defaultMessage: "The session ended, or expired. Changes aren't saved.",
     }),
     forbidden: intl.formatMessage({
       defaultMessage:
@@ -155,7 +154,7 @@ function EndReasonBanner({ endReason }: EndReasonBannerProps) {
     }),
     failed: intl.formatMessage({
       defaultMessage:
-        "The connection to the shared review failed. Reload the page to try again.",
+        "The connection to the session failed. Reload the page to try again.",
     }),
   }[endReason];
   return (
