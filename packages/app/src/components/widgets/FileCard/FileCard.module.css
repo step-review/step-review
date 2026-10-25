@@ -2,6 +2,9 @@
   scroll-margin-top: var(--base-size-8);
   border: var(--borderWidth-default) solid var(--borderColor-default);
   border-radius: var(--borderRadius-medium);
+  /* Keeps the sticky header's z-index within the card, below Primer's
+     dialogs and menus. */
+  isolation: isolate;
 }
 
 .body {
