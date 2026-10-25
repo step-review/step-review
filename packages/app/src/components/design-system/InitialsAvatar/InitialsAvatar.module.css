@@ -24,10 +24,6 @@
   font-size: 10px;
 }
 
-.avatar[data-dimmed] {
-  opacity: 0.45;
-}
-
 .avatar[data-color="0"] {
   background: var(--data-blue-color-emphasis);
 }
@@ -74,4 +70,14 @@
 
 .avatar[data-color="11"] {
   background: var(--data-olive-color-emphasis);
+}
+
+/* Faded toward the background, but opaque, so that avatars beneath an
+   overlapping one don't show through. After the colors, which set the
+   background. */
+.avatar[data-dimmed] {
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--bgColor-default) 55%, transparent),
+    color-mix(in srgb, var(--bgColor-default) 55%, transparent)
+  );
 }

@@ -20,15 +20,23 @@
   }
 }
 
+/* In reverse order, so that each avatar is painted over the next one. */
 .avatars {
   display: inline-flex;
+  flex-direction: row-reverse;
 }
 
 .avatar {
   display: inline-flex;
 }
 
-/* Overlapping. */
+/* Overlapping the next one, on its right, by a third. */
 .avatar + .avatar {
-  margin-inline-start: calc(-1 * var(--base-size-6));
+  margin-inline-end: calc(-1 * var(--base-size-8));
+}
+
+.hiddenCount {
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
 }
