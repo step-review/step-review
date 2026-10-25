@@ -115,10 +115,7 @@ export default function StepNavigation({
       })}
       {/* Not a step: shows that the list ended, as the overview starts it. */}
       <p className={styles["end"]}>
-        <FormattedMessage
-          defaultMessage="{number}. End"
-          values={{ number: reviewView.steps.length + 1 }}
-        />
+        <FormattedMessage defaultMessage="End" />
       </p>
     </nav>
   );

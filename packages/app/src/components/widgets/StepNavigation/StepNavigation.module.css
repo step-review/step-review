@@ -31,11 +31,10 @@
   margin-top: var(--base-size-8);
 }
 
-/* Lines up with the steps' labels, muted as it can't be opened. */
 .end {
   margin: 0;
-  padding: calc(var(--base-size-8) + var(--control-medium-paddingBlock))
-    var(--base-size-16);
+  padding: var(--base-size-8);
   color: var(--fgColor-muted);
-  font-weight: var(--base-text-weight-semibold);
+  font: var(--text-caption-shorthand);
+  text-align: center;
 }
