@@ -35,10 +35,10 @@
       "value": "Couldn't start the session"
     }
   ],
-  "CollaborationSessionDialog.tsx_Av840o": [
+  "CollaborationSessionDialog.tsx_BUjJOW": [
     {
       "type": 0,
-      "value": "The key to decrypt it is in the link, and is never sent to our servers. Anyone with the link can read it."
+      "value": "The key to decrypt it is in the link, and is never sent to our servers."
     }
   ],
   "CollaborationSessionDialog.tsx_J9JF+p": [
@@ -81,6 +81,12 @@
     {
       "type": 0,
       "value": "Leave session"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_evE0sn": [
+    {
+      "type": 0,
+      "value": "Anyone with the link can read the review."
     }
   ],
   "CollaborationSessionDialog.tsx_iIenp6": [

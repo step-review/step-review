@@ -17,8 +17,8 @@
   "CollaborationSessionDialog.tsx_A5AvFO": {
     "defaultMessage": "Couldn't start the session"
   },
-  "CollaborationSessionDialog.tsx_Av840o": {
-    "defaultMessage": "The key to decrypt it is in the link, and is never sent to our servers. Anyone with the link can read it."
+  "CollaborationSessionDialog.tsx_BUjJOW": {
+    "defaultMessage": "The key to decrypt it is in the link, and is never sent to our servers."
   },
   "CollaborationSessionDialog.tsx_J9JF+p": {
     "defaultMessage": "Start session"
@@ -40,6 +40,9 @@
   },
   "CollaborationSessionDialog.tsx_dmhZKW": {
     "defaultMessage": "Leave session"
+  },
+  "CollaborationSessionDialog.tsx_evE0sn": {
+    "defaultMessage": "Anyone with the link can read the review."
   },
   "CollaborationSessionDialog.tsx_iIenp6": {
     "defaultMessage": "End session"

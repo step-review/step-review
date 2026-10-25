@@ -88,7 +88,10 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
             <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
           </li>
           <li>
-            <FormattedMessage defaultMessage="The key to decrypt it is in the link, and is never sent to our servers. Anyone with the link can read it." />
+            <FormattedMessage defaultMessage="The key to decrypt it is in the link, and is never sent to our servers." />
+          </li>
+          <li>
+            <FormattedMessage defaultMessage="Anyone with the link can read the review." />
           </li>
           <li>
             <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
