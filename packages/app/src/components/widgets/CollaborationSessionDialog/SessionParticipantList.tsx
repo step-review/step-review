@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@primer/octicons-react";
+import { Tooltip, VisuallyHidden } from "@primer/react";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -27,7 +27,7 @@ export default function SessionParticipantList({ onFollow }: Props) {
       <ul className={styles["list"]}>
         {sessionParticipants.map((sessionParticipant) => (
           <li key={sessionParticipant.participantId}>
-            <ParticipantRow
+            <ParticipantChip
               sessionParticipant={sessionParticipant}
               onFollow={onFollow}
             />
@@ -38,37 +38,52 @@ export default function SessionParticipantList({ onFollow }: Props) {
   );
 }
 
-interface ParticipantRowProps {
+interface ParticipantChipProps {
   sessionParticipant: SessionParticipantView;
   onFollow: () => void;
 }
 
-/** A participant; another one who is on a step can be followed there. */
-function ParticipantRow({ sessionParticipant, onFollow }: ParticipantRowProps) {
+/**
+ * A participant, as a chip with their avatar and name; another one who is on a
+ * step can be followed there.
+ */
+function ParticipantChip({
+  sessionParticipant,
+  onFollow,
+}: ParticipantChipProps) {
   const intl = useIntl();
   const participantLabel = useParticipantLabel();
   const { reviewAddress } = useCurrentReviewView();
   const label = participantLabel(sessionParticipant);
   const content = (
     <>
-      <InitialsAvatar
-        name={sessionParticipant.name}
-        label={label}
-        colorIndex={sessionParticipant.colorIndex}
-        isDimmed={!sessionParticipant.isOnline}
-      />
+      {/* Named by the chip's text. */}
+      <span className={styles["avatar"]} aria-hidden>
+        <InitialsAvatar
+          name={sessionParticipant.name}
+          label={label}
+          colorIndex={sessionParticipant.colorIndex}
+          size="small"
+          isDimmed={!sessionParticipant.isOnline}
+        />
+      </span>
       <span className={styles["name"]}>{label}</span>
       {!sessionParticipant.isOnline && (
-        <span className={styles["status"]}>
-          <FormattedMessage defaultMessage="Offline" />
-        </span>
+        <VisuallyHidden>
+          <FormattedMessage defaultMessage="(offline)" />
+        </VisuallyHidden>
       )}
     </>
   );
+  const isOffline = !sessionParticipant.isOnline || undefined;
   // Follows the first tab, to its step and file.
   const [firstLocation] = sessionParticipant.locations;
   if (!firstLocation) {
-    return <div className={styles["row"]}>{content}</div>;
+    return (
+      <span className={styles["chip"]} data-offline={isOffline}>
+        {content}
+      </span>
+    );
   }
   const follow = () => {
     onFollow();
@@ -80,19 +95,21 @@ function ParticipantRow({ sessionParticipant, onFollow }: ParticipantRowProps) {
     );
   };
   return (
-    <button
-      type="button"
-      className={styles["row"]}
-      aria-label={intl.formatMessage(
+    <Tooltip
+      text={intl.formatMessage(
         { defaultMessage: "Go to where {name} is" },
         { name: label },
       )}
-      onClick={follow}
+      direction="n"
     >
-      {content}
-      <span className={styles["followIcon"]}>
-        <ArrowRightIcon />
-      </span>
-    </button>
+      <button
+        type="button"
+        className={styles["chip"]}
+        data-offline={isOffline}
+        onClick={follow}
+      >
+        {content}
+      </button>
+    </Tooltip>
   );
 }

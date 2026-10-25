@@ -305,8 +305,8 @@
   "SessionNotices.tsx_wd79hm": {
     "defaultMessage": "The session ended, or expired. Changes aren't saved."
   },
-  "SessionParticipantList.tsx_7UOvbT": {
-    "defaultMessage": "Offline"
+  "SessionParticipantList.tsx_bLm0E3": {
+    "defaultMessage": "(offline)"
   },
   "SessionParticipantList.tsx_vM4QPQ": {
     "defaultMessage": "Go to where {name} is"

@@ -1,35 +1,41 @@
 /* Like the form controls' labels above it. */
 .heading {
-  margin: 0 0 var(--base-size-4);
+  margin: 0 0 var(--base-size-8);
   font-size: var(--text-body-size-medium);
   font-weight: var(--base-text-weight-semibold);
 }
 
+/* As many chips per line as fit. */
 .list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--base-size-6);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* The rows' padding lines their avatars up with the fields above. */
-.row {
-  display: flex;
+.chip {
+  display: inline-flex;
   align-items: center;
-  gap: var(--base-size-8);
-  width: 100%;
-  margin-inline: calc(-1 * var(--base-size-8));
-  padding: var(--base-size-4) var(--base-size-8);
-  box-sizing: content-box;
-  border: 0;
-  border-radius: var(--borderRadius-medium);
+  gap: var(--base-size-6);
+  max-width: 100%;
+  padding: var(--base-size-4) var(--base-size-8) var(--base-size-4)
+    var(--base-size-4);
+  border: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-full);
   background: none;
   color: var(--fgColor-default);
   font: inherit;
-  font-size: var(--text-body-size-medium);
-  text-align: start;
+  font-size: var(--text-body-size-small);
+  line-height: var(--base-text-lineHeight-tight);
+
+  &[data-offline] {
+    color: var(--fgColor-muted);
+  }
 }
 
-button.row {
+button.chip {
   cursor: pointer;
 
   &:hover {
@@ -42,20 +48,13 @@ button.row {
   }
 }
 
+.avatar {
+  display: inline-flex;
+}
+
 .name {
-  flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.status {
-  color: var(--fgColor-muted);
-  font-size: var(--text-body-size-small);
-}
-
-.followIcon {
-  display: flex;
-  color: var(--fgColor-muted);
 }
