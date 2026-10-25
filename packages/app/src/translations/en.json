@@ -383,6 +383,9 @@
   "StepNavigation.tsx_huCHmk": {
     "defaultMessage": "Steps"
   },
+  "StepNavigation.tsx_u9VtBA": {
+    "defaultMessage": "{number}. End"
+  },
   "StepPager.tsx_9uOFF3": {
     "defaultMessage": "Overview"
   },

@@ -1043,6 +1043,16 @@
       "value": "Steps"
     }
   ],
+  "StepNavigation.tsx_u9VtBA": [
+    {
+      "type": 1,
+      "value": "number"
+    },
+    {
+      "type": 0,
+      "value": ". End"
+    }
+  ],
   "StepPager.tsx_9uOFF3": [
     {
       "type": 0,
