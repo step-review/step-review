@@ -377,6 +377,9 @@
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
   },
+  "StepNavigation.tsx_3JVa6k": {
+    "defaultMessage": "End"
+  },
   "StepNavigation.tsx_9uOFF3": {
     "defaultMessage": "Overview"
   },

@@ -60,7 +60,7 @@ export default function StepNavigation({
         >
           <ActionList.LeadingVisual>
             <StepMarker
-              number={null}
+              number={0}
               progress={null}
               isActive={activeStepId === null}
             />
@@ -130,7 +130,7 @@ export default function StepNavigation({
       {/* Not a step: where the timeline ends. Decorative, so hidden from
           assistive technology, for which the list ends anyway. */}
       <p className={styles["end"]} aria-hidden>
-        ~
+        <FormattedMessage defaultMessage="End" />
       </p>
     </nav>
   );

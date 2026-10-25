@@ -1,8 +1,8 @@
 import styles from "./StepMarker.module.css";
 
 interface Props {
-  /** Shown inside the marker; `null` for one without, e.g. the overview. */
-  number: number | null;
+  /** Shown inside the marker. */
+  number: number;
   /** Fills the ring; `null` for a marker without progress. */
   progress: { viewedCount: number; totalCount: number } | null;
   isActive: boolean;
@@ -28,13 +28,13 @@ export default function StepMarker({ number, progress, isActive }: Props) {
     >
       {/* The counts are in the text beside it. */}
       <svg className={styles["ring"]} viewBox="0 0 24 24" aria-hidden>
-        <circle className={styles["track"]} cx="12" cy="12" r="11" />
+        <circle className={styles["track"]} cx="12" cy="12" r="10.5" />
         {percentage > 0 && !isComplete && (
           <circle
             className={styles["arc"]}
             cx="12"
             cy="12"
-            r="11"
+            r="10.5"
             pathLength={100}
             strokeDasharray={`${percentage} 100`}
           />
