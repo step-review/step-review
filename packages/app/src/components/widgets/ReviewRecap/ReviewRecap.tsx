@@ -138,7 +138,9 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                   })}
                 />
               </ActionMenu.Anchor>
-              <ActionMenu.Overlay>
+              {/* The pane sticks while the page scrolls: placed by the
+                  document, the menu would open below the viewport. */}
+              <ActionMenu.Overlay displayInViewport>
                 <ActionList>
                   <ActionList.Item
                     onSelect={() => navigateTo({ name: RouteName.Start })}
