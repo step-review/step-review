@@ -50,10 +50,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const noteKindCounts = countNotes(collectNotes(reviewView.steps));
   const stateFileInputRef = useRef<HTMLInputElement>(null);
   const isInSession = useSessionConnectionContext() !== null;
-  const [
-    isCollaborationSessionDialogOpen,
-    setIsCollaborationSessionDialogOpen,
-  ] = useCollaborationSessionDialogState();
+  const collaborationSessionDialogState = useCollaborationSessionDialogState();
   const importState = async (file: File) => {
     const importedReviewState = parseReviewState(await file.text());
     if (!importedReviewState) {
@@ -151,7 +148,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     <FormattedMessage defaultMessage="Open another review" />
                   </ActionList.Item>
                   <ActionList.Item
-                    onSelect={() => setIsCollaborationSessionDialogOpen(true)}
+                    onSelect={collaborationSessionDialogState.open}
                   >
                     <ActionList.LeadingVisual>
                       <PeopleIcon />
@@ -203,7 +200,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
           </div>
         </div>
       </div>
-      {isCollaborationSessionDialogOpen && (
+      {collaborationSessionDialogState.isOpen && (
         <CollaborationSessionDialog
           loadedReview={loadedReview}
           viewedFingerprints={reviewState.viewedFingerprints}

@@ -263,6 +263,9 @@
   "SessionLinkField.tsx_JBWS0c": {
     "defaultMessage": "Link"
   },
+  "SessionLinkField.tsx_emDtLh": {
+    "defaultMessage": "Copied to the clipboard."
+  },
   "SessionLinkField.tsx_zXYcAr": {
     "defaultMessage": "Copy the link"
   },

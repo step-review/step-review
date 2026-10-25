@@ -46,16 +46,38 @@ type SessionStartProps = Props;
 function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
   const intl = useIntl();
   const route = useNavigationState();
-  const [, setIsOpen] = useCollaborationSessionDialogState();
+  const { close, setCopiedLink } = useCollaborationSessionDialogState();
   const [status, setStatus] = useState<"idle" | "starting" | "failed">("idle");
+  // Called right away, while handling the click: browsers only let pages write
+  // to the clipboard then. The link follows once the session starts.
+  const copyLink = async (linkPromise: Promise<string>) => {
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/plain": linkPromise.then(
+            (link) => new Blob([link], { type: "text/plain" }),
+          ),
+        }),
+      ]);
+      setCopiedLink(await linkPromise);
+    } catch {
+      // Not copied (e.g. the session didn't start, or the browser refused):
+      // the dialog still gives the link to copy.
+    }
+  };
   const start = async () => {
     setStatus("starting");
+    const sessionBookmarkPromise = startSession(
+      window.location.origin,
+      loadedReview,
+      { name: readParticipantName(), viewedFingerprints },
+    );
+    const linkPromise = sessionBookmarkPromise.then((sessionBookmark) =>
+      sessionLink(window.location.origin, sessionBookmark),
+    );
+    void copyLink(linkPromise);
     try {
-      const { sessionId, sessionKey } = await startSession(
-        window.location.origin,
-        loadedReview,
-        { name: readParticipantName(), viewedFingerprints },
-      );
+      const { sessionId, sessionKey } = await sessionBookmarkPromise;
       // The same page, of the session: the dialog stays open, with its link.
       const reviewAddress = { kind: "session", sessionId, sessionKey } as const;
       navigateTo(
@@ -72,7 +94,7 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
       title={intl.formatMessage({
         defaultMessage: "Start collaboration session",
       })}
-      onClose={() => setIsOpen(false)}
+      onClose={close}
       footerButtons={[
         {
           buttonType: "primary",
@@ -116,11 +138,11 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
 
 function SessionDetails() {
   const intl = useIntl();
-  const [, setIsOpen] = useCollaborationSessionDialogState();
-  const close = () => setIsOpen(false);
+  const { close, copiedLink } = useCollaborationSessionDialogState();
   const { sessionBookmark, sessionConnection, sessionConnectionSnapshot } =
     useSessionConnectionContext()!;
   const [name, setName] = useState(sessionConnectionSnapshot.ownState.name);
+  const link = sessionLink(window.location.origin, sessionBookmark);
   const leaveSession = useLeaveSession(sessionBookmark, close);
   const rename = (newName: string) => {
     setName(newName);
@@ -159,9 +181,7 @@ function SessionDetails() {
             onChange={(event) => rename(event.currentTarget.value)}
           />
         </FormControl>
-        <SessionLinkField
-          link={sessionLink(window.location.origin, sessionBookmark)}
-        />
+        <SessionLinkField link={link} isCopied={link === copiedLink} />
       </Stack>
     </Dialog>
   );
