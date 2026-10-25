@@ -25,15 +25,15 @@ import countViewedFiles from "../../../business-logic/review-view/countViewedFil
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import exampleReviewId from "../../../business-logic/review/exampleReviewId.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
-import { useShareSessionContext } from "../../../business-logic/share-session/ShareSessionProvider.tsx";
+import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
 import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
-import ShareLinkDialog from "../ShareLinkDialog/ShareLinkDialog.tsx";
-import ShareReviewDialog from "../ShareReviewDialog/ShareReviewDialog.tsx";
+import SessionLinkDialog from "../SessionLinkDialog/SessionLinkDialog.tsx";
+import StartSessionDialog from "../StartSessionDialog/StartSessionDialog.tsx";
 import styles from "./ReviewRecap.module.css";
-import useLeaveSharedReview from "./useLeaveSharedReview.ts";
+import useLeaveSession from "./useLeaveSession.ts";
 
 interface Props {
   loadedReview: LoadedReview;
@@ -51,8 +51,10 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const progress = countViewedFiles(reviewView.steps, useViewedFingerprints());
   const noteKindCounts = countNotes(collectNotes(reviewView.steps));
   const stateFileInputRef = useRef<HTMLInputElement>(null);
-  const shareBookmark = useShareSessionContext()?.shareBookmark ?? null;
-  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
+  const sessionBookmark =
+    useSessionConnectionContext()?.sessionBookmark ?? null;
+  const [isSessionDialogOpen, setIsSessionDialogOpen] = useState(false);
+  const openSessionDialog = () => setIsSessionDialogOpen(true);
   const importState = async (file: File) => {
     const importedReviewState = parseReviewState(await file.text());
     if (!importedReviewState) {
@@ -74,7 +76,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
   const resetState = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({ defaultMessage: "Reset review state?" }),
-      content: shareBookmark
+      content: sessionBookmark
         ? intl.formatMessage({
             defaultMessage:
               "Every file will be marked as not viewed, for every participant.",
@@ -89,7 +91,7 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
       dispatch({ type: "resetViewed" });
     }
   };
-  const leaveSharedReview = useLeaveSharedReview(shareBookmark);
+  const leaveSession = useLeaveSession(sessionBookmark);
   const deleteLoadedReview = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({ defaultMessage: "Delete review?" }),
@@ -150,11 +152,11 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Open another review" />
                   </ActionList.Item>
-                  <ActionList.Item onSelect={() => setIsShareDialogOpen(true)}>
+                  <ActionList.Item onSelect={openSessionDialog}>
                     <ActionList.LeadingVisual>
                       <ShareIcon />
                     </ActionList.LeadingVisual>
-                    {shareBookmark ? (
+                    {sessionBookmark ? (
                       <FormattedMessage defaultMessage="Invite to the review" />
                     ) : (
                       <FormattedMessage defaultMessage="Share the review" />
@@ -185,19 +187,19 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
                     </ActionList.LeadingVisual>
                     <FormattedMessage defaultMessage="Reset review state" />
                   </ActionList.Item>
-                  {shareBookmark ? (
+                  {sessionBookmark ? (
                     <ActionList.Item
                       variant="danger"
-                      onSelect={() => void leaveSharedReview()}
+                      onSelect={() => void leaveSession()}
                     >
                       <ActionList.LeadingVisual>
-                        {shareBookmark.ownerSecret === null ? (
+                        {sessionBookmark.ownerSecret === null ? (
                           <SignOutIcon />
                         ) : (
                           <TrashIcon />
                         )}
                       </ActionList.LeadingVisual>
-                      {shareBookmark.ownerSecret === null ? (
+                      {sessionBookmark.ownerSecret === null ? (
                         <FormattedMessage defaultMessage="Leave the review" />
                       ) : (
                         <FormattedMessage defaultMessage="Stop sharing" />
@@ -224,17 +226,17 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
           </div>
         </div>
       </div>
-      {isShareDialogOpen &&
-        (shareBookmark ? (
-          <ShareLinkDialog
-            shareBookmark={shareBookmark}
-            onClose={() => setIsShareDialogOpen(false)}
+      {isSessionDialogOpen &&
+        (sessionBookmark ? (
+          <SessionLinkDialog
+            sessionBookmark={sessionBookmark}
+            onClose={() => setIsSessionDialogOpen(false)}
           />
         ) : (
-          <ShareReviewDialog
+          <StartSessionDialog
             loadedReview={loadedReview}
             viewedFingerprints={reviewState.viewedFingerprints}
-            onClose={() => setIsShareDialogOpen(false)}
+            onClose={() => setIsSessionDialogOpen(false)}
           />
         ))}
       <HiddenFileInput

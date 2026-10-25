@@ -5,7 +5,7 @@ import type ReviewAddress from "../navigation/ReviewAddress.ts";
 import updateReviewState from "../review-store/updateReviewState.ts";
 import useStoredReviewState from "../review-store/useStoredReviewState.ts";
 import exampleReviewId from "../review/exampleReviewId.ts";
-import { useShareSessionContext } from "../share-session/ShareSessionProvider.tsx";
+import { useSessionConnectionContext } from "../session-connection/SessionConnectionProvider.tsx";
 import emptyReviewState from "./emptyReviewState.ts";
 import reduceReviewState from "./reduceReviewState.ts";
 import type ReviewState from "./ReviewState.ts";
@@ -28,15 +28,15 @@ interface Props {
 
 /**
  * Keeps the reviewer's state for one review: persisted in the browser, or by
- * the share for a shared review. The example review isn't stored, so its state
- * is only kept in memory.
+ * the session's server for a session. The example review isn't stored, so its
+ * state is only kept in memory.
  */
 export default function ReviewStateProvider({
   reviewAddress,
   children,
 }: Props) {
-  if (reviewAddress.kind === "shared") {
-    return <SharedReviewStateProvider>{children}</SharedReviewStateProvider>;
+  if (reviewAddress.kind === "session") {
+    return <SessionReviewStateProvider>{children}</SessionReviewStateProvider>;
   }
   return reviewAddress.reviewId === exampleReviewId ? (
     <MemoryReviewStateProvider>{children}</MemoryReviewStateProvider>
@@ -90,32 +90,33 @@ function StoredReviewStateProvider({
   return <ReviewStateContext value={value}>{children}</ReviewStateContext>;
 }
 
-interface SharedReviewStateProviderProps {
+interface SessionReviewStateProviderProps {
   children: ReactNode;
 }
 
-/** The state of the share being displayed, shared by every participant. */
-function SharedReviewStateProvider({
+/** The state of the session being displayed, shared by every participant. */
+function SessionReviewStateProvider({
   children,
-}: SharedReviewStateProviderProps) {
-  const shareSessionContext = useShareSessionContext();
-  const shareSession = shareSessionContext?.shareSession;
+}: SessionReviewStateProviderProps) {
+  const sessionConnectionContext = useSessionConnectionContext();
+  const sessionConnection = sessionConnectionContext?.sessionConnection;
   const fileViewedStatuses =
-    shareSessionContext?.shareSessionSnapshot.fileViewedStatuses;
+    sessionConnectionContext?.sessionConnectionSnapshot.fileViewedStatuses;
   const value = useMemo(
     () =>
-      shareSession &&
+      sessionConnection &&
       fileViewedStatuses && {
         reviewState: {
           viewedFingerprints: [...fileViewedStatuses]
             .filter(([, fileViewedStatus]) => fileViewedStatus.viewed)
             .map(([fingerprint]) => fingerprint),
         },
-        dispatch: (action: ReviewStateAction) => shareSession.dispatch(action),
+        dispatch: (action: ReviewStateAction) =>
+          sessionConnection.dispatch(action),
       },
-    [shareSession, fileViewedStatuses],
+    [sessionConnection, fileViewedStatuses],
   );
-  // The review only loads within its share session.
+  // The review only loads within its session connection.
   if (!value) {
     return null;
   }

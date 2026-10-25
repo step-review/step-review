@@ -7,7 +7,7 @@ interface ParticipantViewedMark extends ViewedMark {
 }
 
 /**
- * The viewed status of each file of a shared review, by fingerprint: the file's
+ * The viewed status of each file of a session, by fingerprint: the file's
  * latest mark wins. Marks made at the same time are ordered by participant ID,
  * so that every participant gets the same statuses.
  */

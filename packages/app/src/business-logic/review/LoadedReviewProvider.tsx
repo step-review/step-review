@@ -5,7 +5,7 @@ import reviewAddressId from "../navigation/reviewAddressId.ts";
 import routeReviewAddress from "../navigation/routeReviewAddress.ts";
 import useNavigationState from "../navigation/useNavigationState.ts";
 import useStoredLoadedReview from "../review-store/useStoredLoadedReview.ts";
-import SharedReviewProvider from "../sharing/SharedReviewProvider.tsx";
+import SessionReviewProvider from "../session/SessionReviewProvider.tsx";
 import exampleReviewId from "./exampleReviewId.ts";
 import LoadedReviewValue from "./LoadedReviewValue.tsx";
 import useExampleLoadedReview from "./useExampleLoadedReview.ts";
@@ -16,7 +16,7 @@ interface Props {
 
 /**
  * Provides the review the URL names: loaded from the browser's storage, the
- * example review served with the app, or a shared review from the server.
+ * example review served with the app, or a session's review from the server.
  */
 export default function LoadedReviewProvider({ children }: Props) {
   const reviewAddress = routeReviewAddress(useNavigationState());
@@ -30,11 +30,11 @@ export default function LoadedReviewProvider({ children }: Props) {
   // Keyed, so that another review starts out as being read rather than showing
   // the previous one.
   const key = reviewAddressId(reviewAddress);
-  if (reviewAddress.kind === "shared") {
+  if (reviewAddress.kind === "session") {
     return (
-      <SharedReviewProvider key={key} reviewAddress={reviewAddress}>
+      <SessionReviewProvider key={key} reviewAddress={reviewAddress}>
         {children}
-      </SharedReviewProvider>
+      </SessionReviewProvider>
     );
   }
   if (reviewAddress.reviewId === exampleReviewId) {

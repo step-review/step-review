@@ -2,7 +2,7 @@ import "vitest";
 
 declare module "vitest" {
   export interface ProvidedContext {
-    /** The origin of the share server started for the tests. */
-    shareServerOrigin: string;
+    /** The origin of the session server started for the tests. */
+    sessionServerOrigin: string;
   }
 }

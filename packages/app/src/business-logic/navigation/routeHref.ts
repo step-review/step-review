@@ -23,7 +23,7 @@ export default function routeHref(
 function reviewPath(reviewAddress: ReviewAddress): string {
   return reviewAddress.kind === "local"
     ? `/r/${encodeURIComponent(reviewAddress.reviewId)}`
-    : `/s/${encodeURIComponent(reviewAddress.shareId)}`;
+    : `/s/${encodeURIComponent(reviewAddress.sessionId)}`;
 }
 
 function reviewHash(
@@ -34,8 +34,8 @@ function reviewHash(
     return fragment ? `#${encodeURIComponent(fragment)}` : "";
   }
   const hashParameters = new URLSearchParams();
-  if (reviewAddress.shareKey !== null) {
-    hashParameters.set("key", reviewAddress.shareKey);
+  if (reviewAddress.sessionKey !== null) {
+    hashParameters.set("key", reviewAddress.sessionKey);
   }
   if (fragment) {
     hashParameters.set("to", fragment);

@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
-import useParticipantLabel from "../../../business-logic/share-participants/useParticipantLabel.ts";
-import useShareParticipants from "../../../business-logic/share-participants/useShareParticipants.ts";
+import useParticipantLabel from "../../../business-logic/session-participants/useParticipantLabel.ts";
+import useSessionParticipants from "../../../business-logic/session-participants/useSessionParticipants.ts";
 import InitialsAvatarStack from "../../design-system/InitialsAvatarStack/InitialsAvatarStack.tsx";
 
 interface Props {
@@ -8,20 +8,20 @@ interface Props {
   fingerprint: string;
 }
 
-/** The other participants of a shared review who viewed a file. */
+/** The other participants of a session who viewed a file. */
 export default function FileViewers({ fingerprint }: Props) {
   const intl = useIntl();
   const participantLabel = useParticipantLabel();
-  const viewers = (useShareParticipants() ?? []).filter(
-    (shareParticipant) =>
-      !shareParticipant.isSelf &&
-      shareParticipant.viewedFingerprints.has(fingerprint),
+  const viewers = (useSessionParticipants() ?? []).filter(
+    (sessionParticipant) =>
+      !sessionParticipant.isSelf &&
+      sessionParticipant.viewedFingerprints.has(fingerprint),
   );
-  const people = viewers.map((shareParticipant) => ({
-    key: shareParticipant.participantId,
-    name: shareParticipant.name,
-    label: participantLabel(shareParticipant),
-    colorIndex: shareParticipant.colorIndex,
+  const people = viewers.map((sessionParticipant) => ({
+    key: sessionParticipant.participantId,
+    name: sessionParticipant.name,
+    label: participantLabel(sessionParticipant),
+    colorIndex: sessionParticipant.colorIndex,
   }));
   return (
     <InitialsAvatarStack

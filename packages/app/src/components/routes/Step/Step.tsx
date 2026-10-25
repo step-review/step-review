@@ -10,7 +10,7 @@ import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewPr
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewValue.tsx";
-import useOwnPresence from "../../../business-logic/share-session/useOwnPresence.ts";
+import useOwnPresence from "../../../business-logic/session-connection/useOwnPresence.ts";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import FileCard from "../../widgets/FileCard/FileCard.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";

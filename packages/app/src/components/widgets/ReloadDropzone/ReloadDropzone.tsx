@@ -2,27 +2,27 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import loadReview from "../../../business-logic/review/loadReview.ts";
 import useOpenReviewFile from "../../../business-logic/review/useOpenReviewFile.ts";
-import { useShareSessionContext } from "../../../business-logic/share-session/ShareSessionProvider.tsx";
-import updateSharedReview from "../../../business-logic/sharing/updateSharedReview.ts";
+import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
+import updateSessionReview from "../../../business-logic/session/updateSessionReview.ts";
 import FullScreenDropzone from "../../design-system/FullScreenDropzone/FullScreenDropzone.tsx";
 
 /**
  * Accepts a review file dropped anywhere on the page, e.g. after the agent
- * reviewed the PR again. A shared review is updated for every participant, and
- * only by its owner.
+ * reviewed the PR again. A session's review is updated for every participant,
+ * and only by its owner.
  */
 export default function ReloadDropzone() {
-  const shareSessionContext = useShareSessionContext();
-  if (!shareSessionContext) {
+  const sessionConnectionContext = useSessionConnectionContext();
+  if (!sessionConnectionContext) {
     return <LocalReloadDropzone />;
   }
-  const { shareBookmark, shareKey } = shareSessionContext;
-  const { ownerSecret } = shareBookmark;
+  const { sessionBookmark, sessionKey } = sessionConnectionContext;
+  const { ownerSecret } = sessionBookmark;
   return (
     ownerSecret !== null && (
-      <SharedReloadDropzone
-        shareBookmark={{ ...shareBookmark, ownerSecret }}
-        shareKey={shareKey}
+      <SessionReloadDropzone
+        sessionBookmark={{ ...sessionBookmark, ownerSecret }}
+        sessionKey={sessionKey}
       />
     )
   );
@@ -48,15 +48,15 @@ function LocalReloadDropzone() {
   );
 }
 
-interface SharedReloadDropzoneProps {
-  shareBookmark: Parameters<typeof updateSharedReview>[1];
-  shareKey: CryptoKey;
+interface SessionReloadDropzoneProps {
+  sessionBookmark: Parameters<typeof updateSessionReview>[1];
+  sessionKey: CryptoKey;
 }
 
-function SharedReloadDropzone({
-  shareBookmark,
-  shareKey,
-}: SharedReloadDropzoneProps) {
+function SessionReloadDropzone({
+  sessionBookmark,
+  sessionKey,
+}: SessionReloadDropzoneProps) {
   const intl = useIntl();
   const update = async (file: File) => {
     const result = loadReview(file.name, await file.text());
@@ -67,10 +67,10 @@ function SharedReloadDropzone({
       return;
     }
     try {
-      await updateSharedReview(
+      await updateSessionReview(
         window.location.origin,
-        shareBookmark,
-        shareKey,
+        sessionBookmark,
+        sessionKey,
         result.loadedReview,
       );
     } catch {

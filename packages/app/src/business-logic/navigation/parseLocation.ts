@@ -4,8 +4,8 @@ import RouteName from "./RouteName.ts";
 
 /**
  * The route and the fragment (the ID of the element to scroll to) of a URL. The
- * fragment of a shared review's URL also holds the share's key, so that any of
- * its URLs opens it: `#key=<key>&to=<fragment>`.
+ * fragment of a session's URL also holds the session's key, so that any of its
+ * URLs opens it: `#key=<key>&to=<fragment>`.
  */
 export default function parseLocation(
   pathname: string,
@@ -32,9 +32,9 @@ export default function parseLocation(
     addressKind === "r"
       ? { kind: "local", reviewId: decodeURIComponent(addressId) }
       : {
-          kind: "shared",
-          shareId: decodeURIComponent(addressId),
-          shareKey: hashParameters.get("key"),
+          kind: "session",
+          sessionId: decodeURIComponent(addressId),
+          sessionKey: hashParameters.get("key"),
         };
   const fragment =
     addressKind === "r"

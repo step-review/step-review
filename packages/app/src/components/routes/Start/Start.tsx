@@ -1,7 +1,7 @@
 import { Banner, Heading, Stack, Text } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
-import useShareBookmarks from "../../../business-logic/share-store/useShareBookmarks.ts";
+import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
@@ -12,9 +12,9 @@ import styles from "./Start.module.css";
 interface Props {
   /**
    * Set when a review page was opened for a review that can't be loaded: one
-   * that isn't stored, or a share that doesn't exist (anymore).
+   * that isn't stored, or a session that doesn't exist (anymore).
    */
-  missingReview?: "local" | "shared";
+  missingReview?: "local" | "session";
 }
 
 /**
@@ -24,13 +24,13 @@ interface Props {
 export default function Start({ missingReview }: Props) {
   const intl = useIntl();
   const storedReviews = useStoredReviews();
-  const shareBookmarks = useShareBookmarks();
+  const sessionBookmarks = useSessionBookmarks();
   // Being read from the browser's storage, which takes a moment.
-  if (storedReviews === undefined || shareBookmarks === undefined) {
+  if (storedReviews === undefined || sessionBookmarks === undefined) {
     return null;
   }
   const hasStoredReviews =
-    storedReviews.length > 0 || shareBookmarks.length > 0;
+    storedReviews.length > 0 || sessionBookmarks.length > 0;
   return (
     <div className={styles["page"]}>
       <div
@@ -99,7 +99,7 @@ export default function Start({ missingReview }: Props) {
               </Heading>
               <StoredReviewList
                 storedReviews={storedReviews}
-                shareBookmarks={shareBookmarks}
+                sessionBookmarks={sessionBookmarks}
               />
             </Stack>
           ) : (

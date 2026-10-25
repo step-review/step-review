@@ -47,7 +47,7 @@ it("reads the decoded fragment of a local review's URL", () => {
   expect(fragment).toBe("note-retry limit");
 });
 
-it("routes a shared review's step path, reading the key from the fragment", () => {
+it("routes a session's step path, reading the key from the fragment", () => {
   // Exercise
   const { route } = parseLocation(
     "/s/Qx2mT9vK4pLw8nR1sYb7Ze/steps/one",
@@ -58,15 +58,15 @@ it("routes a shared review's step path, reading the key from the fragment", () =
   expect(route).toEqual({
     name: RouteName.Step,
     reviewAddress: {
-      kind: "shared",
-      shareId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      shareKey: "Abc-_123",
+      kind: "session",
+      sessionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
+      sessionKey: "Abc-_123",
     },
     stepId: "one",
   });
 });
 
-it("reads the element to scroll to from a shared review's fragment", () => {
+it("reads the element to scroll to from a session's fragment", () => {
   // Exercise
   const { fragment } = parseLocation(
     "/s/Qx2mT9vK4pLw8nR1sYb7Ze/steps/one",
@@ -77,7 +77,7 @@ it("reads the element to scroll to from a shared review's fragment", () => {
   expect(fragment).toBe("note-retry limit");
 });
 
-it("routes a shared review's URL without a key to the share, with no key", () => {
+it("routes a session's URL without a key to the session, with no key", () => {
   // Exercise
   const { route } = parseLocation("/s/Qx2mT9vK4pLw8nR1sYb7Ze/overview", "");
 
@@ -85,9 +85,9 @@ it("routes a shared review's URL without a key to the share, with no key", () =>
   expect(route).toEqual({
     name: RouteName.Overview,
     reviewAddress: {
-      kind: "shared",
-      shareId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      shareKey: null,
+      kind: "session",
+      sessionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
+      sessionKey: null,
     },
   });
 });

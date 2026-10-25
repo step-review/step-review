@@ -1,4 +1,4 @@
-/** Whether a file of a shared review is viewed, from every participant's marks. */
+/** Whether a file of a session is viewed, from every participant's marks. */
 export default interface FileViewedStatus {
   viewed: boolean;
   /** When the file's latest mark was made. */

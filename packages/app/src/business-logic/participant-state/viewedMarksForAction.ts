@@ -3,9 +3,9 @@ import type FileViewedStatus from "./FileViewedStatus.ts";
 import type ViewedMark from "./ViewedMark.ts";
 
 /**
- * The marks that apply a change to a shared review's state. Each is later than
- * the file's latest mark, even when the participants' clocks disagree, so that
- * it wins.
+ * The marks that apply a change to a session's state. Each is later than the
+ * file's latest mark, even when the participants' clocks disagree, so that it
+ * wins.
  */
 export default function viewedMarksForAction(
   reviewStateAction: ReviewStateAction,

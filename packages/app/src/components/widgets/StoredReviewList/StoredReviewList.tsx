@@ -7,23 +7,23 @@ import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import deleteReview from "../../../business-logic/review-store/deleteReview.ts";
 import type StoredReview from "../../../business-logic/review-store/StoredReview.ts";
-import deleteShareBookmark from "../../../business-logic/share-store/deleteShareBookmark.ts";
-import type ShareBookmark from "../../../business-logic/share-store/ShareBookmark.ts";
+import deleteSessionBookmark from "../../../business-logic/session-store/deleteSessionBookmark.ts";
+import type SessionBookmark from "../../../business-logic/session-store/SessionBookmark.ts";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import styles from "./StoredReviewList.module.css";
 
 interface Props {
   storedReviews: StoredReview[];
-  shareBookmarks: ShareBookmark[];
+  sessionBookmarks: SessionBookmark[];
 }
 
 /**
- * The reviews kept in the browser and the shared reviews opened in it, most
- * recently opened first, to open again or remove.
+ * The reviews kept in the browser and the sessions opened in it, most recently
+ * opened first, to open again or remove.
  */
 export default function StoredReviewList({
   storedReviews,
-  shareBookmarks,
+  sessionBookmarks,
 }: Props) {
   const items = [
     ...storedReviews.map((storedReview) => ({
@@ -31,10 +31,10 @@ export default function StoredReviewList({
       openedAt: storedReview.openedAt,
       element: <StoredReviewItem storedReview={storedReview} />,
     })),
-    ...shareBookmarks.map((shareBookmark) => ({
-      key: `shared:${shareBookmark.shareId}`,
-      openedAt: shareBookmark.openedAt,
-      element: <SharedReviewItem shareBookmark={shareBookmark} />,
+    ...sessionBookmarks.map((sessionBookmark) => ({
+      key: `session:${sessionBookmark.sessionId}`,
+      openedAt: sessionBookmark.openedAt,
+      element: <SessionReviewItem sessionBookmark={sessionBookmark} />,
     })),
   ].sort((first, second) => second.openedAt - first.openedAt);
   return (
@@ -84,20 +84,20 @@ function StoredReviewItem({ storedReview }: StoredReviewItemProps) {
   );
 }
 
-interface SharedReviewItemProps {
-  shareBookmark: ShareBookmark;
+interface SessionReviewItemProps {
+  sessionBookmark: SessionBookmark;
 }
 
-function SharedReviewItem({ shareBookmark }: SharedReviewItemProps) {
+function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
   const intl = useIntl();
   const confirm = useConfirm();
-  const removeShareBookmark = async () => {
+  const removeSessionBookmark = async () => {
     const isConfirmed = await confirm({
       title: intl.formatMessage({
         defaultMessage: "Remove the shared review?",
       }),
       content:
-        shareBookmark.ownerSecret === null
+        sessionBookmark.ownerSecret === null
           ? intl.formatMessage({
               defaultMessage:
                 "It will be removed from this browser. You can join it again with its link, as a new participant.",
@@ -110,29 +110,29 @@ function SharedReviewItem({ shareBookmark }: SharedReviewItemProps) {
       confirmButtonType: "danger",
     });
     if (isConfirmed) {
-      await deleteShareBookmark(shareBookmark.shareId);
+      await deleteSessionBookmark(sessionBookmark.sessionId);
     }
   };
-  const { shareId, shareKey } = shareBookmark;
+  const { sessionId, sessionKey } = sessionBookmark;
   return (
     <ReviewItem
       route={{
         name: RouteName.Overview,
-        reviewAddress: { kind: "shared", shareId, shareKey },
+        reviewAddress: { kind: "session", sessionId, sessionKey },
       }}
       title={
-        shareBookmark.title ||
+        sessionBookmark.title ||
         intl.formatMessage({ defaultMessage: "Shared review" })
       }
       detail={
-        shareBookmark.ownerSecret === null
+        sessionBookmark.ownerSecret === null
           ? intl.formatMessage({ defaultMessage: "Shared with you" })
           : intl.formatMessage({ defaultMessage: "Shared by you" })
       }
       removeLabel={intl.formatMessage({
         defaultMessage: "Remove the shared review",
       })}
-      onRemove={() => void removeShareBookmark()}
+      onRemove={() => void removeSessionBookmark()}
     />
   );
 }

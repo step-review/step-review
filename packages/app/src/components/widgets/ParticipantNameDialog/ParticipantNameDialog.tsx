@@ -13,7 +13,7 @@ interface Props {
   onClose: () => void;
 }
 
-/** Asks for the name the other participants of a shared review see. */
+/** Asks for the name the other participants of a session see. */
 export default function ParticipantNameDialog({
   title,
   description,

@@ -19,14 +19,14 @@ it("builds a step URL that parses back to the same route", () => {
   expect(parseLocation(url.pathname, url.hash).route).toEqual(route);
 });
 
-it("builds a shared step URL that parses back to the same route and fragment", () => {
+it("builds a session step URL that parses back to the same route and fragment", () => {
   // Setup SUT
   const route = {
     name: RouteName.Step,
     reviewAddress: {
-      kind: "shared",
-      shareId: "Qx2mT9vK4pLw8nR1sYb7Ze",
-      shareKey: "Abc-_123",
+      kind: "session",
+      sessionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
+      sessionKey: "Abc-_123",
     },
     stepId: "ids/v2",
   } as const;

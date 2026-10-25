@@ -675,6 +675,108 @@
       "pluralType": "cardinal"
     }
   ],
+  "SessionLinkDialog.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "SessionLinkDialog.tsx_qEZHWw": [
+    {
+      "type": 0,
+      "value": "Invite to the review"
+    }
+  ],
+  "SessionLinkField.tsx_JBWS0c": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "SessionLinkField.tsx_JSXm7k": [
+    {
+      "type": 0,
+      "value": "Anyone with the link can open the review and join it. The key that decrypts it is in the link only."
+    }
+  ],
+  "SessionLinkField.tsx_zXYcAr": [
+    {
+      "type": 0,
+      "value": "Copy the link"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_3H1+9V": [
+    {
+      "type": 0,
+      "value": "Join the review"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_46Kg+h": [
+    {
+      "type": 0,
+      "value": "The other participants will see the new name."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_7YjYX+": [
+    {
+      "type": 0,
+      "value": "Change your name"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_P6PLpi": [
+    {
+      "type": 0,
+      "value": "Join"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_PrtHNc": [
+    {
+      "type": 0,
+      "value": "The connection to the shared review failed. Reload the page to try again."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_PuU15u": [
+    {
+      "type": 0,
+      "value": "Not connected"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_QH2s4N": [
+    {
+      "type": 0,
+      "value": "The review has too many participants to join it. Changes aren't saved."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "SessionParticipantsPanel.tsx_oID+Is": [
+    {
+      "type": 0,
+      "value": "The review is no longer shared: it was deleted, or expired. Changes aren't saved."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_pK7uFW": [
+    {
+      "type": 0,
+      "value": "This browser can't join the review as before. Changes aren't saved."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_vFA0iR": [
+    {
+      "type": 0,
+      "value": "The other participants will see your name, the files you viewed, and where you are."
+    }
+  ],
+  "SessionParticipantsPanel.tsx_zx0myy": [
+    {
+      "type": 0,
+      "value": "Participants"
+    }
+  ],
   "SeverityBadge.tsx_9eQkfo": [
     {
       "type": 0,
@@ -697,180 +799,6 @@
     {
       "type": 0,
       "value": "Blocker"
-    }
-  ],
-  "ShareLinkDialog.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Done"
-    }
-  ],
-  "ShareLinkDialog.tsx_qEZHWw": [
-    {
-      "type": 0,
-      "value": "Invite to the review"
-    }
-  ],
-  "ShareLinkField.tsx_JBWS0c": [
-    {
-      "type": 0,
-      "value": "Link"
-    }
-  ],
-  "ShareLinkField.tsx_JSXm7k": [
-    {
-      "type": 0,
-      "value": "Anyone with the link can open the review and join it. The key that decrypts it is in the link only."
-    }
-  ],
-  "ShareLinkField.tsx_zXYcAr": [
-    {
-      "type": 0,
-      "value": "Copy the link"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_3H1+9V": [
-    {
-      "type": 0,
-      "value": "Join the review"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_46Kg+h": [
-    {
-      "type": 0,
-      "value": "The other participants will see the new name."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_7YjYX+": [
-    {
-      "type": 0,
-      "value": "Change your name"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_P6PLpi": [
-    {
-      "type": 0,
-      "value": "Join"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_PrtHNc": [
-    {
-      "type": 0,
-      "value": "The connection to the shared review failed. Reload the page to try again."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_PuU15u": [
-    {
-      "type": 0,
-      "value": "Not connected"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_QH2s4N": [
-    {
-      "type": 0,
-      "value": "The review has too many participants to join it. Changes aren't saved."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_jvo0vs": [
-    {
-      "type": 0,
-      "value": "Save"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_oID+Is": [
-    {
-      "type": 0,
-      "value": "The review is no longer shared: it was deleted, or expired. Changes aren't saved."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_pK7uFW": [
-    {
-      "type": 0,
-      "value": "This browser can't join the review as before. Changes aren't saved."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_vFA0iR": [
-    {
-      "type": 0,
-      "value": "The other participants will see your name, the files you viewed, and where you are."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_zx0myy": [
-    {
-      "type": 0,
-      "value": "Participants"
-    }
-  ],
-  "ShareReviewDialog.tsx_1pllGg": [
-    {
-      "type": 0,
-      "value": "Create a link"
-    }
-  ],
-  "ShareReviewDialog.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "ShareReviewDialog.tsx_MFYa+V": [
-    {
-      "type": 0,
-      "value": "The review couldn't be uploaded. Try again later."
-    }
-  ],
-  "ShareReviewDialog.tsx_Qw3ad0": [
-    {
-      "type": 0,
-      "value": "Open the shared review"
-    }
-  ],
-  "ShareReviewDialog.tsx_r1bBFq": [
-    {
-      "type": 0,
-      "value": "The key is in the link only, so the server can't read the review. It is deleted after 30 days without activity."
-    }
-  ],
-  "ShareReviewDialog.tsx_r4Blpt": [
-    {
-      "type": 0,
-      "value": "Review shared"
-    }
-  ],
-  "ShareReviewDialog.tsx_r4YXET": [
-    {
-      "type": 0,
-      "value": "Sharing failed"
-    }
-  ],
-  "ShareReviewDialog.tsx_rOSpQP": [
-    {
-      "type": 0,
-      "value": "Share the review"
-    }
-  ],
-  "ShareReviewDialog.tsx_rbrahO": [
-    {
-      "type": 0,
-      "value": "Close"
-    }
-  ],
-  "ShareReviewDialog.tsx_vlKhIl": [
-    {
-      "type": 0,
-      "value": "Your name"
-    }
-  ],
-  "ShareReviewDialog.tsx_wiJcF8": [
-    {
-      "type": 0,
-      "value": "The review is encrypted in your browser and uploaded with your progress. Whoever opens its link reviews it with you: you'll see each other's progress, and where you are."
-    }
-  ],
-  "ShareReviewDialog.tsx_x4TTpt": [
-    {
-      "type": 0,
-      "value": "Shown to the others."
     }
   ],
   "Start.tsx_3sbmjt": [
@@ -993,6 +921,78 @@
     {
       "type": 0,
       "value": "This shared review can't be opened: it was deleted or expired, or its link is incomplete."
+    }
+  ],
+  "StartSessionDialog.tsx_1pllGg": [
+    {
+      "type": 0,
+      "value": "Create a link"
+    }
+  ],
+  "StartSessionDialog.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "StartSessionDialog.tsx_MFYa+V": [
+    {
+      "type": 0,
+      "value": "The review couldn't be uploaded. Try again later."
+    }
+  ],
+  "StartSessionDialog.tsx_Qw3ad0": [
+    {
+      "type": 0,
+      "value": "Open the shared review"
+    }
+  ],
+  "StartSessionDialog.tsx_r1bBFq": [
+    {
+      "type": 0,
+      "value": "The key is in the link only, so the server can't read the review. It is deleted after 30 days without activity."
+    }
+  ],
+  "StartSessionDialog.tsx_r4Blpt": [
+    {
+      "type": 0,
+      "value": "Review shared"
+    }
+  ],
+  "StartSessionDialog.tsx_r4YXET": [
+    {
+      "type": 0,
+      "value": "Sharing failed"
+    }
+  ],
+  "StartSessionDialog.tsx_rOSpQP": [
+    {
+      "type": 0,
+      "value": "Share the review"
+    }
+  ],
+  "StartSessionDialog.tsx_rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "StartSessionDialog.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
+  "StartSessionDialog.tsx_wiJcF8": [
+    {
+      "type": 0,
+      "value": "The review is encrypted in your browser and uploaded with your progress. Whoever opens its link reviews it with you: you'll see each other's progress, and where you are."
+    }
+  ],
+  "StartSessionDialog.tsx_x4TTpt": [
+    {
+      "type": 0,
+      "value": "Shown to the others."
     }
   ],
   "StepFileTree.tsx_D/0ALU": [
@@ -1181,43 +1181,43 @@
       "value": " viewed"
     }
   ],
-  "useLeaveSharedReview.ts_4yMAWe": [
+  "useLeaveSession.ts_4yMAWe": [
     {
       "type": 0,
       "value": "Leave the review?"
     }
   ],
-  "useLeaveSharedReview.ts_5+HaBc": [
+  "useLeaveSession.ts_5+HaBc": [
     {
       "type": 0,
       "value": "The review couldn't be deleted. Try again later."
     }
   ],
-  "useLeaveSharedReview.ts_WhiGBX": [
+  "useLeaveSession.ts_WhiGBX": [
     {
       "type": 0,
       "value": "Stop sharing"
     }
   ],
-  "useLeaveSharedReview.ts_ePgmeH": [
+  "useLeaveSession.ts_ePgmeH": [
     {
       "type": 0,
       "value": "Stop sharing?"
     }
   ],
-  "useLeaveSharedReview.ts_fnihsY": [
+  "useLeaveSession.ts_fnihsY": [
     {
       "type": 0,
       "value": "Leave"
     }
   ],
-  "useLeaveSharedReview.ts_hzmKWb": [
+  "useLeaveSession.ts_hzmKWb": [
     {
       "type": 0,
       "value": "The review and every participant's progress will be deleted from the server. Its links will stop working."
     }
   ],
-  "useLeaveSharedReview.ts_slzWn+": [
+  "useLeaveSession.ts_slzWn+": [
     {
       "type": 0,
       "value": "The review will be removed from this browser. You can join it again with its link, as a new participant."
