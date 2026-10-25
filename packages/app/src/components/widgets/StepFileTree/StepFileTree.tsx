@@ -10,6 +10,7 @@ import type StepFileView from "../../../business-logic/review-view/StepFileView.
 import type StepView from "../../../business-logic/review-view/StepView.ts";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import FileIcon from "../FileIcon/FileIcon.tsx";
+import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import styles from "./StepFileTree.module.css";
 
 interface Props {
@@ -70,7 +71,8 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
     return (
       <TreeView.Item
         key={stepFileView.id}
-        id={fileFragment}
+        // Not the fragment: that's the ID of the file's card, to scroll to.
+        id={`tree-${fileFragment}`}
         current={fragment === fileFragment}
         onSelect={() => onFileSelect(fileFragment)}
       >
@@ -86,13 +88,18 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
             {node.label}
           </TruncatedText>
         </span>
-        {isViewed && (
-          <TreeView.TrailingVisual
-            label={intl.formatMessage({ defaultMessage: "Viewed" })}
-          >
-            <CheckIcon className={styles["viewedIcon"]} />
-          </TreeView.TrailingVisual>
-        )}
+        <TreeView.TrailingVisual
+          label={
+            isViewed
+              ? intl.formatMessage({ defaultMessage: "Viewed" })
+              : undefined
+          }
+        >
+          <span className={styles["marks"]}>
+            <ParticipantsHere fileId={stepFileView.id} />
+            {isViewed && <CheckIcon className={styles["viewedIcon"]} />}
+          </span>
+        </TreeView.TrailingVisual>
       </TreeView.Item>
     );
   });

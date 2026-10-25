@@ -18,5 +18,8 @@ export default function navigateTo(
       window.history.pushState(window.history.state, "", href);
     }
     window.dispatchEvent(new PopStateEvent("popstate"));
+  } else if (fragment) {
+    // Already there, but maybe scrolled away from it.
+    document.getElementById(fragment)?.scrollIntoView({ block: "start" });
   }
 }

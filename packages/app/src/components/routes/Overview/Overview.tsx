@@ -5,6 +5,7 @@ import useScrollToFragment from "../../../business-logic/navigation/useScrollToF
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
 import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewValue.tsx";
+import useOwnPresence from "../../../business-logic/share-session/useOwnPresence.ts";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import IssuesByStep from "../../widgets/IssuesByStep/IssuesByStep.tsx";
 import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
@@ -18,6 +19,7 @@ export default function Overview() {
   const { loadedReview, reviewAddress } = useLoadedReviewContext();
   const reviewView = useReviewView();
   useScrollToFragment();
+  useOwnPresence(null, null);
   useHotkeys([
     [
       "ArrowRight",

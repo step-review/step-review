@@ -3,18 +3,25 @@ import useParticipantLabel from "../../../business-logic/share-participants/useP
 import useShareParticipants from "../../../business-logic/share-participants/useShareParticipants.ts";
 import InitialsAvatarStack from "../../design-system/InitialsAvatarStack/InitialsAvatarStack.tsx";
 
-interface Props {
-  /** `null` for the overview. */
-  stepId: string | null;
-}
+type Props =
+  | {
+      /** `null` for the overview. */
+      stepId: string | null;
+    }
+  | { fileId: string };
 
-/** The other participants of a shared review who are on a step. */
-export default function ParticipantsHere({ stepId }: Props) {
+/** The other participants of a shared review who are on a step, or a file. */
+export default function ParticipantsHere(props: Props) {
   const intl = useIntl();
   const participantLabel = useParticipantLabel();
   const participantsHere = (useShareParticipants() ?? []).filter(
     (shareParticipant) =>
-      !shareParticipant.isSelf && shareParticipant.stepIds.includes(stepId),
+      !shareParticipant.isSelf &&
+      shareParticipant.locations.some((location) =>
+        "fileId" in props
+          ? location.fileId === props.fileId
+          : location.stepId === props.stepId,
+      ),
   );
   const people = participantsHere.map((shareParticipant) => ({
     key: shareParticipant.participantId,

@@ -189,11 +189,6 @@ function ShareSessionValue({
     shareKey,
     shareSessionSnapshot.versionId,
   );
-  const { route } = useLocationParts();
-  const presenceStepId = route.name === RouteName.Step ? route.stepId : null;
-  useEffect(() => {
-    shareSession.setPresence(presenceStepId);
-  }, [shareSession, presenceStepId]);
   const title = loadedReview?.reviewFile.data.target.title;
   useEffect(() => {
     if (title !== undefined) {

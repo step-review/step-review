@@ -140,7 +140,7 @@ it("keeps the changes made at once in two tabs of the same participant", async (
   ]);
 });
 
-it("shows the step another participant is on", async () => {
+it("shows the step and file another participant is on", async () => {
   // Setup SUT
   const { apiOrigin, shareId, shareKey } = await createTestShare();
   const aliceParticipantId = randomBase64Url(16);
@@ -166,7 +166,10 @@ it("shows the step another participant is on", async () => {
   );
 
   // Exercise
-  aliceShareSession.setPresence("sync-buckets");
+  aliceShareSession.setPresence({
+    stepId: "sync-buckets",
+    fileId: "sync-buckets:src/buckets.ts",
+  });
 
   // Verify
   const bobSnapshot = await waitForShareSession(
@@ -176,8 +179,76 @@ it("shows the step another participant is on", async () => {
   expect([...bobSnapshot.otherPresences.values()]).toEqual([
     {
       participantId: aliceParticipantId,
-      presence: { stepIdHash: hashString("sync-buckets") },
+      presence: {
+        stepIdHash: hashString("sync-buckets"),
+        fileIdHash: hashString("sync-buckets:src/buckets.ts"),
+      },
     },
+  ]);
+});
+
+it("sends only the first and the last of presences set in quick succession", async () => {
+  // Setup SUT
+  const { apiOrigin, shareId, shareKey } = await createTestShare();
+  const aliceShareSession = new ShareSession({
+    apiOrigin,
+    shareId,
+    shareKey,
+    participantId: randomBase64Url(16),
+    participantSecret: randomBase64Url(32),
+  });
+  onTestFinished(() => aliceShareSession.close());
+  const bobShareSession = new ShareSession({
+    apiOrigin,
+    shareId,
+    shareKey,
+    participantId: randomBase64Url(16),
+    participantSecret: randomBase64Url(32),
+  });
+  onTestFinished(() => bobShareSession.close());
+  await Promise.all(
+    [aliceShareSession, bobShareSession].map((shareSession) =>
+      waitForShareSession(
+        shareSession,
+        (snapshot) => snapshot.connectionStatus === "connected",
+      ),
+    ),
+  );
+  // Joining sent a presence: lets its interval pass.
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  const receivedFileIdHashes: (string | null)[] = [];
+  const unsubscribe = bobShareSession.subscribe(() => {
+    const [alicePresence] = bobShareSession.getSnapshot().otherPresences;
+    const fileIdHash = alicePresence?.[1].presence.fileIdHash;
+    if (
+      fileIdHash !== undefined &&
+      receivedFileIdHashes.at(-1) !== fileIdHash
+    ) {
+      receivedFileIdHashes.push(fileIdHash);
+    }
+  });
+  onTestFinished(() => {
+    unsubscribe();
+  });
+
+  // Exercise
+  for (const path of ["src/a.ts", "src/b.ts", "src/c.ts"]) {
+    aliceShareSession.setPresence({
+      stepId: "sync-buckets",
+      fileId: `sync-buckets:${path}`,
+    });
+  }
+
+  // Verify
+  await waitForShareSession(
+    bobShareSession,
+    (snapshot) =>
+      [...snapshot.otherPresences.values()][0]?.presence.fileIdHash ===
+      hashString("sync-buckets:src/c.ts"),
+  );
+  expect(receivedFileIdHashes).toEqual([
+    hashString("sync-buckets:src/a.ts"),
+    hashString("sync-buckets:src/c.ts"),
   ]);
 });
 

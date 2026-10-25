@@ -107,14 +107,20 @@ function ParticipantItem({ shareParticipant, onRename }: ParticipantItemProps) {
   const participantLabel = useParticipantLabel();
   const { reviewAddress, steps } = useCurrentReviewView();
   const label = participantLabel(shareParticipant);
-  const [firstStepId] = shareParticipant.stepIds;
-  const locationRoute =
-    firstStepId === undefined
-      ? null
-      : firstStepId === null
-        ? { name: RouteName.Overview, reviewAddress }
-        : { name: RouteName.Step, reviewAddress, stepId: firstStepId };
-  const locationText = shareParticipant.stepIds
+  // Following goes to the first tab's step, and scrolls to its file.
+  const [firstLocation] = shareParticipant.locations;
+  const locationRoute = !firstLocation
+    ? null
+    : firstLocation.stepId === null
+      ? { name: RouteName.Overview, reviewAddress }
+      : { name: RouteName.Step, reviewAddress, stepId: firstLocation.stepId };
+  const locationFragment = firstLocation?.fileId
+    ? `file-${firstLocation.fileId}`
+    : undefined;
+  const locationStepIds = new Set(
+    shareParticipant.locations.map((location) => location.stepId),
+  );
+  const locationText = [...locationStepIds]
     .map((stepId) => {
       const step = steps.find((stepView) => stepView.id === stepId);
       return step
@@ -149,10 +155,10 @@ function ParticipantItem({ shareParticipant, onRename }: ParticipantItemProps) {
           />
         ) : locationRoute ? (
           <Link
-            href={routeHref(locationRoute)}
+            href={routeHref(locationRoute, locationFragment)}
             onClick={(event) => {
               event.preventDefault();
-              navigateTo(locationRoute);
+              navigateTo(locationRoute, locationFragment);
             }}
           >
             {locationText}

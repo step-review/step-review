@@ -10,6 +10,7 @@ import Diffstat from "../../design-system/Diffstat/Diffstat.tsx";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import FileViewers from "../FileViewers/FileViewers.tsx";
+import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import styles from "./FileCardHeader.module.css";
 
 interface Props {
@@ -60,6 +61,7 @@ export default function FileCardHeader({
         value={stepFileView.path}
         label={intl.formatMessage({ defaultMessage: "Copy the path" })}
       />
+      <ParticipantsHere fileId={stepFileView.id} />
       <div className={styles["trailing"]}>
         <Diffstat
           additions={stepFileView.additions}

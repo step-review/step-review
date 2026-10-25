@@ -1,3 +1,5 @@
+import type PresenceLocation from "../share-session/PresenceLocation.ts";
+
 /** A participant of a shared review, as shown to the others. */
 export default interface ShareParticipantView {
   participantId: string;
@@ -8,9 +10,9 @@ export default interface ShareParticipantView {
   isSelf: boolean;
   isOnline: boolean;
   /**
-   * The steps the participant is on, in one or more tabs: `null` for the
-   * overview. Empty for the own participant, who is wherever the page is.
+   * Where the participant is, in one or more tabs. Empty for the own
+   * participant, who is wherever the page is.
    */
-  stepIds: (string | null)[];
+  locations: PresenceLocation[];
   viewedFingerprints: Set<string>;
 }

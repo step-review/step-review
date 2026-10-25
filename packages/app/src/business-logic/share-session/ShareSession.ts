@@ -5,15 +5,20 @@ import type OwnStateSync from "../participant-state/OwnStateSync.ts";
 import type OwnStateSyncEvent from "../participant-state/OwnStateSyncEvent.ts";
 import type ParticipantStateAction from "../participant-state/ParticipantStateAction.ts";
 import reduceOwnStateSync from "../participant-state/reduceOwnStateSync.ts";
-import hashString from "../review/hashString.ts";
 import encryptJson from "../share-crypto/encryptJson.ts";
 import shareAdditionalData from "../share-crypto/shareAdditionalData.ts";
 import decryptJoinedMessage from "./decryptJoinedMessage.ts";
 import decryptParticipantState from "./decryptParticipantState.ts";
 import decryptPresence from "./decryptPresence.ts";
+import encryptPresence from "./encryptPresence.ts";
+import type PresenceLocation from "./PresenceLocation.ts";
 import type ShareSessionOptions from "./ShareSessionOptions.ts";
 import type ShareSessionSnapshot from "./ShareSessionSnapshot.ts";
 import ShareSocket from "./ShareSocket.ts";
+import Throttle from "./Throttle.ts";
+
+/** The least time between two presences, which change while scrolling. */
+const presenceInterval = 500;
 
 /**
  * A live connection to a share: keeps the own state stored, and the others'
@@ -30,8 +35,12 @@ export default class ShareSession {
   };
   private listeners = new Set<() => void>();
   private shareSocket: ShareSocket;
-  /** `undefined` until set: the step's ID, `null` on the overview. */
-  private presenceStepId: string | null | undefined;
+  /** `undefined` until set. */
+  private presenceLocation: PresenceLocation | undefined;
+  private presenceThrottle = new Throttle(
+    () => void this.sendPresence(),
+    presenceInterval,
+  );
 
   constructor(options: ShareSessionOptions) {
     this.options = options;
@@ -72,12 +81,13 @@ export default class ShareSession {
     void this.sendNextWrite();
   }
 
-  setPresence(stepId: string | null): void {
-    this.presenceStepId = stepId;
-    void this.sendPresence();
+  setPresence(presenceLocation: PresenceLocation): void {
+    this.presenceLocation = presenceLocation;
+    this.presenceThrottle.request();
   }
 
   close(): void {
+    this.presenceThrottle.cancel();
     this.shareSocket.close();
   }
 
@@ -100,7 +110,7 @@ export default class ShareSession {
           otherParticipantStates: joined.otherParticipantStates,
           otherPresences: joined.otherPresences,
         });
-        await this.sendPresence();
+        this.presenceThrottle.request();
         break;
       }
       case "stateWritten":
@@ -203,16 +213,17 @@ export default class ShareSession {
   }
 
   private async sendPresence(): Promise<void> {
-    const stepId = this.presenceStepId;
-    if (!this.shareSocket.isJoined || stepId === undefined) {
+    const { presenceLocation } = this;
+    if (!this.shareSocket.isJoined || !presenceLocation) {
       return;
     }
     const { connectionNumber } = this.shareSocket;
     const { shareKey, shareId, participantId } = this.options;
-    const presence = await encryptJson(
+    const presence = await encryptPresence(
       shareKey,
-      { stepIdHash: stepId === null ? null : hashString(stepId) },
-      shareAdditionalData.presence(shareId, participantId),
+      shareId,
+      participantId,
+      presenceLocation,
     );
     this.shareSocket.send(connectionNumber, { type: "setPresence", presence });
   }
