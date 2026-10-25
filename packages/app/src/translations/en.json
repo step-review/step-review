@@ -14,11 +14,11 @@
   "AttentionIcon.tsx_v5MVrw": {
     "defaultMessage": "Skim"
   },
-  "CollaborationSessionDialog.tsx_3scjcG": {
-    "defaultMessage": "The key to decrypt it is in the link, so anyone with the link can read it (but we can't)."
-  },
   "CollaborationSessionDialog.tsx_A5AvFO": {
     "defaultMessage": "Couldn't start the session"
+  },
+  "CollaborationSessionDialog.tsx_Av840o": {
+    "defaultMessage": "The key to decrypt it is in the link, and is never sent to our servers. Anyone with the link can read it."
   },
   "CollaborationSessionDialog.tsx_J9JF+p": {
     "defaultMessage": "Start session"
