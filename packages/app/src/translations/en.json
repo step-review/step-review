@@ -257,9 +257,6 @@
   "ShareLinkField.tsx_zXYcAr": {
     "defaultMessage": "Copy the link"
   },
-  "ShareParticipantsPanel.tsx_0JXAsk": {
-    "defaultMessage": "Away"
-  },
   "ShareParticipantsPanel.tsx_3H1+9V": {
     "defaultMessage": "Join the review"
   },
@@ -268,15 +265,6 @@
   },
   "ShareParticipantsPanel.tsx_7YjYX+": {
     "defaultMessage": "Change your name"
-  },
-  "ShareParticipantsPanel.tsx_9uOFF3": {
-    "defaultMessage": "Overview"
-  },
-  "ShareParticipantsPanel.tsx_Dn82AL": {
-    "defaultMessage": "Live"
-  },
-  "ShareParticipantsPanel.tsx_LVhU8V": {
-    "defaultMessage": "Step {stepNumber}"
   },
   "ShareParticipantsPanel.tsx_P6PLpi": {
     "defaultMessage": "Join"
@@ -289,12 +277,6 @@
   },
   "ShareParticipantsPanel.tsx_QH2s4N": {
     "defaultMessage": "The review has too many participants to join it. Changes aren't saved."
-  },
-  "ShareParticipantsPanel.tsx_YtxGgO": {
-    "defaultMessage": "Connecting…"
-  },
-  "ShareParticipantsPanel.tsx_ccU6l/": {
-    "defaultMessage": "Online"
   },
   "ShareParticipantsPanel.tsx_jvo0vs": {
     "defaultMessage": "Save"

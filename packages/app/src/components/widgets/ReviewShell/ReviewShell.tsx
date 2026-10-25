@@ -75,17 +75,17 @@ export default function ReviewShell({
                 onNavigate={() => setIsNavigationOpen(false)}
               />
             </div>
-            {isShared && (
-              <div className={styles["participants"]}>
-                <ShareParticipantsPanel />
-              </div>
-            )}
             <div className={styles["recap"]}>
               <ReviewRecap
                 loadedReview={loadedReview}
                 reviewView={reviewView}
               />
             </div>
+            {isShared && (
+              <div className={styles["participants"]}>
+                <ShareParticipantsPanel />
+              </div>
+            )}
           </div>
         </SplitPageLayout.Pane>
         <SplitPageLayout.Content width="full">

@@ -729,12 +729,6 @@
       "value": "Copy the link"
     }
   ],
-  "ShareParticipantsPanel.tsx_0JXAsk": [
-    {
-      "type": 0,
-      "value": "Away"
-    }
-  ],
   "ShareParticipantsPanel.tsx_3H1+9V": [
     {
       "type": 0,
@@ -751,28 +745,6 @@
     {
       "type": 0,
       "value": "Change your name"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_9uOFF3": [
-    {
-      "type": 0,
-      "value": "Overview"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_Dn82AL": [
-    {
-      "type": 0,
-      "value": "Live"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_LVhU8V": [
-    {
-      "type": 0,
-      "value": "Step "
-    },
-    {
-      "type": 1,
-      "value": "stepNumber"
     }
   ],
   "ShareParticipantsPanel.tsx_P6PLpi": [
@@ -797,18 +769,6 @@
     {
       "type": 0,
       "value": "The review has too many participants to join it. Changes aren't saved."
-    }
-  ],
-  "ShareParticipantsPanel.tsx_YtxGgO": [
-    {
-      "type": 0,
-      "value": "Connecting…"
-    }
-  ],
-  "ShareParticipantsPanel.tsx_ccU6l/": [
-    {
-      "type": 0,
-      "value": "Online"
     }
   ],
   "ShareParticipantsPanel.tsx_jvo0vs": [

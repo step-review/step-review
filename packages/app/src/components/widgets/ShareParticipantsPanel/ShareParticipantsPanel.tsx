@@ -1,9 +1,7 @@
-import { PencilIcon } from "@primer/octicons-react";
-import { Banner, IconButton, Link } from "@primer/react";
+import { Banner, Tooltip } from "@primer/react";
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import type ShareParticipantView from "../../../business-logic/share-participants/ShareParticipantView.ts";
@@ -15,13 +13,12 @@ import participantNameStorageKey from "../../../business-logic/share-store/parti
 import readStorage from "../../../business-logic/storage/readStorage.ts";
 import writeStorage from "../../../business-logic/storage/writeStorage.ts";
 import InitialsAvatar from "../../design-system/InitialsAvatar/InitialsAvatar.tsx";
-import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ParticipantNameDialog from "../ParticipantNameDialog/ParticipantNameDialog.tsx";
 import styles from "./ShareParticipantsPanel.module.css";
 
 /**
- * Who is reviewing a shared review, and where they are; asks a new participant
- * for their name.
+ * Who is reviewing a shared review, as a row of avatars, the own one first;
+ * asks a new participant for their name.
  */
 export default function ShareParticipantsPanel() {
   const intl = useIntl();
@@ -42,29 +39,17 @@ export default function ShareParticipantsPanel() {
       className={styles["panel"]}
       aria-label={intl.formatMessage({ defaultMessage: "Participants" })}
     >
-      <div className={styles["heading"]}>
-        <FormattedMessage defaultMessage="Participants" />
-        <span
-          className={styles["status"]}
-          data-status={shareSessionSnapshot.connectionStatus}
-        >
-          {shareSessionSnapshot.connectionStatus === "connected" ? (
-            <FormattedMessage defaultMessage="Live" />
-          ) : shareSessionSnapshot.connectionStatus === "connecting" ? (
-            <FormattedMessage defaultMessage="Connecting…" />
-          ) : null}
-        </span>
-      </div>
       {shareSessionSnapshot.endReason && (
         <EndReasonBanner endReason={shareSessionSnapshot.endReason} />
       )}
       <ul className={styles["list"]}>
         {shareParticipants.map((shareParticipant) => (
-          <ParticipantItem
-            key={shareParticipant.participantId}
-            shareParticipant={shareParticipant}
-            onRename={() => setIsRenaming(true)}
-          />
+          <li key={shareParticipant.participantId}>
+            <ParticipantButton
+              shareParticipant={shareParticipant}
+              onRename={() => setIsRenaming(true)}
+            />
+          </li>
         ))}
       </ul>
       {shareSessionSnapshot.isNewParticipant && (
@@ -97,79 +82,54 @@ export default function ShareParticipantsPanel() {
   );
 }
 
-interface ParticipantItemProps {
+interface ParticipantButtonProps {
   shareParticipant: ShareParticipantView;
   onRename: () => void;
 }
 
-function ParticipantItem({ shareParticipant, onRename }: ParticipantItemProps) {
-  const intl = useIntl();
+/**
+ * A participant's avatar, named on hover. Clicking the own one renames;
+ * another's follows them to their step and file, if they are on one.
+ */
+function ParticipantButton({
+  shareParticipant,
+  onRename,
+}: ParticipantButtonProps) {
   const participantLabel = useParticipantLabel();
-  const { reviewAddress, steps } = useCurrentReviewView();
+  const { reviewAddress } = useCurrentReviewView();
   const label = participantLabel(shareParticipant);
-  // Following goes to the first tab's step, and scrolls to its file.
+  // Follows the first tab, to its step and file.
   const [firstLocation] = shareParticipant.locations;
-  const locationRoute = !firstLocation
-    ? null
-    : firstLocation.stepId === null
-      ? { name: RouteName.Overview, reviewAddress }
-      : { name: RouteName.Step, reviewAddress, stepId: firstLocation.stepId };
-  const locationFragment = firstLocation?.fileId
-    ? `file-${firstLocation.fileId}`
-    : undefined;
-  const locationStepIds = new Set(
-    shareParticipant.locations.map((location) => location.stepId),
-  );
-  const locationText = [...locationStepIds]
-    .map((stepId) => {
-      const step = steps.find((stepView) => stepView.id === stepId);
-      return step
-        ? intl.formatMessage(
-            { defaultMessage: "Step {stepNumber}" },
-            { stepNumber: step.number },
-          )
-        : intl.formatMessage({ defaultMessage: "Overview" });
-    })
-    .join(", ");
+  const follow =
+    firstLocation &&
+    (() =>
+      navigateTo(
+        firstLocation.stepId === null
+          ? { name: RouteName.Overview, reviewAddress }
+          : {
+              name: RouteName.Step,
+              reviewAddress,
+              stepId: firstLocation.stepId,
+            },
+        firstLocation.fileId ? `file-${firstLocation.fileId}` : undefined,
+      ));
+  const onClick = shareParticipant.isSelf ? onRename : follow;
   return (
-    <li className={styles["item"]}>
-      <InitialsAvatar
-        name={shareParticipant.name}
-        label={label}
-        colorIndex={shareParticipant.colorIndex}
-        isDimmed={!shareParticipant.isOnline}
-      />
-      <span className={styles["name"]}>
-        <TruncatedText tooltip={label}>{label}</TruncatedText>
-      </span>
-      <span className={styles["location"]}>
-        {shareParticipant.isSelf ? (
-          <IconButton
-            variant="invisible"
-            size="small"
-            icon={PencilIcon}
-            aria-label={intl.formatMessage({
-              defaultMessage: "Change your name",
-            })}
-            onClick={onRename}
-          />
-        ) : locationRoute ? (
-          <Link
-            href={routeHref(locationRoute, locationFragment)}
-            onClick={(event) => {
-              event.preventDefault();
-              navigateTo(locationRoute, locationFragment);
-            }}
-          >
-            {locationText}
-          </Link>
-        ) : shareParticipant.isOnline ? (
-          <FormattedMessage defaultMessage="Online" />
-        ) : (
-          <FormattedMessage defaultMessage="Away" />
-        )}
-      </span>
-    </li>
+    <Tooltip text={label} type="label" direction="n">
+      <button
+        type="button"
+        className={styles["avatarButton"]}
+        aria-disabled={!onClick || undefined}
+        onClick={onClick}
+      >
+        <InitialsAvatar
+          name={shareParticipant.name}
+          label={label}
+          colorIndex={shareParticipant.colorIndex}
+          isDimmed={!shareParticipant.isOnline}
+        />
+      </button>
+    </Tooltip>
   );
 }
 
