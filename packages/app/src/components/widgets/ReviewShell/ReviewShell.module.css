@@ -33,9 +33,9 @@
 
 /* The participants, the recap and the brand line up with the text of the
    steps. */
+/* Under the recap, without a border: the recap's padding separates them. */
 .participants {
-  padding: var(--base-size-12) var(--base-size-24);
-  border-top: var(--borderWidth-default) solid var(--borderColor-default);
+  padding: 0 var(--base-size-24) var(--base-size-16);
 }
 
 .recap {

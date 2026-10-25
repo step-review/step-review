@@ -1,6 +1,0 @@
-.divider {
-  width: 100%;
-  margin: 0;
-  border: 0;
-  border-top: var(--borderWidth-default) solid var(--borderColor-default);
-}

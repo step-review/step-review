@@ -19,7 +19,6 @@ import StepPager from "../../widgets/StepPager/StepPager.tsx";
 import StepToolbar from "../../widgets/StepToolbar/StepToolbar.tsx";
 import NotFound from "../NotFound/NotFound.tsx";
 import Start from "../Start/Start.tsx";
-import styles from "./Step.module.css";
 
 interface Props {
   stepId: string;
@@ -106,7 +105,6 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
             areExplainersHidden={preferences.explainers === "hidden"}
           />
         ))}
-        <hr className={styles["divider"]} />
         <StepPager reviewView={reviewView} stepIndex={stepIndex} />
       </Stack>
     </ReviewShell>
