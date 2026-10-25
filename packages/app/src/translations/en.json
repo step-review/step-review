@@ -92,6 +92,9 @@
   "LiveCollaborationDialog.tsx_A5AvFO": {
     "defaultMessage": "Couldn't start the session"
   },
+  "LiveCollaborationDialog.tsx_J9JF+p": {
+    "defaultMessage": "Start session"
+  },
   "LiveCollaborationDialog.tsx_JXdbo8": {
     "defaultMessage": "Done"
   },
@@ -101,14 +104,14 @@
   "LiveCollaborationDialog.tsx_MFYa+V": {
     "defaultMessage": "The review couldn't be uploaded. Try again later."
   },
+  "LiveCollaborationDialog.tsx_XCceQP": {
+    "defaultMessage": "Start collaboration session"
+  },
   "LiveCollaborationDialog.tsx_dmhZKW": {
     "defaultMessage": "Leave session"
   },
   "LiveCollaborationDialog.tsx_iIenp6": {
     "defaultMessage": "End session"
-  },
-  "LiveCollaborationDialog.tsx_o9kbW/": {
-    "defaultMessage": "Start live collaboration session"
   },
   "LiveCollaborationDialog.tsx_rcmAMG": {
     "defaultMessage": "The review is uploaded to our servers encrypted."

@@ -215,6 +215,12 @@
       "value": "Couldn't start the session"
     }
   ],
+  "LiveCollaborationDialog.tsx_J9JF+p": [
+    {
+      "type": 0,
+      "value": "Start session"
+    }
+  ],
   "LiveCollaborationDialog.tsx_JXdbo8": [
     {
       "type": 0,
@@ -233,6 +239,12 @@
       "value": "The review couldn't be uploaded. Try again later."
     }
   ],
+  "LiveCollaborationDialog.tsx_XCceQP": [
+    {
+      "type": 0,
+      "value": "Start collaboration session"
+    }
+  ],
   "LiveCollaborationDialog.tsx_dmhZKW": [
     {
       "type": 0,
@@ -243,12 +255,6 @@
     {
       "type": 0,
       "value": "End session"
-    }
-  ],
-  "LiveCollaborationDialog.tsx_o9kbW/": [
-    {
-      "type": 0,
-      "value": "Start live collaboration session"
     }
   ],
   "LiveCollaborationDialog.tsx_rcmAMG": [

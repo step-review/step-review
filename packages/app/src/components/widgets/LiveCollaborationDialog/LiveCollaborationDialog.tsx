@@ -1,11 +1,4 @@
-import {
-  Banner,
-  Button,
-  Dialog,
-  FormControl,
-  Stack,
-  TextInput,
-} from "@primer/react";
+import { Banner, Dialog, FormControl, Stack, TextInput } from "@primer/react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -76,19 +69,31 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
   };
   return (
     <Dialog
-      title={intl.formatMessage({ defaultMessage: "Live collaboration" })}
+      title={intl.formatMessage({
+        defaultMessage: "Start collaboration session",
+      })}
       onClose={() => setIsOpen(false)}
+      footerButtons={[
+        {
+          buttonType: "primary",
+          content: intl.formatMessage({ defaultMessage: "Start session" }),
+          loading: status === "starting",
+          onClick: () => void start(),
+        },
+      ]}
     >
       <Stack gap="normal">
-        <div className={styles["start"]}>
-          <Button
-            variant="primary"
-            loading={status === "starting"}
-            onClick={() => void start()}
-          >
-            <FormattedMessage defaultMessage="Start live collaboration session" />
-          </Button>
-        </div>
+        <ul className={styles["points"]}>
+          <li>
+            <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
+          </li>
+          <li>
+            <FormattedMessage defaultMessage="The key to decrypt it is in the link, so anyone with the link can read it (but we can't)." />
+          </li>
+          <li>
+            <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
+          </li>
+        </ul>
         {status === "failed" && (
           <Banner
             variant="critical"
@@ -101,17 +106,6 @@ function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
             }
           />
         )}
-        <ul className={styles["points"]}>
-          <li>
-            <FormattedMessage defaultMessage="The review is uploaded to our servers encrypted." />
-          </li>
-          <li>
-            <FormattedMessage defaultMessage="The key to decrypt it is in the link, so anyone with the link can read it (but we can't)." />
-          </li>
-          <li>
-            <FormattedMessage defaultMessage="The session is deleted after 30 days without activity." />
-          </li>
-        </ul>
       </Stack>
     </Dialog>
   );
