@@ -10,8 +10,8 @@ import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
+import StepMarker from "../../design-system/StepMarker/StepMarker.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
-import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
@@ -46,6 +46,7 @@ export default function StepNavigation({
   };
   return (
     // One list per step, so that the active step's file tree sits under it.
+    // A line joins the steps' markers into a timeline.
     <nav
       aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
       className={styles["navigation"]}
@@ -57,8 +58,15 @@ export default function StepNavigation({
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
         >
+          <ActionList.LeadingVisual>
+            <StepMarker
+              number={null}
+              progress={null}
+              isActive={activeStepId === null}
+            />
+          </ActionList.LeadingVisual>
           <span className={styles["stepLabel"]}>
-            <FormattedMessage defaultMessage="0. Overview" />
+            <FormattedMessage defaultMessage="Overview" />
             <ParticipantsHere stepId={null} />
           </span>
         </ActionList.LinkItem>
@@ -79,11 +87,18 @@ export default function StepNavigation({
                 aria-current={isActive ? "page" : undefined}
                 onClick={goOnClick(step.id)}
               >
+                <ActionList.LeadingVisual>
+                  <StepMarker
+                    number={step.number}
+                    progress={progress}
+                    isActive={isActive}
+                  />
+                </ActionList.LeadingVisual>
                 {/* In the label, not a trailing visual, so that the
-                    progress bar below spans the whole item. */}
+                    description below spans the whole item. */}
                 <span className={styles["stepLabel"]}>
                   <span>
-                    {step.number}. <StepTitle step={step} />
+                    <StepTitle step={step} />
                   </span>
                   <span className={styles["stepMarks"]}>
                     <ParticipantsHere stepId={step.id} />
@@ -98,22 +113,21 @@ export default function StepNavigation({
                     {...progress}
                     noteKindCounts={countNotes(collectNotes([step]))}
                   />
-                  <span className={styles["progress"]}>
-                    <ViewedProgressBar {...progress} />
-                  </span>
                 </ActionList.Description>
               </ActionList.LinkItem>
             </ActionList>
             {isActive && (
-              <StepFileTree
-                stepView={step}
-                onFileSelect={(fileFragment) => go(step.id, fileFragment)}
-              />
+              <div className={styles["fileTree"]}>
+                <StepFileTree
+                  stepView={step}
+                  onFileSelect={(fileFragment) => go(step.id, fileFragment)}
+                />
+              </div>
             )}
           </div>
         );
       })}
-      {/* Not a step: shows that the list ended. Decorative, so hidden from
+      {/* Not a step: where the timeline ends. Decorative, so hidden from
           assistive technology, for which the list ends anyway. */}
       <p className={styles["end"]} aria-hidden>
         ~

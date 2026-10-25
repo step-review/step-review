@@ -1,7 +1,32 @@
 .navigation {
+  position: relative;
+  /* Keeps the line's and the markers' stacking within the navigation. */
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: var(--base-size-4);
+
+  /* The timeline: from the overview's marker, fading out into the end mark.
+     The markers sit at Primer's item margin and padding, 16px in. */
+  &::before {
+    position: absolute;
+    top: calc(
+      var(--base-size-8) + var(--control-medium-paddingBlock) +
+        var(--base-size-12)
+    );
+    bottom: var(--base-size-32);
+    left: calc(var(--base-size-16) + var(--base-size-12));
+    /* Above the active step's background, below the markers. */
+    z-index: 0;
+    width: var(--borderWidth-default);
+    translate: -50%;
+    background: linear-gradient(
+      to bottom,
+      var(--borderColor-default) calc(100% - var(--base-size-32)),
+      transparent
+    );
+    content: "";
+  }
 }
 
 /* Semibold like Primer's labels with a description, for the overview too. */
@@ -20,20 +45,22 @@
   gap: var(--base-size-4);
 }
 
-/* Adds to the gap Primer leaves under the label, so that the label, the
-   counts and the progress bar don't feel cramped. */
+/* Adds to the gap Primer leaves under the label, so that the label and the
+   counts don't feel cramped. */
 .description {
   margin-top: var(--base-size-4);
 }
 
-.progress {
-  display: block;
-  margin-top: var(--base-size-8);
+/* Clears the timeline's line. */
+.fileTree {
+  padding-inline-start: var(--base-size-40);
 }
 
+/* Centered on the timeline's line. */
 .end {
+  width: calc(2 * (var(--base-size-16) + var(--base-size-12)));
   margin: 0;
-  padding: var(--base-size-8);
+  padding: var(--base-size-8) 0;
   color: var(--fgColor-muted);
   font-size: var(--text-title-size-large);
   line-height: 1;
