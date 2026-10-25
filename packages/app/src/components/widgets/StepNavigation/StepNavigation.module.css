@@ -35,6 +35,7 @@
   margin: 0;
   padding: var(--base-size-8);
   color: var(--fgColor-muted);
-  font: var(--text-body-shorthand-medium);
+  font-size: var(--text-title-size-large);
+  line-height: 1;
   text-align: center;
 }
