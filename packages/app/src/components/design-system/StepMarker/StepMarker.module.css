@@ -9,8 +9,8 @@
   box-sizing: border-box;
   width: var(--base-size-24);
   height: var(--base-size-24);
-  border: calc(var(--borderWidth-thick) + var(--borderWidth-thin)) solid
-    var(--borderColor-default);
+  /* As thin as the timeline's line. */
+  border: var(--borderWidth-default) solid var(--borderColor-default);
   border-radius: 50%;
   /* Covers the timeline's line, which runs behind the markers. */
   background: var(--bgColor-default);
