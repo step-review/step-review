@@ -9,7 +9,7 @@ import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import AppBrand from "../AppBrand/AppBrand.tsx";
-import ReloadDropzone from "../ReloadDropzone/ReloadDropzone.tsx";
+import OpenReviewDropzone from "../OpenReviewDropzone/OpenReviewDropzone.tsx";
 import ReviewRecap from "../ReviewRecap/ReviewRecap.tsx";
 import SessionNotices from "../SessionNotices/SessionNotices.tsx";
 import StepNavigation from "../StepNavigation/StepNavigation.tsx";
@@ -86,7 +86,7 @@ export default function ReviewShell({
           {children}
         </SplitPageLayout.Content>
       </SplitPageLayout>
-      <ReloadDropzone />
+      <OpenReviewDropzone />
     </>
   );
 }

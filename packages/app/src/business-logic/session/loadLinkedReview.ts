@@ -1,6 +1,5 @@
 import type LoadedReview from "../review/LoadedReview.ts";
 import importSessionKey from "../session-crypto/importSessionKey.ts";
-import fetchSessionInfo from "./fetchSessionInfo.ts";
 import fetchSessionReview from "./fetchSessionReview.ts";
 
 /**
@@ -13,9 +12,5 @@ export default async function loadLinkedReview(
   sessionKey: string,
 ): Promise<LoadedReview | null> {
   const cryptoKey = await importSessionKey(sessionKey);
-  const sessionInfo =
-    cryptoKey && (await fetchSessionInfo(apiOrigin, sessionId));
-  return cryptoKey && sessionInfo
-    ? fetchSessionReview(apiOrigin, sessionId, cryptoKey, sessionInfo.versionId)
-    : null;
+  return cryptoKey && fetchSessionReview(apiOrigin, sessionId, cryptoKey);
 }

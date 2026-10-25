@@ -7,10 +7,10 @@ import type ParticipantRecord from "./ParticipantRecord.ts";
 const reviewChunkBytes = 1024 * 1024;
 
 /**
- * The stored data of a session: its owner, the latest version of its encrypted
- * review, and its participants' encrypted states, or, once it ended, only that
- * it did. Tables are only created when the session is, so that looking up an
- * unknown session stores nothing.
+ * The stored data of a session: its owner, its encrypted review, and its
+ * participants' encrypted states, or, once it ended, only that it did. Tables
+ * are only created when the session is, so that looking up an unknown session
+ * stores nothing.
  */
 export default class SessionStore {
   private storage: DurableObjectStorage;
@@ -24,16 +24,12 @@ export default class SessionStore {
   }
 
   /**
-   * Whether the owner secret's hash can save a review: the owner's, or any to
-   * create the session. An ended session isn't created again: its participants
-   * still hold its key, so any of them could otherwise pass off a review as the
-   * owner's.
+   * Whether the session can be created: it doesn't exist, and never did. An
+   * ended session isn't created again: its participants still hold its key, so
+   * any of them could otherwise pass off a review as the owner's.
    */
-  canSaveReview(ownerSecretHash: string): boolean {
-    const session = this.readSession();
-    return session
-      ? session.ownerSecretHash === ownerSecretHash
-      : !this.hasTable("ended");
+  canCreate(): boolean {
+    return !this.exists() && !this.hasTable("ended");
   }
 
   /**
@@ -47,42 +43,35 @@ export default class SessionStore {
   }
 
   /** `null` when the session doesn't exist. */
-  readSession(): { ownerSecretHash: string; versionId: string } | null {
+  readOwnerSecretHash(): string | null {
     if (!this.exists()) {
       return null;
     }
     const [row] = this.storage.sql
-      .exec<{ owner_secret_hash: string; version_id: string }>(
-        "SELECT owner_secret_hash, version_id FROM session",
+      .exec<{ owner_secret_hash: string }>(
+        "SELECT owner_secret_hash FROM session",
       )
       .toArray();
-    return row
-      ? { ownerSecretHash: row.owner_secret_hash, versionId: row.version_id }
-      : null;
+    return row?.owner_secret_hash ?? null;
   }
 
-  /** Replaces the review with a new version, creating the session if needed. */
-  writeReview(
-    ownerSecretHash: string,
-    versionId: string,
-    review: ArrayBuffer,
-  ): void {
+  /** Creates the session with its review, which never changes. */
+  create(ownerSecretHash: string, review: ArrayBuffer): void {
     this.storage.transactionSync(() => {
       this.storage.sql.exec(
-        `CREATE TABLE IF NOT EXISTS session (
+        `CREATE TABLE session (
           singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
-          owner_secret_hash TEXT NOT NULL,
-          version_id TEXT NOT NULL
+          owner_secret_hash TEXT NOT NULL
         )`,
       );
       this.storage.sql.exec(
-        `CREATE TABLE IF NOT EXISTS review_chunks (
+        `CREATE TABLE review_chunks (
           chunk_index INTEGER PRIMARY KEY,
           data BLOB NOT NULL
         )`,
       );
       this.storage.sql.exec(
-        `CREATE TABLE IF NOT EXISTS participants (
+        `CREATE TABLE participants (
           participant_id TEXT PRIMARY KEY,
           secret_hash TEXT NOT NULL,
           revision INTEGER NOT NULL,
@@ -90,13 +79,9 @@ export default class SessionStore {
         )`,
       );
       this.storage.sql.exec(
-        `INSERT INTO session (singleton, owner_secret_hash, version_id)
-        VALUES (1, ?, ?)
-        ON CONFLICT (singleton) DO UPDATE SET version_id = excluded.version_id`,
+        "INSERT INTO session (singleton, owner_secret_hash) VALUES (1, ?)",
         ownerSecretHash,
-        versionId,
       );
-      this.storage.sql.exec("DELETE FROM review_chunks");
       for (
         let offset = 0, chunkIndex = 0;
         offset < review.byteLength;

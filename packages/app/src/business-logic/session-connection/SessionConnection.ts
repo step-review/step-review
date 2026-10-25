@@ -36,7 +36,6 @@ export default class SessionConnection {
     this.snapshot = {
       connectionStatus: "connecting",
       endReason: null,
-      versionId: null,
       ownState: currentOwnState(this.ownStateSync),
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -109,7 +108,6 @@ export default class SessionConnection {
         });
         this.update({
           connectionStatus: "connected",
-          versionId: serverMessage.versionId,
           isNewParticipant:
             joined.ownRevision === 0 &&
             this.ownStateSync.pendingActions.length === 0,
@@ -186,10 +184,7 @@ export default class SessionConnection {
         const otherPresences = new Map(this.snapshot.otherPresences);
         otherPresences.delete(serverMessage.connectionId);
         this.update({ otherPresences });
-        break;
       }
-      case "reviewVersion":
-        this.update({ versionId: serverMessage.versionId });
     }
     await this.sendNextWrite();
   }

@@ -13,6 +13,6 @@ export default interface SessionBookmark {
   participantId: string;
   /** Proves to the server that the participant is this browser. */
   participantSecret: string;
-  /** Set when this browser created the session, to update or delete it. */
+  /** Set when this browser created the session, to end it. */
   ownerSecret: string | null;
 }

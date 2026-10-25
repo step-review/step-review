@@ -8,8 +8,6 @@ export default interface SessionConnectionSnapshot {
   connectionStatus: "connecting" | "connected" | "ended";
   /** Set once the status is `ended`. */
   endReason: SessionEndReason | null;
-  /** The version of the review to show; `null` until the server tells. */
-  versionId: string | null;
   ownState: ParticipantState;
   /** Whether some changes to the own state aren't stored yet. */
   hasPendingChanges: boolean;

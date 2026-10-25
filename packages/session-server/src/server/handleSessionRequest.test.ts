@@ -1,20 +1,14 @@
 import { expect, it } from "vitest";
 import sessionApiPaths from "../protocol/sessionApiPaths.ts";
-import type SessionInfo from "../protocol/SessionInfo.ts";
 import sessionLimits from "../protocol/sessionLimits.ts";
 import putTestReview from "../test-utils/putTestReview.ts";
 import randomTestId from "../test-utils/randomTestId.ts";
 import sessionServerFetch from "../test-utils/sessionServerFetch.ts";
 
-it("returns the version to load after a session is created", async () => {
+it("tells that a session exists once it is created", async () => {
   // Setup SUT
   const sessionId = randomTestId();
-  const response = await putTestReview(
-    sessionId,
-    randomTestId(32),
-    new Uint8Array([1, 2, 3]),
-  );
-  const { versionId } = (await response.json()) as SessionInfo;
+  await putTestReview(sessionId, randomTestId(32), new Uint8Array([1, 2, 3]));
 
   // Exercise
   const sessionResponse = await sessionServerFetch(
@@ -22,69 +16,48 @@ it("returns the version to load after a session is created", async () => {
   );
 
   // Verify
-  expect(await sessionResponse.json()).toEqual({ versionId });
+  expect(sessionResponse.status).toBe(204);
 });
 
-it("returns the uploaded review, larger than a storage row, by its version", async () => {
+it("returns the uploaded review, larger than a storage row", async () => {
   // Setup SUT
   const sessionId = randomTestId();
   const review = new Uint8Array(2_500_000).map((_, index) => index % 251);
-  const response = await putTestReview(sessionId, randomTestId(32), review);
-  const { versionId } = (await response.json()) as SessionInfo;
+  await putTestReview(sessionId, randomTestId(32), review);
 
   // Exercise
-  const versionResponse = await sessionServerFetch(
-    sessionApiPaths.reviewVersion(sessionId, versionId),
+  const reviewResponse = await sessionServerFetch(
+    sessionApiPaths.review(sessionId),
   );
 
   // Verify
   // Compared as buffers: deep equality is slow on millions of elements.
-  const receivedReview = Buffer.from(await versionResponse.arrayBuffer());
+  const receivedReview = Buffer.from(await reviewResponse.arrayBuffer());
   expect(receivedReview.equals(review)).toBe(true);
-  expect(versionResponse.headers.get("Cache-Control")).toContain("immutable");
+  expect(reviewResponse.headers.get("Cache-Control")).toContain("immutable");
 });
 
-it("replaces the review, and its version, when the owner uploads it again", async () => {
+it("refuses to replace the review, even for the owner", async () => {
   // Setup SUT
   const sessionId = randomTestId();
   const ownerSecret = randomTestId(32);
-  const firstResponse = await putTestReview(
-    sessionId,
-    ownerSecret,
-    new Uint8Array([1]),
-  );
-  const firstSessionInfo = (await firstResponse.json()) as SessionInfo;
-
-  // Exercise
-  const secondResponse = await putTestReview(
-    sessionId,
-    ownerSecret,
-    new Uint8Array([2]),
-  );
-
-  // Verify
-  const secondSessionInfo = (await secondResponse.json()) as SessionInfo;
-  expect(secondSessionInfo.versionId).not.toBe(firstSessionInfo.versionId);
-  const oldVersionResponse = await sessionServerFetch(
-    sessionApiPaths.reviewVersion(sessionId, firstSessionInfo.versionId),
-  );
-  expect(oldVersionResponse.status).toBe(404);
-});
-
-it("refuses to replace the review without the owner secret", async () => {
-  // Setup SUT
-  const sessionId = randomTestId();
-  await putTestReview(sessionId, randomTestId(32), new Uint8Array([1]));
+  await putTestReview(sessionId, ownerSecret, new Uint8Array([1]));
 
   // Exercise
   const response = await putTestReview(
     sessionId,
-    randomTestId(32),
+    ownerSecret,
     new Uint8Array([2]),
   );
 
   // Verify
-  expect(response.status).toBe(403);
+  expect(response.status).toBe(409);
+  const reviewResponse = await sessionServerFetch(
+    sessionApiPaths.review(sessionId),
+  );
+  expect(new Uint8Array(await reviewResponse.arrayBuffer())).toEqual(
+    new Uint8Array([1]),
+  );
 });
 
 it("refuses a review larger than the limit", async () => {
@@ -165,7 +138,7 @@ it("refuses to create a deleted session again", async () => {
   );
 
   // Verify
-  expect(response.status).toBe(403);
+  expect(response.status).toBe(409);
 });
 
 it("refuses to delete the session without the owner secret", async () => {

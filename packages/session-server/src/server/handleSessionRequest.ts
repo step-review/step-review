@@ -3,12 +3,12 @@ import readBearerSecret from "./readBearerSecret.ts";
 import readReviewBody from "./readReviewBody.ts";
 
 const sessionPathPattern =
-  /^\/api\/sessions\/([\w-]{22})(?:\/(review|socket)|\/versions\/([\w-]{22}))?$/u;
+  /^\/api\/sessions\/([\w-]{22})(?:\/(review|socket))?$/u;
 
 /**
- * The session API: `/api/sessions/<sessionId>` (`GET` the version to load,
- * `DELETE` by the owner), `…/review` (`PUT` by the owner, creating the session
- * the first time), `…/versions/<versionId>` (`GET`, immutable) and `…/socket`.
+ * The session API: `/api/sessions/<sessionId>` (`GET` whether it exists,
+ * `DELETE` by the owner), `…/review` (`PUT` by the owner, creating the session,
+ * then `GET`, immutable) and `…/socket`.
  */
 export default async function handleSessionRequest(
   request: Request,
@@ -18,23 +18,18 @@ export default async function handleSessionRequest(
   if (!match) {
     return new Response(null, { status: 404 });
   }
-  const [, sessionId, resource, versionId] = match as unknown as [
+  const [, sessionId, resource] = match as unknown as [
     string,
     string,
-    string | undefined,
     string | undefined,
   ];
   const sessionObject = env.SESSIONS.getByName(sessionId);
-  const route = versionId ? "version" : (resource ?? "session");
-  switch (`${request.method} ${route}`) {
-    case "GET session": {
-      const sessionInfo = await sessionObject.readSessionInfo();
-      return sessionInfo
-        ? Response.json(sessionInfo, {
-            headers: { "Cache-Control": "no-store" },
-          })
-        : new Response(null, { status: 404 });
-    }
+  switch (`${request.method} ${resource ?? "session"}`) {
+    case "GET session":
+      return new Response(null, {
+        status: (await sessionObject.exists()) ? 204 : 404,
+        headers: { "Cache-Control": "no-store" },
+      });
     case "DELETE session": {
       const ownerSecret = readBearerSecret(request);
       if (!ownerSecret) {
@@ -60,18 +55,17 @@ export default async function handleSessionRequest(
       if (!review) {
         return new Response(null, { status: 413 });
       }
-      const sessionInfo = await sessionObject.saveReview(ownerSecret, review);
-      return sessionInfo
-        ? Response.json(sessionInfo)
-        : new Response(null, { status: 403 });
+      return new Response(null, {
+        status: (await sessionObject.create(ownerSecret, review)) ? 201 : 409,
+      });
     }
-    case "GET version": {
-      const review = await sessionObject.readReview(versionId!);
+    case "GET review": {
+      const review = await sessionObject.readReview();
       return review
         ? new Response(review, {
             headers: {
               "Content-Type": "application/octet-stream",
-              // Versions never change: a new one gets a new ID.
+              // A session's review never changes, and its ID is never reused.
               "Cache-Control": "private, max-age=31536000, immutable",
             },
           })

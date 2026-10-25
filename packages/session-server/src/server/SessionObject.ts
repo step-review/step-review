@@ -2,7 +2,6 @@ import { DurableObject } from "cloudflare:workers";
 import type ClientMessage from "../protocol/ClientMessage.ts";
 import type ServerMessage from "../protocol/ServerMessage.ts";
 import sessionCloseCodes from "../protocol/sessionCloseCodes.ts";
-import type SessionInfo from "../protocol/SessionInfo.ts";
 import sessionLimits from "../protocol/sessionLimits.ts";
 import type ConnectionAttachment from "./ConnectionAttachment.ts";
 import hashSecret from "./hashSecret.ts";
@@ -22,43 +21,38 @@ import writeAttachment from "./writeAttachment.ts";
 export default class SessionObject extends DurableObject {
   private sessionStore = new SessionStore(this.ctx.storage);
 
-  /** Creates the session, or replaces its review if the owner secret matches. */
-  async saveReview(
-    ownerSecret: string,
-    review: ArrayBuffer,
-  ): Promise<SessionInfo | null> {
+  /**
+   * Creates the session with its review, which never changes. `false` when it
+   * exists, or existed.
+   */
+  async create(ownerSecret: string, review: ArrayBuffer): Promise<boolean> {
     const ownerSecretHash = await hashSecret(ownerSecret);
-    if (!this.sessionStore.canSaveReview(ownerSecretHash)) {
-      return null;
+    if (!this.sessionStore.canCreate()) {
+      return false;
     }
-    const versionId = randomId();
-    this.sessionStore.writeReview(ownerSecretHash, versionId, review);
+    this.sessionStore.create(ownerSecretHash, review);
     await this.extendLifetime();
-    this.broadcast({ type: "reviewVersion", versionId });
-    return { versionId };
+    return true;
   }
 
-  readSessionInfo(): SessionInfo | null {
-    const session = this.sessionStore.readSession();
-    return session && { versionId: session.versionId };
+  exists(): boolean {
+    return this.sessionStore.exists();
   }
 
-  /** Only the latest version is kept: older ones are `null`. */
-  readReview(versionId: string): ArrayBuffer | null {
-    return this.sessionStore.readSession()?.versionId === versionId
-      ? this.sessionStore.readReview()
-      : null;
+  /** `null` when the session doesn't exist. */
+  readReview(): ArrayBuffer | null {
+    return this.sessionStore.exists() ? this.sessionStore.readReview() : null;
   }
 
   async deleteSession(
     ownerSecret: string,
   ): Promise<"deleted" | "forbidden" | "notFound"> {
     const ownerSecretHash = await hashSecret(ownerSecret);
-    const session = this.sessionStore.readSession();
-    if (!session) {
+    const storedOwnerSecretHash = this.sessionStore.readOwnerSecretHash();
+    if (storedOwnerSecretHash === null) {
       return "notFound";
     }
-    if (session.ownerSecretHash !== ownerSecretHash) {
+    if (storedOwnerSecretHash !== ownerSecretHash) {
       return "forbidden";
     }
     await this.removeSession();
@@ -142,8 +136,7 @@ export default class SessionObject extends DurableObject {
     joinMessage: Extract<ClientMessage, { type: "join" }>,
   ): Promise<void> {
     const secretHash = await hashSecret(joinMessage.participantSecret);
-    const session = this.sessionStore.readSession();
-    if (!session) {
+    if (!this.sessionStore.exists()) {
       webSocket.close(sessionCloseCodes.sessionNotFound, "Session not found");
       return;
     }
@@ -173,7 +166,6 @@ export default class SessionObject extends DurableObject {
     send(webSocket, {
       type: "joined",
       connectionId: attachment.connectionId,
-      versionId: session.versionId,
       participantStates: this.sessionStore.readParticipantStates(),
       presences: listPresences(this.ctx.getWebSockets(), webSocket),
     });

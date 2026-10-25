@@ -8,9 +8,8 @@ import saveReview from "../review-store/saveReview.ts";
 import loadReview from "./loadReview.ts";
 
 /**
- * Reads a review file and keeps it in the browser. Stays on the current page of
- * the same review (e.g. after the agent reviewed the PR again), otherwise opens
- * the review's overview.
+ * Reads a review file and keeps it in the browser. Stays on the current page if
+ * it's the review shown, otherwise opens the review's overview.
  */
 export default function useOpenReviewFile() {
   const [problems, setProblems] = useState<ReviewFileProblem[]>([]);

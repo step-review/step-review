@@ -7,8 +7,6 @@ import type SessionConnectionSnapshot from "./SessionConnectionSnapshot.ts";
 
 interface SessionConnectionContextValue {
   sessionBookmark: SessionBookmark;
-  /** The imported key of the session, e.g. to upload a new version. */
-  sessionKey: CryptoKey;
   sessionConnection: SessionConnection;
   sessionConnectionSnapshot: SessionConnectionSnapshot;
 }

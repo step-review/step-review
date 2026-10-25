@@ -17,10 +17,12 @@ a time, with the notes beside the diff, and lets you mark files as viewed.
 2. Give the prompt to your coding agent. Following
    [SKILL.md](packages/app/public/SKILL.md) (published at
    `step-review.dev/SKILL.md`), it writes a single review file, such as
-   `pr-123.step-review`, in your repository. The file is never committed.
+   `pr-123-20261025-143012.step-review`, in your repository. The file is never
+   committed.
 3. Drop the file into Step Review. Everything stays in your browser.
-4. When the PR changes, ask the agent to review it again. Files whose changes
-   are the same stay marked as viewed.
+
+Every review stands on its own: reviewing a PR again writes a new file, which
+opens as a new review.
 
 ## Collaboration sessions
 

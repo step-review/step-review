@@ -128,6 +128,9 @@
   "NoteCounts.tsx_cr9pr9": {
     "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
   },
+  "OpenReviewDropzone.tsx_p5lOej": {
+    "defaultMessage": "Drop the review file to open it"
+  },
   "OverviewHeader.tsx_3PcNZ7": {
     "defaultMessage": "Copy \"{branchName}\""
   },
@@ -163,15 +166,6 @@
   },
   "PromptGenerator.tsx_k9O196": {
     "defaultMessage": "Prompt for your coding agent"
-  },
-  "ReloadDropzone.tsx_/YcyUn": {
-    "defaultMessage": "Drop the review file to reload it"
-  },
-  "ReloadDropzone.tsx_/m0mpG": {
-    "defaultMessage": "The review couldn't be updated for the session. Try again later."
-  },
-  "ReloadDropzone.tsx_Eu0rWa": {
-    "defaultMessage": "Drop the review file to update it for the session"
   },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
@@ -422,9 +416,6 @@
   "StoredReviewList.tsx_OtMych": {
     "defaultMessage": "Delete review"
   },
-  "StoredReviewList.tsx_Qdb174": {
-    "defaultMessage": "It will be removed from this browser, but stay available to the others until it expires: you won't be able to update the review or end the session. To delete it for everyone, end the session from the review instead."
-  },
   "StoredReviewList.tsx_YBUNQ3": {
     "defaultMessage": "Remove the session?"
   },
@@ -445,6 +436,9 @@
   },
   "StoredReviewList.tsx_qbbNEM": {
     "defaultMessage": "It will be removed from this browser. You can join it again with its link, as a new participant."
+  },
+  "StoredReviewList.tsx_u0ABgm": {
+    "defaultMessage": "It will be removed from this browser, but stay available to the others until it expires: you won't be able to end the session. To delete it for everyone, end the session from the review instead."
   },
   "ViewedAndNoteCounts.tsx_zz6max": {
     "defaultMessage": "{viewedCount}/{totalCount} viewed"

@@ -191,7 +191,6 @@ function SessionConnectionValue({
     window.location.origin,
     sessionBookmark.sessionId,
     sessionKey,
-    sessionConnectionSnapshot.versionId,
   );
   const title = loadedReview?.reviewFile.data.target.title;
   useEffect(() => {
@@ -203,13 +202,8 @@ function SessionConnectionValue({
     }
   }, [sessionBookmark.sessionId, title]);
   const value = useMemo(
-    () => ({
-      sessionBookmark,
-      sessionKey,
-      sessionConnection,
-      sessionConnectionSnapshot,
-    }),
-    [sessionBookmark, sessionKey, sessionConnection, sessionConnectionSnapshot],
+    () => ({ sessionBookmark, sessionConnection, sessionConnectionSnapshot }),
+    [sessionBookmark, sessionConnection, sessionConnectionSnapshot],
   );
   return (
     <SessionConnectionProvider value={value}>

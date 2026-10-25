@@ -15,7 +15,6 @@ it("places another participant on the step their presence names", () => {
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -54,7 +53,6 @@ it("lists the own participant first, then those online, then the others by name"
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Zoe", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -93,7 +91,6 @@ it("keeps a participant online on a step that isn't in the review", () => {
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -142,7 +139,6 @@ it("places another participant on the file their presence names", () => {
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -184,7 +180,6 @@ it("keeps another participant on their step when their file isn't in the review"
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -228,7 +223,6 @@ it("doesn't place another participant on a file of another step than theirs", ()
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -270,7 +264,6 @@ it("shows once a place another participant has open in two tabs", () => {
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,
@@ -317,7 +310,6 @@ it("lists the files each participant viewed since they were last marked not view
     {
       connectionStatus: "connected",
       endReason: null,
-      versionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
       ownState: { name: "Ada", viewedMarks: [] },
       hasPendingChanges: false,
       isNewParticipant: false,

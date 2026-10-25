@@ -1,22 +1,17 @@
-import {
-  sessionApiPaths,
-  sessionInfoSchema,
-  type SessionInfo,
-} from "@step-review/session-server";
-import * as v from "valibot";
+import { sessionApiPaths } from "@step-review/session-server";
 import encryptReviewFile from "./encryptReviewFile.ts";
 import SessionApiError from "./SessionApiError.ts";
 import type SessionReviewFile from "./SessionReviewFile.ts";
 
 /**
- * Encrypts and uploads a review file, as a session's new version. The first
- * upload creates the session, owned by whoever holds the owner secret.
+ * Creates a session on the server with its encrypted review, which never
+ * changes, owned by whoever holds the owner secret.
  */
-export default async function uploadReviewFile(
+export default async function createSession(
   apiOrigin: string,
   session: { sessionId: string; sessionKey: CryptoKey; ownerSecret: string },
   sessionReviewFile: SessionReviewFile,
-): Promise<SessionInfo> {
+): Promise<void> {
   const response = await fetch(
     new URL(sessionApiPaths.review(session.sessionId), apiOrigin),
     {
@@ -32,5 +27,4 @@ export default async function uploadReviewFile(
   if (!response.ok) {
     throw new SessionApiError(response.status);
   }
-  return v.parse(sessionInfoSchema, await response.json());
 }

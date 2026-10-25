@@ -5,7 +5,7 @@ import importSessionKey from "../session-crypto/importSessionKey.ts";
 import randomBase64Url from "../session-crypto/randomBase64Url.ts";
 import saveSessionBookmark from "../session-store/saveSessionBookmark.ts";
 import type SessionBookmark from "../session-store/SessionBookmark.ts";
-import uploadReviewFile from "./uploadReviewFile.ts";
+import createSession from "./createSession.ts";
 
 /** How long to wait for the owner's state to be stored, in milliseconds. */
 const storeStateTimeout = 10_000;
@@ -30,7 +30,7 @@ export default async function startSession(
     ownerSecret: randomBase64Url(32),
   };
   const sessionKey = (await importSessionKey(sessionBookmark.sessionKey))!;
-  await uploadReviewFile(
+  await createSession(
     apiOrigin,
     {
       sessionId: sessionBookmark.sessionId,
@@ -40,7 +40,7 @@ export default async function startSession(
     { fileName: loadedReview.fileName, text: loadedReview.text },
   );
   // Saved before storing the state, so that closing the page meanwhile doesn't
-  // lose the owner secret, the only way to update or end the session.
+  // lose the owner secret, the only way to end the session.
   await saveSessionBookmark(sessionBookmark);
   const sessionConnection = new SessionConnection({
     apiOrigin,

@@ -21,7 +21,6 @@ export default v.variant("type", [
   v.object({
     type: v.literal("joined"),
     connectionId: idSchema,
-    versionId: idSchema,
     /** Every participant's state, the joining one's included. */
     participantStates: v.array(v.object(participantStateEntries)),
     /** The presences of the other connections. */
@@ -37,5 +36,4 @@ export default v.variant("type", [
   v.object({ type: v.literal("participantState"), ...participantStateEntries }),
   v.object({ type: v.literal("presence"), ...presenceEntries }),
   v.object({ type: v.literal("presenceEnded"), connectionId: idSchema }),
-  v.object({ type: v.literal("reviewVersion"), versionId: idSchema }),
 ]);

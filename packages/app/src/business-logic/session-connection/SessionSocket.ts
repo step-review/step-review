@@ -1,5 +1,5 @@
 import type { ClientMessage, ServerMessage } from "@step-review/session-server";
-import fetchSessionInfo from "../session/fetchSessionInfo.ts";
+import fetchSessionExists from "../session/fetchSessionExists.ts";
 import parseServerMessage from "./parseServerMessage.ts";
 import type SessionConnectionOptions from "./SessionConnectionOptions.ts";
 import type SessionEndReason from "./SessionEndReason.ts";
@@ -113,11 +113,11 @@ export default class SessionSocket {
     }
     // A socket to a missing session fails to open, with no close code to tell.
     if (!wasJoined) {
-      const sessionInfo = await fetchSessionInfo(
+      const sessionExists = await fetchSessionExists(
         this.options.apiOrigin,
         this.options.sessionId,
       ).catch(() => undefined);
-      if (sessionInfo === null) {
+      if (sessionExists === false) {
         this.handlers.onEnded("notFound");
         return;
       }

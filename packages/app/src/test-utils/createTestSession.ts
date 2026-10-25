@@ -1,7 +1,7 @@
 import { inject } from "vitest";
 import importSessionKey from "../business-logic/session-crypto/importSessionKey.ts";
 import randomBase64Url from "../business-logic/session-crypto/randomBase64Url.ts";
-import uploadReviewFile from "../business-logic/session/uploadReviewFile.ts";
+import createSession from "../business-logic/session/createSession.ts";
 
 /**
  * Creates a session on the test server, with a placeholder review: the session
@@ -17,7 +17,7 @@ export default async function createTestSession(): Promise<{
   const sessionId = randomBase64Url(16);
   const sessionKey = (await importSessionKey(randomBase64Url(32)))!;
   const ownerSecret = randomBase64Url(32);
-  await uploadReviewFile(
+  await createSession(
     apiOrigin,
     { sessionId, sessionKey, ownerSecret },
     { fileName: "test.step-review", text: "" },

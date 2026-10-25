@@ -18,13 +18,10 @@ has.
 Under `/api/sessions/<sessionId>`, where IDs are random and created by the
 browser:
 
-- `GET` returns the version of the review to load; `DELETE`, by the owner,
-  deletes the session.
-- `…/review`: `PUT`, by the owner, uploads a new version of the review, and
-  creates the session the first time. The owner proves themselves with the
-  secret sent on creation, in `Authorization: Bearer`.
-- `…/versions/<versionId>`: `GET` returns a version, cacheable forever. Only the
-  latest is kept.
+- `GET` tells whether the session exists; `DELETE`, by the owner, deletes it.
+- `…/review`: `PUT` creates the session with its review, which never changes
+  afterwards. Its `Authorization: Bearer` secret becomes the owner secret, which
+  deleting the session takes. `GET` returns the review, cacheable forever.
 - `…/socket`: a WebSocket. Browsers join as a participant, with a secret that
   their first join registers, then get every participant's state and the
   presences, and the changes as they happen.

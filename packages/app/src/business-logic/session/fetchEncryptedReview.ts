@@ -2,16 +2,15 @@ import { sessionApiPaths } from "@step-review/session-server";
 import SessionApiError from "./SessionApiError.ts";
 
 /**
- * The encrypted review of a version. Versions never change, so the browser
- * caches them.
+ * The encrypted review of a session. It never changes, so the browser caches
+ * it.
  */
-export default async function fetchReviewVersion(
+export default async function fetchEncryptedReview(
   apiOrigin: string,
   sessionId: string,
-  versionId: string,
 ): Promise<Uint8Array<ArrayBuffer>> {
   const response = await fetch(
-    new URL(sessionApiPaths.reviewVersion(sessionId, versionId), apiOrigin),
+    new URL(sessionApiPaths.review(sessionId), apiOrigin),
   );
   if (!response.ok) {
     throw new SessionApiError(response.status);

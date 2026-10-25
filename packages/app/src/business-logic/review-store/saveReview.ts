@@ -2,8 +2,8 @@ import type LoadedReview from "../review/LoadedReview.ts";
 import reviewDatabase from "./reviewDatabase.ts";
 
 /**
- * Keeps a review file in the browser, replacing the one with the same ID. The
- * review state is kept, so files whose changes are the same stay viewed.
+ * Keeps a review file in the browser. Opening the same file again keeps its
+ * review state.
  */
 export default async function saveReview(
   loadedReview: LoadedReview,

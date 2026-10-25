@@ -1,21 +1,15 @@
 import { expect, it } from "vitest";
 import sessionApiPaths from "../protocol/sessionApiPaths.ts";
 import sessionCloseCodes from "../protocol/sessionCloseCodes.ts";
-import type SessionInfo from "../protocol/SessionInfo.ts";
 import putTestReview from "../test-utils/putTestReview.ts";
 import randomTestId from "../test-utils/randomTestId.ts";
 import sessionServerFetch from "../test-utils/sessionServerFetch.ts";
 import TestSessionSocket from "../test-utils/TestSessionSocket.ts";
 
-it("sends the review version and the written states on joining", async () => {
+it("sends the written states on joining", async () => {
   // Setup SUT
   const sessionId = randomTestId();
-  const response = await putTestReview(
-    sessionId,
-    randomTestId(32),
-    new Uint8Array([1]),
-  );
-  const { versionId } = (await response.json()) as SessionInfo;
+  await putTestReview(sessionId, randomTestId(32), new Uint8Array([1]));
   const writingSocket = await TestSessionSocket.open(sessionId);
   const writingParticipantId = randomTestId();
   writingSocket.send({
@@ -38,7 +32,6 @@ it("sends the review version and the written states on joining", async () => {
   // Verify
   expect(await joiningSocket.nextMessage()).toMatchObject({
     type: "joined",
-    versionId,
     participantStates: [
       { participantId: writingParticipantId, revision: 1, state: "alice-v1" },
     ],
@@ -182,34 +175,6 @@ it("sends the presences of the others on joining", async () => {
       presence: "overview",
     },
   ]);
-});
-
-it("tells the joined sockets when the owner uploads a new version", async () => {
-  // Setup SUT
-  const sessionId = randomTestId();
-  const ownerSecret = randomTestId(32);
-  await putTestReview(sessionId, ownerSecret, new Uint8Array([1]));
-  const sessionSocket = await TestSessionSocket.open(sessionId);
-  sessionSocket.send({
-    type: "join",
-    participantId: randomTestId(),
-    participantSecret: randomTestId(32),
-  });
-  await sessionSocket.nextMessage();
-
-  // Exercise
-  const response = await putTestReview(
-    sessionId,
-    ownerSecret,
-    new Uint8Array([2]),
-  );
-
-  // Verify
-  const { versionId } = (await response.json()) as SessionInfo;
-  expect(await sessionSocket.nextMessage()).toEqual({
-    type: "reviewVersion",
-    versionId,
-  });
 });
 
 it("closes the socket of a participant joining with the wrong secret", async () => {

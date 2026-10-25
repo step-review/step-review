@@ -104,7 +104,7 @@ function SessionReviewItem({ sessionBookmark }: SessionReviewItemProps) {
             })
           : intl.formatMessage({
               defaultMessage:
-                "It will be removed from this browser, but stay available to the others until it expires: you won't be able to update the review or end the session. To delete it for everyone, end the session from the review instead.",
+                "It will be removed from this browser, but stay available to the others until it expires: you won't be able to end the session. To delete it for everyone, end the session from the review instead.",
             }),
       confirmButtonContent: intl.formatMessage({ defaultMessage: "Remove" }),
       confirmButtonType: "danger",
