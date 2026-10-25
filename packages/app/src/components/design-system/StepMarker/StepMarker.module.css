@@ -6,8 +6,11 @@
   flex: none;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   width: var(--base-size-24);
   height: var(--base-size-24);
+  border: calc(var(--borderWidth-thick) + var(--borderWidth-thin)) solid
+    var(--borderColor-default);
   border-radius: 50%;
   /* Covers the timeline's line, which runs behind the markers. */
   background: var(--bgColor-default);
@@ -16,42 +19,7 @@
   font-weight: var(--base-text-weight-semibold);
 
   &[data-active] {
+    border-color: var(--borderColor-emphasis);
     color: var(--fgColor-default);
   }
-
-  &[data-complete] {
-    background: var(--bgColor-success-emphasis);
-    color: var(--fgColor-onEmphasis);
-  }
-}
-
-.ring {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-}
-
-.track,
-.arc {
-  fill: none;
-  stroke-width: 3;
-}
-
-.track {
-  stroke: var(--borderColor-default);
-
-  .marker[data-active] & {
-    stroke: var(--borderColor-emphasis);
-  }
-
-  .marker[data-complete] & {
-    stroke: var(--bgColor-success-emphasis);
-  }
-}
-
-.arc {
-  stroke: var(--bgColor-accent-emphasis);
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: center;
 }

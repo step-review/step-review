@@ -12,6 +12,7 @@ import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
 import StepMarker from "../../design-system/StepMarker/StepMarker.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
+import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
@@ -54,15 +55,12 @@ export default function StepNavigation({
       <ActionList>
         <ActionList.LinkItem
           href={routeHref({ name: RouteName.Overview, reviewAddress })}
-          active={activeStepId === null}
+          className={activeStepId === null ? styles["current"] : undefined}
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
         >
-          {/* Where the timeline starts. Decorative, like its end. */}
           <ActionList.LeadingVisual>
-            <span className={styles["start"]} aria-hidden>
-              <FormattedMessage defaultMessage="Start" />
-            </span>
+            <StepMarker number={0} isActive={activeStepId === null} />
           </ActionList.LeadingVisual>
           <span className={styles["stepLabel"]}>
             <FormattedMessage defaultMessage="Overview" />
@@ -82,19 +80,15 @@ export default function StepNavigation({
                   reviewAddress,
                   stepId: step.id,
                 })}
-                active={isActive}
+                className={isActive ? styles["current"] : undefined}
                 aria-current={isActive ? "page" : undefined}
                 onClick={goOnClick(step.id)}
               >
                 <ActionList.LeadingVisual>
-                  <StepMarker
-                    number={step.number}
-                    progress={progress}
-                    isActive={isActive}
-                  />
+                  <StepMarker number={step.number} isActive={isActive} />
                 </ActionList.LeadingVisual>
                 {/* In the label, not a trailing visual, so that the
-                    description below spans the whole item. */}
+                    progress bar below spans the whole item. */}
                 <span className={styles["stepLabel"]}>
                   <span>
                     <StepTitle step={step} />
@@ -112,6 +106,9 @@ export default function StepNavigation({
                     {...progress}
                     noteKindCounts={countNotes(collectNotes([step]))}
                   />
+                  <span className={styles["progress"]}>
+                    <ViewedProgressBar {...progress} />
+                  </span>
                 </ActionList.Description>
               </ActionList.LinkItem>
             </ActionList>
