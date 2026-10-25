@@ -6,25 +6,21 @@
   flex-direction: column;
   gap: var(--base-size-4);
 
-  /* The timeline: from the overview's marker, fading out into "End".
-     The markers sit at Primer's item margin and padding, 16px in. */
+  /* The timeline, from "Start" to "End". The markers sit at Primer's item
+     margin and padding, 16px in. */
   &::before {
     position: absolute;
     top: calc(
       var(--base-size-8) + var(--control-medium-paddingBlock) +
-        var(--base-size-12)
+        var(--base-size-12) + var(--base-size-8)
     );
-    bottom: var(--base-size-32);
+    bottom: calc(var(--base-size-24) + var(--base-size-2));
     left: calc(var(--base-size-16) + var(--base-size-12));
     /* Above the active step's background, below the markers. */
     z-index: 0;
     width: var(--borderWidth-default);
     translate: -50%;
-    background: linear-gradient(
-      to bottom,
-      var(--borderColor-default) calc(100% - var(--base-size-32)),
-      transparent
-    );
+    background: var(--borderColor-default);
     content: "";
   }
 }
@@ -54,6 +50,16 @@
 /* Clears the timeline's line. */
 .fileTree {
   padding-inline-start: var(--base-size-40);
+}
+
+/* Centered on the timeline's line, overflowing the markers' width. */
+.start {
+  display: flex;
+  justify-content: center;
+  width: var(--base-size-24);
+  color: var(--fgColor-muted);
+  font: var(--text-caption-shorthand);
+  white-space: nowrap;
 }
 
 /* Centered on the timeline's line. */

@@ -58,12 +58,11 @@ export default function StepNavigation({
           aria-current={activeStepId === null ? "page" : undefined}
           onClick={goOnClick(null)}
         >
+          {/* Where the timeline starts. Decorative, like its end. */}
           <ActionList.LeadingVisual>
-            <StepMarker
-              number={0}
-              progress={null}
-              isActive={activeStepId === null}
-            />
+            <span className={styles["start"]} aria-hidden>
+              <FormattedMessage defaultMessage="Start" />
+            </span>
           </ActionList.LeadingVisual>
           <span className={styles["stepLabel"]}>
             <FormattedMessage defaultMessage="Overview" />
