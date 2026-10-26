@@ -9,12 +9,14 @@ import FullScreenDropzone from "../../design-system/FullScreenDropzone/FullScree
  */
 export default function OpenReviewDropzone() {
   const intl = useIntl();
-  const { openReviewFile, problems } = useOpenReviewFile();
+  const { openReviewFile, invalidReviewFile } = useOpenReviewFile();
   useEffect(() => {
-    if (problems.length > 0) {
-      window.alert(problems.map((problem) => problem.message).join("\n"));
+    if (invalidReviewFile) {
+      window.alert(
+        invalidReviewFile.problems.map((problem) => problem.message).join("\n"),
+      );
     }
-  }, [problems]);
+  }, [invalidReviewFile]);
   return (
     <FullScreenDropzone
       label={intl.formatMessage({

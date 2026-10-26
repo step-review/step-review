@@ -2,6 +2,7 @@ import { UploadIcon } from "@primer/octicons-react";
 import { Banner, Button, Stack } from "@primer/react";
 import { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import createFixPrompt from "../../../business-logic/prompts/createFixPrompt.ts";
 import useOpenReviewFile from "../../../business-logic/review/useOpenReviewFile.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import FullScreenDropzone from "../../design-system/FullScreenDropzone/FullScreenDropzone.tsx";
@@ -14,15 +15,8 @@ import styles from "./ReviewDropzone.module.css";
  */
 export default function ReviewDropzone() {
   const intl = useIntl();
-  const { openReviewFile, problems } = useOpenReviewFile();
+  const { openReviewFile, invalidReviewFile } = useOpenReviewFile();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const problemsText = problems
-    .map((problem) =>
-      problem.location
-        ? `${problem.location}: ${problem.message}`
-        : problem.message,
-    )
-    .join("\n");
   return (
     <Stack gap="condensed">
       <div className={styles["actions"]}>
@@ -51,20 +45,28 @@ export default function ReviewDropzone() {
           void openReviewFile(file);
         }}
       />
-      {problems.length > 0 && (
+      {invalidReviewFile && (
         <Banner variant="critical">
           <Banner.Title className={styles["problemsTitle"]}>
             <FormattedMessage defaultMessage="The file is not a valid review" />
             <CopyIconButton
-              value={problemsText}
+              value={createFixPrompt(
+                window.location.origin,
+                invalidReviewFile.fileName,
+                invalidReviewFile.problems.map((problem) =>
+                  problem.location
+                    ? `${problem.location}: ${problem.message}`
+                    : problem.message,
+                ),
+              )}
               label={intl.formatMessage({
-                defaultMessage: "Copy the problems",
+                defaultMessage: "Copy for your agent",
               })}
             />
           </Banner.Title>
           <Banner.Description>
             <ul className={styles["problems"]}>
-              {problems.map((problem, index) => (
+              {invalidReviewFile.problems.map((problem, index) => (
                 <li key={index}>
                   {problem.location && (
                     <span className={styles["location"]}>

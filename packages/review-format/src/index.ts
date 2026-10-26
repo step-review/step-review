@@ -1,4 +1,5 @@
 export { default as parseReviewFile } from "./file/parseReviewFile.ts";
+export { default as createReviewFileText } from "./file/createReviewFileText.ts";
 export { default as sectionMarkerPrefix } from "./file/sectionMarkerPrefix.ts";
 export type { default as ParseReviewFileResult } from "./file/ParseReviewFileResult.ts";
 export type { default as ReviewFile } from "./file/ReviewFile.ts";

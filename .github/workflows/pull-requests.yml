@@ -37,6 +37,8 @@ jobs:
         run: pnpm check-types
       - name: Test
         run: pnpm test
+      - name: Build CLI
+        run: pnpm --filter @step-review/cli build
 
   build-deploy:
     outputs:

@@ -21,11 +21,13 @@ Don't post anything on the PR, and don't commit the review file.
 3. Split the changes into steps (see "Steps").
 4. Write notes (see "Notes").
 5. Write the review's JSON to a temporary file outside the repository, then
-   build the review file with the command in "Writing the file".
+   build the review file with the CLI (see "Writing the file"). Fix every
+   problem it reports and build again, until it reports none.
 6. Tell the user the file's path.
 
 Every review is a new file. Never overwrite or edit an earlier review file, even
-for the same PR: the user may still be going through it.
+for the same PR: the user may still be going through it. Building the file you
+are writing again is fine.
 
 ## Base and head
 
@@ -98,25 +100,43 @@ Markdown. To link to another part of the review, use `[text](note:n12)`,
 
 ## Writing the file
 
-Name the file after the PR or the branch, followed by the UTC time it is
-written, so that every review gets its own name
+Name the file after the PR or the branch, followed by the UTC time it is first
+built (`date -u +%Y%m%d-%H%M%S`), so that every review gets its own name
 (`pr-123-20261025-143012.step-review`), at the root of the repository, unless
 the user asked for another name. Write the JSON of the review to a temporary
-file outside the repository, then run (with the actual commits and paths):
+file outside the repository, then build the review file with the Step Review
+CLI, from the repository:
 
 ```sh
-file="pr-123-$(date -u +%Y%m%d-%H%M%S).step-review"
-{
+npx @step-review/cli@latest build /tmp/step-review.json \
+  --output pr-123-20261025-143012.step-review
+```
+
+Run it with the package runner the user prefers, otherwise the one the
+repository uses (`pnpm dlx`, `yarn dlx`, `bunx`), otherwise `npx`.
+
+The CLI appends the diff between the JSON's base and head commits, and reports
+the problems the app would show: invalid JSON, fields that don't match the
+schema, notes and ranges that don't match the diff, changed files in no step.
+Fix them in the JSON and build again with the same file name, until it reports
+none. `check <file>` reports the problems of an existing review file.
+
+Only if the CLI can't run (e.g. without network access), build the file by hand,
+and tell the user that it wasn't checked:
+
+```sh
+jq empty /tmp/step-review.json && {
   echo '#step-review:review'
   cat /tmp/step-review.json
   echo '#step-review:diff'
   git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
     --src-prefix=a/ --dst-prefix=b/ <base> <head>
-} > "$file"
+} > pr-123-20261025-143012.step-review
 ```
 
 Use exactly these `git diff` options: the app parses the output, and notes rely
-on the 20 lines of context.
+on the 20 lines of context. `jq empty` fails on invalid JSON; without `jq`, use
+`python3 -m json.tool /tmp/step-review.json > /dev/null`.
 
 ## JSON format
 

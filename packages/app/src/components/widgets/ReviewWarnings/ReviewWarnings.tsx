@@ -1,5 +1,6 @@
 import { Banner } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import createFixPrompt from "../../../business-logic/prompts/createFixPrompt.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
 import Markdown from "../../design-system/Markdown/Markdown.tsx";
@@ -16,10 +17,11 @@ export default function ReviewWarnings({ loadedReview }: Props) {
   if (warnings.length === 0) {
     return null;
   }
-  const warningsText = [
-    `The review in \`${loadedReview.fileName}\` has these problems. Fix them:`,
-    ...warnings.map((warning) => `- ${warning}`),
-  ].join("\n");
+  const fixPrompt = createFixPrompt(
+    window.location.origin,
+    loadedReview.fileName,
+    warnings,
+  );
   return (
     <Banner variant="warning">
       <Banner.Title className={styles["title"]}>
@@ -28,7 +30,7 @@ export default function ReviewWarnings({ loadedReview }: Props) {
           values={{ warningCount: warnings.length }}
         />
         <CopyIconButton
-          value={warningsText}
+          value={fixPrompt}
           label={intl.formatMessage({
             defaultMessage: "Copy for your agent",
           })}
