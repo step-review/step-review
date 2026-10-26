@@ -16,15 +16,14 @@ export default function loadReview(
   if (!result.success) {
     return result;
   }
-  const { target } = result.reviewFile.data;
-  // Reviews written again after the PR changed share the key, so files whose
-  // changes are the same stay viewed.
-  const reviewId = hashString(target.url ?? target.title);
   return {
     success: true,
     loadedReview: {
-      reviewId,
+      // Every review file is a review of its own, even of the same PR: opening
+      // the same file again opens the same review.
+      reviewId: hashString(text),
       fileName,
+      text,
       reviewFile: result.reviewFile,
       warnings: checkReviewFile(result.reviewFile),
     },

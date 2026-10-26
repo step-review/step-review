@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import parseRoute from "./parseRoute.ts";
+import parseLocation from "./parseLocation.ts";
 import routeHref from "./routeHref.ts";
 import RouteName from "./RouteName.ts";
 
@@ -7,7 +7,7 @@ it("builds a step URL that parses back to the same route", () => {
   // Setup SUT
   const route = {
     name: RouteName.Step,
-    reviewId: "3f9a0c21b7e4d2",
+    reviewAddress: { kind: "local", reviewId: "3f9a0c21b7e4d2" },
     stepId: "ids/v2",
   } as const;
 
@@ -15,5 +15,55 @@ it("builds a step URL that parses back to the same route", () => {
   const href = routeHref(route);
 
   // Verify
-  expect(parseRoute(href)).toEqual(route);
+  const url = new URL(href, "https://step-review.dev");
+  expect(parseLocation(url.pathname, url.hash).route).toEqual(route);
+});
+
+it("builds a session step URL that parses back to the same route and fragment", () => {
+  // Setup SUT
+  const route = {
+    name: RouteName.Step,
+    reviewAddress: {
+      kind: "session",
+      sessionId: "Qx2mT9vK4pLw8nR1sYb7Ze",
+      sessionKey: "Abc-_123",
+    },
+    stepId: "ids/v2",
+  } as const;
+
+  // Exercise
+  const href = routeHref(route, "note-retry limit");
+
+  // Verify
+  const url = new URL(href, "https://step-review.dev");
+  expect(parseLocation(url.pathname, url.hash)).toEqual({
+    route,
+    fragment: "note-retry limit",
+  });
+});
+
+it("keeps a local review's fragment as the element ID alone", () => {
+  // Exercise
+  const href = routeHref(
+    {
+      name: RouteName.Overview,
+      reviewAddress: { kind: "local", reviewId: "3f9a0c21b7e4d2" },
+    },
+    "note-retry",
+  );
+
+  // Verify
+  expect(href).toBe("/r/3f9a0c21b7e4d2/overview#note-retry");
+});
+
+it("builds the privacy page URL that parses back to the same route", () => {
+  // Setup SUT
+  const route = { name: RouteName.Privacy } as const;
+
+  // Exercise
+  const href = routeHref(route);
+
+  // Verify
+  const url = new URL(href, "https://step-review.dev");
+  expect(parseLocation(url.pathname, url.hash).route).toEqual(route);
 });

@@ -14,6 +14,36 @@
   "AttentionIcon.tsx_v5MVrw": {
     "defaultMessage": "Skim"
   },
+  "CollaborationSessionButton.tsx_XCceQP": {
+    "defaultMessage": "Start collaboration session"
+  },
+  "CollaborationSessionDialog.tsx_7F2Pzm": {
+    "defaultMessage": "What to know:"
+  },
+  "CollaborationSessionDialog.tsx_A5AvFO": {
+    "defaultMessage": "Couldn't start the session"
+  },
+  "CollaborationSessionDialog.tsx_BUjJOW": {
+    "defaultMessage": "The key to decrypt it is in the link, and is never sent to our servers."
+  },
+  "CollaborationSessionDialog.tsx_J9JF+p": {
+    "defaultMessage": "Start session"
+  },
+  "CollaborationSessionDialog.tsx_K31T5O": {
+    "defaultMessage": "The session is deleted after 30 days without activity."
+  },
+  "CollaborationSessionDialog.tsx_MFYa+V": {
+    "defaultMessage": "The review couldn't be uploaded. Try again later."
+  },
+  "CollaborationSessionDialog.tsx_XCceQP": {
+    "defaultMessage": "Start collaboration session"
+  },
+  "CollaborationSessionDialog.tsx_evE0sn": {
+    "defaultMessage": "Anyone with the link can read the review."
+  },
+  "CollaborationSessionDialog.tsx_rcmAMG": {
+    "defaultMessage": "The review is uploaded to our servers encrypted."
+  },
   "CopyIconButton.tsx_p556q3": {
     "defaultMessage": "Copied"
   },
@@ -56,6 +86,9 @@
   "FileStatusBadge.tsx_tOxzip": {
     "defaultMessage": "Modified"
   },
+  "FileViewers.tsx_Z7S0/N": {
+    "defaultMessage": "Viewed by {names}"
+  },
   "GapRow.tsx_0oLj/t": {
     "defaultMessage": "Expand"
   },
@@ -80,6 +113,15 @@
   "IssuesByStep.tsx_xg6/fp": {
     "defaultMessage": "Concerns"
   },
+  "JoinSessionDialog.tsx_ABUgKT": {
+    "defaultMessage": "Join the session"
+  },
+  "JoinSessionDialog.tsx_P6PLpi": {
+    "defaultMessage": "Join"
+  },
+  "JoinSessionDialog.tsx_vFA0iR": {
+    "defaultMessage": "The other participants will see your name, the files you viewed, and where you are."
+  },
   "NotFound.tsx_osJs96": {
     "defaultMessage": "Page not found."
   },
@@ -98,20 +140,98 @@
   "NoteCounts.tsx_cr9pr9": {
     "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
   },
+  "OpenReviewDropzone.tsx_p5lOej": {
+    "defaultMessage": "Drop the review file to open it"
+  },
   "OverviewHeader.tsx_3PcNZ7": {
     "defaultMessage": "Copy \"{branchName}\""
   },
   "OverviewHeader.tsx_Nvd511": {
     "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
   },
-  "OverviewHeader.tsx_VsxSiL": {
-    "defaultMessage": "<link>PR</link> review"
-  },
-  "OverviewHeader.tsx_ZLnOd3": {
-    "defaultMessage": "<link>PR {pullRequestNumber, number, ::group-off}</link> review"
+  "OverviewHeader.tsx_uo7hRG": {
+    "defaultMessage": "Review for {link}"
   },
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"
+  },
+  "ParticipantNameDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "ParticipantNameDialog.tsx_vlKhIl": {
+    "defaultMessage": "Your name"
+  },
+  "Privacy.tsx_+pPNRT": {
+    "defaultMessage": "Step Review runs no analytics scripts. To see how much it's used, we look at the aggregate statistics Cloudflare computes from the requests it serves, such as the number of page views and visitors per day and the countries they come from. Nothing runs on or is read from your device for this."
+  },
+  "Privacy.tsx_5cxCIW": {
+    "defaultMessage": "Hosting and network data"
+  },
+  "Privacy.tsx_CUYkvi": {
+    "defaultMessage": "Under the GDPR, you can ask us to access, correct or erase your personal data, to restrict or stop processing it, and to hand it over in a portable format. As we don't know who you are and can't read sessions, we usually can't tell which data is yours: ending a session you own, or clearing this site's data in your browser, is the quickest way to erase it."
+  },
+  "Privacy.tsx_GZJpDf": {
+    "defaultMessage": "Analytics"
+  },
+  "Privacy.tsx_GlM8hd": {
+    "defaultMessage": "Step Review is run by {dataController}, the data controller for the processing described here. For any question or request about your data, write to {email}."
+  },
+  "Privacy.tsx_KEWCI1": {
+    "defaultMessage": "Step Review is hosted by {cloudflare}, which processes your IP address and standard request information to deliver the site and protect it from attacks, and may keep it in short-lived logs. To prevent abuse, the server also limits how many sessions an IP address can start per minute; it only keeps those counts for that minute."
+  },
+  "Privacy.tsx_RuHI4i": {
+    "defaultMessage": "This storage is needed for Step Review to work, so it doesn't require consent. You can remove a review from the start page, or remove everything by clearing this site's data in your browser."
+  },
+  "Privacy.tsx_SaUZGt": {
+    "defaultMessage": "You also have the right to lodge a complaint with a data protection authority, in particular the one where you live or work."
+  },
+  "Privacy.tsx_T33gk/": {
+    "defaultMessage": "Last updated {date}"
+  },
+  "Privacy.tsx_TLmf1s": {
+    "defaultMessage": "Who is responsible"
+  },
+  "Privacy.tsx_UFX1od": {
+    "defaultMessage": "We process this data to provide the sessions you ask for (Article 6(1)(b) GDPR)."
+  },
+  "Privacy.tsx_UNX1+0": {
+    "defaultMessage": "The review files you open, the files you mark as viewed, the sessions you joined (with the keys that open them), your name in sessions and your display preferences are stored in your browser's local storage. <strong>They are not sent to us</strong>, except as described for sessions below."
+  },
+  "Privacy.tsx_Vwbc0H": {
+    "defaultMessage": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no tracking, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
+  },
+  "Privacy.tsx_WmroJ6": {
+    "defaultMessage": "Data kept in your browser"
+  },
+  "Privacy.tsx_cXBJ7U": {
+    "defaultMessage": "Privacy"
+  },
+  "Privacy.tsx_cufYZU": {
+    "defaultMessage": "If what Step Review does with data changes, we'll update this page and its date."
+  },
+  "Privacy.tsx_cxQ2EY": {
+    "defaultMessage": "The server stores the encrypted data and hashes of the secrets that let participants in. It can see how large a session is, when it's used, and how many participants it has. A session is deleted when its owner ends it, or after 30 days without activity."
+  },
+  "Privacy.tsx_dgqhUM": {
+    "defaultMessage": "Changes"
+  },
+  "Privacy.tsx_h1P7n8": {
+    "defaultMessage": "Collaboration sessions"
+  },
+  "Privacy.tsx_hNv3oI": {
+    "defaultMessage": "Your rights"
+  },
+  "Privacy.tsx_hbVyuj": {
+    "defaultMessage": "We rely on our legitimate interest in understanding how Step Review is used, so that we can improve it (Article 6(1)(f) GDPR)."
+  },
+  "Privacy.tsx_iDEnD2": {
+    "defaultMessage": "When you start a session, the review is uploaded to our server so that others can join it. Before anything leaves your browser, the review, each participant's name and viewed files, and the step each participant is on are <strong>end-to-end encrypted</strong>, with a key that only the session's links hold. Browsers never send that part of a link, so we can't read any of this data."
+  },
+  "Privacy.tsx_m9nuC7": {
+    "defaultMessage": "Cloudflare processes this data on our behalf under its data processing addendum. It may do so outside the European Economic Area, protected by the EU Standard Contractual Clauses. We rely on our legitimate interest in running a secure, reliable service (Article 6(1)(f) GDPR)."
+  },
+  "Privacy.tsx_r4kdjG": {
+    "defaultMessage": "Step Review uses no advertising and no third-party scripts, and loads its fonts and other assets from its own domain. Links to GitHub and floor 0 lead to sites with their own privacy policies."
   },
   "ProjectCredits.tsx_wTNySU": {
     "defaultMessage": "by"
@@ -125,8 +245,44 @@
   "PromptGenerator.tsx_k9O196": {
     "defaultMessage": "Prompt for your coding agent"
   },
-  "ReloadDropzone.tsx_/YcyUn": {
-    "defaultMessage": "Drop the review file to reload it"
+  "ReviewActions.tsx_2pwM03": {
+    "defaultMessage": "Export review state"
+  },
+  "ReviewActions.tsx_Gy09SB": {
+    "defaultMessage": "The file is not a valid review state."
+  },
+  "ReviewActions.tsx_JzmbIf": {
+    "defaultMessage": "Reset review state"
+  },
+  "ReviewActions.tsx_K3r6DQ": {
+    "defaultMessage": "Delete"
+  },
+  "ReviewActions.tsx_Kx622U": {
+    "defaultMessage": "Import review state"
+  },
+  "ReviewActions.tsx_OLCgvh": {
+    "defaultMessage": "The review file and its review state will be removed from this browser."
+  },
+  "ReviewActions.tsx_OtMych": {
+    "defaultMessage": "Delete review"
+  },
+  "ReviewActions.tsx_aN434T": {
+    "defaultMessage": "Every file will be marked as not viewed, for every participant."
+  },
+  "ReviewActions.tsx_agjgCY": {
+    "defaultMessage": "Every file will be marked as not viewed."
+  },
+  "ReviewActions.tsx_bmvTUd": {
+    "defaultMessage": "Review state"
+  },
+  "ReviewActions.tsx_jbbK0Z": {
+    "defaultMessage": "Delete review?"
+  },
+  "ReviewActions.tsx_jm/spn": {
+    "defaultMessage": "Reset"
+  },
+  "ReviewActions.tsx_qjGckA": {
+    "defaultMessage": "Reset review state?"
   },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
@@ -143,47 +299,14 @@
   "ReviewDropzone.tsx_pF/caX": {
     "defaultMessage": "or drop it anywhere on this page"
   },
-  "ReviewRecap.tsx_2pwM03": {
-    "defaultMessage": "Export review state"
-  },
-  "ReviewRecap.tsx_Gy09SB": {
-    "defaultMessage": "The file is not a valid review state."
-  },
-  "ReviewRecap.tsx_JzmbIf": {
-    "defaultMessage": "Reset review state"
-  },
-  "ReviewRecap.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
-  },
-  "ReviewRecap.tsx_Kx622U": {
-    "defaultMessage": "Import review state"
-  },
-  "ReviewRecap.tsx_OLCgvh": {
-    "defaultMessage": "The review file and its review state will be removed from this browser."
-  },
-  "ReviewRecap.tsx_OtMych": {
-    "defaultMessage": "Delete review"
-  },
   "ReviewRecap.tsx_R+J5ox": {
     "defaultMessage": "Review"
   },
-  "ReviewRecap.tsx_agjgCY": {
-    "defaultMessage": "Every file will be marked as not viewed."
+  "ReviewRecapRail.tsx_R+J5ox": {
+    "defaultMessage": "Review"
   },
-  "ReviewRecap.tsx_cNrFsL": {
-    "defaultMessage": "Open another review"
-  },
-  "ReviewRecap.tsx_jbbK0Z": {
-    "defaultMessage": "Delete review?"
-  },
-  "ReviewRecap.tsx_jm/spn": {
-    "defaultMessage": "Reset"
-  },
-  "ReviewRecap.tsx_kvdGU5": {
-    "defaultMessage": "Review actions"
-  },
-  "ReviewRecap.tsx_qjGckA": {
-    "defaultMessage": "Reset review state?"
+  "ReviewRecapRail.tsx_sfqExy": {
+    "defaultMessage": "{fileName}: {counts}"
   },
   "ReviewShell.tsx_huCHmk": {
     "defaultMessage": "Steps"
@@ -191,11 +314,86 @@
   "ReviewShell.tsx_zGgSXZ": {
     "defaultMessage": "Show or hide the steps"
   },
+  "ReviewSidebar.tsx_eOJ4QU": {
+    "defaultMessage": "Collapse sidebar"
+  },
+  "ReviewSidebarRail.tsx_1JgBls": {
+    "defaultMessage": "Expand sidebar"
+  },
   "ReviewWarnings.tsx_7oiKM4": {
     "defaultMessage": "Copy for your agent"
   },
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
+  },
+  "SessionDetailsDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "SessionDetailsDialog.tsx_JXdbo8": {
+    "defaultMessage": "Done"
+  },
+  "SessionDetailsDialog.tsx_KahVNL": {
+    "defaultMessage": "Collaboration session"
+  },
+  "SessionDetailsDialog.tsx_NFDO56": {
+    "defaultMessage": "Leave the session?"
+  },
+  "SessionDetailsDialog.tsx_dVpNza": {
+    "defaultMessage": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
+  },
+  "SessionDetailsDialog.tsx_dmhZKW": {
+    "defaultMessage": "Leave session"
+  },
+  "SessionDetailsDialog.tsx_iIenp6": {
+    "defaultMessage": "End session"
+  },
+  "SessionDetailsDialog.tsx_vT1p72": {
+    "defaultMessage": "The review will be removed from this browser. You can join again with the link, as a new participant."
+  },
+  "SessionDetailsDialog.tsx_vlKhIl": {
+    "defaultMessage": "Your name"
+  },
+  "SessionDetailsDialog.tsx_xqCAKC": {
+    "defaultMessage": "End the session?"
+  },
+  "SessionLinkField.tsx_JBWS0c": {
+    "defaultMessage": "Link"
+  },
+  "SessionLinkField.tsx_zXYcAr": {
+    "defaultMessage": "Copy the link"
+  },
+  "SessionNotices.tsx_PuU15u": {
+    "defaultMessage": "Not connected"
+  },
+  "SessionNotices.tsx_QH2s4N": {
+    "defaultMessage": "The review has too many participants to join it. Changes aren't saved."
+  },
+  "SessionNotices.tsx_TNjWaR": {
+    "defaultMessage": "The connection to the session failed. Reload the page to try again."
+  },
+  "SessionNotices.tsx_pK7uFW": {
+    "defaultMessage": "This browser can't join the review as before. Changes aren't saved."
+  },
+  "SessionNotices.tsx_pRFgWn": {
+    "defaultMessage": "{title}: {description}"
+  },
+  "SessionNotices.tsx_sACAMl": {
+    "defaultMessage": "Your progress is too large to be saved in the session. Changes aren't saved."
+  },
+  "SessionNotices.tsx_wd79hm": {
+    "defaultMessage": "The session ended, or expired. Changes aren't saved."
+  },
+  "SessionParticipantList.tsx_bLm0E3": {
+    "defaultMessage": "(offline)"
+  },
+  "SessionParticipantList.tsx_vM4QPQ": {
+    "defaultMessage": "Go to where {name} is"
+  },
+  "SessionParticipantList.tsx_zx0myy": {
+    "defaultMessage": "Participants"
+  },
+  "SessionParticipantsButton.tsx_uP1HHN": {
+    "defaultMessage": "Collaboration session: {count, plural, one {# participant} other {# participants}}"
   },
   "SeverityBadge.tsx_9eQkfo": {
     "defaultMessage": "Concern"
@@ -215,11 +413,17 @@
   "Start.tsx_5jA9ee": {
     "defaultMessage": "2. Open the review file it produces"
   },
+  "Start.tsx_BZvdW+": {
+    "defaultMessage": "This session can't be joined: it ended or expired, or its link is incomplete."
+  },
   "Start.tsx_NGb5sK": {
     "defaultMessage": "Step Review <strong>breaks them down into logical steps</strong>, so you can <strong>actually understand them</strong>, and keep a handle on your codebase. Try it:"
   },
   "Start.tsx_Reg+fk": {
     "defaultMessage": "3. Go through the PR ({exampleLink})"
+  },
+  "Start.tsx_cXBJ7U": {
+    "defaultMessage": "Privacy"
   },
   "Start.tsx_dqEFrF": {
     "defaultMessage": "Review not found"
@@ -242,6 +446,9 @@
   "Start.tsx_tM2s2t": {
     "defaultMessage": "see example"
   },
+  "Start.tsx_txEOWF": {
+    "defaultMessage": "Step Review on GitHub"
+  },
   "StepFileTree.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
   },
@@ -254,14 +461,38 @@
   "StepHeader.tsx_JNtjKE": {
     "defaultMessage": "Step {stepNumber} of {stepCount}"
   },
-  "StepNavigation.tsx_/O2KYl": {
-    "defaultMessage": "0. Overview"
+  "StepNavigation.tsx_3JVa6k": {
+    "defaultMessage": "End"
+  },
+  "StepNavigation.tsx_9uOFF3": {
+    "defaultMessage": "Overview"
   },
   "StepNavigation.tsx_huCHmk": {
     "defaultMessage": "Steps"
   },
   "StepPager.tsx_9uOFF3": {
     "defaultMessage": "Overview"
+  },
+  "StepRail.tsx_7YdvBN": {
+    "defaultMessage": "{number}. {title}"
+  },
+  "StepRail.tsx_9BK0YE": {
+    "defaultMessage": "Files in no step"
+  },
+  "StepRail.tsx_9uOFF3": {
+    "defaultMessage": "Overview"
+  },
+  "StepRail.tsx_huCHmk": {
+    "defaultMessage": "Steps"
+  },
+  "StepRailLink.tsx_HRTugO": {
+    "defaultMessage": "Read carefully"
+  },
+  "StepRailLink.tsx_ltk9Fd": {
+    "defaultMessage": "{title}: {details}"
+  },
+  "StepRailLink.tsx_v5MVrw": {
+    "defaultMessage": "Skim"
   },
   "StepTitle.tsx_9BK0YE": {
     "defaultMessage": "Files in no step"
@@ -281,6 +512,9 @@
   "StepToolbar.tsx_dUFzeV": {
     "defaultMessage": "Diff layout"
   },
+  "StoredReviewList.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
   "StoredReviewList.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
@@ -290,10 +524,55 @@
   "StoredReviewList.tsx_OtMych": {
     "defaultMessage": "Delete review"
   },
+  "StoredReviewList.tsx_YBUNQ3": {
+    "defaultMessage": "Remove the session?"
+  },
+  "StoredReviewList.tsx_YnVaj4": {
+    "defaultMessage": "Joined session"
+  },
+  "StoredReviewList.tsx_d3wbXx": {
+    "defaultMessage": "Session"
+  },
+  "StoredReviewList.tsx_dwAISe": {
+    "defaultMessage": "Started by you"
+  },
+  "StoredReviewList.tsx_esPulN": {
+    "defaultMessage": "Remove the session"
+  },
   "StoredReviewList.tsx_jbbK0Z": {
     "defaultMessage": "Delete review?"
   },
+  "StoredReviewList.tsx_qbbNEM": {
+    "defaultMessage": "It will be removed from this browser. You can join it again with its link, as a new participant."
+  },
+  "StoredReviewList.tsx_u0ABgm": {
+    "defaultMessage": "It will be removed from this browser, but stay available to the others until it expires: you won't be able to end the session. To delete it for everyone, end the session from the review instead."
+  },
   "ViewedAndNoteCounts.tsx_zz6max": {
     "defaultMessage": "{viewedCount}/{totalCount} viewed"
+  },
+  "formatViewedAndNoteCounts.ts_7hxyNF": {
+    "defaultMessage": "{issueCount, plural, one {# issue} other {# issues}}"
+  },
+  "formatViewedAndNoteCounts.ts_cr9pr9": {
+    "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
+  },
+  "formatViewedAndNoteCounts.ts_zz6max": {
+    "defaultMessage": "{viewedCount}/{totalCount} viewed"
+  },
+  "useLeaveSession.ts_FjpI/y": {
+    "defaultMessage": "The session couldn't be ended. Try again later."
+  },
+  "useLeaveSession.ts_OAlCD8": {
+    "defaultMessage": "The session couldn't be removed from this browser. Try again later."
+  },
+  "useParticipantLabel.ts_LXxsbk": {
+    "defaultMessage": "Anonymous"
+  },
+  "useParticipantLabel.ts_OKhxcB": {
+    "defaultMessage": "{name} (you)"
+  },
+  "useParticipantsHere.ts_im4lxq": {
+    "defaultMessage": "{count, plural, one {{names} is here} other {{names} are here}}"
   }
 }

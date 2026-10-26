@@ -3,6 +3,7 @@ import {
   findUnassignedFileDiffs,
   type ReviewFile,
 } from "@step-review/review-format";
+import type ReviewAddress from "../navigation/ReviewAddress.ts";
 import buildStepFileView from "./buildStepFileView.ts";
 import type ReviewView from "./ReviewView.ts";
 import type StepFileView from "./StepFileView.ts";
@@ -10,7 +11,7 @@ import type StepView from "./StepView.ts";
 import unassignedStepId from "./unassignedStepId.ts";
 
 export default function buildReviewView(
-  reviewId: string,
+  reviewAddress: ReviewAddress,
   reviewFile: ReviewFile,
 ): ReviewView {
   const steps: StepView[] = reviewFile.data.steps.map((step, index) => ({
@@ -44,7 +45,7 @@ export default function buildReviewView(
     });
   }
   return {
-    reviewId,
+    reviewAddress,
     data: reviewFile.data,
     diff: reviewFile.diff,
     steps,

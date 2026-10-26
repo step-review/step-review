@@ -7,10 +7,12 @@ import styles from "./AttentionIcon.module.css";
 
 interface Props {
   attention: Attention;
+  /** Off where an enclosing element's tooltip already says it. */
+  hasTooltip?: boolean;
 }
 
 /** Compact form of `AttentionBadge`: an icon, with the label as tooltip. */
-export default function AttentionIcon({ attention }: Props) {
+export default function AttentionIcon({ attention, hasTooltip = true }: Props) {
   const intl = useIntl();
   const iconRef = useRef<HTMLSpanElement>(null);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -33,11 +35,13 @@ export default function AttentionIcon({ attention }: Props) {
       >
         <Icon size={14} aria-label={label} />
       </span>
-      <AnchoredTooltip
-        anchorRef={iconRef}
-        isOpen={isTooltipOpen}
-        text={label}
-      />
+      {hasTooltip && (
+        <AnchoredTooltip
+          anchorRef={iconRef}
+          isOpen={isTooltipOpen}
+          text={label}
+        />
+      )}
     </>
   );
 }

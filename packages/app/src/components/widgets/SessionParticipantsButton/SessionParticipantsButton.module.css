@@ -1,0 +1,60 @@
+/* As tall as the small icon button beside it. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--base-size-4);
+  height: var(--control-small-size);
+  padding: 0 var(--base-size-4) 0 var(--base-size-2);
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--control-transparent-bgColor-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  /* As wide as the small icon buttons above and below it. */
+  &[data-orientation="vertical"] {
+    flex-direction: column;
+    justify-content: center;
+    width: var(--control-small-size);
+    height: auto;
+    padding: var(--base-size-2) 0 var(--base-size-4);
+  }
+}
+
+/* In reverse order, so that each avatar is painted over the next one. */
+.avatars {
+  display: inline-flex;
+  flex-direction: row-reverse;
+
+  .button[data-orientation="vertical"] & {
+    flex-direction: column-reverse;
+  }
+}
+
+.avatar {
+  display: inline-flex;
+}
+
+/* Overlapping the next one, on its right or below it, by a third. */
+.avatar + .avatar {
+  margin-inline-end: calc(-1 * var(--base-size-8));
+
+  .button[data-orientation="vertical"] & {
+    margin-inline-end: 0;
+    margin-block-end: calc(-1 * var(--base-size-8));
+  }
+}
+
+.hiddenCount {
+  color: var(--fgColor-muted);
+  font-size: var(--text-body-size-small);
+  font-weight: var(--base-text-weight-semibold);
+}

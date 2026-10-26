@@ -1,0 +1,36 @@
+.marker {
+  position: relative;
+  /* Above a timeline's line. */
+  z-index: 1;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--base-size-24);
+  height: var(--base-size-24);
+  /* As thin as the timeline's line. */
+  border: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: 50%;
+  /* Covers the timeline's line, which runs behind the markers. */
+  background: var(--bgColor-default);
+  color: var(--fgColor-muted);
+  font: var(--text-caption-shorthand);
+  font-weight: var(--base-text-weight-semibold);
+
+  &[data-active] {
+    border-color: var(--borderColor-emphasis);
+    color: var(--fgColor-default);
+  }
+
+  /* The progress ring's track takes the border's place. */
+  &[data-with-progress] {
+    border-color: transparent;
+  }
+}
+
+/* Over the border. */
+.progress {
+  position: absolute;
+  inset: calc(-1 * var(--borderWidth-default));
+}

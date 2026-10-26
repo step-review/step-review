@@ -9,13 +9,17 @@ import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.ts
 import Diffstat from "../../design-system/Diffstat/Diffstat.tsx";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
+import FileViewers from "../FileViewers/FileViewers.tsx";
+import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import styles from "./FileCardHeader.module.css";
 
 interface Props {
   stepFileView: StepFileView;
   isCollapsed: boolean;
+  /** Whether anyone viewed the file. */
   isViewed: boolean;
   onToggleCollapsed: () => void;
+  /** In a session, marks the file viewed or not for every participant. */
   onViewedChange: (isViewed: boolean) => void;
 }
 
@@ -59,6 +63,7 @@ export default function FileCardHeader({
         value={stepFileView.path}
         label={intl.formatMessage({ defaultMessage: "Copy the path" })}
       />
+      <ParticipantsHere fileId={stepFileView.id} />
       <div className={styles["trailing"]}>
         <Diffstat
           additions={stepFileView.additions}
@@ -69,6 +74,7 @@ export default function FileCardHeader({
           )}
         />
         <NoteCounts {...noteKindCounts} />
+        <FileViewers fingerprint={stepFileView.fingerprint} />
         {/* GitHub's checkbox styled as a button. */}
         <label className={styles["viewed"]} data-viewed={isViewed || undefined}>
           <Checkbox

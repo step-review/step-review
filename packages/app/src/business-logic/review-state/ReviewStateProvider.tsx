@@ -1,9 +1,11 @@
 /* oxlint-disable architecture/public-exports -- Keep the review state context and its hook together. */
 import { createContext, useContext, useMemo, useReducer } from "react";
 import type { ReactNode } from "react";
+import type ReviewAddress from "../navigation/ReviewAddress.ts";
 import updateReviewState from "../review-store/updateReviewState.ts";
 import useStoredReviewState from "../review-store/useStoredReviewState.ts";
 import exampleReviewId from "../review/exampleReviewId.ts";
+import { useSessionConnectionContext } from "../session-connection/SessionConnectionProvider.tsx";
 import emptyReviewState from "./emptyReviewState.ts";
 import reduceReviewState from "./reduceReviewState.ts";
 import type ReviewState from "./ReviewState.ts";
@@ -20,19 +22,26 @@ const ReviewStateContext = createContext<ReviewStateContextValue>({
 });
 
 interface Props {
-  reviewId: string;
+  reviewAddress: ReviewAddress;
   children: ReactNode;
 }
 
 /**
- * Keeps the reviewer's state for one review, persisted in the browser. The
- * example review isn't stored, so its state is only kept in memory.
+ * Keeps the reviewer's state for one review: persisted in the browser, or by
+ * the session's server for a session. The example review isn't stored, so its
+ * state is only kept in memory.
  */
-export default function ReviewStateProvider({ reviewId, children }: Props) {
-  return reviewId === exampleReviewId ? (
+export default function ReviewStateProvider({
+  reviewAddress,
+  children,
+}: Props) {
+  if (reviewAddress.kind === "session") {
+    return <SessionReviewStateProvider>{children}</SessionReviewStateProvider>;
+  }
+  return reviewAddress.reviewId === exampleReviewId ? (
     <MemoryReviewStateProvider>{children}</MemoryReviewStateProvider>
   ) : (
-    <StoredReviewStateProvider reviewId={reviewId}>
+    <StoredReviewStateProvider reviewId={reviewAddress.reviewId}>
       {children}
     </StoredReviewStateProvider>
   );
@@ -75,6 +84,39 @@ function StoredReviewStateProvider({
       },
     [reviewId, reviewState],
   );
+  if (!value) {
+    return null;
+  }
+  return <ReviewStateContext value={value}>{children}</ReviewStateContext>;
+}
+
+interface SessionReviewStateProviderProps {
+  children: ReactNode;
+}
+
+/** The state of the session being displayed, shared by every participant. */
+function SessionReviewStateProvider({
+  children,
+}: SessionReviewStateProviderProps) {
+  const sessionConnectionContext = useSessionConnectionContext();
+  const sessionConnection = sessionConnectionContext?.sessionConnection;
+  const fileViewedStatuses =
+    sessionConnectionContext?.sessionConnectionSnapshot.fileViewedStatuses;
+  const value = useMemo(
+    () =>
+      sessionConnection &&
+      fileViewedStatuses && {
+        reviewState: {
+          viewedFingerprints: [...fileViewedStatuses]
+            .filter(([, fileViewedStatus]) => fileViewedStatus.viewed)
+            .map(([fingerprint]) => fingerprint),
+        },
+        dispatch: (action: ReviewStateAction) =>
+          sessionConnection.dispatch(action),
+      },
+    [sessionConnection, fileViewedStatuses],
+  );
+  // The review only loads within its session connection.
   if (!value) {
     return null;
   }

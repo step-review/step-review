@@ -1,0 +1,60 @@
+/* Like the form controls' labels above it. */
+.heading {
+  margin: 0 0 var(--base-size-8);
+  font-size: var(--text-body-size-medium);
+  font-weight: var(--base-text-weight-semibold);
+}
+
+/* As many chips per line as fit. */
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--base-size-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--base-size-6);
+  max-width: 100%;
+  padding: var(--base-size-4) var(--base-size-8) var(--base-size-4)
+    var(--base-size-4);
+  border: var(--borderWidth-default) solid var(--borderColor-default);
+  border-radius: var(--borderRadius-full);
+  background: none;
+  color: var(--fgColor-default);
+  font: inherit;
+  font-size: var(--text-body-size-small);
+  line-height: var(--base-text-lineHeight-tight);
+
+  &[data-offline] {
+    color: var(--fgColor-muted);
+  }
+}
+
+button.chip {
+  cursor: pointer;
+
+  &:hover {
+    background: var(--control-transparent-bgColor-hover);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.avatar {
+  display: inline-flex;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

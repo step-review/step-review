@@ -8,6 +8,8 @@ interface Props {
   value: string;
   label: string;
   size?: "small" | "medium";
+  /** Shows the value as copied from the start, e.g. copied on its own. */
+  isInitiallyCopied?: boolean;
 }
 
 /** How long the button shows that the value was copied, in milliseconds. */
@@ -17,9 +19,10 @@ export default function CopyIconButton({
   value,
   label,
   size = "small",
+  isInitiallyCopied = false,
 }: Props) {
   const intl = useIntl();
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(isInitiallyCopied);
   useEffect(() => {
     if (!isCopied) {
       return;

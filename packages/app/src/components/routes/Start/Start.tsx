@@ -1,6 +1,11 @@
-import { Banner, Heading, Stack, Text } from "@primer/react";
+import { MarkGithubIcon, ShieldLockIcon } from "@primer/octicons-react";
+import { Banner, Heading, IconButton, Stack, Text } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
+import routeHref from "../../../business-logic/navigation/routeHref.ts";
+import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
+import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
@@ -9,22 +14,27 @@ import StoredReviewList from "../../widgets/StoredReviewList/StoredReviewList.ts
 import styles from "./Start.module.css";
 
 interface Props {
-  /** Set when a review page was opened for a review that isn't stored. */
-  isReviewMissing?: boolean;
+  /**
+   * Set when a review page was opened for a review that can't be loaded: one
+   * that isn't stored, or a session that doesn't exist (anymore).
+   */
+  missingReview?: "local" | "session";
 }
 
 /**
  * Walks new users through the steps, with the example review. Users with stored
  * reviews get just what they work with.
  */
-export default function Start({ isReviewMissing = false }: Props) {
+export default function Start({ missingReview }: Props) {
   const intl = useIntl();
   const storedReviews = useStoredReviews();
+  const sessionBookmarks = useSessionBookmarks();
   // Being read from the browser's storage, which takes a moment.
-  if (storedReviews === undefined) {
+  if (storedReviews === undefined || sessionBookmarks === undefined) {
     return null;
   }
-  const hasStoredReviews = storedReviews.length > 0;
+  const hasStoredReviews =
+    storedReviews.length > 0 || sessionBookmarks.length > 0;
   return (
     <div className={styles["page"]}>
       <div
@@ -36,13 +46,17 @@ export default function Start({ isReviewMissing = false }: Props) {
           className={styles["steps"]}
           data-new-user={!hasStoredReviews || undefined}
         >
-          {isReviewMissing && (
+          {missingReview && (
             <Banner
               variant="info"
               title={intl.formatMessage({ defaultMessage: "Review not found" })}
               hideTitle
               description={
-                <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
+                missingReview === "local" ? (
+                  <FormattedMessage defaultMessage="This review isn't saved in this browser. Open its file to continue." />
+                ) : (
+                  <FormattedMessage defaultMessage="This session can't be joined: it ended or expired, or its link is incomplete." />
+                )
               }
             />
           )}
@@ -87,7 +101,10 @@ export default function Start({ isReviewMissing = false }: Props) {
               <Heading as="h2" variant="small">
                 <FormattedMessage defaultMessage="Past reviews" />
               </Heading>
-              <StoredReviewList storedReviews={storedReviews} />
+              <StoredReviewList
+                storedReviews={storedReviews}
+                sessionBookmarks={sessionBookmarks}
+              />
             </Stack>
           ) : (
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>
@@ -104,8 +121,32 @@ export default function Start({ isReviewMissing = false }: Props) {
             </Heading>
           )}
         </Stack>
-        <footer className={styles["brand"]}>
+        <footer className={styles["footer"]}>
           <AppBrand />
+          <div className={styles["footerLinks"]}>
+            <IconButton
+              as="a"
+              href={routeHref({ name: RouteName.Privacy })}
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo({ name: RouteName.Privacy });
+              }}
+              variant="invisible"
+              icon={ShieldLockIcon}
+              aria-label={intl.formatMessage({ defaultMessage: "Privacy" })}
+            />
+            <IconButton
+              as="a"
+              href="https://github.com/step-review/step-review"
+              target="_blank"
+              rel="noreferrer"
+              variant="invisible"
+              icon={MarkGithubIcon}
+              aria-label={intl.formatMessage({
+                defaultMessage: "Step Review on GitHub",
+              })}
+            />
+          </div>
         </footer>
       </div>
     </div>

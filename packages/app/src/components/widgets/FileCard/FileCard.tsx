@@ -28,6 +28,7 @@ export default function FileCard({
 }: Props) {
   const intl = useIntl();
   const { dispatch } = useReviewState();
+  // Viewed by anyone, while the checkbox only changes the own view.
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
   const [isCollapsed, setIsCollapsed] = useState(
     isViewed || stepView.attention === "low",

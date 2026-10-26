@@ -1,0 +1,67 @@
+.link {
+  /* Also behind the badges, so that they hide the marker's ring. */
+  --link-background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Inset 8px, like the full sidebar's steps. */
+  width: var(--base-size-48);
+  height: var(--base-size-40);
+  border-radius: var(--borderRadius-medium);
+  background: var(--link-background);
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    --link-background: var(--control-transparent-bgColor-hover);
+    /* Overrides the document's link underline, meant for text. */
+    text-decoration: none;
+  }
+
+  /* Like the current step in the full sidebar. */
+  &[aria-current="page"] {
+    --link-background: var(--control-transparent-bgColor-selected);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: calc(-1 * var(--borderWidth-thick));
+  }
+}
+
+/* The marker in the middle, with the badges at the corners: as wide as the
+   rail's logo. */
+.markerArea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--base-size-32);
+  height: var(--base-size-32);
+}
+
+/* Above the marker. */
+.attention,
+.presence {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+}
+
+/* On a disk of the link's background, which is translucent: over the page's
+   own, as the link is. The icon's outline would show the ring through it. */
+.attention {
+  top: 0;
+  right: 0;
+  padding: var(--base-size-2);
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--link-background), var(--link-background)),
+    var(--bgColor-default);
+}
+
+.presence {
+  right: 0;
+  bottom: 0;
+}

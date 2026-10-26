@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useLoadedReviewContext } from "../review/LoadedReviewProvider.tsx";
+import { useLoadedReviewContext } from "../review/LoadedReviewValue.tsx";
 import indexNotes from "./indexNotes.ts";
 import type NoteLocation from "./NoteLocation.ts";
 

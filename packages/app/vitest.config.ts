@@ -13,6 +13,8 @@ export default mergeConfig(
             name: "node",
             include: ["src/**/*.test.{ts,tsx}", "scripts/**/*.test.ts"],
             exclude: ["src/**/*.browser.test.{ts,tsx}"],
+            // For the session connection tests, which talk to the real server.
+            globalSetup: ["@step-review/session-server/test-server"],
           },
         },
         {

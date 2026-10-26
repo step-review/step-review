@@ -12,6 +12,11 @@ inferred from the code. Omit examples and descriptions of existing structure.
   versioned in `@step-review/review-format`. Changes must stay compatible with
   existing review files, or introduce a new format version.
 
+- Name things in the code as the interface names them. Reviewing together
+  happens in a collaboration session (a session, for short) that a review's
+  owner starts and ends, and that others join; a session connection is one
+  browser's link to a session.
+
 - Avoid TypeScript’s `readonly` modifier unless an external API requires it.
 
 - Name variables after the full class or returned object they represent. Do not
@@ -21,6 +26,12 @@ inferred from the code. Omit examples and descriptions of existing structure.
   explain that reason in a comment beside the check.
 
 - Review files are untrusted input. Never render their content as raw HTML.
+
+- Sessions are end-to-end encrypted: the session server must never receive
+  review content, participant names, progress or presence in plaintext, nor the
+  session key. Encrypt in the browser with the key from the link's fragment, and
+  treat everything decrypted as untrusted input, since other participants wrote
+  it.
 
 # Testing guidelines
 

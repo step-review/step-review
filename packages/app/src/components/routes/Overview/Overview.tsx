@@ -4,7 +4,8 @@ import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
-import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewProvider.tsx";
+import { useLoadedReviewContext } from "../../../business-logic/review/LoadedReviewValue.tsx";
+import useOwnPresence from "../../../business-logic/session-connection/useOwnPresence.ts";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import IssuesByStep from "../../widgets/IssuesByStep/IssuesByStep.tsx";
 import OverviewHeader from "../../widgets/OverviewHeader/OverviewHeader.tsx";
@@ -15,9 +16,10 @@ import Start from "../Start/Start.tsx";
 import styles from "./Overview.module.css";
 
 export default function Overview() {
-  const { loadedReview } = useLoadedReviewContext();
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
   const reviewView = useReviewView();
   useScrollToFragment();
+  useOwnPresence(null, null);
   useHotkeys([
     [
       "ArrowRight",
@@ -26,7 +28,7 @@ export default function Overview() {
         if (firstStep) {
           navigateTo({
             name: RouteName.Step,
-            reviewId: reviewView.reviewId,
+            reviewAddress: reviewView.reviewAddress,
             stepId: firstStep.id,
           });
         }
@@ -38,7 +40,7 @@ export default function Overview() {
     return null;
   }
   if (!loadedReview || !reviewView) {
-    return <Start isReviewMissing />;
+    return <Start missingReview={reviewAddress?.kind ?? "local"} />;
   }
   return (
     <ReviewViewProvider reviewView={reviewView}>

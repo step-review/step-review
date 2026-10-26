@@ -1,0 +1,27 @@
+.recap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--base-size-8);
+}
+
+/* Room for "100%" inside the ring. */
+.progress {
+  position: relative;
+  display: block;
+  width: var(--base-size-32);
+  height: var(--base-size-32);
+}
+
+.percentage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fgColor-muted);
+  /* Primer's smallest size doesn't fit "100%" in the ring. */
+  font-size: 9px;
+  font-weight: var(--base-text-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}

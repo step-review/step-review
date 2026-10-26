@@ -1,7 +1,29 @@
 .navigation {
+  position: relative;
+  /* Keeps the line's and the markers' stacking within the navigation. */
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  gap: var(--base-size-4);
+  gap: var(--base-size-16);
+
+  /* The timeline, from the overview's marker to "End". The markers sit at
+     Primer's item margin and padding, 16px in, plus 4px: centered under the
+     logo, as in the sidebar's rail. */
+  &::before {
+    position: absolute;
+    top: calc(
+      var(--base-size-8) + var(--control-medium-paddingBlock) +
+        var(--base-size-12)
+    );
+    bottom: calc(var(--base-size-24) + var(--base-size-2));
+    left: calc(var(--base-size-16) + var(--base-size-4) + var(--base-size-12));
+    /* Above the active step's background, below the markers. */
+    z-index: 0;
+    width: var(--borderWidth-default);
+    translate: -50%;
+    background: var(--borderColor-default);
+    content: "";
+  }
 }
 
 /* Semibold like Primer's labels with a description, for the overview too. */
@@ -13,13 +35,62 @@
   gap: var(--base-size-8);
 }
 
+/* As tall as the marker and centered on it: the overview has no
+   description, so its marker can't center on the whole item. */
+.overviewLabel {
+  composes: stepLabel;
+  align-items: center;
+  min-height: var(--base-size-24);
+}
+
+.stepMarks {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--base-size-4);
+}
+
 /* Adds to the gap Primer leaves under the label, so that the label, the
    counts and the progress bar don't feel cramped. */
 .description {
   margin-top: var(--base-size-4);
 }
 
+/* Centered on the whole step, not only its title. */
+.markerSlot {
+  align-self: center;
+}
+
+/* Centers the marker under the logo, and adds to the gap Primer leaves after
+   it, to set the title apart. */
+.marker {
+  display: flex;
+  padding-inline: var(--base-size-4);
+}
+
 .progress {
   display: block;
   margin-top: var(--base-size-8);
+}
+
+/* The current step, without the accent bar of Primer's active items. */
+.current {
+  background: var(--control-transparent-bgColor-selected);
+}
+
+/* Clears the timeline's line. */
+.fileTree {
+  padding-inline-start: var(--base-size-48);
+}
+
+/* Centered on the timeline's line. */
+.end {
+  width: calc(
+    2 * (var(--base-size-16) + var(--base-size-4) + var(--base-size-12))
+  );
+  margin: 0;
+  padding: var(--base-size-8) 0;
+  color: var(--fgColor-muted);
+  font: var(--text-caption-shorthand);
+  text-align: center;
 }

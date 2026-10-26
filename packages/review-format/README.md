@@ -5,8 +5,8 @@ consistency checks that the app reports to the user.
 
 ## Files
 
-A review file (e.g. `pr-123.step-review`) is plain text: two sections, each
-starting with a marker line.
+A review file (e.g. `pr-123-20261025-143012.step-review`) is plain text: two
+sections, each starting with a marker line.
 
 ```
 #step-review:review

@@ -1,0 +1,44 @@
+/* As tall as the viewport, like the full sidebar, with only the steps
+   scrolling. */
+.rail {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Padded like the full sidebar's brand, so that the logo and the border stay
+   in place when the sidebar collapses. */
+.brand {
+  display: flex;
+  padding: var(--base-size-16);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
+}
+
+.home {
+  display: flex;
+  padding: 0;
+  border: 0;
+  border-radius: var(--borderRadius-medium);
+  background: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
+.navigation {
+  flex: 1;
+  min-height: 0;
+}
+
+.recap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--base-size-8);
+  /* Padded like the full sidebar's recap. */
+  padding: var(--base-size-16);
+  border-top: var(--borderWidth-default) solid var(--borderColor-default);
+}

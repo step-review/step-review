@@ -24,9 +24,8 @@ Don't post anything on the PR, and don't commit the review file.
    build the review file with the command in "Writing the file".
 6. Tell the user the file's path.
 
-If the PR changed since an earlier review, review it again from scratch and
-overwrite the existing file. Don't reuse the earlier JSON: the steps and notes
-must match the new diff.
+Every review is a new file. Never overwrite or edit an earlier review file, even
+for the same PR: the user may still be going through it.
 
 ## Base and head
 
@@ -99,19 +98,21 @@ Markdown. To link to another part of the review, use `[text](note:n12)`,
 
 ## Writing the file
 
-Name the file after the PR (`pr-123.step-review`) or the branch, at the root of
-the repository, unless the user asked for another name. Write the JSON of the
-review to a temporary file outside the repository, then run (with the actual
-commits and paths):
+Name the file after the PR or the branch, followed by the UTC time it is
+written, so that every review gets its own name
+(`pr-123-20261025-143012.step-review`), at the root of the repository, unless
+the user asked for another name. Write the JSON of the review to a temporary
+file outside the repository, then run (with the actual commits and paths):
 
 ```sh
+file="pr-123-$(date -u +%Y%m%d-%H%M%S).step-review"
 {
   echo '#step-review:review'
   cat /tmp/step-review.json
   echo '#step-review:diff'
   git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
     --src-prefix=a/ --dst-prefix=b/ <base> <head>
-} > pr-123.step-review
+} > "$file"
 ```
 
 Use exactly these `git diff` options: the app parses the output, and notes rely

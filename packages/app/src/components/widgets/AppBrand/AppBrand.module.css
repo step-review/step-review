@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--base-size-8);
+  gap: var(--base-size-32);
 }
 
 /* Measured at its narrowest when deciding whether the credits fit. */
@@ -22,9 +22,13 @@
   cursor: pointer;
 }
 
+/* As tall as the logo, so that the brand is as tall as the sidebar's rail's,
+   which only has the logo: the lines' leading overflows, not their text. */
 .names {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  height: var(--base-size-32);
 }
 
 .name {
@@ -37,5 +41,6 @@
 .tagline {
   color: var(--fgColor-muted);
   font-size: var(--text-body-size-small);
+  line-height: var(--text-caption-lineHeight);
   white-space: nowrap;
 }

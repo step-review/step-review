@@ -1,0 +1,14 @@
+/* Under the recap, lined up with it: the recap's padding is above. */
+.banner {
+  padding: 0 var(--base-size-16) var(--base-size-16);
+}
+
+/* As tall as a small icon button, centered like its icon. */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-small-size);
+  height: var(--control-small-size);
+  color: var(--fgColor-attention);
+}

@@ -24,5 +24,12 @@ export default defineConfig({
     host: "127.0.0.1",
     // Lets parallel dev servers run on assigned ports.
     port: process.env["PORT"] ? Number(process.env["PORT"]) : 5173,
+    // The session API, from `pnpm --filter @step-review/session-server dev`.
+    proxy: {
+      "/api/": {
+        target: `http://127.0.0.1:${process.env["SESSION_SERVER_PORT"] ?? 8787}`,
+        ws: true,
+      },
+    },
   },
 });

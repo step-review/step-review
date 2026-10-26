@@ -23,7 +23,7 @@ export default function NoteLink({ noteId }: Props) {
   return (
     <Link
       className={styles["id"]}
-      href={`${routeHref(resolved.route)}#note-${encodeURIComponent(noteId)}`}
+      href={routeHref(resolved.route, `note-${noteId}`)}
       onClick={(event) => {
         event.preventDefault();
         navigateTo(resolved.route, `note-${noteId}`);

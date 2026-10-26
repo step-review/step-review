@@ -1,0 +1,55 @@
+/* The padding leaves room for the fades at the ends. */
+.area {
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--base-size-8) 0;
+  overflow-y: auto;
+
+  /* Fades only an edge the content scrolls past. Without scroll timelines the
+     animations would end at once, fading the top for good. */
+  @supports (animation-timeline: scroll()) {
+    mask-image: linear-gradient(
+      transparent,
+      black var(--top-fade),
+      black calc(100% - var(--bottom-fade)),
+      transparent
+    );
+    animation:
+      top-fade linear both,
+      bottom-fade linear both;
+    animation-timeline: scroll(self);
+    animation-range:
+      0 var(--base-size-16),
+      calc(100% - var(--base-size-16)) 100%;
+  }
+}
+
+@property --top-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --bottom-fade {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes top-fade {
+  from {
+    --top-fade: 0px;
+  }
+  to {
+    --top-fade: var(--base-size-16);
+  }
+}
+
+@keyframes bottom-fade {
+  from {
+    --bottom-fade: var(--base-size-16);
+  }
+  to {
+    --bottom-fade: 0px;
+  }
+}

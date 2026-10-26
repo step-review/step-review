@@ -1,16 +1,15 @@
 import type { ReviewFileProblem } from "@step-review/review-format";
 import { useState } from "react";
 import navigateTo from "../navigation/navigateTo.ts";
-import parseRoute from "../navigation/parseRoute.ts";
+import parseLocation from "../navigation/parseLocation.ts";
 import RouteName from "../navigation/RouteName.ts";
-import routeReviewId from "../navigation/routeReviewId.ts";
+import routeReviewAddress from "../navigation/routeReviewAddress.ts";
 import saveReview from "../review-store/saveReview.ts";
 import loadReview from "./loadReview.ts";
 
 /**
- * Reads a review file and keeps it in the browser. Stays on the current page of
- * the same review (e.g. after the agent reviewed the PR again), otherwise opens
- * the review's overview.
+ * Reads a review file and keeps it in the browser. Stays on the current page if
+ * it's the review shown, otherwise opens the review's overview.
  */
 export default function useOpenReviewFile() {
   const [problems, setProblems] = useState<ReviewFileProblem[]>([]);
@@ -26,9 +25,18 @@ export default function useOpenReviewFile() {
       }
       setProblems([]);
       const { reviewId } = result.loadedReview;
-      await saveReview(result.loadedReview, text);
-      if (routeReviewId(parseRoute(window.location.pathname)) !== reviewId) {
-        navigateTo({ name: RouteName.Overview, reviewId });
+      await saveReview(result.loadedReview);
+      const currentReviewAddress = routeReviewAddress(
+        parseLocation(window.location.pathname, window.location.hash).route,
+      );
+      if (
+        currentReviewAddress?.kind !== "local" ||
+        currentReviewAddress.reviewId !== reviewId
+      ) {
+        navigateTo({
+          name: RouteName.Overview,
+          reviewAddress: { kind: "local", reviewId },
+        });
       }
     } finally {
       setIsLoading(false);

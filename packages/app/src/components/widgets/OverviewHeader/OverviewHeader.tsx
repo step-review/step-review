@@ -1,7 +1,6 @@
 import { BranchName, Heading, Link, Stack } from "@primer/react";
-import type { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import parsePullRequestNumber from "../../../business-logic/review-target/parsePullRequestNumber.ts";
+import formatTargetUrl from "../../../business-logic/review-target/formatTargetUrl.ts";
 import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
 import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
@@ -20,10 +19,16 @@ export default function OverviewHeader() {
     <Stack gap="condensed">
       <div>
         {target.url && (
-          <div className={styles["pullRequestLabel"]}>
-            <PullRequestLabel
-              url={target.url}
-              pullRequestNumber={parsePullRequestNumber(target.url)}
+          <div className={styles["targetLabel"]}>
+            <FormattedMessage
+              defaultMessage="Review for {link}"
+              values={{
+                link: (
+                  <Link href={target.url} target="_blank" rel="noreferrer">
+                    {formatTargetUrl(target.url)}
+                  </Link>
+                ),
+              }}
             />
           </div>
         )}
@@ -67,30 +72,5 @@ export default function OverviewHeader() {
         )}
       </div>
     </Stack>
-  );
-}
-
-interface PullRequestLabelProps {
-  url: string;
-  pullRequestNumber: number | null;
-}
-
-/** Marks the title as the PR's, linking to the PR. */
-function PullRequestLabel({ url, pullRequestNumber }: PullRequestLabelProps) {
-  const link = (chunks: ReactNode[]) => (
-    <Link href={url} target="_blank" rel="noreferrer">
-      {chunks}
-    </Link>
-  );
-  return pullRequestNumber === null ? (
-    <FormattedMessage
-      defaultMessage="<link>PR</link> review"
-      values={{ link }}
-    />
-  ) : (
-    <FormattedMessage
-      defaultMessage="<link>PR {pullRequestNumber, number, ::group-off}</link> review"
-      values={{ link, pullRequestNumber }}
-    />
   );
 }

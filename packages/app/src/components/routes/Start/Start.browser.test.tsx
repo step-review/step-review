@@ -2,10 +2,12 @@ import { afterEach, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { page } from "vitest/browser";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
+import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import TestProviders from "../../../test-utils/TestProviders.tsx";
 import Start from "./Start.tsx";
 
 vi.mock("../../../business-logic/review-store/useStoredReviews.ts");
+vi.mock("../../../business-logic/session-store/useSessionBookmarks.ts");
 
 afterEach(() => {
   vi.resetAllMocks();
@@ -16,6 +18,7 @@ it.each([1024, 375])(
   async (width) => {
     // Setup mocks
     vi.mocked(useStoredReviews).mockReturnValue([]);
+    vi.mocked(useSessionBookmarks).mockReturnValue([]);
 
     // Exercise
     await page.viewport(width, 350);
@@ -33,6 +36,9 @@ it.each([1024, 375])(
 );
 
 it("keeps the footer below saved reviews in a short viewport", async () => {
+  // Setup mocks
+  vi.mocked(useSessionBookmarks).mockReturnValue([]);
+
   // Exercise
   vi.mocked(useStoredReviews).mockReturnValue([
     {
@@ -58,6 +64,7 @@ it("keeps the footer below saved reviews in a short viewport", async () => {
 it("scrolls to the footer when the new-user page is shorter than its content", async () => {
   // Setup mocks
   vi.mocked(useStoredReviews).mockReturnValue([]);
+  vi.mocked(useSessionBookmarks).mockReturnValue([]);
 
   // Setup SUT
   await page.viewport(1024, 350);

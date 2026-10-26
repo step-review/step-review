@@ -29,6 +29,66 @@
       "value": "Skim"
     }
   ],
+  "CollaborationSessionButton.tsx_XCceQP": [
+    {
+      "type": 0,
+      "value": "Start collaboration session"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_7F2Pzm": [
+    {
+      "type": 0,
+      "value": "What to know:"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_A5AvFO": [
+    {
+      "type": 0,
+      "value": "Couldn't start the session"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_BUjJOW": [
+    {
+      "type": 0,
+      "value": "The key to decrypt it is in the link, and is never sent to our servers."
+    }
+  ],
+  "CollaborationSessionDialog.tsx_J9JF+p": [
+    {
+      "type": 0,
+      "value": "Start session"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_K31T5O": [
+    {
+      "type": 0,
+      "value": "The session is deleted after 30 days without activity."
+    }
+  ],
+  "CollaborationSessionDialog.tsx_MFYa+V": [
+    {
+      "type": 0,
+      "value": "The review couldn't be uploaded. Try again later."
+    }
+  ],
+  "CollaborationSessionDialog.tsx_XCceQP": [
+    {
+      "type": 0,
+      "value": "Start collaboration session"
+    }
+  ],
+  "CollaborationSessionDialog.tsx_evE0sn": [
+    {
+      "type": 0,
+      "value": "Anyone with the link can read the review."
+    }
+  ],
+  "CollaborationSessionDialog.tsx_rcmAMG": [
+    {
+      "type": 0,
+      "value": "The review is uploaded to our servers encrypted."
+    }
+  ],
   "CopyIconButton.tsx_p556q3": [
     {
       "type": 0,
@@ -113,6 +173,16 @@
       "value": "Modified"
     }
   ],
+  "FileViewers.tsx_Z7S0/N": [
+    {
+      "type": 0,
+      "value": "Viewed by "
+    },
+    {
+      "type": 1,
+      "value": "names"
+    }
+  ],
   "GapRow.tsx_0oLj/t": [
     {
       "type": 0,
@@ -185,6 +255,24 @@
     {
       "type": 0,
       "value": "Concerns"
+    }
+  ],
+  "JoinSessionDialog.tsx_ABUgKT": [
+    {
+      "type": 0,
+      "value": "Join the session"
+    }
+  ],
+  "JoinSessionDialog.tsx_P6PLpi": [
+    {
+      "type": 0,
+      "value": "Join"
+    }
+  ],
+  "JoinSessionDialog.tsx_vFA0iR": [
+    {
+      "type": 0,
+      "value": "The other participants will see your name, the files you viewed, and where you are."
     }
   ],
   "NotFound.tsx_osJs96": [
@@ -275,6 +363,12 @@
       "pluralType": "cardinal"
     }
   ],
+  "OpenReviewDropzone.tsx_p5lOej": [
+    {
+      "type": 0,
+      "value": "Drop the review file to open it"
+    }
+  ],
   "OverviewHeader.tsx_3PcNZ7": [
     {
       "type": 0,
@@ -321,58 +415,232 @@
       "pluralType": "cardinal"
     }
   ],
-  "OverviewHeader.tsx_VsxSiL": [
-    {
-      "type": 8,
-      "value": "link",
-      "children": [
-        {
-          "type": 0,
-          "value": "PR"
-        }
-      ]
-    },
+  "OverviewHeader.tsx_uo7hRG": [
     {
       "type": 0,
-      "value": " review"
-    }
-  ],
-  "OverviewHeader.tsx_ZLnOd3": [
-    {
-      "type": 8,
-      "value": "link",
-      "children": [
-        {
-          "type": 0,
-          "value": "PR "
-        },
-        {
-          "type": 2,
-          "value": "pullRequestNumber",
-          "style": {
-            "type": 0,
-            "tokens": [
-              {
-                "stem": "group-off",
-                "options": []
-              }
-            ],
-            "parsedOptions": {
-              "useGrouping": false
-            }
-          }
-        }
-      ]
+      "value": "Review for "
     },
     {
-      "type": 0,
-      "value": " review"
+      "type": 1,
+      "value": "link"
     }
   ],
   "OverviewSummary.tsx_NNdqGL": [
     {
       "type": 0,
       "value": "How to read this review"
+    }
+  ],
+  "ParticipantNameDialog.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "ParticipantNameDialog.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
+  "Privacy.tsx_+pPNRT": [
+    {
+      "type": 0,
+      "value": "Step Review runs no analytics scripts. To see how much it's used, we look at the aggregate statistics Cloudflare computes from the requests it serves, such as the number of page views and visitors per day and the countries they come from. Nothing runs on or is read from your device for this."
+    }
+  ],
+  "Privacy.tsx_5cxCIW": [
+    {
+      "type": 0,
+      "value": "Hosting and network data"
+    }
+  ],
+  "Privacy.tsx_CUYkvi": [
+    {
+      "type": 0,
+      "value": "Under the GDPR, you can ask us to access, correct or erase your personal data, to restrict or stop processing it, and to hand it over in a portable format. As we don't know who you are and can't read sessions, we usually can't tell which data is yours: ending a session you own, or clearing this site's data in your browser, is the quickest way to erase it."
+    }
+  ],
+  "Privacy.tsx_GZJpDf": [
+    {
+      "type": 0,
+      "value": "Analytics"
+    }
+  ],
+  "Privacy.tsx_GlM8hd": [
+    {
+      "type": 0,
+      "value": "Step Review is run by "
+    },
+    {
+      "type": 1,
+      "value": "dataController"
+    },
+    {
+      "type": 0,
+      "value": ", the data controller for the processing described here. For any question or request about your data, write to "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "Privacy.tsx_KEWCI1": [
+    {
+      "type": 0,
+      "value": "Step Review is hosted by "
+    },
+    {
+      "type": 1,
+      "value": "cloudflare"
+    },
+    {
+      "type": 0,
+      "value": ", which processes your IP address and standard request information to deliver the site and protect it from attacks, and may keep it in short-lived logs. To prevent abuse, the server also limits how many sessions an IP address can start per minute; it only keeps those counts for that minute."
+    }
+  ],
+  "Privacy.tsx_RuHI4i": [
+    {
+      "type": 0,
+      "value": "This storage is needed for Step Review to work, so it doesn't require consent. You can remove a review from the start page, or remove everything by clearing this site's data in your browser."
+    }
+  ],
+  "Privacy.tsx_SaUZGt": [
+    {
+      "type": 0,
+      "value": "You also have the right to lodge a complaint with a data protection authority, in particular the one where you live or work."
+    }
+  ],
+  "Privacy.tsx_T33gk/": [
+    {
+      "type": 0,
+      "value": "Last updated "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "Privacy.tsx_TLmf1s": [
+    {
+      "type": 0,
+      "value": "Who is responsible"
+    }
+  ],
+  "Privacy.tsx_UFX1od": [
+    {
+      "type": 0,
+      "value": "We process this data to provide the sessions you ask for (Article 6(1)(b) GDPR)."
+    }
+  ],
+  "Privacy.tsx_UNX1+0": [
+    {
+      "type": 0,
+      "value": "The review files you open, the files you mark as viewed, the sessions you joined (with the keys that open them), your name in sessions and your display preferences are stored in your browser's local storage. "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "They are not sent to us"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", except as described for sessions below."
+    }
+  ],
+  "Privacy.tsx_Vwbc0H": [
+    {
+      "type": 0,
+      "value": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no tracking, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
+    }
+  ],
+  "Privacy.tsx_WmroJ6": [
+    {
+      "type": 0,
+      "value": "Data kept in your browser"
+    }
+  ],
+  "Privacy.tsx_cXBJ7U": [
+    {
+      "type": 0,
+      "value": "Privacy"
+    }
+  ],
+  "Privacy.tsx_cufYZU": [
+    {
+      "type": 0,
+      "value": "If what Step Review does with data changes, we'll update this page and its date."
+    }
+  ],
+  "Privacy.tsx_cxQ2EY": [
+    {
+      "type": 0,
+      "value": "The server stores the encrypted data and hashes of the secrets that let participants in. It can see how large a session is, when it's used, and how many participants it has. A session is deleted when its owner ends it, or after 30 days without activity."
+    }
+  ],
+  "Privacy.tsx_dgqhUM": [
+    {
+      "type": 0,
+      "value": "Changes"
+    }
+  ],
+  "Privacy.tsx_h1P7n8": [
+    {
+      "type": 0,
+      "value": "Collaboration sessions"
+    }
+  ],
+  "Privacy.tsx_hNv3oI": [
+    {
+      "type": 0,
+      "value": "Your rights"
+    }
+  ],
+  "Privacy.tsx_hbVyuj": [
+    {
+      "type": 0,
+      "value": "We rely on our legitimate interest in understanding how Step Review is used, so that we can improve it (Article 6(1)(f) GDPR)."
+    }
+  ],
+  "Privacy.tsx_iDEnD2": [
+    {
+      "type": 0,
+      "value": "When you start a session, the review is uploaded to our server so that others can join it. Before anything leaves your browser, the review, each participant's name and viewed files, and the step each participant is on are "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "end-to-end encrypted"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", with a key that only the session's links hold. Browsers never send that part of a link, so we can't read any of this data."
+    }
+  ],
+  "Privacy.tsx_m9nuC7": [
+    {
+      "type": 0,
+      "value": "Cloudflare processes this data on our behalf under its data processing addendum. It may do so outside the European Economic Area, protected by the EU Standard Contractual Clauses. We rely on our legitimate interest in running a secure, reliable service (Article 6(1)(f) GDPR)."
+    }
+  ],
+  "Privacy.tsx_r4kdjG": [
+    {
+      "type": 0,
+      "value": "Step Review uses no advertising and no third-party scripts, and loads its fonts and other assets from its own domain. Links to GitHub and floor 0 lead to sites with their own privacy policies."
     }
   ],
   "ProjectCredits.tsx_wTNySU": [
@@ -399,10 +667,82 @@
       "value": "Prompt for your coding agent"
     }
   ],
-  "ReloadDropzone.tsx_/YcyUn": [
+  "ReviewActions.tsx_2pwM03": [
     {
       "type": 0,
-      "value": "Drop the review file to reload it"
+      "value": "Export review state"
+    }
+  ],
+  "ReviewActions.tsx_Gy09SB": [
+    {
+      "type": 0,
+      "value": "The file is not a valid review state."
+    }
+  ],
+  "ReviewActions.tsx_JzmbIf": [
+    {
+      "type": 0,
+      "value": "Reset review state"
+    }
+  ],
+  "ReviewActions.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "ReviewActions.tsx_Kx622U": [
+    {
+      "type": 0,
+      "value": "Import review state"
+    }
+  ],
+  "ReviewActions.tsx_OLCgvh": [
+    {
+      "type": 0,
+      "value": "The review file and its review state will be removed from this browser."
+    }
+  ],
+  "ReviewActions.tsx_OtMych": [
+    {
+      "type": 0,
+      "value": "Delete review"
+    }
+  ],
+  "ReviewActions.tsx_aN434T": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed, for every participant."
+    }
+  ],
+  "ReviewActions.tsx_agjgCY": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed."
+    }
+  ],
+  "ReviewActions.tsx_bmvTUd": [
+    {
+      "type": 0,
+      "value": "Review state"
+    }
+  ],
+  "ReviewActions.tsx_jbbK0Z": [
+    {
+      "type": 0,
+      "value": "Delete review?"
+    }
+  ],
+  "ReviewActions.tsx_jm/spn": [
+    {
+      "type": 0,
+      "value": "Reset"
+    }
+  ],
+  "ReviewActions.tsx_qjGckA": [
+    {
+      "type": 0,
+      "value": "Reset review state?"
     }
   ],
   "ReviewDropzone.tsx_LsFoKe": [
@@ -435,88 +775,30 @@
       "value": "or drop it anywhere on this page"
     }
   ],
-  "ReviewRecap.tsx_2pwM03": [
-    {
-      "type": 0,
-      "value": "Export review state"
-    }
-  ],
-  "ReviewRecap.tsx_Gy09SB": [
-    {
-      "type": 0,
-      "value": "The file is not a valid review state."
-    }
-  ],
-  "ReviewRecap.tsx_JzmbIf": [
-    {
-      "type": 0,
-      "value": "Reset review state"
-    }
-  ],
-  "ReviewRecap.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "ReviewRecap.tsx_Kx622U": [
-    {
-      "type": 0,
-      "value": "Import review state"
-    }
-  ],
-  "ReviewRecap.tsx_OLCgvh": [
-    {
-      "type": 0,
-      "value": "The review file and its review state will be removed from this browser."
-    }
-  ],
-  "ReviewRecap.tsx_OtMych": [
-    {
-      "type": 0,
-      "value": "Delete review"
-    }
-  ],
   "ReviewRecap.tsx_R+J5ox": [
     {
       "type": 0,
       "value": "Review"
     }
   ],
-  "ReviewRecap.tsx_agjgCY": [
+  "ReviewRecapRail.tsx_R+J5ox": [
     {
       "type": 0,
-      "value": "Every file will be marked as not viewed."
+      "value": "Review"
     }
   ],
-  "ReviewRecap.tsx_cNrFsL": [
+  "ReviewRecapRail.tsx_sfqExy": [
+    {
+      "type": 1,
+      "value": "fileName"
+    },
     {
       "type": 0,
-      "value": "Open another review"
-    }
-  ],
-  "ReviewRecap.tsx_jbbK0Z": [
+      "value": ": "
+    },
     {
-      "type": 0,
-      "value": "Delete review?"
-    }
-  ],
-  "ReviewRecap.tsx_jm/spn": [
-    {
-      "type": 0,
-      "value": "Reset"
-    }
-  ],
-  "ReviewRecap.tsx_kvdGU5": [
-    {
-      "type": 0,
-      "value": "Review actions"
-    }
-  ],
-  "ReviewRecap.tsx_qjGckA": [
-    {
-      "type": 0,
-      "value": "Reset review state?"
+      "type": 1,
+      "value": "counts"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -529,6 +811,18 @@
     {
       "type": 0,
       "value": "Show or hide the steps"
+    }
+  ],
+  "ReviewSidebar.tsx_eOJ4QU": [
+    {
+      "type": 0,
+      "value": "Collapse sidebar"
+    }
+  ],
+  "ReviewSidebarRail.tsx_1JgBls": [
+    {
+      "type": 0,
+      "value": "Expand sidebar"
     }
   ],
   "ReviewWarnings.tsx_7oiKM4": [
@@ -577,6 +871,190 @@
       "pluralType": "cardinal"
     }
   ],
+  "SessionDetailsDialog.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "SessionDetailsDialog.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "SessionDetailsDialog.tsx_KahVNL": [
+    {
+      "type": 0,
+      "value": "Collaboration session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_NFDO56": [
+    {
+      "type": 0,
+      "value": "Leave the session?"
+    }
+  ],
+  "SessionDetailsDialog.tsx_dVpNza": [
+    {
+      "type": 0,
+      "value": "The review and everyone's progress will be deleted from our servers, and the link will stop working."
+    }
+  ],
+  "SessionDetailsDialog.tsx_dmhZKW": [
+    {
+      "type": 0,
+      "value": "Leave session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_iIenp6": [
+    {
+      "type": 0,
+      "value": "End session"
+    }
+  ],
+  "SessionDetailsDialog.tsx_vT1p72": [
+    {
+      "type": 0,
+      "value": "The review will be removed from this browser. You can join again with the link, as a new participant."
+    }
+  ],
+  "SessionDetailsDialog.tsx_vlKhIl": [
+    {
+      "type": 0,
+      "value": "Your name"
+    }
+  ],
+  "SessionDetailsDialog.tsx_xqCAKC": [
+    {
+      "type": 0,
+      "value": "End the session?"
+    }
+  ],
+  "SessionLinkField.tsx_JBWS0c": [
+    {
+      "type": 0,
+      "value": "Link"
+    }
+  ],
+  "SessionLinkField.tsx_zXYcAr": [
+    {
+      "type": 0,
+      "value": "Copy the link"
+    }
+  ],
+  "SessionNotices.tsx_PuU15u": [
+    {
+      "type": 0,
+      "value": "Not connected"
+    }
+  ],
+  "SessionNotices.tsx_QH2s4N": [
+    {
+      "type": 0,
+      "value": "The review has too many participants to join it. Changes aren't saved."
+    }
+  ],
+  "SessionNotices.tsx_TNjWaR": [
+    {
+      "type": 0,
+      "value": "The connection to the session failed. Reload the page to try again."
+    }
+  ],
+  "SessionNotices.tsx_pK7uFW": [
+    {
+      "type": 0,
+      "value": "This browser can't join the review as before. Changes aren't saved."
+    }
+  ],
+  "SessionNotices.tsx_pRFgWn": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "description"
+    }
+  ],
+  "SessionNotices.tsx_sACAMl": [
+    {
+      "type": 0,
+      "value": "Your progress is too large to be saved in the session. Changes aren't saved."
+    }
+  ],
+  "SessionNotices.tsx_wd79hm": [
+    {
+      "type": 0,
+      "value": "The session ended, or expired. Changes aren't saved."
+    }
+  ],
+  "SessionParticipantList.tsx_bLm0E3": [
+    {
+      "type": 0,
+      "value": "(offline)"
+    }
+  ],
+  "SessionParticipantList.tsx_vM4QPQ": [
+    {
+      "type": 0,
+      "value": "Go to where "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " is"
+    }
+  ],
+  "SessionParticipantList.tsx_zx0myy": [
+    {
+      "type": 0,
+      "value": "Participants"
+    }
+  ],
+  "SessionParticipantsButton.tsx_uP1HHN": [
+    {
+      "type": 0,
+      "value": "Collaboration session: "
+    },
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " participant"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " participants"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
   "SeverityBadge.tsx_9eQkfo": [
     {
       "type": 0,
@@ -611,6 +1089,12 @@
     {
       "type": 0,
       "value": "2. Open the review file it produces"
+    }
+  ],
+  "Start.tsx_BZvdW+": [
+    {
+      "type": 0,
+      "value": "This session can't be joined: it ended or expired, or its link is incomplete."
     }
   ],
   "Start.tsx_NGb5sK": [
@@ -659,6 +1143,12 @@
     {
       "type": 0,
       "value": ")"
+    }
+  ],
+  "Start.tsx_cXBJ7U": [
+    {
+      "type": 0,
+      "value": "Privacy"
     }
   ],
   "Start.tsx_dqEFrF": [
@@ -717,6 +1207,12 @@
       "value": "see example"
     }
   ],
+  "Start.tsx_txEOWF": [
+    {
+      "type": 0,
+      "value": "Step Review on GitHub"
+    }
+  ],
   "StepFileTree.tsx_D/0ALU": [
     {
       "type": 0,
@@ -753,10 +1249,16 @@
       "value": "stepCount"
     }
   ],
-  "StepNavigation.tsx_/O2KYl": [
+  "StepNavigation.tsx_3JVa6k": [
     {
       "type": 0,
-      "value": "0. Overview"
+      "value": "End"
+    }
+  ],
+  "StepNavigation.tsx_9uOFF3": [
+    {
+      "type": 0,
+      "value": "Overview"
     }
   ],
   "StepNavigation.tsx_huCHmk": [
@@ -769,6 +1271,64 @@
     {
       "type": 0,
       "value": "Overview"
+    }
+  ],
+  "StepRail.tsx_7YdvBN": [
+    {
+      "type": 1,
+      "value": "number"
+    },
+    {
+      "type": 0,
+      "value": ". "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
+  "StepRail.tsx_9BK0YE": [
+    {
+      "type": 0,
+      "value": "Files in no step"
+    }
+  ],
+  "StepRail.tsx_9uOFF3": [
+    {
+      "type": 0,
+      "value": "Overview"
+    }
+  ],
+  "StepRail.tsx_huCHmk": [
+    {
+      "type": 0,
+      "value": "Steps"
+    }
+  ],
+  "StepRailLink.tsx_HRTugO": [
+    {
+      "type": 0,
+      "value": "Read carefully"
+    }
+  ],
+  "StepRailLink.tsx_ltk9Fd": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "details"
+    }
+  ],
+  "StepRailLink.tsx_v5MVrw": [
+    {
+      "type": 0,
+      "value": "Skim"
     }
   ],
   "StepTitle.tsx_9BK0YE": [
@@ -807,6 +1367,12 @@
       "value": "Diff layout"
     }
   ],
+  "StoredReviewList.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
   "StoredReviewList.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -825,10 +1391,52 @@
       "value": "Delete review"
     }
   ],
+  "StoredReviewList.tsx_YBUNQ3": [
+    {
+      "type": 0,
+      "value": "Remove the session?"
+    }
+  ],
+  "StoredReviewList.tsx_YnVaj4": [
+    {
+      "type": 0,
+      "value": "Joined session"
+    }
+  ],
+  "StoredReviewList.tsx_d3wbXx": [
+    {
+      "type": 0,
+      "value": "Session"
+    }
+  ],
+  "StoredReviewList.tsx_dwAISe": [
+    {
+      "type": 0,
+      "value": "Started by you"
+    }
+  ],
+  "StoredReviewList.tsx_esPulN": [
+    {
+      "type": 0,
+      "value": "Remove the session"
+    }
+  ],
   "StoredReviewList.tsx_jbbK0Z": [
     {
       "type": 0,
       "value": "Delete review?"
+    }
+  ],
+  "StoredReviewList.tsx_qbbNEM": [
+    {
+      "type": 0,
+      "value": "It will be removed from this browser. You can join it again with its link, as a new participant."
+    }
+  ],
+  "StoredReviewList.tsx_u0ABgm": [
+    {
+      "type": 0,
+      "value": "It will be removed from this browser, but stay available to the others until it expires: you won't be able to end the session. To delete it for everyone, end the session from the review instead."
     }
   ],
   "ViewedAndNoteCounts.tsx_zz6max": [
@@ -847,6 +1455,150 @@
     {
       "type": 0,
       "value": " viewed"
+    }
+  ],
+  "formatViewedAndNoteCounts.ts_7hxyNF": [
+    {
+      "type": 6,
+      "value": "issueCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issue"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issues"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "formatViewedAndNoteCounts.ts_cr9pr9": [
+    {
+      "type": 6,
+      "value": "explainerCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " note"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notes"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "formatViewedAndNoteCounts.ts_zz6max": [
+    {
+      "type": 1,
+      "value": "viewedCount"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "totalCount"
+    },
+    {
+      "type": 0,
+      "value": " viewed"
+    }
+  ],
+  "useLeaveSession.ts_FjpI/y": [
+    {
+      "type": 0,
+      "value": "The session couldn't be ended. Try again later."
+    }
+  ],
+  "useLeaveSession.ts_OAlCD8": [
+    {
+      "type": 0,
+      "value": "The session couldn't be removed from this browser. Try again later."
+    }
+  ],
+  "useParticipantLabel.ts_LXxsbk": [
+    {
+      "type": 0,
+      "value": "Anonymous"
+    }
+  ],
+  "useParticipantLabel.ts_OKhxcB": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " (you)"
+    }
+  ],
+  "useParticipantsHere.ts_im4lxq": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "names"
+            },
+            {
+              "type": 0,
+              "value": " is here"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "names"
+            },
+            {
+              "type": 0,
+              "value": " are here"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ]
 }

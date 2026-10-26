@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { useLoadedReviewContext } from "../review/LoadedReviewProvider.tsx";
+import reviewAddressId from "../navigation/reviewAddressId.ts";
+import { useLoadedReviewContext } from "../review/LoadedReviewValue.tsx";
 import ReviewStateProvider from "./ReviewStateProvider.tsx";
 
 interface Props {
@@ -8,14 +9,14 @@ interface Props {
 
 /** Provides the reviewer's state for the loaded review, if any. */
 export default function LoadedReviewStateProvider({ children }: Props) {
-  const { loadedReview } = useLoadedReviewContext();
-  if (!loadedReview) {
+  const { loadedReview, reviewAddress } = useLoadedReviewContext();
+  if (!loadedReview || !reviewAddress) {
     return children;
   }
   return (
     <ReviewStateProvider
-      key={loadedReview.reviewId}
-      reviewId={loadedReview.reviewId}
+      key={reviewAddressId(reviewAddress)}
+      reviewAddress={reviewAddress}
     >
       {children}
     </ReviewStateProvider>
