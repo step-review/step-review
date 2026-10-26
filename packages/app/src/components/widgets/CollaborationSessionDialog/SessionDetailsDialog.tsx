@@ -29,7 +29,15 @@ export default function SessionDetailsDialog() {
   const { close, copiedLink } = useCollaborationSessionDialogState();
   const { sessionBookmark, sessionConnection, sessionConnectionSnapshot } =
     useSessionConnectionContext()!;
-  const [name, setName] = useState(sessionConnectionSnapshot.ownState.name);
+  const ownName = sessionConnectionSnapshot.ownState.name;
+  const [name, setName] = useState(ownName);
+  // Follows the own name as it changes: e.g. opened right after starting the
+  // session, the dialog shows before the stored state is received.
+  const [previousOwnName, setPreviousOwnName] = useState(ownName);
+  if (ownName !== previousOwnName) {
+    setPreviousOwnName(ownName);
+    setName(ownName);
+  }
   const [isConfirmingLeave, setIsConfirmingLeave] = useState(false);
   const leaveSession = useLeaveSession(sessionBookmark, close);
   const link = sessionLink(window.location.origin, sessionBookmark);
@@ -41,7 +49,7 @@ export default function SessionDetailsDialog() {
   // whole state, for every participant to receive.
   const saveName = () => {
     const trimmedName = name.trim();
-    if (trimmedName !== sessionConnectionSnapshot.ownState.name) {
+    if (trimmedName !== ownName) {
       sessionConnection.rename(trimmedName);
       writeStorage(participantNameStorageKey, trimmedName);
     }

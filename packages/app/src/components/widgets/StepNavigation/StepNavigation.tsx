@@ -1,4 +1,5 @@
 import { ActionList } from "@primer/react";
+import { useState } from "react";
 import type { MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
@@ -32,6 +33,14 @@ export default function StepNavigation({
   const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
   const { reviewAddress } = reviewView;
+  // Expanded whenever another step becomes active.
+  const [isActiveStepCollapsed, setIsActiveStepCollapsed] = useState(false);
+  const [previousActiveStepId, setPreviousActiveStepId] =
+    useState(activeStepId);
+  if (activeStepId !== previousActiveStepId) {
+    setPreviousActiveStepId(activeStepId);
+    setIsActiveStepCollapsed(false);
+  }
   const go = (stepId: string | null, fileFragment?: string) => {
     navigateTo(
       stepId === null
@@ -44,6 +53,11 @@ export default function StepNavigation({
   const goOnClick = (stepId: string | null) => (event: MouseEvent) => {
     event.preventDefault();
     go(stepId);
+  };
+  // The active step stays where it is: clicking it shows or hides its files.
+  const toggleActiveStepOnClick = (event: MouseEvent) => {
+    event.preventDefault();
+    setIsActiveStepCollapsed(!isActiveStepCollapsed);
   };
   return (
     // One list per step, so that the active step's file tree sits under it.
@@ -84,7 +98,10 @@ export default function StepNavigation({
                 })}
                 className={isActive ? styles["current"] : undefined}
                 aria-current={isActive ? "page" : undefined}
-                onClick={goOnClick(step.id)}
+                aria-expanded={isActive ? !isActiveStepCollapsed : undefined}
+                onClick={
+                  isActive ? toggleActiveStepOnClick : goOnClick(step.id)
+                }
               >
                 <ActionList.LeadingVisual className={styles["markerSlot"]}>
                   <span className={styles["marker"]}>
@@ -116,7 +133,7 @@ export default function StepNavigation({
                 </ActionList.Description>
               </ActionList.LinkItem>
             </ActionList>
-            {isActive && (
+            {isActive && !isActiveStepCollapsed && (
               <div className={styles["fileTree"]}>
                 <StepFileTree
                   stepView={step}
