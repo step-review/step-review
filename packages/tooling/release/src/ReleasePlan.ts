@@ -2,7 +2,6 @@ export default interface ReleasePlan {
   version: string;
   /** The dist-tag the version is published under. */
   channel: string;
-  commit: string;
-  /** Set for branch betas, absent for stable releases. */
-  branch?: string;
+  /** Whether the version is a PR preview rather than a release. */
+  preview: boolean;
 }

@@ -1,51 +1,28 @@
-name: Release
+name: Tags
 
-# A `vX.Y.Z` tag deploys the app to production. The CLI workflow publishes the
-# CLI for the same tag.
+# A `vX.Y.Z` tag on main deploys the app to production and publishes the public
+# packages to npm under `latest`.
 on:
   push:
     tags: ["v*"]
 
 concurrency:
-  group: deploy-production
+  group: release
   cancel-in-progress: false
 
 jobs:
   qa:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/_qa.yml
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "24"
-      - name: Enable corepack
-        run: corepack enable
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Install Chromium for component tests
-        run: pnpm --filter @step-review/app exec playwright install --with-deps chromium
-      - name: Check formatting
-        run: pnpm check-formatting
-      - name: Check linting
-        run: pnpm lint
-      - name: Check translations
-        run: pnpm check-translations
-      - name: Check types
-        run: pnpm check-types
-      - name: Test
-        run: pnpm test
-      - name: Build CLI
-        run: pnpm --filter @step-review/cli build
 
-  deploy:
+  release:
     needs: qa
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # npm trusted publishing: no token, and the packages get provenance.
+      id-token: write
     steps:
       - uses: actions/checkout@v6
         with:
@@ -55,6 +32,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+          registry-url: "https://registry.npmjs.org"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
@@ -72,3 +50,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOY_REVISION: ${{ github.sha }}
         run: pnpm deploy-site --production
+      - name: Publish packages
+        run: pnpm release:publish --production

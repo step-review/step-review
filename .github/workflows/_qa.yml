@@ -1,0 +1,41 @@
+name: QA
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Commit to check, instead of the triggering one
+        type: string
+        required: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Chromium for component tests
+        run: pnpm --filter @step-review/app exec playwright install --with-deps chromium
+      - name: Check formatting
+        run: pnpm check-formatting
+      - name: Check linting
+        run: pnpm lint
+      - name: Check translations
+        run: pnpm check-translations
+      - name: Check types
+        run: pnpm check-types
+      - name: Test
+        run: pnpm test
+      - name: Build
+        run: pnpm build

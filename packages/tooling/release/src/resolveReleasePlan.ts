@@ -1,47 +1,54 @@
-import { createHash } from "node:crypto";
+import { parseArgs } from "node:util";
 import type ReleasePlan from "./ReleasePlan.ts";
 
 /**
- * A `vX.Y.Z` tag releases the committed version to `latest`. A branch publishes
- * a beta of it, under a dist-tag named after the branch.
+ * `--production` releases the committed version to `latest`. `--pr <number>
+ * --revision <commit>` publishes a preview of it, under the `pr-<number>`
+ * dist-tag.
  */
 export default function resolveReleasePlan(
   committedVersion: string,
-  environment: NodeJS.ProcessEnv,
+  argumentsList: string[],
 ): ReleasePlan {
   if (!/^\d+\.\d+\.\d+$/u.test(committedVersion)) {
     throw new Error(
       `The committed version must be X.Y.Z, not ${committedVersion}.`,
     );
   }
-  const commit = environment["GITHUB_SHA"] ?? "";
-  const refName = environment["GITHUB_REF_NAME"] ?? "";
-  if (environment["GITHUB_REF_TYPE"] === "tag") {
-    if (refName !== `v${committedVersion}`) {
-      throw new Error(
-        `The tag ${refName} doesn't match the version ${committedVersion}.`,
-      );
-    }
-    return { version: committedVersion, channel: "latest", commit };
+  const { values } = parseArgs({
+    args: argumentsList,
+    options: {
+      production: { type: "boolean" },
+      pr: { type: "string" },
+      revision: { type: "string" },
+    },
+    allowPositionals: false,
+    strict: true,
+  });
+  if (
+    values.production === true &&
+    values.pr === undefined &&
+    values.revision === undefined
+  ) {
+    return { version: committedVersion, channel: "latest", preview: false };
   }
-  const slug =
-    refName
-      .toLowerCase()
-      .replaceAll(/[^a-z0-9-]+/gu, "-")
-      .replaceAll(/^-+|-+$/gu, "")
-      .slice(0, 40) || "branch";
-  const hash = createHash("sha256").update(refName).digest("hex").slice(0, 8);
-  const identifier = `${slug}-${hash}`;
-  // npm rejects dist-tags that read as versions or ranges; `latest` and
-  // `branch-*` are taken by stable releases and the fallback names.
-  const branchCanBeDistTag =
-    /^[a-z_][a-z0-9._-]*$/iu.test(refName) &&
-    !/^v\d/iu.test(refName) &&
-    !/^(?:latest$|branch-)/iu.test(refName);
-  return {
-    version: `${committedVersion}-beta.${identifier}.sha${commit.slice(0, 12)}`,
-    channel: branchCanBeDistTag ? refName : `branch-${identifier}`,
-    commit,
-    branch: refName,
-  };
+  // Both values end up in the version, which npm rejects unless it's semver.
+  if (
+    values.production === undefined &&
+    values.pr !== undefined &&
+    /^[1-9]\d{0,9}$/u.test(values.pr) &&
+    values.revision !== undefined &&
+    /^[0-9a-f]{40}$/u.test(values.revision)
+  ) {
+    // Semver forbids numeric identifiers with leading zeros, which a commit
+    // prefix can be: `sha` keeps it alphanumeric.
+    return {
+      version: `${committedVersion}-pr.${values.pr}.sha${values.revision.slice(0, 12)}`,
+      channel: `pr-${values.pr}`,
+      preview: true,
+    };
+  }
+  throw new Error(
+    "Choose exactly one target: --production or --pr <number> --revision <commit>.",
+  );
 }

@@ -30,7 +30,7 @@ To try the app, have a coding agent write a review of any repository (see
 From the repository root:
 
 - `pnpm dev`: start the app.
-- `pnpm build`: build the app into `packages/app/dist`.
+- `pnpm build`: build every package.
 - `pnpm lint` / `pnpm lint-fix`
 - `pnpm check-formatting` / `pnpm fix-formatting`
 - `pnpm check-translations`: check that the message catalogs are up to date.
@@ -54,12 +54,17 @@ The app is a static site, deployed to Cloudflare as a Worker with static assets.
 The same Worker runs the session server for the requests under `/api/`: the
 deploy script merges `packages/session-server/wrangler.json` into the app's
 configuration. Each Worker has its own Durable Objects, so PR previews don't
-share data with production. GitHub Actions deploy:
+share data with production.
 
-- each release tag (`vX.Y.Z`) to `https://step-review.dev` (`release.yml`), see
-  [Releasing](#releasing);
-- each internal PR to `https://pr-<number>.step-review.dev`, removed when the PR
-  closes (`pull-requests.yml`, `cleanup-preview.yml`).
+GitHub Actions run QA (`_qa.yml`) on every PR, on every push to `main`
+(`main.yml`) and on every release tag. After it passes:
+
+- each internal PR is deployed to `https://pr-<number>.step-review.dev`, removed
+  when the PR closes, and its public packages are published under the
+  `pr-<number>` dist-tag (`pull-requests.yml`, `pull-requests-closed.yml`);
+- each release tag (`vX.Y.Z`) is deployed to `https://step-review.dev` and its
+  public packages are published under `latest` (`tags.yml`), see
+  [Releasing](#releasing).
 
 One-time setup:
 
@@ -74,10 +79,7 @@ To deploy by hand, export the same variables and run `pnpm build`, then
 
 ## Releasing
 
-All packages share one version. A `vX.Y.Z` tag on `main` deploys the app to
-production (`release.yml`) and publishes the public packages to npm with the
-`latest` dist-tag (`publish.yml`). Every push to a branch also publishes betas
-of them, under a dist-tag named after the branch.
+All packages share one version, released by a `vX.Y.Z` tag on `main`.
 
 1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md) and commit it.
 2. On a clean `main`, run `pnpm release:prepare X.Y.Z`: it sets the version of
@@ -89,6 +91,6 @@ job skips the versions already published.
 
 One-time setup: publish the first version of `@step-review/cli` by hand
 (`pnpm --filter @step-review/cli build`, then `pnpm publish --access public` in
-`packages/cli`), then register the repository's `publish.yml` workflow as its
-trusted publisher on npm. Branch betas are skipped until then, since npm makes a
-package's first version `latest`.
+`packages/cli`), then register the repository's `pull-requests.yml` and
+`tags.yml` workflows as its trusted publishers on npm. PR previews are skipped
+until then, since npm makes a package's first version `latest`.
