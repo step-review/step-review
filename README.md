@@ -38,20 +38,25 @@ Then, Step Review's [SKILL.md](packages/app/public/SKILL.md) (published at
 - Teaches the agent the format.
 - Tells it how to prepare the review: how to split the changes into steps, and
   what deserves a note.
-- Tells it to build the review file and write it in your repository, without
-  committing it.
+- Tells it to build the review file with
+  [`@step-review/cli`](packages/cli/README.md), which reports the problems the
+  app would show, and to write it in your repository, without committing it.
 
 ## Development
 
 pnpm monorepo:
 
 - [`packages/app`](packages/app): the web app (Vite, React, Primer).
+- [`packages/cli`](packages/cli): the CLI that agents use to build and check
+  review files, published as `@step-review/cli`.
 - [`packages/review-format`](packages/review-format): the review file format:
   schemas, parser and consistency checks.
 - [`packages/session-server`](packages/session-server): the server of sessions
   (a Cloudflare Worker with Durable Objects), and its protocol.
 - [`packages/tooling/oxlint-custom-rules`](packages/tooling/oxlint-custom-rules):
   architecture lint rules.
+- [`packages/tooling/release`](packages/tooling/release): the scripts that
+  prepare releases and publish the packages.
 
 See [Setup](docs/setup.md) for requirements, commands and deployment.
 Contributors and coding agents follow the principles in
