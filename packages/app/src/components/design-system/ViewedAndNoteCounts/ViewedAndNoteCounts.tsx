@@ -20,11 +20,21 @@ export default function ViewedAndNoteCounts({
 }: Props) {
   return (
     <span className={styles["counts"]}>
+      {/* As wide as with every file viewed, its widest, so that it keeps its
+          width as files are viewed. */}
       <span className={styles["viewed"]}>
-        <FormattedMessage
-          defaultMessage="{viewedCount}/{totalCount} viewed"
-          values={{ viewedCount, totalCount }}
-        />
+        <span>
+          <FormattedMessage
+            defaultMessage="{viewedCount}/{totalCount} viewed"
+            values={{ viewedCount, totalCount }}
+          />
+        </span>
+        <span className={styles["widest"]} aria-hidden>
+          <FormattedMessage
+            defaultMessage="{viewedCount}/{totalCount} viewed"
+            values={{ viewedCount: totalCount, totalCount }}
+          />
+        </span>
       </span>
       <NoteCounts {...noteKindCounts} isCompact />
     </span>

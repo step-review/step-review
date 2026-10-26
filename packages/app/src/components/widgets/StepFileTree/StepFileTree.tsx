@@ -6,8 +6,10 @@ import buildFileTree from "../../../business-logic/file-tree/buildFileTree.ts";
 import type FileTreeNode from "../../../business-logic/file-tree/FileTreeNode.ts";
 import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
+import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
+import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import FileIcon from "../FileIcon/FileIcon.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
@@ -68,6 +70,36 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
     const stepFileView = node.file;
     const fileFragment = `file-${stepFileView.id}`;
     const isViewed = viewedFingerprints.has(stepFileView.fingerprint);
+    const noteKindCounts = countNotes(stepFileView.notes);
+    const issueCount = Object.values(
+      noteKindCounts.issueCountsBySeverity,
+    ).reduce((sum, count) => sum + count, 0);
+    // The marks are hidden from assistive technology, which reads this instead.
+    const marksLabel = intl.formatList([
+      ...(issueCount > 0
+        ? [
+            intl.formatMessage(
+              {
+                defaultMessage:
+                  "{issueCount, plural, one {# issue} other {# issues}}",
+              },
+              { issueCount },
+            ),
+          ]
+        : []),
+      ...(noteKindCounts.explainerCount > 0
+        ? [
+            intl.formatMessage(
+              {
+                defaultMessage:
+                  "{explainerCount, plural, one {# note} other {# notes}}",
+              },
+              { explainerCount: noteKindCounts.explainerCount },
+            ),
+          ]
+        : []),
+      ...(isViewed ? [intl.formatMessage({ defaultMessage: "Viewed" })] : []),
+    ]);
     return (
       <TreeView.Item
         key={stepFileView.id}
@@ -88,15 +120,10 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
             {node.label}
           </TruncatedText>
         </span>
-        <TreeView.TrailingVisual
-          label={
-            isViewed
-              ? intl.formatMessage({ defaultMessage: "Viewed" })
-              : undefined
-          }
-        >
+        <TreeView.TrailingVisual label={marksLabel || undefined}>
           <span className={styles["marks"]}>
             <ParticipantsHere fileId={stepFileView.id} />
+            <NoteCounts {...noteKindCounts} isCompact />
             {isViewed && <CheckIcon className={styles["viewedIcon"]} />}
           </span>
         </TreeView.TrailingVisual>
