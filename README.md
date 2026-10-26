@@ -1,44 +1,45 @@
-<img src="packages/app/public/favicon.svg" alt="" width="64" height="64">
+Step Review helps you review large PRs and actually understand them. This way,
+you keep a handle on your codebase even when coding agents produce mountains of
+code that you can't realistically review line by line.
 
-# Step Review
+Your agent doesn't review the PR for you: it just prepares it for you. It splits
+the changes into logical steps, explains the parts that aren't obvious, points
+out possible issues, and focuses your attention on the most important aspects.
 
-A better way to review PRs.
+## Quickstart
 
-Your coding agent splits a PR into steps (by part of the system, by concern,
-mechanical changes apart…) and writes notes on the changes: explainers for the
-non-obvious parts, and issues to check. Step Review shows the review one step at
-a time, with the notes beside the diff, and lets you mark files as viewed.
+1. You tell your coding agent to review your PR with the
+   [step-review skill](https://step-review.dev/SKILL.md).
+2. Your agent does that and writes a review file in your repository
+   (uncommitted).
+3. You open the file in [step-review.dev](https://step-review.dev) and go
+   through the PR one step at a time, with the notes beside the diff.
 
-## How it works
+You can also review a PR with others: just start a collaboration session from
+the review's menu and share the link.
 
-1. Open [step-review.dev](https://step-review.dev) and paste the PR link (or a
-   branch, or a commit range) into the prompt. The app copies the completed
-   prompt for you.
-2. Give the prompt to your coding agent. Following
-   [SKILL.md](packages/app/public/SKILL.md) (published at
-   `step-review.dev/SKILL.md`), it writes a single review file, such as
-   `pr-123-20261025-143012.step-review`, in your repository. The file is never
-   committed.
-3. Drop the file into Step Review. Everything stays in your browser.
+## Under the hood
 
-Every review stands on its own: reviewing a PR again writes a new file, which
-opens as a new review.
+Step Review defines a simple format for the "review explainer", made of:
 
-## Collaboration sessions
+- An overview: what the PR does, and how to read it.
+- Steps: groups of changes to read together, in order, each with a short intro
+  and an attention level (high, normal or low).
+- Notes, anchored to lines of the diff, to files or to steps: explainers for the
+  non-obvious parts, and issues to check, each with a severity.
+- The PR's `git diff`, which the notes point into.
 
-From a review's menu, start a collaboration session to review it with others.
-The review is encrypted in your browser and uploaded with a key that only its
-link holds, so the server can't read it. Participants see each other's names,
-the files each viewed, and the step each is on, live. Whoever started the
-session can update the review by dropping a new review file, or end the session.
-Sessions are deleted after 30 days without activity.
+The format is versioned and has a JSON Schema; see
+[`@step-review/review-format`](packages/review-format/README.md).
 
-## Review files
+Then, Step Review's [SKILL.md](packages/app/public/SKILL.md) (published at
+`step-review.dev/SKILL.md`):
 
-A review file is a JSON section written by the agent (overview, steps, notes)
-followed by the `git diff` of the PR, so the agent never writes diff content
-itself. See [`@step-review/review-format`](packages/review-format/README.md) for
-the format, and `step-review.dev/schema/v3.json` for its JSON Schema.
+- Teaches the agent the format.
+- Tells it how to prepare the review: how to split the changes into steps, and
+  what deserves a note.
+- Tells it to build the review file and write it in your repository, without
+  committing it.
 
 ## Development
 
