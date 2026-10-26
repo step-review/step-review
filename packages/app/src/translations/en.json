@@ -251,17 +251,8 @@
   "ReviewActions.tsx_JzmbIf": {
     "defaultMessage": "Reset review state"
   },
-  "ReviewActions.tsx_K3r6DQ": {
-    "defaultMessage": "Delete"
-  },
   "ReviewActions.tsx_Kx622U": {
     "defaultMessage": "Import review state"
-  },
-  "ReviewActions.tsx_OLCgvh": {
-    "defaultMessage": "The review file and its review state will be removed from this browser."
-  },
-  "ReviewActions.tsx_OtMych": {
-    "defaultMessage": "Delete review"
   },
   "ReviewActions.tsx_aN434T": {
     "defaultMessage": "Every file will be marked as not viewed, for every participant."
@@ -271,9 +262,6 @@
   },
   "ReviewActions.tsx_bmvTUd": {
     "defaultMessage": "Review state"
-  },
-  "ReviewActions.tsx_jbbK0Z": {
-    "defaultMessage": "Delete review?"
   },
   "ReviewActions.tsx_jm/spn": {
     "defaultMessage": "Reset"

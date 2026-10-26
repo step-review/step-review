@@ -51,10 +51,7 @@ export default function ReviewRecap({
             />
           </span>
           <div className={styles["actions"]}>
-            <ReviewActions
-              loadedReview={loadedReview}
-              reviewView={reviewView}
-            />
+            <ReviewActions loadedReview={loadedReview} />
             {sidebarToggle}
           </div>
         </div>
