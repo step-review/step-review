@@ -56,10 +56,10 @@ deploy script merges `packages/session-server/wrangler.json` into the app's
 configuration. Each Worker has its own Durable Objects, so PR previews don't
 share data with production. GitHub Actions deploy:
 
-- each release tag (`vX.Y.Z`) to `https://step-review.dev` (`release.yml`), see
+- each release tag (`vX.Y.Z`) to `https://step-review.dev`, see
   [Releasing](#releasing);
 - each internal PR to `https://pr-<number>.step-review.dev`, removed when the PR
-  closes (`pull-requests.yml`, `cleanup-preview.yml`).
+  closes (`ci.yml`, `cleanup-preview.yml`).
 
 One-time setup:
 
@@ -89,6 +89,6 @@ a version already published with the same content, so re-running a job is safe.
 
 One-time setup: publish the first version of `@step-review/cli` by hand
 (`pnpm --filter @step-review/cli build`, then `pnpm publish --access public` in
-`packages/cli`), then register the repository's `cli.yml` workflow as its
-trusted publisher on npm. Branch betas are skipped until then, since npm makes a
+`packages/cli`), then register the repository's `ci.yml` workflow as its trusted
+publisher on npm. Branch betas are skipped until then, since npm makes a
 package's first version `latest`.
