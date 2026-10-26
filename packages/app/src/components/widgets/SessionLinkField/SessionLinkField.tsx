@@ -6,12 +6,10 @@ import styles from "./SessionLinkField.module.css";
 
 interface Props {
   link: string;
-  /** Whether the link was copied on its own, e.g. when the session started. */
-  isInitiallyCopied: boolean;
 }
 
 /** A session's link, to copy. */
-export default function SessionLinkField({ link, isInitiallyCopied }: Props) {
+export default function SessionLinkField({ link }: Props) {
   const intl = useIntl();
   // FormControl only labels its direct children: the input is in a row with
   // the copy button.
@@ -35,7 +33,6 @@ export default function SessionLinkField({ link, isInitiallyCopied }: Props) {
         <CopyIconButton
           value={link}
           size="medium"
-          isInitiallyCopied={isInitiallyCopied}
           label={intl.formatMessage({ defaultMessage: "Copy the link" })}
         />
       </div>

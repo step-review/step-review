@@ -71,3 +71,20 @@ it("selects the PR placeholder in the editable prompt", async () => {
     textarea.value.slice(textarea.selectionStart, textarea.selectionEnd),
   ).toBe("PR_LINK_HERE");
 });
+
+it("keeps the editable prompt's height when a long link is entered", async () => {
+  // Setup SUT
+  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const textarea = screen.getByRole("textbox", {
+    name: "Prompt for your coding agent",
+  });
+  const initialHeight = textarea.element().getBoundingClientRect().height;
+
+  // Exercise
+  await textarea.fill(
+    "Review https://github.com/example-organization/example-repository/pull/12345 with https://step-review.dev/SKILL.md.",
+  );
+
+  // Verify
+  expect(textarea.element().getBoundingClientRect().height).toBe(initialHeight);
+});

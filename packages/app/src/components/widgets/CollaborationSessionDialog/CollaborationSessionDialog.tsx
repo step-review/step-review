@@ -7,7 +7,6 @@ import useNavigationState from "../../../business-logic/navigation/useNavigation
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
 import readParticipantName from "../../../business-logic/session-store/readParticipantName.ts";
-import sessionLink from "../../../business-logic/session/sessionLink.ts";
 import startSession from "../../../business-logic/session/startSession.ts";
 import styles from "./CollaborationSessionDialog.module.css";
 import { useCollaborationSessionDialogState } from "./CollaborationSessionDialogProvider.tsx";
@@ -42,38 +41,16 @@ type SessionStartProps = Props;
 function SessionStart({ loadedReview, viewedFingerprints }: SessionStartProps) {
   const intl = useIntl();
   const route = useNavigationState();
-  const { close, setCopiedLink } = useCollaborationSessionDialogState();
+  const { close } = useCollaborationSessionDialogState();
   const [status, setStatus] = useState<"idle" | "starting" | "failed">("idle");
-  // Called right away, while handling the click: browsers only let pages write
-  // to the clipboard then. The link follows once the session starts.
-  const copyLink = async (linkPromise: Promise<string>) => {
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "text/plain": linkPromise.then(
-            (link) => new Blob([link], { type: "text/plain" }),
-          ),
-        }),
-      ]);
-      setCopiedLink(await linkPromise);
-    } catch {
-      // Not copied (e.g. the session didn't start, or the browser refused):
-      // the dialog still gives the link to copy.
-    }
-  };
   const start = async () => {
     setStatus("starting");
-    const sessionBookmarkPromise = startSession(
-      window.location.origin,
-      loadedReview,
-      { name: readParticipantName(), viewedFingerprints },
-    );
-    const linkPromise = sessionBookmarkPromise.then((sessionBookmark) =>
-      sessionLink(window.location.origin, sessionBookmark),
-    );
-    void copyLink(linkPromise);
     try {
-      const { sessionId, sessionKey } = await sessionBookmarkPromise;
+      const { sessionId, sessionKey } = await startSession(
+        window.location.origin,
+        loadedReview,
+        { name: readParticipantName(), viewedFingerprints },
+      );
       // The same page, of the session: the dialog stays open, with its link.
       const reviewAddress = { kind: "session", sessionId, sessionKey } as const;
       navigateTo(
