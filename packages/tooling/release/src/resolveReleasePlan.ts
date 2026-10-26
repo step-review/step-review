@@ -2,8 +2,8 @@ import { createHash } from "node:crypto";
 import type ReleasePlan from "./ReleasePlan.ts";
 
 /**
- * A `cli-vX.Y.Z` tag releases the committed version to `latest`. A branch
- * publishes a beta of it, under a dist-tag named after the branch.
+ * A `vX.Y.Z` tag releases the committed version to `latest`. A branch publishes
+ * a beta of it, under a dist-tag named after the branch.
  */
 export default function resolveReleasePlan(
   committedVersion: string,
@@ -17,7 +17,7 @@ export default function resolveReleasePlan(
   const commit = environment["GITHUB_SHA"] ?? "";
   const refName = environment["GITHUB_REF_NAME"] ?? "";
   if (environment["GITHUB_REF_TYPE"] === "tag") {
-    if (refName !== `cli-v${committedVersion}`) {
+    if (refName !== `v${committedVersion}`) {
       throw new Error(
         `The tag ${refName} doesn't match the version ${committedVersion}.`,
       );

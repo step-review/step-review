@@ -1,26 +1,30 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import cliManifest from "./cliManifest.ts";
+import cliReleaseFiles from "./cliReleaseFiles.ts";
 import compareVersions from "./compareVersions.ts";
 import computeIntegrity from "./computeIntegrity.ts";
-import packageManifest from "./packageManifest.ts";
+import isOnMain from "./isOnMain.ts";
 import readCommandOutput from "./readCommandOutput.ts";
 import readRegistryValue from "./readRegistryValue.ts";
-import releaseFiles from "./releaseFiles.ts";
 import type ReleasePlan from "./ReleasePlan.ts";
 import resolveReleasePlan from "./resolveReleasePlan.ts";
 import runCommand from "./runCommand.ts";
 import type SealedTarball from "./SealedTarball.ts";
+import workspaceVersion from "./workspaceVersion.ts";
 
-const { name, version: committedVersion } = packageManifest.read();
-const plan = JSON.parse(readFileSync(releaseFiles.plan, "utf8")) as ReleasePlan;
-const expectedPlan = resolveReleasePlan(committedVersion, process.env);
+const name = cliManifest.readName();
+const plan = JSON.parse(
+  readFileSync(cliReleaseFiles.plan, "utf8"),
+) as ReleasePlan;
+const expectedPlan = resolveReleasePlan(workspaceVersion.read(), process.env);
 if (JSON.stringify(plan) !== JSON.stringify(expectedPlan)) {
   throw new Error("The release plan doesn't match this commit.");
 }
 const sealedTarball = JSON.parse(
-  readFileSync(releaseFiles.sealedTarball, "utf8"),
+  readFileSync(cliReleaseFiles.sealedTarball, "utf8"),
 ) as SealedTarball;
-const tarballUrl = new URL(sealedTarball.file, releaseFiles.packDirectory);
+const tarballUrl = new URL(sealedTarball.file, cliReleaseFiles.packDirectory);
 if (
   sealedTarball.version !== plan.version ||
   computeIntegrity(tarballUrl) !== sealedTarball.integrity
@@ -45,15 +49,8 @@ if (plan.branch) {
     process.exit(0);
   }
 } else {
-  try {
-    readCommandOutput("git", [
-      "merge-base",
-      "--is-ancestor",
-      plan.commit,
-      "origin/main",
-    ]);
-  } catch {
-    throw new Error("Stable releases must be tagged on main.");
+  if (!isOnMain(plan.commit)) {
+    throw new Error("Releases must be tagged on main.");
   }
   if (latestVersion && compareVersions(plan.version, latestVersion) < 0) {
     throw new Error(`${plan.version} is older than latest (${latestVersion}).`);

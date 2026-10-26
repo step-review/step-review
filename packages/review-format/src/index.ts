@@ -20,6 +20,7 @@ export { default as findUnassignedFileDiffs } from "./checks/findUnassignedFileD
 export { default as selectHunks } from "./checks/selectHunks.ts";
 
 export { default as createJsonSchema } from "./jsonSchema/createJsonSchema.ts";
+export { default as formatVersion } from "./data/formatVersion.ts";
 export { default as reviewDataSchema } from "./data/schemas/reviewDataSchema.ts";
 export type { default as Attention } from "./data/types/Attention.ts";
 export type { default as DiffSide } from "./data/types/DiffSide.ts";

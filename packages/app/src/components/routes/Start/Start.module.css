@@ -29,6 +29,7 @@
 
 .footerLinks {
   display: flex;
+  align-items: center;
   gap: var(--base-size-4);
 }
 

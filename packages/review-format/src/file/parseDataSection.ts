@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import formatVersion from "../data/formatVersion.ts";
 import reviewDataSchema from "../data/schemas/reviewDataSchema.ts";
 import type ReviewData from "../data/types/ReviewData.ts";
 import formatIssuePath from "./formatIssuePath.ts";
@@ -20,6 +21,24 @@ export default function parseDataSection(
         {
           message: `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
           location: `line ${section.markerLineNumber + 1}`,
+        },
+      ],
+    };
+  }
+  // A review in another format version fails the schema in many places; the
+  // version alone says what to do.
+  if (
+    typeof json === "object" &&
+    json !== null &&
+    "version" in json &&
+    json.version !== formatVersion
+  ) {
+    return {
+      success: false,
+      problems: [
+        {
+          message: `The review uses format version ${JSON.stringify(json.version)}, but Step Review reads only version ${formatVersion}. Write the review again with the current instructions.`,
+          location: "version",
         },
       ],
     };

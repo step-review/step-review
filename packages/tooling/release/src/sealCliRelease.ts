@@ -1,12 +1,14 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import cliReleaseFiles from "./cliReleaseFiles.ts";
 import computeIntegrity from "./computeIntegrity.ts";
-import releaseFiles from "./releaseFiles.ts";
 import type ReleasePlan from "./ReleasePlan.ts";
 import type SealedTarball from "./SealedTarball.ts";
 
 // Records the tarball QA tested, so that the publish job publishes exactly it.
-const plan = JSON.parse(readFileSync(releaseFiles.plan, "utf8")) as ReleasePlan;
-const files = readdirSync(releaseFiles.packDirectory).filter((file) =>
+const plan = JSON.parse(
+  readFileSync(cliReleaseFiles.plan, "utf8"),
+) as ReleasePlan;
+const files = readdirSync(cliReleaseFiles.packDirectory).filter((file) =>
   file.endsWith(".tgz"),
 );
 const [file] = files;
@@ -19,10 +21,10 @@ if (!file.endsWith(`-${plan.version}.tgz`)) {
 const sealedTarball: SealedTarball = {
   file,
   version: plan.version,
-  integrity: computeIntegrity(new URL(file, releaseFiles.packDirectory)),
+  integrity: computeIntegrity(new URL(file, cliReleaseFiles.packDirectory)),
 };
 writeFileSync(
-  releaseFiles.sealedTarball,
+  cliReleaseFiles.sealedTarball,
   `${JSON.stringify(sealedTarball, null, 2)}\n`,
 );
 console.log(`Sealed ${file}.`);

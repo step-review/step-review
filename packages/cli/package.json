@@ -22,11 +22,7 @@
   "scripts": {
     "build": "vite build",
     "check-types": "tsc --noEmit",
-    "test": "vitest run",
-    "release:prepare": "node scripts/release/prepareRelease.ts",
-    "release:ci": "node scripts/release/prepareCiRelease.ts",
-    "release:seal": "node scripts/release/sealRelease.ts",
-    "release:publish": "node scripts/release/publishRelease.ts"
+    "test": "vitest run"
   },
   "devDependencies": {
     "@step-review/review-format": "workspace:*",

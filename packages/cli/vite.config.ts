@@ -18,6 +18,6 @@ export default defineConfig({
     noExternal: true,
   },
   test: {
-    include: ["src/**/*.test.ts", "scripts/**/*.test.ts"],
+    include: ["src/**/*.test.ts"],
   },
 });

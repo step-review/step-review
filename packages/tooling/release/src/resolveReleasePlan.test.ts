@@ -6,7 +6,7 @@ it("releases the committed version to latest from a matching tag", () => {
   const plan = resolveReleasePlan("1.2.3", {
     GITHUB_SHA: "0123456789abcdef0123456789abcdef01234567",
     GITHUB_REF_TYPE: "tag",
-    GITHUB_REF_NAME: "cli-v1.2.3",
+    GITHUB_REF_NAME: "v1.2.3",
   });
 
   // Verify
@@ -23,9 +23,9 @@ it("rejects a tag that doesn't match the committed version", () => {
     resolveReleasePlan("1.2.3", {
       GITHUB_SHA: "0123456789abcdef0123456789abcdef01234567",
       GITHUB_REF_TYPE: "tag",
-      GITHUB_REF_NAME: "cli-v1.2.4",
+      GITHUB_REF_NAME: "v1.2.4",
     }),
-  ).toThrow("The tag cli-v1.2.4 doesn't match the version 1.2.3.");
+  ).toThrow("The tag v1.2.4 doesn't match the version 1.2.3.");
 });
 
 it("publishes a beta of a branch under the branch's name", () => {

@@ -1,9 +1,16 @@
 import formatjs from "@formatjs/unplugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import appPackage from "./package.json" with { type: "json" };
 import emitJsonSchema from "./scripts/emitJsonSchema.ts";
 
 export default defineConfig({
+  define: {
+    // Release builds get the release's version; the others say what they are.
+    __APP_VERSION__: JSON.stringify(
+      process.env["APP_VERSION"] ?? `${appPackage.version}-dev`,
+    ),
+  },
   plugins: [
     react(),
     formatjs({

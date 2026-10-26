@@ -7,6 +7,7 @@ import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
 import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
+import AppVersion from "../../widgets/AppVersion/AppVersion.tsx";
 import ExampleReviewLink from "../../widgets/ExampleReviewLink/ExampleReviewLink.tsx";
 import PromptGenerator from "../../widgets/PromptGenerator/PromptGenerator.tsx";
 import ReviewDropzone from "../../widgets/ReviewDropzone/ReviewDropzone.tsx";
@@ -124,6 +125,7 @@ export default function Start({ missingReview }: Props) {
         <footer className={styles["footer"]}>
           <AppBrand />
           <div className={styles["footerLinks"]}>
+            <AppVersion />
             <IconButton
               as="a"
               href={routeHref({ name: RouteName.Privacy })}

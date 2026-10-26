@@ -63,7 +63,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build
-        run: pnpm build
+        env:
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
+        run: APP_VERSION="$(node -p "require('./package.json').version")-pr.$PULL_REQUEST_NUMBER" pnpm build
       - name: Deploy Worker
         id: deploy
         env:

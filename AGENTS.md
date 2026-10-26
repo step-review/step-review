@@ -8,9 +8,14 @@ inferred from the code. Omit examples and descriptions of existing structure.
 
 - The app has no users yet. Do not add backward-compatibility code or migrations
   for previous versions of the app's own state (local storage) unless explicitly
-  requested. The review format is the exception: it is a public contract,
-  versioned in `@step-review/review-format`. Changes must stay compatible with
-  existing review files, or introduce a new format version.
+  requested.
+
+- Review files are short-lived: the app reads only the current format version,
+  without compatibility code. Bump `formatVersion` in
+  `@step-review/review-format` whenever a change makes older files invalid.
+
+- All packages share one version, released by a `vX.Y.Z` tag that deploys the
+  app and publishes the CLI together.
 
 - Name things in the code as the interface names them. Reviewing together
   happens in a collaboration session (a session, for short) that a review's
