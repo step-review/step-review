@@ -31,7 +31,7 @@ export default function Privacy() {
           </Text>
         </Stack>
         <Text as="p">
-          <FormattedMessage defaultMessage="Step Review is built so that your code stays with you: there are no accounts, no cookies and no ads, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why." />
+          <FormattedMessage defaultMessage="Step Review is built so that your code stays with you: there are no accounts, no cookies and no tracking, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why." />
         </Text>
         <Section
           title={<FormattedMessage defaultMessage="Who is responsible" />}
@@ -106,13 +106,13 @@ export default function Privacy() {
         </Section>
         <Section title={<FormattedMessage defaultMessage="Analytics" />}>
           <Text as="p">
-            <FormattedMessage defaultMessage="To see how much Step Review is used and how fast it loads, we use Cloudflare Web Analytics. A script from Cloudflare reports the address of each page you view (without the part after “?” or “#”, so never a session's key), the page you came from, your browser and device type, your country, and how long the page took to load. It uses no cookies or other storage on your device, and doesn't build a profile of you or follow you across sites." />
+            <FormattedMessage defaultMessage="Step Review runs no analytics scripts. To see how much it's used, we look at the aggregate statistics Cloudflare computes from the requests it serves, such as the number of page views and visitors per day and the countries they come from. Nothing runs on or is read from your device for this." />
           </Text>
           <Text as="p">
             <FormattedMessage defaultMessage="We rely on our legitimate interest in understanding how Step Review is used, so that we can improve it (Article 6(1)(f) GDPR)." />
           </Text>
           <Text as="p">
-            <FormattedMessage defaultMessage="Step Review uses no other analytics, no advertising and no other third-party scripts. Links to GitHub and floor 0 lead to sites with their own privacy policies." />
+            <FormattedMessage defaultMessage="Step Review uses no advertising and no third-party scripts, and loads its fonts and other assets from its own domain. Links to GitHub and floor 0 lead to sites with their own privacy policies." />
           </Text>
         </Section>
         <Section title={<FormattedMessage defaultMessage="Your rights" />}>

@@ -443,6 +443,12 @@
       "value": "Your name"
     }
   ],
+  "Privacy.tsx_+pPNRT": [
+    {
+      "type": 0,
+      "value": "Step Review runs no analytics scripts. To see how much it's used, we look at the aggregate statistics Cloudflare computes from the requests it serves, such as the number of page views and visitors per day and the countries they come from. Nothing runs on or is read from your device for this."
+    }
+  ],
   "Privacy.tsx_5cxCIW": [
     {
       "type": 0,
@@ -495,12 +501,6 @@
     {
       "type": 0,
       "value": ", which processes your IP address and standard request information to deliver the site and protect it from attacks, and may keep it in short-lived logs. To prevent abuse, the server also limits how many sessions an IP address can start per minute; it only keeps those counts for that minute."
-    }
-  ],
-  "Privacy.tsx_PDN1P8": [
-    {
-      "type": 0,
-      "value": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no ads, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
     }
   ],
   "Privacy.tsx_RuHI4i": [
@@ -557,16 +557,16 @@
       "value": ", except as described for sessions below."
     }
   ],
+  "Privacy.tsx_Vwbc0H": [
+    {
+      "type": 0,
+      "value": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no tracking, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
+    }
+  ],
   "Privacy.tsx_WmroJ6": [
     {
       "type": 0,
       "value": "Data kept in your browser"
-    }
-  ],
-  "Privacy.tsx_bBmvET": [
-    {
-      "type": 0,
-      "value": "Step Review uses no other analytics, no advertising and no other third-party scripts. Links to GitHub and floor 0 lead to sites with their own privacy policies."
     }
   ],
   "Privacy.tsx_cXBJ7U": [
@@ -631,16 +631,16 @@
       "value": ", with a key that only the session's links hold. Browsers never send that part of a link, so we can't read any of this data."
     }
   ],
-  "Privacy.tsx_j7C0nE": [
-    {
-      "type": 0,
-      "value": "To see how much Step Review is used and how fast it loads, we use Cloudflare Web Analytics. A script from Cloudflare reports the address of each page you view (without the part after “?” or “#”, so never a session's key), the page you came from, your browser and device type, your country, and how long the page took to load. It uses no cookies or other storage on your device, and doesn't build a profile of you or follow you across sites."
-    }
-  ],
   "Privacy.tsx_m9nuC7": [
     {
       "type": 0,
       "value": "Cloudflare processes this data on our behalf under its data processing addendum. It may do so outside the European Economic Area, protected by the EU Standard Contractual Clauses. We rely on our legitimate interest in running a secure, reliable service (Article 6(1)(f) GDPR)."
+    }
+  ],
+  "Privacy.tsx_r4kdjG": [
+    {
+      "type": 0,
+      "value": "Step Review uses no advertising and no third-party scripts, and loads its fonts and other assets from its own domain. Links to GitHub and floor 0 lead to sites with their own privacy policies."
     }
   ],
   "ProjectCredits.tsx_wTNySU": [

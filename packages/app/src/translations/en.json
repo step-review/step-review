@@ -161,6 +161,9 @@
   "ParticipantNameDialog.tsx_vlKhIl": {
     "defaultMessage": "Your name"
   },
+  "Privacy.tsx_+pPNRT": {
+    "defaultMessage": "Step Review runs no analytics scripts. To see how much it's used, we look at the aggregate statistics Cloudflare computes from the requests it serves, such as the number of page views and visitors per day and the countries they come from. Nothing runs on or is read from your device for this."
+  },
   "Privacy.tsx_5cxCIW": {
     "defaultMessage": "Hosting and network data"
   },
@@ -175,9 +178,6 @@
   },
   "Privacy.tsx_KEWCI1": {
     "defaultMessage": "Step Review is hosted by {cloudflare}, which processes your IP address and standard request information to deliver the site and protect it from attacks, and may keep it in short-lived logs. To prevent abuse, the server also limits how many sessions an IP address can start per minute; it only keeps those counts for that minute."
-  },
-  "Privacy.tsx_PDN1P8": {
-    "defaultMessage": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no ads, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
   },
   "Privacy.tsx_RuHI4i": {
     "defaultMessage": "This storage is needed for Step Review to work, so it doesn't require consent. You can remove a review from the start page, or remove everything by clearing this site's data in your browser."
@@ -197,11 +197,11 @@
   "Privacy.tsx_UNX1+0": {
     "defaultMessage": "The review files you open, the files you mark as viewed, the sessions you joined (with the keys that open them), your name in sessions and your display preferences are stored in your browser's local storage. <strong>They are not sent to us</strong>, except as described for sessions below."
   },
+  "Privacy.tsx_Vwbc0H": {
+    "defaultMessage": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no tracking, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
+  },
   "Privacy.tsx_WmroJ6": {
     "defaultMessage": "Data kept in your browser"
-  },
-  "Privacy.tsx_bBmvET": {
-    "defaultMessage": "Step Review uses no other analytics, no advertising and no other third-party scripts. Links to GitHub and floor 0 lead to sites with their own privacy policies."
   },
   "Privacy.tsx_cXBJ7U": {
     "defaultMessage": "Privacy"
@@ -227,11 +227,11 @@
   "Privacy.tsx_iDEnD2": {
     "defaultMessage": "When you start a session, the review is uploaded to our server so that others can join it. Before anything leaves your browser, the review, each participant's name and viewed files, and the step each participant is on are <strong>end-to-end encrypted</strong>, with a key that only the session's links hold. Browsers never send that part of a link, so we can't read any of this data."
   },
-  "Privacy.tsx_j7C0nE": {
-    "defaultMessage": "To see how much Step Review is used and how fast it loads, we use Cloudflare Web Analytics. A script from Cloudflare reports the address of each page you view (without the part after “?” or “#”, so never a session's key), the page you came from, your browser and device type, your country, and how long the page took to load. It uses no cookies or other storage on your device, and doesn't build a profile of you or follow you across sites."
-  },
   "Privacy.tsx_m9nuC7": {
     "defaultMessage": "Cloudflare processes this data on our behalf under its data processing addendum. It may do so outside the European Economic Area, protected by the EU Standard Contractual Clauses. We rely on our legitimate interest in running a secure, reliable service (Article 6(1)(f) GDPR)."
+  },
+  "Privacy.tsx_r4kdjG": {
+    "defaultMessage": "Step Review uses no advertising and no third-party scripts, and loads its fonts and other assets from its own domain. Links to GitHub and floor 0 lead to sites with their own privacy policies."
   },
   "ProjectCredits.tsx_wTNySU": {
     "defaultMessage": "by"
