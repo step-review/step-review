@@ -71,21 +71,6 @@
   "FileCardHeader.tsx_s3aLc+": {
     "defaultMessage": "Copy the path"
   },
-  "FileStatusBadge.tsx_KQvWvD": {
-    "defaultMessage": "Deleted"
-  },
-  "FileStatusBadge.tsx_Yg0L8+": {
-    "defaultMessage": "Renamed"
-  },
-  "FileStatusBadge.tsx_p556q3": {
-    "defaultMessage": "Copied"
-  },
-  "FileStatusBadge.tsx_rIAJlE": {
-    "defaultMessage": "Added"
-  },
-  "FileStatusBadge.tsx_tOxzip": {
-    "defaultMessage": "Modified"
-  },
   "FileViewers.tsx_Z7S0/N": {
     "defaultMessage": "Viewed by {names}"
   },
@@ -541,6 +526,21 @@
   },
   "ViewedAndNoteCounts.tsx_zz6max": {
     "defaultMessage": "{viewedCount}/{totalCount} viewed"
+  },
+  "formatFileStatus.ts_KQvWvD": {
+    "defaultMessage": "Deleted"
+  },
+  "formatFileStatus.ts_Yg0L8+": {
+    "defaultMessage": "Renamed"
+  },
+  "formatFileStatus.ts_p556q3": {
+    "defaultMessage": "Copied"
+  },
+  "formatFileStatus.ts_rIAJlE": {
+    "defaultMessage": "Added"
+  },
+  "formatFileStatus.ts_tOxzip": {
+    "defaultMessage": "Modified"
   },
   "formatViewedAndNoteCounts.ts_7hxyNF": {
     "defaultMessage": "{issueCount, plural, one {# issue} other {# issues}}"

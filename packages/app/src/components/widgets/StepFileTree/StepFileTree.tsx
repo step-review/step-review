@@ -9,6 +9,8 @@ import useViewedFingerprints from "../../../business-logic/review-state/useViewe
 import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
+import formatFileStatus from "../../design-system/badges/formatFileStatus.ts";
+import FileStatusIcon from "../../design-system/FileStatusIcon/FileStatusIcon.tsx";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import FileIcon from "../FileIcon/FileIcon.tsx";
@@ -76,6 +78,7 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
     ).reduce((sum, count) => sum + count, 0);
     // The marks are hidden from assistive technology, which reads this instead.
     const marksLabel = intl.formatList([
+      formatFileStatus(intl, stepFileView.fileDiff.status),
       ...(issueCount > 0
         ? [
             intl.formatMessage(
@@ -120,11 +123,12 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
             {node.label}
           </TruncatedText>
         </span>
-        <TreeView.TrailingVisual label={marksLabel || undefined}>
+        <TreeView.TrailingVisual label={marksLabel}>
           <span className={styles["marks"]}>
             <ParticipantsHere fileId={stepFileView.id} />
             <NoteCounts {...noteKindCounts} isCompact />
             {isViewed && <CheckIcon className={styles["viewedIcon"]} />}
+            <FileStatusIcon status={stepFileView.fileDiff.status} />
           </span>
         </TreeView.TrailingVisual>
       </TreeView.Item>

@@ -1,7 +1,8 @@
 import { Label } from "@primer/react";
 import type { LabelColorOptions } from "@primer/react";
 import type { FileDiffStatus } from "@step-review/review-format";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
+import formatFileStatus from "./formatFileStatus.ts";
 
 interface Props {
   status: FileDiffStatus;
@@ -16,19 +17,8 @@ const variants: Record<FileDiffStatus, LabelColorOptions> = {
 };
 
 export default function FileStatusBadge({ status }: Props) {
+  const intl = useIntl();
   return (
-    <Label variant={variants[status]}>
-      {status === "added" ? (
-        <FormattedMessage defaultMessage="Added" />
-      ) : status === "deleted" ? (
-        <FormattedMessage defaultMessage="Deleted" />
-      ) : status === "renamed" ? (
-        <FormattedMessage defaultMessage="Renamed" />
-      ) : status === "copied" ? (
-        <FormattedMessage defaultMessage="Copied" />
-      ) : (
-        <FormattedMessage defaultMessage="Modified" />
-      )}
-    </Label>
+    <Label variant={variants[status]}>{formatFileStatus(intl, status)}</Label>
   );
 }
