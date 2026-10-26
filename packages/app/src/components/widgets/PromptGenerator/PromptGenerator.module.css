@@ -25,15 +25,3 @@
   top: var(--base-size-8);
   right: var(--base-size-8);
 }
-
-/* Positioned outside the flow so that it doesn't shift the page. */
-.copiedMessage {
-  position: absolute;
-  top: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: var(--base-size-8);
-  color: var(--fgColor-success);
-  font-size: calc(var(--text-body-size-medium) * var(--content-font-scale, 1));
-}

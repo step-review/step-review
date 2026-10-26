@@ -26,7 +26,7 @@ import useLeaveSession from "./useLeaveSession.ts";
  */
 export default function SessionDetailsDialog() {
   const intl = useIntl();
-  const { close, copiedLink } = useCollaborationSessionDialogState();
+  const { close } = useCollaborationSessionDialogState();
   const { sessionBookmark, sessionConnection, sessionConnectionSnapshot } =
     useSessionConnectionContext()!;
   const ownName = sessionConnectionSnapshot.ownState.name;
@@ -124,10 +124,7 @@ export default function SessionDetailsDialog() {
               onBlur={saveName}
             />
           </FormControl>
-          <SessionLinkField
-            link={link}
-            isInitiallyCopied={link === copiedLink}
-          />
+          <SessionLinkField link={link} />
           <SessionParticipantList onFollow={closeDialog} />
         </Stack>
       )}

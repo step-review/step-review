@@ -1,7 +1,6 @@
-import { CheckIcon } from "@primer/octicons-react";
 import { Link, Textarea } from "@primer/react";
 import { useEffect, useRef, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import createStartPrompt from "../../../business-logic/prompts/createStartPrompt.ts";
 import startPromptPlaceholder from "../../../business-logic/prompts/startPromptPlaceholder.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
@@ -14,10 +13,8 @@ interface Props {
 export default function PromptGenerator({ editable = true }: Props) {
   const intl = useIntl();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const isPastingRef = useRef(false);
   const defaultPrompt = createStartPrompt(window.location.origin);
   const [prompt, setPrompt] = useState(defaultPrompt);
-  const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
   const skillUrl = `${window.location.origin}/SKILL.md`;
   const placeholderStart = defaultPrompt.indexOf(startPromptPlaceholder);
   const skillUrlStart = defaultPrompt.indexOf(skillUrl);
@@ -47,23 +44,11 @@ export default function PromptGenerator({ editable = true }: Props) {
           })}
           block
           resize="none"
-          autoSize
+          // A fixed height, so that pasting a link doesn't make it grow.
+          rows={2}
           className={styles["textarea"]}
           value={prompt}
-          onPaste={() => {
-            isPastingRef.current = true;
-          }}
-          onChange={(event) => {
-            const updatedPrompt = event.currentTarget.value;
-            setPrompt(updatedPrompt);
-            // Pasting completes the prompt, so copy it for the coding agent.
-            if (isPastingRef.current) {
-              isPastingRef.current = false;
-              void navigator.clipboard
-                .writeText(updatedPrompt)
-                .then(() => setCopiedPrompt(updatedPrompt));
-            }
-          }}
+          onChange={(event) => setPrompt(event.currentTarget.value)}
         />
       ) : (
         <p className={styles["prompt"]}>
@@ -86,12 +71,6 @@ export default function PromptGenerator({ editable = true }: Props) {
           size="medium"
         />
       </div>
-      {editable && copiedPrompt === prompt && (
-        <div className={styles["copiedMessage"]}>
-          <CheckIcon size={16} />
-          <FormattedMessage defaultMessage="Prompt copied" />
-        </div>
-      )}
     </div>
   );
 }

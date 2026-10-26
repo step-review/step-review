@@ -655,12 +655,6 @@
       "value": "Copy the prompt"
     }
   ],
-  "PromptGenerator.tsx_irbHMA": [
-    {
-      "type": 0,
-      "value": "Prompt copied"
-    }
-  ],
   "PromptGenerator.tsx_k9O196": [
     {
       "type": 0,
@@ -685,28 +679,10 @@
       "value": "Reset review state"
     }
   ],
-  "ReviewActions.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
   "ReviewActions.tsx_Kx622U": [
     {
       "type": 0,
       "value": "Import review state"
-    }
-  ],
-  "ReviewActions.tsx_OLCgvh": [
-    {
-      "type": 0,
-      "value": "The review file and its review state will be removed from this browser."
-    }
-  ],
-  "ReviewActions.tsx_OtMych": [
-    {
-      "type": 0,
-      "value": "Delete review"
     }
   ],
   "ReviewActions.tsx_aN434T": [
@@ -725,12 +701,6 @@
     {
       "type": 0,
       "value": "Review state"
-    }
-  ],
-  "ReviewActions.tsx_jbbK0Z": [
-    {
-      "type": 0,
-      "value": "Delete review?"
     }
   ],
   "ReviewActions.tsx_jm/spn": [

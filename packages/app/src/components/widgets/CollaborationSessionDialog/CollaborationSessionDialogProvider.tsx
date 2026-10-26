@@ -4,11 +4,8 @@ import type { ReactNode } from "react";
 
 interface CollaborationSessionDialogState {
   isOpen: boolean;
-  /** The link copied to the clipboard when the session started, if it was. */
-  copiedLink: string | null;
   open: () => void;
   close: () => void;
-  setCopiedLink: (copiedLink: string) => void;
 }
 
 const CollaborationSessionDialogContext =
@@ -19,27 +16,21 @@ interface Props {
 }
 
 /**
- * Keeps the collaboration session dialog open, and whether its link was copied,
- * while the page switches from the local review to the session just started,
- * which remounts the review's components.
+ * Keeps the collaboration session dialog open while the page switches from the
+ * local review to the session just started, which remounts the review's
+ * components.
  */
 export default function CollaborationSessionDialogProvider({
   children,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [copiedLink, setCopiedLink] = useState<string | null>(null);
   const collaborationSessionDialogState = useMemo(
     () => ({
       isOpen,
-      copiedLink,
       open: () => setIsOpen(true),
-      close: () => {
-        setIsOpen(false);
-        setCopiedLink(null);
-      },
-      setCopiedLink,
+      close: () => setIsOpen(false),
     }),
-    [isOpen, copiedLink],
+    [isOpen],
   );
   return (
     <CollaborationSessionDialogContext value={collaborationSessionDialogState}>
