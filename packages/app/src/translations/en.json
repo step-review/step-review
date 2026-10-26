@@ -149,11 +149,8 @@
   "OverviewHeader.tsx_Nvd511": {
     "defaultMessage": "{fileCount, plural, one {# file} other {# files}}"
   },
-  "OverviewHeader.tsx_VsxSiL": {
-    "defaultMessage": "<link>PR</link> review"
-  },
-  "OverviewHeader.tsx_ZLnOd3": {
-    "defaultMessage": "<link>PR {pullRequestNumber, number, ::group-off}</link> review"
+  "OverviewHeader.tsx_uo7hRG": {
+    "defaultMessage": "Review for {link}"
   },
   "OverviewSummary.tsx_NNdqGL": {
     "defaultMessage": "How to read this review"

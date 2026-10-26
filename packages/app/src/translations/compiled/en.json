@@ -415,52 +415,14 @@
       "pluralType": "cardinal"
     }
   ],
-  "OverviewHeader.tsx_VsxSiL": [
-    {
-      "type": 8,
-      "value": "link",
-      "children": [
-        {
-          "type": 0,
-          "value": "PR"
-        }
-      ]
-    },
+  "OverviewHeader.tsx_uo7hRG": [
     {
       "type": 0,
-      "value": " review"
-    }
-  ],
-  "OverviewHeader.tsx_ZLnOd3": [
-    {
-      "type": 8,
-      "value": "link",
-      "children": [
-        {
-          "type": 0,
-          "value": "PR "
-        },
-        {
-          "type": 2,
-          "value": "pullRequestNumber",
-          "style": {
-            "type": 0,
-            "tokens": [
-              {
-                "stem": "group-off",
-                "options": []
-              }
-            ],
-            "parsedOptions": {
-              "useGrouping": false
-            }
-          }
-        }
-      ]
+      "value": "Review for "
     },
     {
-      "type": 0,
-      "value": " review"
+      "type": 1,
+      "value": "link"
     }
   ],
   "OverviewSummary.tsx_NNdqGL": [
