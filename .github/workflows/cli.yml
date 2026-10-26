@@ -1,0 +1,85 @@
+name: CLI
+
+# Every push to a branch publishes a beta under a dist-tag named after the
+# branch; a `cli-vX.Y.Z` tag publishes X.Y.Z to `latest`.
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - packages/cli/**
+      - packages/review-format/**
+      - pnpm-lock.yaml
+      - .github/workflows/cli.yml
+    tags: ["cli-v*"]
+
+concurrency:
+  group: cli-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Set the release version
+        run: pnpm --filter @step-review/cli release:ci
+      - name: Check types
+        run: pnpm --filter @step-review/cli --filter @step-review/review-format check-types
+      - name: Test
+        run: pnpm --filter @step-review/cli --filter @step-review/review-format test
+      - name: Build
+        run: pnpm --filter @step-review/cli build
+      - name: Pack
+        working-directory: packages/cli
+        run: pnpm pack --pack-destination .pack
+      - name: Run the packed CLI
+        working-directory: packages/cli
+        run: npx --yes --package="$(ls .pack/*.tgz)" step-review --help
+      - name: Seal the tarball
+        run: pnpm --filter @step-review/cli release:seal
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cli-release
+          path: |
+            packages/cli/.pack/
+            packages/cli/.release/
+          include-hidden-files: true
+          retention-days: 30
+
+  publish:
+    if: github.repository == 'step-review/step-review'
+    needs: qa
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # npm trusted publishing: no token, and the package gets provenance.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          # Stable releases check that the tag is on main.
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - uses: actions/download-artifact@v8
+        with:
+          name: cli-release
+          path: packages/cli
+      # Publishes the sealed tarball; installs and builds nothing.
+      - name: Publish
+        working-directory: packages/cli
+        run: node scripts/release/publishRelease.ts
