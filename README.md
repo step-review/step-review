@@ -15,8 +15,8 @@ out possible issues, and focuses your attention on the most important aspects.
 3. You open the file in [step-review.dev](https://step-review.dev) and go
    through the PR one step at a time, with the notes beside the diff.
 
-You can also review a PR with others: just start a collaboration session from
-the review's menu and share the link.
+You can also review a PR with others: just start a collaboration session with
+the collaboration button in the sidebar and share the link.
 
 ## Under the hood
 
