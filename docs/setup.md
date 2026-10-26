@@ -56,10 +56,10 @@ deploy script merges `packages/session-server/wrangler.json` into the app's
 configuration. Each Worker has its own Durable Objects, so PR previews don't
 share data with production. GitHub Actions deploy:
 
-- each release tag (`vX.Y.Z`) to `https://step-review.dev`, see
+- each release tag (`vX.Y.Z`) to `https://step-review.dev` (`release.yml`), see
   [Releasing](#releasing);
 - each internal PR to `https://pr-<number>.step-review.dev`, removed when the PR
-  closes (`ci.yml`, `cleanup-preview.yml`).
+  closes (`pull-requests.yml`, `cleanup-preview.yml`).
 
 One-time setup:
 
@@ -75,20 +75,20 @@ To deploy by hand, export the same variables and run `pnpm build`, then
 ## Releasing
 
 All packages share one version. A `vX.Y.Z` tag on `main` deploys the app to
-production and publishes the CLI to npm with the `latest` dist-tag. Every push
-to a branch also publishes a CLI beta, under a dist-tag named after the branch.
+production (`release.yml`) and publishes the public packages to npm with the
+`latest` dist-tag (`publish.yml`). Every push to a branch also publishes betas
+of them, under a dist-tag named after the branch.
 
 1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md) and commit it.
 2. On a clean `main`, run `pnpm release:prepare X.Y.Z`: it sets the version of
    every package, runs QA, commits and tags.
 3. Push both: `git push --atomic origin main vX.Y.Z`.
 
-The CLI is published through npm trusted publishing: no token. QA builds and
-tests its tarball once; the publish job publishes that exact tarball, and skips
-a version already published with the same content, so re-running a job is safe.
+Packages are published through npm trusted publishing: no token. Re-running a
+job skips the versions already published.
 
 One-time setup: publish the first version of `@step-review/cli` by hand
 (`pnpm --filter @step-review/cli build`, then `pnpm publish --access public` in
-`packages/cli`), then register the repository's `ci.yml` workflow as its trusted
-publisher on npm. Branch betas are skipped until then, since npm makes a
+`packages/cli`), then register the repository's `publish.yml` workflow as its
+trusted publisher on npm. Branch betas are skipped until then, since npm makes a
 package's first version `latest`.

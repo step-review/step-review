@@ -30,7 +30,3 @@ wrangler.deploy.json
 # Review files
 *.step-review
 !packages/app/public/examples/*.step-review
-
-# CLI release files
-packages/cli/.pack/
-packages/cli/.release/

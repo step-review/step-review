@@ -21,9 +21,6 @@
     "deploy-site": "pnpm --filter @step-review/app deploy-site",
     "cleanup-preview": "pnpm --filter @step-review/app cleanup-preview",
     "release:prepare": "node packages/tooling/release/src/prepareRelease.ts",
-    "release:ci": "node packages/tooling/release/src/prepareCiRelease.ts",
-    "release:pack": "node packages/tooling/release/src/packRelease.ts",
-    "release:seal": "node packages/tooling/release/src/sealRelease.ts",
     "release:publish": "node packages/tooling/release/src/publishRelease.ts"
   },
   "devDependencies": {
