@@ -7,7 +7,8 @@
   gap: var(--base-size-16);
 
   /* The timeline, from the overview's marker to "End". The markers sit at
-     Primer's item margin and padding, 16px in. */
+     Primer's item margin and padding, 16px in, plus 4px: centered under the
+     logo, as in the sidebar's rail. */
   &::before {
     position: absolute;
     top: calc(
@@ -15,7 +16,7 @@
         var(--base-size-12)
     );
     bottom: calc(var(--base-size-24) + var(--base-size-2));
-    left: calc(var(--base-size-16) + var(--base-size-12));
+    left: calc(var(--base-size-16) + var(--base-size-4) + var(--base-size-12));
     /* Above the active step's background, below the markers. */
     z-index: 0;
     width: var(--borderWidth-default);
@@ -60,10 +61,11 @@
   align-self: center;
 }
 
-/* Adds to the gap Primer leaves after the marker, to set the title apart. */
+/* Centers the marker under the logo, and adds to the gap Primer leaves after
+   it, to set the title apart. */
 .marker {
   display: flex;
-  padding-inline-end: var(--base-size-4);
+  padding-inline: var(--base-size-4);
 }
 
 .progress {
@@ -78,12 +80,14 @@
 
 /* Clears the timeline's line. */
 .fileTree {
-  padding-inline-start: calc(var(--base-size-40) + var(--base-size-4));
+  padding-inline-start: var(--base-size-48);
 }
 
 /* Centered on the timeline's line. */
 .end {
-  width: calc(2 * (var(--base-size-16) + var(--base-size-12)));
+  width: calc(
+    2 * (var(--base-size-16) + var(--base-size-4) + var(--base-size-12))
+  );
   margin: 0;
   padding: var(--base-size-8) 0;
   color: var(--fgColor-muted);

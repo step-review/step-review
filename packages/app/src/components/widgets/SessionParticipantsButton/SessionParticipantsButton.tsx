@@ -7,6 +7,8 @@ import styles from "./SessionParticipantsButton.module.css";
 
 interface Props {
   onClick: () => void;
+  /** Vertical in the sidebar's rail, with its tooltip on the right. */
+  orientation?: "horizontal" | "vertical";
 }
 
 const maxVisibleAvatarCount = 3;
@@ -15,7 +17,10 @@ const maxVisibleAvatarCount = 3;
  * The participants of the session displayed, as a few overlapping avatars and
  * how many others there are, to open the session's dialog.
  */
-export default function SessionParticipantsButton({ onClick }: Props) {
+export default function SessionParticipantsButton({
+  onClick,
+  orientation = "horizontal",
+}: Props) {
   const intl = useIntl();
   const participantLabel = useParticipantLabel();
   const sessionParticipants = useSessionParticipants() ?? [];
@@ -32,8 +37,17 @@ export default function SessionParticipantsButton({ onClick }: Props) {
     { count: sessionParticipants.length },
   );
   return (
-    <Tooltip text={label} type="label" direction="n">
-      <button type="button" className={styles["button"]} onClick={onClick}>
+    <Tooltip
+      text={label}
+      type="label"
+      direction={orientation === "vertical" ? "e" : "n"}
+    >
+      <button
+        type="button"
+        className={styles["button"]}
+        data-orientation={orientation}
+        onClick={onClick}
+      >
         {/* Reversed, so that each avatar overlaps the next one. */}
         <span className={styles["avatars"]} aria-hidden>
           {visibleParticipants.toReversed().map((sessionParticipant) => (

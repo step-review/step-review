@@ -1,0 +1,32 @@
+/* Fills its container, keeping the recap at its bottom. */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  /* Beside the content, the sidebar is as tall as the viewport, even on short
+     pages, and only the steps scroll, between the brand and the recap. */
+  @media (min-width: 48rem) {
+    height: 100vh;
+  }
+}
+
+/* The recap and the brand line up with the steps' markers, which sit at
+   Primer's item margin and padding, 16px in. */
+.brand {
+  padding: var(--base-size-16);
+  border-bottom: var(--borderWidth-default) solid var(--borderColor-default);
+}
+
+.navigation {
+  flex: 1;
+
+  @media (min-width: 48rem) {
+    min-height: 0;
+  }
+}
+
+.recap {
+  padding: var(--base-size-16);
+  border-top: var(--borderWidth-default) solid var(--borderColor-default);
+}

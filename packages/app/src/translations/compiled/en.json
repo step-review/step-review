@@ -29,6 +29,12 @@
       "value": "Skim"
     }
   ],
+  "CollaborationSessionButton.tsx_XCceQP": [
+    {
+      "type": 0,
+      "value": "Start collaboration session"
+    }
+  ],
   "CollaborationSessionDialog.tsx_7F2Pzm": [
     {
       "type": 0,
@@ -251,6 +257,24 @@
       "value": "Concerns"
     }
   ],
+  "JoinSessionDialog.tsx_ABUgKT": [
+    {
+      "type": 0,
+      "value": "Join the session"
+    }
+  ],
+  "JoinSessionDialog.tsx_P6PLpi": [
+    {
+      "type": 0,
+      "value": "Join"
+    }
+  ],
+  "JoinSessionDialog.tsx_vFA0iR": [
+    {
+      "type": 0,
+      "value": "The other participants will see your name, the files you viewed, and where you are."
+    }
+  ],
   "NotFound.tsx_osJs96": [
     {
       "type": 0,
@@ -457,40 +481,6 @@
       "value": "Your name"
     }
   ],
-  "ParticipantsHere.tsx_im4lxq": [
-    {
-      "type": 6,
-      "value": "count",
-      "options": {
-        "one": {
-          "value": [
-            {
-              "type": 1,
-              "value": "names"
-            },
-            {
-              "type": 0,
-              "value": " is here"
-            }
-          ]
-        },
-        "other": {
-          "value": [
-            {
-              "type": 1,
-              "value": "names"
-            },
-            {
-              "type": 0,
-              "value": " are here"
-            }
-          ]
-        }
-      },
-      "offset": 0,
-      "pluralType": "cardinal"
-    }
-  ],
   "ProjectCredits.tsx_wTNySU": [
     {
       "type": 0,
@@ -513,6 +503,84 @@
     {
       "type": 0,
       "value": "Prompt for your coding agent"
+    }
+  ],
+  "ReviewActions.tsx_2pwM03": [
+    {
+      "type": 0,
+      "value": "Export review state"
+    }
+  ],
+  "ReviewActions.tsx_Gy09SB": [
+    {
+      "type": 0,
+      "value": "The file is not a valid review state."
+    }
+  ],
+  "ReviewActions.tsx_JzmbIf": [
+    {
+      "type": 0,
+      "value": "Reset review state"
+    }
+  ],
+  "ReviewActions.tsx_K3r6DQ": [
+    {
+      "type": 0,
+      "value": "Delete"
+    }
+  ],
+  "ReviewActions.tsx_Kx622U": [
+    {
+      "type": 0,
+      "value": "Import review state"
+    }
+  ],
+  "ReviewActions.tsx_OLCgvh": [
+    {
+      "type": 0,
+      "value": "The review file and its review state will be removed from this browser."
+    }
+  ],
+  "ReviewActions.tsx_OtMych": [
+    {
+      "type": 0,
+      "value": "Delete review"
+    }
+  ],
+  "ReviewActions.tsx_aN434T": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed, for every participant."
+    }
+  ],
+  "ReviewActions.tsx_agjgCY": [
+    {
+      "type": 0,
+      "value": "Every file will be marked as not viewed."
+    }
+  ],
+  "ReviewActions.tsx_bmvTUd": [
+    {
+      "type": 0,
+      "value": "Review state"
+    }
+  ],
+  "ReviewActions.tsx_jbbK0Z": [
+    {
+      "type": 0,
+      "value": "Delete review?"
+    }
+  ],
+  "ReviewActions.tsx_jm/spn": [
+    {
+      "type": 0,
+      "value": "Reset"
+    }
+  ],
+  "ReviewActions.tsx_qjGckA": [
+    {
+      "type": 0,
+      "value": "Reset review state?"
     }
   ],
   "ReviewDropzone.tsx_LsFoKe": [
@@ -545,100 +613,30 @@
       "value": "or drop it anywhere on this page"
     }
   ],
-  "ReviewRecap.tsx_2pwM03": [
-    {
-      "type": 0,
-      "value": "Export review state"
-    }
-  ],
-  "ReviewRecap.tsx_Gy09SB": [
-    {
-      "type": 0,
-      "value": "The file is not a valid review state."
-    }
-  ],
-  "ReviewRecap.tsx_JzmbIf": [
-    {
-      "type": 0,
-      "value": "Reset review state"
-    }
-  ],
-  "ReviewRecap.tsx_K3r6DQ": [
-    {
-      "type": 0,
-      "value": "Delete"
-    }
-  ],
-  "ReviewRecap.tsx_Kx622U": [
-    {
-      "type": 0,
-      "value": "Import review state"
-    }
-  ],
-  "ReviewRecap.tsx_OLCgvh": [
-    {
-      "type": 0,
-      "value": "The review file and its review state will be removed from this browser."
-    }
-  ],
-  "ReviewRecap.tsx_OtMych": [
-    {
-      "type": 0,
-      "value": "Delete review"
-    }
-  ],
   "ReviewRecap.tsx_R+J5ox": [
     {
       "type": 0,
       "value": "Review"
     }
   ],
-  "ReviewRecap.tsx_XCceQP": [
+  "ReviewRecapRail.tsx_R+J5ox": [
     {
       "type": 0,
-      "value": "Start collaboration session"
+      "value": "Review"
     }
   ],
-  "ReviewRecap.tsx_aN434T": [
+  "ReviewRecapRail.tsx_sfqExy": [
+    {
+      "type": 1,
+      "value": "fileName"
+    },
     {
       "type": 0,
-      "value": "Every file will be marked as not viewed, for every participant."
-    }
-  ],
-  "ReviewRecap.tsx_agjgCY": [
+      "value": ": "
+    },
     {
-      "type": 0,
-      "value": "Every file will be marked as not viewed."
-    }
-  ],
-  "ReviewRecap.tsx_cNrFsL": [
-    {
-      "type": 0,
-      "value": "Open another review"
-    }
-  ],
-  "ReviewRecap.tsx_jbbK0Z": [
-    {
-      "type": 0,
-      "value": "Delete review?"
-    }
-  ],
-  "ReviewRecap.tsx_jm/spn": [
-    {
-      "type": 0,
-      "value": "Reset"
-    }
-  ],
-  "ReviewRecap.tsx_kvdGU5": [
-    {
-      "type": 0,
-      "value": "Review actions"
-    }
-  ],
-  "ReviewRecap.tsx_qjGckA": [
-    {
-      "type": 0,
-      "value": "Reset review state?"
+      "type": 1,
+      "value": "counts"
     }
   ],
   "ReviewShell.tsx_huCHmk": [
@@ -651,6 +649,18 @@
     {
       "type": 0,
       "value": "Show or hide the steps"
+    }
+  ],
+  "ReviewSidebar.tsx_eOJ4QU": [
+    {
+      "type": 0,
+      "value": "Collapse sidebar"
+    }
+  ],
+  "ReviewSidebarRail.tsx_1JgBls": [
+    {
+      "type": 0,
+      "value": "Expand sidebar"
     }
   ],
   "ReviewWarnings.tsx_7oiKM4": [
@@ -771,18 +781,6 @@
       "value": "Copy the link"
     }
   ],
-  "SessionNotices.tsx_ABUgKT": [
-    {
-      "type": 0,
-      "value": "Join the session"
-    }
-  ],
-  "SessionNotices.tsx_P6PLpi": [
-    {
-      "type": 0,
-      "value": "Join"
-    }
-  ],
   "SessionNotices.tsx_PuU15u": [
     {
       "type": 0,
@@ -807,16 +805,24 @@
       "value": "This browser can't join the review as before. Changes aren't saved."
     }
   ],
+  "SessionNotices.tsx_pRFgWn": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "description"
+    }
+  ],
   "SessionNotices.tsx_sACAMl": [
     {
       "type": 0,
       "value": "Your progress is too large to be saved in the session. Changes aren't saved."
-    }
-  ],
-  "SessionNotices.tsx_vFA0iR": [
-    {
-      "type": 0,
-      "value": "The other participants will see your name, the files you viewed, and where you are."
     }
   ],
   "SessionNotices.tsx_wd79hm": [
@@ -1093,6 +1099,64 @@
       "value": "Overview"
     }
   ],
+  "StepRail.tsx_7YdvBN": [
+    {
+      "type": 1,
+      "value": "number"
+    },
+    {
+      "type": 0,
+      "value": ". "
+    },
+    {
+      "type": 1,
+      "value": "title"
+    }
+  ],
+  "StepRail.tsx_9BK0YE": [
+    {
+      "type": 0,
+      "value": "Files in no step"
+    }
+  ],
+  "StepRail.tsx_9uOFF3": [
+    {
+      "type": 0,
+      "value": "Overview"
+    }
+  ],
+  "StepRail.tsx_huCHmk": [
+    {
+      "type": 0,
+      "value": "Steps"
+    }
+  ],
+  "StepRailLink.tsx_HRTugO": [
+    {
+      "type": 0,
+      "value": "Read carefully"
+    }
+  ],
+  "StepRailLink.tsx_ltk9Fd": [
+    {
+      "type": 1,
+      "value": "title"
+    },
+    {
+      "type": 0,
+      "value": ": "
+    },
+    {
+      "type": 1,
+      "value": "details"
+    }
+  ],
+  "StepRailLink.tsx_v5MVrw": [
+    {
+      "type": 0,
+      "value": "Skim"
+    }
+  ],
   "StepTitle.tsx_9BK0YE": [
     {
       "type": 0,
@@ -1219,6 +1283,88 @@
       "value": " viewed"
     }
   ],
+  "formatViewedAndNoteCounts.ts_7hxyNF": [
+    {
+      "type": 6,
+      "value": "issueCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issue"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issues"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "formatViewedAndNoteCounts.ts_cr9pr9": [
+    {
+      "type": 6,
+      "value": "explainerCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " note"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notes"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
+  "formatViewedAndNoteCounts.ts_zz6max": [
+    {
+      "type": 1,
+      "value": "viewedCount"
+    },
+    {
+      "type": 0,
+      "value": "/"
+    },
+    {
+      "type": 1,
+      "value": "totalCount"
+    },
+    {
+      "type": 0,
+      "value": " viewed"
+    }
+  ],
   "useLeaveSession.ts_FjpI/y": [
     {
       "type": 0,
@@ -1245,6 +1391,40 @@
     {
       "type": 0,
       "value": " (you)"
+    }
+  ],
+  "useParticipantsHere.ts_im4lxq": [
+    {
+      "type": 6,
+      "value": "count",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 1,
+              "value": "names"
+            },
+            {
+              "type": 0,
+              "value": " is here"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 1,
+              "value": "names"
+            },
+            {
+              "type": 0,
+              "value": " are here"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ]
 }

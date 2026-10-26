@@ -1,0 +1,27 @@
+.rail {
+  position: relative;
+  /* Keeps the line's, the markers' and the badges' stacking within the rail. */
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--base-size-4);
+  /* Puts the overview's marker where the full sidebar's is, under Primer's
+     list and item padding (8px and 6px): the links already center it 8px
+     down. */
+  padding-top: var(--control-medium-paddingBlock);
+
+  /* The timeline, from the overview's marker to the last step's. */
+  &::before {
+    position: absolute;
+    top: calc(var(--control-medium-paddingBlock) + var(--base-size-20));
+    bottom: var(--base-size-20);
+    left: 50%;
+    /* Above the current step's background, below the markers. */
+    z-index: 1;
+    width: var(--borderWidth-default);
+    translate: -50%;
+    background: var(--borderColor-default);
+    content: "";
+  }
+}

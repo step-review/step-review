@@ -1,62 +1,81 @@
+import { AlertIcon } from "@primer/octicons-react";
 import { Banner } from "@primer/react";
+import { useRef, useState } from "react";
 import { useIntl } from "react-intl";
+import type { IntlShape } from "react-intl";
 import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
 import type SessionEndReason from "../../../business-logic/session-connection/SessionEndReason.ts";
-import participantNameStorageKey from "../../../business-logic/session-store/participantNameStorageKey.ts";
-import readParticipantName from "../../../business-logic/session-store/readParticipantName.ts";
-import writeStorage from "../../../business-logic/storage/writeStorage.ts";
-import ParticipantNameDialog from "../ParticipantNameDialog/ParticipantNameDialog.tsx";
+import AnchoredTooltip from "../../design-system/AnchoredTooltip/AnchoredTooltip.tsx";
 import styles from "./SessionNotices.module.css";
 
-/**
- * What the session displayed has to tell or ask: why it is disconnected, and a
- * new participant's name.
- */
-export default function SessionNotices() {
+interface Props {
+  /** An icon with the notice as tooltip, for the sidebar's rail. */
+  isCompact?: boolean;
+}
+
+/** What the session displayed has to tell: why it is disconnected. */
+export default function SessionNotices({ isCompact = false }: Props) {
   const intl = useIntl();
-  const sessionConnectionContext = useSessionConnectionContext();
-  if (!sessionConnectionContext) {
+  const endReason =
+    useSessionConnectionContext()?.sessionConnectionSnapshot.endReason;
+  if (!endReason) {
     return null;
   }
-  const { sessionConnection, sessionConnectionSnapshot } =
-    sessionConnectionContext;
-  const rename = (name: string) => {
-    sessionConnection.rename(name);
-    writeStorage(participantNameStorageKey, name);
-  };
+  const title = intl.formatMessage({ defaultMessage: "Not connected" });
+  const description = describeEndReason(intl, endReason);
+  return isCompact ? (
+    <EndReasonIcon
+      label={intl.formatMessage(
+        { defaultMessage: "{title}: {description}" },
+        { title, description },
+      )}
+    />
+  ) : (
+    <div className={styles["banner"]}>
+      <Banner
+        variant="warning"
+        title={title}
+        hideTitle
+        description={description}
+      />
+    </div>
+  );
+}
+
+interface EndReasonIconProps {
+  label: string;
+}
+
+function EndReasonIcon({ label }: EndReasonIconProps) {
+  const iconRef = useRef<HTMLSpanElement>(null);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   return (
     <>
-      {sessionConnectionSnapshot.endReason && (
-        <div className={styles["banner"]}>
-          <EndReasonBanner endReason={sessionConnectionSnapshot.endReason} />
-        </div>
-      )}
-      {sessionConnectionSnapshot.isNewParticipant && (
-        <ParticipantNameDialog
-          title={intl.formatMessage({ defaultMessage: "Join the session" })}
-          description={intl.formatMessage({
-            defaultMessage:
-              "The other participants will see your name, the files you viewed, and where you are.",
-          })}
-          submitLabel={intl.formatMessage({ defaultMessage: "Join" })}
-          initialName={readParticipantName()}
-          onSubmit={rename}
-          // Joins without a name, so that it isn't asked again, and keeps the
-          // name suggested for the next session.
-          onClose={() => sessionConnection.rename("")}
-        />
-      )}
+      <span
+        ref={iconRef}
+        role="img"
+        aria-label={label}
+        className={styles["icon"]}
+        onMouseEnter={() => setIsTooltipOpen(true)}
+        onMouseLeave={() => setIsTooltipOpen(false)}
+      >
+        <AlertIcon />
+      </span>
+      <AnchoredTooltip
+        anchorRef={iconRef}
+        isOpen={isTooltipOpen}
+        text={label}
+        side="outside-right"
+      />
     </>
   );
 }
 
-interface EndReasonBannerProps {
-  endReason: SessionEndReason;
-}
-
-function EndReasonBanner({ endReason }: EndReasonBannerProps) {
-  const intl = useIntl();
-  const description = {
+function describeEndReason(
+  intl: IntlShape,
+  endReason: SessionEndReason,
+): string {
+  return {
     notFound: intl.formatMessage({
       defaultMessage: "The session ended, or expired. Changes aren't saved.",
     }),
@@ -77,12 +96,4 @@ function EndReasonBanner({ endReason }: EndReasonBannerProps) {
         "The connection to the session failed. Reload the page to try again.",
     }),
   }[endReason];
-  return (
-    <Banner
-      variant="warning"
-      title={intl.formatMessage({ defaultMessage: "Not connected" })}
-      hideTitle
-      description={description}
-    />
-  );
 }

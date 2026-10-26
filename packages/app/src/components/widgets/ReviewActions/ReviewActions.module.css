@@ -1,0 +1,13 @@
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Red, as the action is destructive. Through the invisible button's own
+   variables: Primer has no invisible danger variant. */
+.deleteButton {
+  --button-invisible-iconColor-rest: var(--fgColor-danger);
+  --button-invisible-iconColor-hover: var(--fgColor-danger);
+  --button-invisible-bgColor-hover: var(--bgColor-danger-muted);
+  --button-invisible-bgColor-active: var(--bgColor-danger-muted);
+}

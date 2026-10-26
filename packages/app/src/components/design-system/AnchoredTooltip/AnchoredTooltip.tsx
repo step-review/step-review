@@ -8,6 +8,8 @@ interface Props {
   anchorRef: RefObject<HTMLElement | null>;
   isOpen: boolean;
   text: string;
+  /** Where the tooltip opens, below the element by default. */
+  side?: "outside-bottom" | "outside-right";
 }
 
 /**
@@ -15,7 +17,12 @@ interface Props {
  * opens on any hover of an interactive trigger, so it can't show only for
  * cut-off text, or for an element inside a link or tree item.
  */
-export default function AnchoredTooltip({ anchorRef, isOpen, text }: Props) {
+export default function AnchoredTooltip({
+  anchorRef,
+  isOpen,
+  text,
+  side = "outside-bottom",
+}: Props) {
   const tooltipRef = useRef<HTMLSpanElement>(null);
   // Before positioning, which measures the open tooltip.
   useLayoutEffect(() => {
@@ -33,12 +40,12 @@ export default function AnchoredTooltip({ anchorRef, isOpen, text }: Props) {
     {
       anchorElementRef: anchorRef,
       floatingElementRef: tooltipRef,
-      side: "outside-bottom",
-      align: "start",
+      side,
+      align: side === "outside-right" ? "center" : "start",
       anchorOffset: 4,
       enabled: isOpen,
     },
-    [isOpen, text],
+    [isOpen, text, side],
   );
   return (
     // Hidden from assistive technology: the full text is already in the page.

@@ -1,0 +1,8 @@
+/* Purple, Primer's color for what's done together, to invite reviewing
+   together. Through the invisible button's own variables. */
+.startButton {
+  --button-invisible-iconColor-rest: var(--fgColor-done);
+  --button-invisible-iconColor-hover: var(--fgColor-done);
+  --button-invisible-bgColor-hover: var(--bgColor-done-muted);
+  --button-invisible-bgColor-active: var(--bgColor-done-muted);
+}

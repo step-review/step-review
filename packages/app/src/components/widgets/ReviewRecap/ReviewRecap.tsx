@@ -1,109 +1,36 @@
-import {
-  DownloadIcon,
-  FileDirectoryOpenFillIcon,
-  KebabHorizontalIcon,
-  PeopleIcon,
-  TrashIcon,
-  UndoIcon,
-  UploadIcon,
-} from "@primer/octicons-react";
-import { ActionList, ActionMenu, IconButton, useConfirm } from "@primer/react";
-import { useRef } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import baseFileName from "../../../business-logic/files/baseFileName.ts";
-import downloadFile from "../../../business-logic/files/downloadFile.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import parseReviewState from "../../../business-logic/review-state/parseReviewState.ts";
-import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
+import type { ReactNode } from "react";
+import { useIntl } from "react-intl";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
-import deleteReview from "../../../business-logic/review-store/deleteReview.ts";
 import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
 import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import countViewedFiles from "../../../business-logic/review-view/countViewedFiles.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
-import exampleReviewId from "../../../business-logic/review/exampleReviewId.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
-import { useSessionConnectionContext } from "../../../business-logic/session-connection/SessionConnectionProvider.tsx";
-import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
-import CollaborationSessionDialog from "../CollaborationSessionDialog/CollaborationSessionDialog.tsx";
-import { useCollaborationSessionDialogState } from "../CollaborationSessionDialog/CollaborationSessionDialogProvider.tsx";
-import SessionParticipantsButton from "../SessionParticipantsButton/SessionParticipantsButton.tsx";
+import ReviewActions from "../ReviewActions/ReviewActions.tsx";
 import styles from "./ReviewRecap.module.css";
 
 interface Props {
   loadedReview: LoadedReview;
   reviewView: ReviewView;
+  /** After the review's actions, e.g. to collapse the sidebar. */
+  sidebarToggle?: ReactNode;
 }
 
 /**
  * The open review file, its files and notes, how much of it was viewed, and its
  * actions.
  */
-export default function ReviewRecap({ loadedReview, reviewView }: Props) {
+export default function ReviewRecap({
+  loadedReview,
+  reviewView,
+  sidebarToggle,
+}: Props) {
   const intl = useIntl();
-  const confirm = useConfirm();
-  const { reviewState, dispatch } = useReviewState();
   const progress = countViewedFiles(reviewView.steps, useViewedFingerprints());
   const noteKindCounts = countNotes(collectNotes(reviewView.steps));
-  const stateFileInputRef = useRef<HTMLInputElement>(null);
-  const isInSession = useSessionConnectionContext() !== null;
-  const collaborationSessionDialogState = useCollaborationSessionDialogState();
-  const importState = async (file: File) => {
-    const importedReviewState = parseReviewState(await file.text());
-    if (!importedReviewState) {
-      window.alert(
-        intl.formatMessage({
-          defaultMessage: "The file is not a valid review state.",
-        }),
-      );
-      return;
-    }
-    dispatch({ type: "replace", reviewState: importedReviewState });
-  };
-  const exportState = () =>
-    downloadFile(
-      `${baseFileName(loadedReview.fileName)}.state.json`,
-      JSON.stringify(reviewState, null, 2),
-      "application/json",
-    );
-  const resetState = async () => {
-    const isConfirmed = await confirm({
-      title: intl.formatMessage({ defaultMessage: "Reset review state?" }),
-      content: isInSession
-        ? intl.formatMessage({
-            defaultMessage:
-              "Every file will be marked as not viewed, for every participant.",
-          })
-        : intl.formatMessage({
-            defaultMessage: "Every file will be marked as not viewed.",
-          }),
-      confirmButtonContent: intl.formatMessage({ defaultMessage: "Reset" }),
-      confirmButtonType: "danger",
-    });
-    if (isConfirmed) {
-      dispatch({ type: "resetViewed" });
-    }
-  };
-  const deleteLoadedReview = async () => {
-    const isConfirmed = await confirm({
-      title: intl.formatMessage({ defaultMessage: "Delete review?" }),
-      content: intl.formatMessage({
-        defaultMessage:
-          "The review file and its review state will be removed from this browser.",
-      }),
-      confirmButtonContent: intl.formatMessage({ defaultMessage: "Delete" }),
-      confirmButtonType: "danger",
-    });
-    if (isConfirmed) {
-      // Leave first, so the page doesn't show the review as missing.
-      navigateTo({ name: RouteName.Start });
-      await deleteReview(loadedReview.reviewId);
-    }
-  };
   return (
     <section
       className={styles["recap"]}
@@ -124,102 +51,14 @@ export default function ReviewRecap({ loadedReview, reviewView }: Props) {
             />
           </span>
           <div className={styles["actions"]}>
-            {isInSession ? (
-              <SessionParticipantsButton
-                onClick={collaborationSessionDialogState.open}
-              />
-            ) : (
-              <IconButton
-                tooltipDirection="n"
-                variant="invisible"
-                size="small"
-                icon={PeopleIcon}
-                aria-label={intl.formatMessage({
-                  defaultMessage: "Start collaboration session",
-                })}
-                onClick={collaborationSessionDialogState.open}
-              />
-            )}
-            <ActionMenu>
-              <ActionMenu.Anchor>
-                <IconButton
-                  tooltipDirection="n"
-                  variant="invisible"
-                  size="small"
-                  icon={KebabHorizontalIcon}
-                  aria-label={intl.formatMessage({
-                    defaultMessage: "Review actions",
-                  })}
-                />
-              </ActionMenu.Anchor>
-              {/* The pane sticks while the page scrolls: placed by the
-                  document, the menu would open below the viewport. */}
-              <ActionMenu.Overlay displayInViewport>
-                <ActionList>
-                  <ActionList.Item
-                    onSelect={() => navigateTo({ name: RouteName.Start })}
-                  >
-                    <ActionList.LeadingVisual>
-                      <FileDirectoryOpenFillIcon />
-                    </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Open another review" />
-                  </ActionList.Item>
-                  <ActionList.Divider />
-                  <ActionList.Item onSelect={exportState}>
-                    <ActionList.LeadingVisual>
-                      <DownloadIcon />
-                    </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Export review state" />
-                  </ActionList.Item>
-                  <ActionList.Item
-                    onSelect={() => stateFileInputRef.current?.click()}
-                  >
-                    <ActionList.LeadingVisual>
-                      <UploadIcon />
-                    </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Import review state" />
-                  </ActionList.Item>
-                  <ActionList.Divider />
-                  <ActionList.Item
-                    variant="danger"
-                    onSelect={() => void resetState()}
-                  >
-                    <ActionList.LeadingVisual>
-                      <UndoIcon />
-                    </ActionList.LeadingVisual>
-                    <FormattedMessage defaultMessage="Reset review state" />
-                  </ActionList.Item>
-                  {/* Sessions are left from the collaboration session dialog,
-                      and the example review isn't stored. */}
-                  {reviewView.reviewAddress.kind === "local" &&
-                    reviewView.reviewAddress.reviewId !== exampleReviewId && (
-                      <ActionList.Item
-                        variant="danger"
-                        onSelect={() => void deleteLoadedReview()}
-                      >
-                        <ActionList.LeadingVisual>
-                          <TrashIcon />
-                        </ActionList.LeadingVisual>
-                        <FormattedMessage defaultMessage="Delete review" />
-                      </ActionList.Item>
-                    )}
-                </ActionList>
-              </ActionMenu.Overlay>
-            </ActionMenu>
+            <ReviewActions
+              loadedReview={loadedReview}
+              reviewView={reviewView}
+            />
+            {sidebarToggle}
           </div>
         </div>
       </div>
-      {collaborationSessionDialogState.isOpen && (
-        <CollaborationSessionDialog
-          loadedReview={loadedReview}
-          viewedFingerprints={reviewState.viewedFingerprints}
-        />
-      )}
-      <HiddenFileInput
-        ref={stateFileInputRef}
-        accept="application/json"
-        onChange={(file) => void importState(file)}
-      />
     </section>
   );
 }
