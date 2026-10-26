@@ -10,6 +10,17 @@ it("routes the root path to the start page", () => {
   expect(route).toEqual({ name: RouteName.Start });
 });
 
+it.each(["/privacy", "/privacy/"])(
+  "routes %s to the privacy page",
+  (pathname) => {
+    // Exercise
+    const { route } = parseLocation(pathname, "");
+
+    // Verify
+    expect(route).toEqual({ name: RouteName.Privacy });
+  },
+);
+
 it.each(["/r/3f9a0c21b7e4d2/overview", "/r/3f9a0c21b7e4d2/overview/"])(
   "routes %s to the review's overview",
   (pathname) => {

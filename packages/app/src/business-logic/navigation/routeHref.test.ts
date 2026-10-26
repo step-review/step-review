@@ -55,3 +55,15 @@ it("keeps a local review's fragment as the element ID alone", () => {
   // Verify
   expect(href).toBe("/r/3f9a0c21b7e4d2/overview#note-retry");
 });
+
+it("builds the privacy page URL that parses back to the same route", () => {
+  // Setup SUT
+  const route = { name: RouteName.Privacy } as const;
+
+  // Exercise
+  const href = routeHref(route);
+
+  // Verify
+  const url = new URL(href, "https://step-review.dev");
+  expect(parseLocation(url.pathname, url.hash).route).toEqual(route);
+});

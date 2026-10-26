@@ -1,5 +1,9 @@
-import { Banner, Heading, Stack, Text } from "@primer/react";
+import { MarkGithubIcon, ShieldLockIcon } from "@primer/octicons-react";
+import { Banner, Heading, IconButton, Stack, Text } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
+import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
+import routeHref from "../../../business-logic/navigation/routeHref.ts";
+import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
 import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
@@ -117,8 +121,32 @@ export default function Start({ missingReview }: Props) {
             </Heading>
           )}
         </Stack>
-        <footer className={styles["brand"]}>
+        <footer className={styles["footer"]}>
           <AppBrand />
+          <div className={styles["footerLinks"]}>
+            <IconButton
+              as="a"
+              href={routeHref({ name: RouteName.Privacy })}
+              onClick={(event) => {
+                event.preventDefault();
+                navigateTo({ name: RouteName.Privacy });
+              }}
+              variant="invisible"
+              icon={ShieldLockIcon}
+              aria-label={intl.formatMessage({ defaultMessage: "Privacy" })}
+            />
+            <IconButton
+              as="a"
+              href="https://github.com/step-review/step-review"
+              target="_blank"
+              rel="noreferrer"
+              variant="invisible"
+              icon={MarkGithubIcon}
+              aria-label={intl.formatMessage({
+                defaultMessage: "Step Review on GitHub",
+              })}
+            />
+          </div>
         </footer>
       </div>
     </div>

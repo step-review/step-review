@@ -1,0 +1,33 @@
+/* As the start page. */
+.page {
+  background: light-dark(
+    color-mix(in srgb, var(--bgColor-accent-muted) 40%, var(--bgColor-default)),
+    var(--bgColor-default)
+  );
+  min-height: 100dvh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-24);
+  box-sizing: border-box;
+  max-width: calc(696px + 2 * var(--base-size-16));
+  margin-inline: auto;
+  padding: var(--base-size-24) var(--base-size-16) var(--base-size-40);
+  line-height: var(--base-text-lineHeight-normal);
+
+  & p {
+    margin: 0;
+  }
+}
+
+.lastUpdated {
+  color: var(--fgColor-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--base-size-8);
+}

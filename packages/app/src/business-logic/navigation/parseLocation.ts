@@ -15,6 +15,9 @@ export default function parseLocation(
   if (normalizedPathname === "/") {
     return { route: { name: RouteName.Start }, fragment: "" };
   }
+  if (normalizedPathname === "/privacy") {
+    return { route: { name: RouteName.Privacy }, fragment: "" };
+  }
   const match = /^\/([rs])\/([^/]+)(?:\/overview|\/steps\/([^/]+))$/u.exec(
     normalizedPathname,
   );

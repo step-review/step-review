@@ -13,6 +13,8 @@ export default function routeHref(
   switch (route.name) {
     case RouteName.Start:
       return "/";
+    case RouteName.Privacy:
+      return "/privacy";
     case RouteName.Overview:
       return `${reviewPath(route.reviewAddress)}/overview${reviewHash(route.reviewAddress, fragment)}`;
     case RouteName.Step:

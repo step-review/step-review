@@ -443,6 +443,206 @@
       "value": "Your name"
     }
   ],
+  "Privacy.tsx_5cxCIW": [
+    {
+      "type": 0,
+      "value": "Hosting and network data"
+    }
+  ],
+  "Privacy.tsx_CUYkvi": [
+    {
+      "type": 0,
+      "value": "Under the GDPR, you can ask us to access, correct or erase your personal data, to restrict or stop processing it, and to hand it over in a portable format. As we don't know who you are and can't read sessions, we usually can't tell which data is yours: ending a session you own, or clearing this site's data in your browser, is the quickest way to erase it."
+    }
+  ],
+  "Privacy.tsx_GZJpDf": [
+    {
+      "type": 0,
+      "value": "Analytics"
+    }
+  ],
+  "Privacy.tsx_GlM8hd": [
+    {
+      "type": 0,
+      "value": "Step Review is run by "
+    },
+    {
+      "type": 1,
+      "value": "dataController"
+    },
+    {
+      "type": 0,
+      "value": ", the data controller for the processing described here. For any question or request about your data, write to "
+    },
+    {
+      "type": 1,
+      "value": "email"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "Privacy.tsx_KEWCI1": [
+    {
+      "type": 0,
+      "value": "Step Review is hosted by "
+    },
+    {
+      "type": 1,
+      "value": "cloudflare"
+    },
+    {
+      "type": 0,
+      "value": ", which processes your IP address and standard request information to deliver the site and protect it from attacks, and may keep it in short-lived logs. To prevent abuse, the server also limits how many sessions an IP address can start per minute; it only keeps those counts for that minute."
+    }
+  ],
+  "Privacy.tsx_PDN1P8": [
+    {
+      "type": 0,
+      "value": "Step Review is built so that your code stays with you: there are no accounts, no cookies and no ads, and reviews you open never leave your browser unless you start a collaboration session. This page explains what data Step Review handles, where, and why."
+    }
+  ],
+  "Privacy.tsx_RuHI4i": [
+    {
+      "type": 0,
+      "value": "This storage is needed for Step Review to work, so it doesn't require consent. You can remove a review from the start page, or remove everything by clearing this site's data in your browser."
+    }
+  ],
+  "Privacy.tsx_SaUZGt": [
+    {
+      "type": 0,
+      "value": "You also have the right to lodge a complaint with a data protection authority, in particular the one where you live or work."
+    }
+  ],
+  "Privacy.tsx_T33gk/": [
+    {
+      "type": 0,
+      "value": "Last updated "
+    },
+    {
+      "type": 1,
+      "value": "date"
+    }
+  ],
+  "Privacy.tsx_TLmf1s": [
+    {
+      "type": 0,
+      "value": "Who is responsible"
+    }
+  ],
+  "Privacy.tsx_UFX1od": [
+    {
+      "type": 0,
+      "value": "We process this data to provide the sessions you ask for (Article 6(1)(b) GDPR)."
+    }
+  ],
+  "Privacy.tsx_UNX1+0": [
+    {
+      "type": 0,
+      "value": "The review files you open, the files you mark as viewed, the sessions you joined (with the keys that open them), your name in sessions and your display preferences are stored in your browser's local storage. "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "They are not sent to us"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", except as described for sessions below."
+    }
+  ],
+  "Privacy.tsx_WmroJ6": [
+    {
+      "type": 0,
+      "value": "Data kept in your browser"
+    }
+  ],
+  "Privacy.tsx_bBmvET": [
+    {
+      "type": 0,
+      "value": "Step Review uses no other analytics, no advertising and no other third-party scripts. Links to GitHub and floor 0 lead to sites with their own privacy policies."
+    }
+  ],
+  "Privacy.tsx_cXBJ7U": [
+    {
+      "type": 0,
+      "value": "Privacy"
+    }
+  ],
+  "Privacy.tsx_cufYZU": [
+    {
+      "type": 0,
+      "value": "If what Step Review does with data changes, we'll update this page and its date."
+    }
+  ],
+  "Privacy.tsx_cxQ2EY": [
+    {
+      "type": 0,
+      "value": "The server stores the encrypted data and hashes of the secrets that let participants in. It can see how large a session is, when it's used, and how many participants it has. A session is deleted when its owner ends it, or after 30 days without activity."
+    }
+  ],
+  "Privacy.tsx_dgqhUM": [
+    {
+      "type": 0,
+      "value": "Changes"
+    }
+  ],
+  "Privacy.tsx_h1P7n8": [
+    {
+      "type": 0,
+      "value": "Collaboration sessions"
+    }
+  ],
+  "Privacy.tsx_hNv3oI": [
+    {
+      "type": 0,
+      "value": "Your rights"
+    }
+  ],
+  "Privacy.tsx_hbVyuj": [
+    {
+      "type": 0,
+      "value": "We rely on our legitimate interest in understanding how Step Review is used, so that we can improve it (Article 6(1)(f) GDPR)."
+    }
+  ],
+  "Privacy.tsx_iDEnD2": [
+    {
+      "type": 0,
+      "value": "When you start a session, the review is uploaded to our server so that others can join it. Before anything leaves your browser, the review, each participant's name and viewed files, and the step each participant is on are "
+    },
+    {
+      "type": 8,
+      "value": "strong",
+      "children": [
+        {
+          "type": 0,
+          "value": "end-to-end encrypted"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": ", with a key that only the session's links hold. Browsers never send that part of a link, so we can't read any of this data."
+    }
+  ],
+  "Privacy.tsx_j7C0nE": [
+    {
+      "type": 0,
+      "value": "To see how much Step Review is used and how fast it loads, we use Cloudflare Web Analytics. A script from Cloudflare reports the address of each page you view (without the part after “?” or “#”, so never a session's key), the page you came from, your browser and device type, your country, and how long the page took to load. It uses no cookies or other storage on your device, and doesn't build a profile of you or follow you across sites."
+    }
+  ],
+  "Privacy.tsx_m9nuC7": [
+    {
+      "type": 0,
+      "value": "Cloudflare processes this data on our behalf under its data processing addendum. It may do so outside the European Economic Area, protected by the EU Standard Contractual Clauses. We rely on our legitimate interest in running a secure, reliable service (Article 6(1)(f) GDPR)."
+    }
+  ],
   "ProjectCredits.tsx_wTNySU": [
     {
       "type": 0,
@@ -945,6 +1145,12 @@
       "value": ")"
     }
   ],
+  "Start.tsx_cXBJ7U": [
+    {
+      "type": 0,
+      "value": "Privacy"
+    }
+  ],
   "Start.tsx_dqEFrF": [
     {
       "type": 0,
@@ -999,6 +1205,12 @@
     {
       "type": 0,
       "value": "see example"
+    }
+  ],
+  "Start.tsx_txEOWF": [
+    {
+      "type": 0,
+      "value": "Step Review on GitHub"
     }
   ],
   "StepFileTree.tsx_D/0ALU": [
