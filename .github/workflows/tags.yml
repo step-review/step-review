@@ -1,0 +1,54 @@
+name: Tags
+
+# A `vX.Y.Z` tag on main deploys the app to production and publishes the public
+# packages to npm under `latest`.
+on:
+  push:
+    tags: ["v*"]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    uses: ./.github/workflows/_qa.yml
+    permissions:
+      contents: read
+
+  release:
+    needs: qa
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # npm trusted publishing: no token, and the packages get provenance.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          # Checking that the tag is on main needs the history.
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check the release tag
+        run: node packages/tooling/release/src/checkReleaseTag.ts
+      - name: Build
+        env:
+          TAG: ${{ github.ref_name }}
+        run: APP_VERSION="${TAG#v}" pnpm build
+      - name: Deploy Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_REVISION: ${{ github.sha }}
+        run: pnpm deploy-site --production
+      - name: Publish packages
+        run: pnpm release:publish --production

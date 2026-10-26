@@ -1,5 +1,6 @@
 {
   "name": "@step-review/root",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -8,7 +9,7 @@
   "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61",
   "scripts": {
     "dev": "pnpm --parallel --filter @step-review/app --filter @step-review/session-server dev",
-    "build": "pnpm --filter @step-review/app build",
+    "build": "pnpm -r --if-present build",
     "check-translations": "pnpm -r --if-present check-translations",
     "check-types": "pnpm -r --if-present check-types",
     "check-formatting": "oxfmt --check .",
@@ -18,7 +19,9 @@
     "test": "pnpm -r --if-present test",
     "qa": "pnpm check-formatting && pnpm lint && pnpm check-types && pnpm check-translations && pnpm test",
     "deploy-site": "pnpm --filter @step-review/app deploy-site",
-    "cleanup-preview": "pnpm --filter @step-review/app cleanup-preview"
+    "cleanup-preview": "pnpm --filter @step-review/app cleanup-preview",
+    "release:prepare": "node packages/tooling/release/src/prepareRelease.ts",
+    "release:publish": "node packages/tooling/release/src/publishRelease.ts"
   },
   "devDependencies": {
     "@step-review/oxlint-custom-rules": "workspace:*",

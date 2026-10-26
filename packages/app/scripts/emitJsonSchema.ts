@@ -1,7 +1,7 @@
-import { createJsonSchema } from "@step-review/review-format";
+import { createJsonSchema, formatVersion } from "@step-review/review-format";
 import type { Plugin } from "vite";
 
-const schemaPath = "/schema/v3.json";
+const schemaPath = `/schema/v${formatVersion}.json`;
 
 /**
  * Publishes the review format's JSON Schema next to the app: emitted on build,

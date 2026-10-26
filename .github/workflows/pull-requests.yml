@@ -1,4 +1,4 @@
-name: QA and deploy PR preview
+name: Pull requests
 
 on:
   pull_request:
@@ -10,44 +10,26 @@ concurrency:
 
 jobs:
   qa:
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/_qa.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-          ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "24"
-      - name: Enable corepack
-        run: corepack enable
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Install Chromium for component tests
-        run: pnpm --filter @step-review/app exec playwright install --with-deps chromium
-      - name: Check formatting
-        run: pnpm check-formatting
-      - name: Check linting
-        run: pnpm lint
-      - name: Check translations
-        run: pnpm check-translations
-      - name: Check types
-        run: pnpm check-types
-      - name: Test
-        run: pnpm test
 
-  build-deploy:
+  preview:
     outputs:
       deployed: ${{ steps.deploy.outputs.deployed }}
-    # Previews need the Cloudflare secrets, which fork PRs don't get.
+      packages: ${{ steps.publish.outputs.packages }}
+    # Previews need the Cloudflare secrets and the OIDC token, which fork PRs
+    # don't get.
     if: github.event.pull_request.head.repo.full_name == github.repository
     needs: qa
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
+      # npm trusted publishing: no token, and the packages get provenance.
+      id-token: write
     steps:
       - uses: actions/checkout@v6
         with:
@@ -56,12 +38,15 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+          registry-url: "https://registry.npmjs.org"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build
-        run: pnpm build
+        env:
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
+        run: APP_VERSION="$(node -p "require('./package.json').version")-pr.$PULL_REQUEST_NUMBER" pnpm build
       - name: Deploy Worker
         id: deploy
         env:
@@ -71,20 +56,30 @@ jobs:
           DEPLOY_REVISION: ${{ github.event.pull_request.head.sha }}
           PULL_REQUEST_NUMBER: ${{ github.event.number }}
         run: pnpm deploy-site --pr "$PULL_REQUEST_NUMBER"
+      - name: Publish packages
+        id: publish
+        env:
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
+          PUBLISH_REVISION: ${{ github.event.pull_request.head.sha }}
+        run: pnpm release:publish --pr "$PULL_REQUEST_NUMBER" --revision "$PUBLISH_REVISION"
 
   add-pr-comment:
-    if: needs.build-deploy.outputs.deployed == 'true'
-    needs: build-deploy
+    if: needs.preview.outputs.deployed == 'true'
+    needs: preview
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - name: Comment preview URL
+      - name: Comment preview URL and packages
         uses: actions/github-script@v8
+        env:
+          PREVIEW_PACKAGES: ${{ needs.preview.outputs.packages }}
         with:
           script: |
             const pullRequestNumber = context.payload.pull_request.number;
             const marker = "<!-- preview-deployments-comment -->";
+            // Empty until the first release, which previews need.
+            const previewPackages = JSON.parse(process.env.PREVIEW_PACKAGES);
             const body = [
               marker,
               "",
@@ -92,6 +87,14 @@ jobs:
               "",
               `https://pr-${pullRequestNumber}.step-review.dev/`,
               "",
+              ...(previewPackages.length > 0
+                ? [
+                    "Preview packages:",
+                    "",
+                    ...previewPackages.map((previewPackage) => `- \`pnpx ${previewPackage}\``),
+                    "",
+                  ]
+                : []),
               `Revision: ${context.payload.pull_request.head.sha}`,
             ].join("\n");
             const comments = await github.paginate(github.rest.issues.listComments, {

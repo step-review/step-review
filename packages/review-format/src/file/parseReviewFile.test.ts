@@ -175,3 +175,27 @@ it("reports a diff problem with its line in the review file", () => {
     !result.success && result.problems.map((problem) => problem.location),
   ).toEqual(["line 8"]);
 });
+
+it("reports a review in another format version", () => {
+  // Exercise
+  const result = parseReviewFile(
+    [
+      "#step-review:review",
+      JSON.stringify({ version: 2, rounds: [] }),
+      "#step-review:diff",
+      "",
+    ].join("\n"),
+  );
+
+  // Verify
+  expect(result).toEqual({
+    success: false,
+    problems: [
+      {
+        message:
+          "The review uses format version 2, but Step Review reads only version 3. Write the review again with the current instructions.",
+        location: "version",
+      },
+    ],
+  });
+});

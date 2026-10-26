@@ -3,7 +3,10 @@ import shell from "./shell.ts";
 
 const domain = "step-review.dev";
 
-/** Where a build is deployed: production (`--main`) or a PR preview. */
+/** Prints `<tag> <commit>` for each `vX.Y.Z` tag. */
+const releaseTagsQuery = String.raw`.[] | select(.name | test("^v[0-9]+[.][0-9]+[.][0-9]+$")) | "\(.name) \(.commit.sha)"`;
+
+/** Where a build is deployed: production (`--production`) or a PR preview. */
 export default class DeployTarget {
   pullRequestNumber: string | undefined;
   workerName: string;
@@ -13,21 +16,23 @@ export default class DeployTarget {
     const { values } = parseArgs({
       args: argumentsList,
       options: {
-        main: { type: "boolean" },
+        production: { type: "boolean" },
         pr: { type: "string" },
       },
       allowPositionals: false,
       strict: true,
     });
     if (
-      !(values.main === true && values.pr === undefined) &&
+      !(values.production === true && values.pr === undefined) &&
       !(
-        values.main === undefined &&
+        values.production === undefined &&
         values.pr !== undefined &&
         /^[1-9]\d{0,9}$/u.test(values.pr)
       )
     ) {
-      throw new Error("Choose exactly one target: --main or --pr <number>.");
+      throw new Error(
+        "Choose exactly one target: --production or --pr <number>.",
+      );
     }
     this.pullRequestNumber = values.pr;
     this.workerName = values.pr ? `step-review-pr-${values.pr}` : "step-review";
@@ -47,10 +52,8 @@ export default class DeployTarget {
     }
     const repository = required("GITHUB_REPOSITORY");
     if (!this.pullRequestNumber) {
-      const endpoint = `repos/${repository}/commits/main`;
       return (
-        (await shell`gh api ${endpoint} --jq .sha`).stdout.trim() ===
-        required("DEPLOY_REVISION")
+        (await latestReleaseCommit(repository)) === required("DEPLOY_REVISION")
       );
     }
     const endpoint = `repos/${repository}/pulls/${this.pullRequestNumber}`;
@@ -68,6 +71,27 @@ export default class DeployTarget {
           pullRequest.head.sha === required("DEPLOY_REVISION"))
     );
   }
+}
+
+/** The commit of the highest `vX.Y.Z` tag: production runs the latest release. */
+async function latestReleaseCommit(
+  repository: string,
+): Promise<string | undefined> {
+  const endpoint = `repos/${repository}/tags`;
+  const releaseTags = (
+    await shell`gh api ${endpoint} --paginate --jq ${releaseTagsQuery}`
+  ).stdout
+    .trim()
+    .split("\n")
+    .filter((line) => line !== "")
+    .map((line) => {
+      const [name = "", commit = ""] = line.split(" ");
+      return { version: name.slice(1), commit };
+    })
+    .sort((a, b) =>
+      b.version.localeCompare(a.version, "en", { numeric: true }),
+    );
+  return releaseTags[0]?.commit;
 }
 
 function required(name: string): string {

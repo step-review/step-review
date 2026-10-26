@@ -1,4 +1,4 @@
-name: Clean up PR preview
+name: Pull requests closed
 
 on:
   pull_request:

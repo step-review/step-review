@@ -1,4 +1,5 @@
 export { default as parseReviewFile } from "./file/parseReviewFile.ts";
+export { default as createReviewFileText } from "./file/createReviewFileText.ts";
 export { default as sectionMarkerPrefix } from "./file/sectionMarkerPrefix.ts";
 export type { default as ParseReviewFileResult } from "./file/ParseReviewFileResult.ts";
 export type { default as ReviewFile } from "./file/ReviewFile.ts";
@@ -19,6 +20,7 @@ export { default as findUnassignedFileDiffs } from "./checks/findUnassignedFileD
 export { default as selectHunks } from "./checks/selectHunks.ts";
 
 export { default as createJsonSchema } from "./jsonSchema/createJsonSchema.ts";
+export { default as formatVersion } from "./data/formatVersion.ts";
 export { default as reviewDataSchema } from "./data/schemas/reviewDataSchema.ts";
 export type { default as Attention } from "./data/types/Attention.ts";
 export type { default as DiffSide } from "./data/types/DiffSide.ts";

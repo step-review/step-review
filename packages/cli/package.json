@@ -1,0 +1,33 @@
+{
+  "name": "@step-review/cli",
+  "version": "0.1.0",
+  "description": "Builds and checks Step Review files.",
+  "license": "MIT",
+  "homepage": "https://step-review.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step-review/step-review.git",
+    "directory": "packages/cli"
+  },
+  "type": "module",
+  "bin": {
+    "step-review": "./dist/step-review.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "vite build",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@step-review/review-format": "workspace:*",
+    "@types/node": "26.6.5",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
+  }
+}

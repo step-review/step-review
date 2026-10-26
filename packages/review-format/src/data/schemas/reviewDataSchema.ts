@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import formatVersion from "../formatVersion.ts";
 import reviewOverviewSchema from "./reviewOverviewSchema.ts";
 import reviewTargetSchema from "./reviewTargetSchema.ts";
 import stepSchema from "./stepSchema.ts";
@@ -6,7 +7,7 @@ import stepSchema from "./stepSchema.ts";
 export default v.pipe(
   v.strictObject({
     $schema: v.optional(v.string()),
-    version: v.literal(3),
+    version: v.literal(formatVersion),
     createdAt: v.pipe(
       v.string(),
       v.isoTimestamp(),

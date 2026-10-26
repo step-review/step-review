@@ -24,8 +24,8 @@ at `https://step-review.dev/schema/v3.json`. The agent instructions in
 
 ## Compatibility
 
-The format is a public contract: files written by agents must keep working.
-Changes must be backward compatible within a version (new optional fields only),
-or introduce a new `version`. Before the app had users, version 2 dropped the
-rounds of version 1 and version 3 the overview's areas, so the app only reads
-version 3.
+Agents write review files for the app to open right away; nobody opens old ones.
+So the app reads only the current `version` (`formatVersion`), with no
+compatibility code: bump it whenever a change makes older files invalid. Ship
+format changes in a release, so that the deployed app and the published CLI
+always agree.

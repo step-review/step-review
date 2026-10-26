@@ -269,11 +269,11 @@
   "ReviewActions.tsx_qjGckA": {
     "defaultMessage": "Reset review state?"
   },
+  "ReviewDropzone.tsx_7oiKM4": {
+    "defaultMessage": "Copy for your agent"
+  },
   "ReviewDropzone.tsx_LsFoKe": {
     "defaultMessage": "Open file"
-  },
-  "ReviewDropzone.tsx_PK4BW0": {
-    "defaultMessage": "Copy the problems"
   },
   "ReviewDropzone.tsx_ldEvwe": {
     "defaultMessage": "The file is not a valid review"
