@@ -11,5 +11,16 @@
 /* A line no taller than the text, so that aligning its baseline with the
    pills' doesn't push them down. */
 .viewed {
+  display: inline-grid;
   line-height: 1;
+  /* Digits of one width, so that no count is wider than the widest. */
+  font-variant-numeric: tabular-nums;
+
+  & > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.widest {
+  visibility: hidden;
 }

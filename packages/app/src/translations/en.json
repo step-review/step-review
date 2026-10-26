@@ -449,8 +449,14 @@
   "Start.tsx_txEOWF": {
     "defaultMessage": "Step Review on GitHub"
   },
+  "StepFileTree.tsx_7hxyNF": {
+    "defaultMessage": "{issueCount, plural, one {# issue} other {# issues}}"
+  },
   "StepFileTree.tsx_D/0ALU": {
     "defaultMessage": "Viewed"
+  },
+  "StepFileTree.tsx_cr9pr9": {
+    "defaultMessage": "{explainerCount, plural, one {# note} other {# notes}}"
   },
   "StepFileTree.tsx_hvXAqx": {
     "defaultMessage": "Files of the step"

@@ -1213,10 +1213,74 @@
       "value": "Step Review on GitHub"
     }
   ],
+  "StepFileTree.tsx_7hxyNF": [
+    {
+      "type": 6,
+      "value": "issueCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issue"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " issues"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
+    }
+  ],
   "StepFileTree.tsx_D/0ALU": [
     {
       "type": 0,
       "value": "Viewed"
+    }
+  ],
+  "StepFileTree.tsx_cr9pr9": [
+    {
+      "type": 6,
+      "value": "explainerCount",
+      "options": {
+        "one": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " note"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " notes"
+            }
+          ]
+        }
+      },
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "StepFileTree.tsx_hvXAqx": [
