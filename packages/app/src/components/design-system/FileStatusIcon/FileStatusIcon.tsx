@@ -1,8 +1,8 @@
 import {
-  DiffAddedIcon,
-  DiffModifiedIcon,
-  DiffRemovedIcon,
-  DiffRenamedIcon,
+  FileAddedIcon,
+  FileDiffIcon,
+  FileMovedIcon,
+  FileRemovedIcon,
 } from "@primer/octicons-react";
 import type { Icon } from "@primer/octicons-react";
 import type { FileDiffStatus } from "@step-review/review-format";
@@ -13,12 +13,12 @@ interface Props {
 }
 
 const icons: Record<FileDiffStatus, Icon> = {
-  added: DiffAddedIcon,
-  deleted: DiffRemovedIcon,
-  modified: DiffModifiedIcon,
-  renamed: DiffRenamedIcon,
+  added: FileAddedIcon,
+  deleted: FileRemovedIcon,
+  modified: FileDiffIcon,
+  renamed: FileMovedIcon,
   // Octicons has no icon for copies, which also come from another path.
-  copied: DiffRenamedIcon,
+  copied: FileMovedIcon,
 };
 
 /** GitHub's icon for a file's status, without a label of its own. */

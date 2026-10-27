@@ -13,7 +13,6 @@ import formatFileStatus from "../../design-system/badges/formatFileStatus.ts";
 import FileStatusIcon from "../../design-system/FileStatusIcon/FileStatusIcon.tsx";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
-import FileIcon from "../FileIcon/FileIcon.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
 import styles from "./StepFileTree.module.css";
 
@@ -62,7 +61,9 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
           <TreeView.LeadingVisual>
             <TreeView.DirectoryIcon />
           </TreeView.LeadingVisual>
-          <TruncatedText tooltip={node.path}>{node.label}</TruncatedText>
+          <span className={styles["folderName"]}>
+            <TruncatedText tooltip={node.path}>{node.label}</TruncatedText>
+          </span>
           <TreeView.SubTree>
             <FileTreeNodes nodes={node.children} onFileSelect={onFileSelect} />
           </TreeView.SubTree>
@@ -112,15 +113,16 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
         onSelect={() => onFileSelect(fileFragment)}
       >
         <TreeView.LeadingVisual>
-          <FileIcon path={stepFileView.path} />
+          <FileStatusIcon status={stepFileView.fileDiff.status} />
         </TreeView.LeadingVisual>
-        {/* Viewed files are dimmed. */}
+        {/* Viewed files are dimmed, and deleted ones struck through. */}
         <span
           className={styles["fileName"]}
+          data-status={stepFileView.fileDiff.status}
           data-viewed={isViewed || undefined}
         >
           <TruncatedText tooltip={stepFileView.path}>
-            {node.label}
+            <span className={styles["fileLabel"]}>{node.label}</span>
           </TruncatedText>
         </span>
         <TreeView.TrailingVisual label={marksLabel}>
@@ -128,7 +130,6 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
             <ParticipantsHere fileId={stepFileView.id} />
             <NoteCounts {...noteKindCounts} isCompact />
             {isViewed && <CheckIcon className={styles["viewedIcon"]} />}
-            <FileStatusIcon status={stepFileView.fileDiff.status} />
           </span>
         </TreeView.TrailingVisual>
       </TreeView.Item>
