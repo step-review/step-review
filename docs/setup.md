@@ -1,5 +1,24 @@
 # Setup
 
+## Packages
+
+pnpm monorepo:
+
+- [`packages/app`](../packages/app): the web app (Vite, React, Primer).
+- [`packages/cli`](../packages/cli): the CLI that agents use to build and check
+  review files, published as `@step-review/cli`.
+- [`packages/review-format`](../packages/review-format): the review file format:
+  schemas, parser and consistency checks.
+- [`packages/session-server`](../packages/session-server): the server of
+  sessions (a Cloudflare Worker with Durable Objects), and its protocol.
+- [`packages/tooling/oxlint-custom-rules`](../packages/tooling/oxlint-custom-rules):
+  architecture lint rules.
+- [`packages/tooling/release`](../packages/tooling/release): the scripts that
+  prepare releases and publish the packages.
+
+Contributors and coding agents follow the principles in
+[`AGENTS.md`](../AGENTS.md).
+
 ## System requirements
 
 - [Node.js 24](https://nodejs.org/en/).

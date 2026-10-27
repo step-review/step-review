@@ -1,3 +1,11 @@
+<p align="center">
+  <img src="packages/app/public/favicon.svg" alt="" width="64" height="64">
+</p>
+
+<h1 align="center">Step Review</h1>
+
+<p align="center">by <a href="https://floor0.dev">floor 0</a></p>
+
 Step Review helps you review large PRs and actually understand them. This way,
 you keep a handle on your codebase even when coding agents produce mountains of
 code that you can't realistically review line by line.
@@ -41,26 +49,6 @@ Then, Step Review's [SKILL.md](packages/app/public/SKILL.md) (published at
 - Tells it to build the review file with
   [`@step-review/cli`](packages/cli/README.md), which reports the problems the
   app would show, and to write it in your repository, without committing it.
-
-## Development
-
-pnpm monorepo:
-
-- [`packages/app`](packages/app): the web app (Vite, React, Primer).
-- [`packages/cli`](packages/cli): the CLI that agents use to build and check
-  review files, published as `@step-review/cli`.
-- [`packages/review-format`](packages/review-format): the review file format:
-  schemas, parser and consistency checks.
-- [`packages/session-server`](packages/session-server): the server of sessions
-  (a Cloudflare Worker with Durable Objects), and its protocol.
-- [`packages/tooling/oxlint-custom-rules`](packages/tooling/oxlint-custom-rules):
-  architecture lint rules.
-- [`packages/tooling/release`](packages/tooling/release): the scripts that
-  prepare releases and publish the packages.
-
-See [Setup](docs/setup.md) for requirements, commands and deployment.
-Contributors and coding agents follow the principles in
-[`AGENTS.md`](AGENTS.md).
 
 ## License
 
