@@ -41,10 +41,12 @@
   height: var(--base-size-32);
 }
 
-/* Above the marker. */
+/* Above the marker. Out on the link's padding, over the ring but clear of the
+   number. */
 .attention,
 .presence {
   position: absolute;
+  right: calc(-1 * var(--base-size-6));
   z-index: 2;
   display: flex;
 }
@@ -52,8 +54,7 @@
 /* On a disk of the link's background, which is translucent: over the page's
    own, as the link is. The icon's outline would show the ring through it. */
 .attention {
-  top: 0;
-  right: 0;
+  top: calc(-1 * var(--base-size-4));
   padding: var(--base-size-2);
   border-radius: 50%;
   background:
@@ -62,6 +63,5 @@
 }
 
 .presence {
-  right: 0;
-  bottom: 0;
+  bottom: calc(-1 * var(--base-size-4));
 }
