@@ -30,8 +30,11 @@ export default function FileCard({
   const { dispatch } = useReviewState();
   // Viewed by anyone, while the checkbox only changes the own view.
   const isViewed = useViewedFingerprints().has(stepFileView.fingerprint);
+  // A deleted file's diff only repeats the content it removes.
   const [isCollapsed, setIsCollapsed] = useState(
-    isViewed || stepView.attention === "low",
+    isViewed ||
+      stepView.attention === "low" ||
+      stepFileView.fileDiff.status === "deleted",
   );
   const [isSummaryDiffShown, setIsSummaryDiffShown] = useState(false);
   const fragment = useFragment();

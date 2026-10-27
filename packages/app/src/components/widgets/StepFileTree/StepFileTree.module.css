@@ -3,13 +3,28 @@
   font-kerning: none;
 }
 
+.folderName,
 .fileName {
   display: block;
   min-width: 0;
+  /* Mona Sans's line box has more room above the letters than below them,
+     which leaves the names visibly lower than the icons and marks. */
+  position: relative;
+  top: -1px;
+}
 
+.fileName {
   &[data-viewed] {
     color: var(--fgColor-muted);
   }
+}
+
+/* Mona Sans's own line-through runs above the middle of lowercase letters, so
+   the line is drawn across it: 0.84em below the top of the text, which is
+   where the browser puts the baseline (1.11em) minus half the x-height. */
+.fileName[data-status="deleted"] .fileLabel {
+  background: linear-gradient(currentColor, currentColor) 0
+    calc(0.84em - 0.5px) / 100% 1px no-repeat;
 }
 
 .marks {

@@ -12,6 +12,6 @@ Both commands exit with status 1 when the review has problems, and list them.
 
 ## Publishing
 
-Every push to a branch publishes a beta under a dist-tag named after the branch
-(`npx @step-review/cli@my-branch`), and every release publishes to `latest`. See
+Every PR publishes a preview under the `pr-<number>` dist-tag (the PR's comment
+shows the exact version to run), and every release publishes to `latest`. See
 [Releasing](../../docs/setup.md#releasing).

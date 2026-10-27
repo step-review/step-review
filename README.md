@@ -1,3 +1,5 @@
+<p align="center"><a href="https://step-review.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/brand-dark.png"><img src="docs/media/brand-light.png" alt="Step Review: a better way to review PRs" width="308" height="96"></picture></a><a href="https://floor0.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/credits-dark.png"><img src="docs/media/credits-light.png" alt="by floor 0" width="179" height="96"></picture></a></p>
+
 Step Review helps you review large PRs and actually understand them. This way,
 you keep a handle on your codebase even when coding agents produce mountains of
 code that you can't realistically review line by line.
@@ -38,24 +40,9 @@ Then, Step Review's [SKILL.md](packages/app/public/SKILL.md) (published at
 - Teaches the agent the format.
 - Tells it how to prepare the review: how to split the changes into steps, and
   what deserves a note.
-- Tells it to build the review file and write it in your repository, without
-  committing it.
-
-## Development
-
-pnpm monorepo:
-
-- [`packages/app`](packages/app): the web app (Vite, React, Primer).
-- [`packages/review-format`](packages/review-format): the review file format:
-  schemas, parser and consistency checks.
-- [`packages/session-server`](packages/session-server): the server of sessions
-  (a Cloudflare Worker with Durable Objects), and its protocol.
-- [`packages/tooling/oxlint-custom-rules`](packages/tooling/oxlint-custom-rules):
-  architecture lint rules.
-
-See [Setup](docs/setup.md) for requirements, commands and deployment.
-Contributors and coding agents follow the principles in
-[`AGENTS.md`](AGENTS.md).
+- Tells it to build the review file with
+  [`@step-review/cli`](packages/cli/README.md), which reports the problems the
+  app would show, and to write it in your repository, without committing it.
 
 ## License
 

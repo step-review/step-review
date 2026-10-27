@@ -1,5 +1,24 @@
 # Setup
 
+## Packages
+
+pnpm monorepo:
+
+- [`packages/app`](../packages/app): the web app (Vite, React, Primer).
+- [`packages/cli`](../packages/cli): the CLI that agents use to build and check
+  review files, published as `@step-review/cli`.
+- [`packages/review-format`](../packages/review-format): the review file format:
+  schemas, parser and consistency checks.
+- [`packages/session-server`](../packages/session-server): the server of
+  sessions (a Cloudflare Worker with Durable Objects), and its protocol.
+- [`packages/tooling/oxlint-custom-rules`](../packages/tooling/oxlint-custom-rules):
+  architecture lint rules.
+- [`packages/tooling/release`](../packages/tooling/release): the scripts that
+  prepare releases and publish the packages.
+
+Contributors and coding agents follow the principles in
+[`AGENTS.md`](../AGENTS.md).
+
 ## System requirements
 
 - [Node.js 24](https://nodejs.org/en/).
@@ -81,16 +100,23 @@ To deploy by hand, export the same variables and run `pnpm build`, then
 
 All packages share one version, released by a `vX.Y.Z` tag on `main`.
 
-1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md) and commit it.
+1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md), in a PR.
 2. On a clean `main`, run `pnpm release:prepare X.Y.Z`: it sets the version of
    every package, runs QA, commits and tags.
-3. Push both: `git push --atomic origin main vX.Y.Z`.
+3. Push both: `git push --atomic origin main vX.Y.Z`. Pushing to `main` without
+   a PR needs the bypass of its ruleset, which repository admins have.
 
 Packages are published through npm trusted publishing: no token. Re-running a
 job skips the versions already published.
 
-One-time setup: publish the first version of `@step-review/cli` by hand
-(`pnpm --filter @step-review/cli build`, then `pnpm publish --access public` in
-`packages/cli`), then register the repository's `pull-requests.yml` and
-`tags.yml` workflows as its trusted publishers on npm. PR previews are skipped
-until then, since npm makes a package's first version `latest`.
+One-time setup for each new public package: npm only trusts publishers of
+packages that exist, so publish its first version by hand, with `npm login`,
+then `pnpm build` and `pnpm release:publish --production`. Then, in the
+package's settings on npm, add the repository's `pull-requests.yml` and
+`tags.yml` workflows as trusted publishers, allowing `npm publish`, and require
+two-factor authentication and disallow tokens. PR previews are skipped until the
+first version exists, since npm makes a package's first version `latest`.
+
+The `main` ruleset requires the QA check, which GitHub names `qa / qa` after the
+calling job and the job of `_qa.yml`: renaming either job means updating the
+ruleset.

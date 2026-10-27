@@ -143,36 +143,6 @@
       "value": "Copy the path"
     }
   ],
-  "FileStatusBadge.tsx_KQvWvD": [
-    {
-      "type": 0,
-      "value": "Deleted"
-    }
-  ],
-  "FileStatusBadge.tsx_Yg0L8+": [
-    {
-      "type": 0,
-      "value": "Renamed"
-    }
-  ],
-  "FileStatusBadge.tsx_p556q3": [
-    {
-      "type": 0,
-      "value": "Copied"
-    }
-  ],
-  "FileStatusBadge.tsx_rIAJlE": [
-    {
-      "type": 0,
-      "value": "Added"
-    }
-  ],
-  "FileStatusBadge.tsx_tOxzip": [
-    {
-      "type": 0,
-      "value": "Modified"
-    }
-  ],
   "FileViewers.tsx_Z7S0/N": [
     {
       "type": 0,
@@ -1489,6 +1459,36 @@
     {
       "type": 0,
       "value": " viewed"
+    }
+  ],
+  "formatFileStatus.ts_KQvWvD": [
+    {
+      "type": 0,
+      "value": "Deleted"
+    }
+  ],
+  "formatFileStatus.ts_Yg0L8+": [
+    {
+      "type": 0,
+      "value": "Renamed"
+    }
+  ],
+  "formatFileStatus.ts_p556q3": [
+    {
+      "type": 0,
+      "value": "Copied"
+    }
+  ],
+  "formatFileStatus.ts_rIAJlE": [
+    {
+      "type": 0,
+      "value": "Added"
+    }
+  ],
+  "formatFileStatus.ts_tOxzip": [
+    {
+      "type": 0,
+      "value": "Modified"
     }
   ],
   "formatViewedAndNoteCounts.ts_7hxyNF": [

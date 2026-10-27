@@ -1,0 +1,15 @@
+.icon {
+  color: var(--fgColor-muted);
+
+  &[data-status="added"] {
+    color: var(--fgColor-success);
+  }
+
+  &[data-status="deleted"] {
+    color: var(--fgColor-danger);
+  }
+
+  &[data-status="modified"] {
+    color: var(--fgColor-attention);
+  }
+}
