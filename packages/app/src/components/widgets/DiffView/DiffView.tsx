@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import buildDiffRows from "../../../business-logic/diff-layout/buildDiffRows.ts";
 import buildSplitRows from "../../../business-logic/diff-layout/buildSplitRows.ts";
 import computeWordDiffs from "../../../business-logic/diff-layout/computeWordDiffs.ts";
+import lineNumberDigitCount from "../../../business-logic/diff-layout/lineNumberDigitCount.ts";
 import splitLineSegments from "../../../business-logic/diff-layout/splitLineSegments.ts";
 import useHighlightedLines from "../../../business-logic/highlighting/useHighlightedLines.ts";
 import noteLineKeys from "../../../business-logic/notes/noteLineKeys.ts";
@@ -25,7 +26,10 @@ interface Props {
   layout: "unified" | "split";
 }
 
-/** Minimum width for the notes column; narrower diffs show notes inline. */
+/**
+ * Minimum width for the notes column; narrower diffs show notes inline. Split
+ * diffs always do, so that every file keeps its two halves at the same width.
+ */
 const notesColumnMinimumWidth = 960;
 
 export default function DiffView({ path, hunks, notes, layout }: Props) {
@@ -38,7 +42,8 @@ export default function DiffView({ path, hunks, notes, layout }: Props) {
     setWidth(entries[0]?.contentRect.width ?? 0);
   }, wrapperRef);
   const rowsContainerRef = useRef<HTMLDivElement>(null);
-  const isWide = width >= notesColumnMinimumWidth;
+  const hasNotesColumn =
+    layout === "unified" && width >= notesColumnMinimumWidth;
   const pinnedLineKeys = useMemo(
     () => new Set(notes.flatMap(noteLineKeys)),
     [notes],
@@ -86,7 +91,7 @@ export default function DiffView({ path, hunks, notes, layout }: Props) {
     onExpandGap: (gapId) =>
       setExpandedGapIds((ids) => new Set([...ids, gapId])),
     renderExtras: (lineKeys, colSpan) => {
-      const rowNotes = isWide
+      const rowNotes = hasNotesColumn
         ? []
         : notes.filter((note) =>
             lineKeys.includes(noteLineKeys(note)[0] ?? ""),
@@ -110,7 +115,10 @@ export default function DiffView({ path, hunks, notes, layout }: Props) {
   return (
     <div ref={wrapperRef} className={styles["wrapper"]}>
       <div ref={rowsContainerRef} className={styles["rows"]}>
-        <DiffTable layout={layout}>
+        <DiffTable
+          layout={layout}
+          lineNumberDigitCount={lineNumberDigitCount(hunks)}
+        >
           {layout === "split" ? (
             <SplitDiffRows rows={splitRows} renderer={renderer} />
           ) : (
@@ -118,7 +126,7 @@ export default function DiffView({ path, hunks, notes, layout }: Props) {
           )}
         </DiffTable>
       </div>
-      {isWide && notes.length > 0 && (
+      {hasNotesColumn && notes.length > 0 && (
         <NotesColumn
           notes={notes}
           rowsContainerRef={rowsContainerRef}
