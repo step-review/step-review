@@ -8,8 +8,10 @@
   line-height: 20px;
 }
 
+/* As wide as the largest line number, and at least two digits wide so that
+   the gap rows' expand buttons fit. */
 .numberColumn {
-  width: 50px;
+  width: calc(max(var(--line-number-digit-count), 2) * 1ch + 20px);
 }
 
 .row {
@@ -27,6 +29,12 @@
     text-align: right;
     color: var(--fgColor-muted);
     user-select: none;
+  }
+
+  /* Holds the expand button, wider than the column's padding leaves room for. */
+  &[data-kind="number"][data-tone="gap"] {
+    padding: 0;
+    text-align: center;
   }
 
   &[data-kind="code"] {
