@@ -1,10 +1,4 @@
-<p align="center">
-  <img src="packages/app/public/favicon.svg" alt="" width="64" height="64">
-</p>
-
-<h1 align="center">Step Review</h1>
-
-<p align="center">by <a href="https://floor0.dev">floor 0</a></p>
+<p align="center"><a href="https://step-review.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/brand-dark.png"><img src="docs/media/brand-light.png" alt="Step Review: a better way to review PRs" width="205" height="40"></picture></a><a href="https://floor0.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/credits-dark.png"><img src="docs/media/credits-light.png" alt="by floor 0" width="119" height="40"></picture></a></p>
 
 Step Review helps you review large PRs and actually understand them. This way,
 you keep a handle on your codebase even when coding agents produce mountains of
