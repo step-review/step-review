@@ -1,4 +1,4 @@
-<p align="center"><a href="https://step-review.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/brand-dark.png"><img src="docs/media/brand-light.png" alt="Step Review: a better way to review PRs" width="308" height="60"></picture></a><a href="https://floor0.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/credits-dark.png"><img src="docs/media/credits-light.png" alt="by floor 0" width="179" height="60"></picture></a></p>
+<p align="center"><a href="https://step-review.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/brand-dark.png"><img src="docs/media/brand-light.png" alt="Step Review: a better way to review PRs" width="308" height="96"></picture></a><a href="https://floor0.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/media/credits-dark.png"><img src="docs/media/credits-light.png" alt="by floor 0" width="179" height="96"></picture></a></p>
 
 Step Review helps you review large PRs and actually understand them. This way,
 you keep a handle on your codebase even when coding agents produce mountains of
