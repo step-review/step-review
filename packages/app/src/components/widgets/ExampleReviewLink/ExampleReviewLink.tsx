@@ -1,21 +1,23 @@
 import { Link } from "@primer/react";
 import type { ReactNode } from "react";
-import openExampleReview from "../../../business-logic/review/openExampleReview.ts";
-import styles from "./ExampleReviewLink.module.css";
+import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import exampleReviewId from "../../../business-logic/review/exampleReviewId.ts";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 
 interface Props {
   children: ReactNode;
 }
 
-/** A link that opens the example review, styled like the surrounding text. */
+/** A link that opens the example review. */
 export default function ExampleReviewLink({ children }: Props) {
   return (
     <Link
-      as="button"
-      type="button"
+      as={RouteLink}
       inline
-      className={styles["link"]}
-      onClick={openExampleReview}
+      route={{
+        name: RouteName.Overview,
+        reviewAddress: { kind: "local", reviewId: exampleReviewId },
+      }}
     >
       {children}
     </Link>
