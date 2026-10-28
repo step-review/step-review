@@ -1,6 +1,6 @@
 {
   "name": "@step-review/cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Builds and checks Step Review files.",
   "license": "MIT",
   "homepage": "https://step-review.dev",
