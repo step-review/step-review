@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- Step Review can be installed as an app from Chrome or Edge on desktop, and the
+  installed app opens `.step-review` files from the operating system.
+
 ## 1.1.3
 
 - The skill runs an installed `step-review` CLI first, and asks the user to
