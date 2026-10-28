@@ -1,6 +1,6 @@
 import { UploadIcon } from "@primer/octicons-react";
 import { Banner, Button, Stack } from "@primer/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import createFixPrompt from "../../../business-logic/prompts/createFixPrompt.ts";
 import useOpenReviewFile from "../../../business-logic/review/useOpenReviewFile.ts";
@@ -10,13 +10,22 @@ import HiddenFileInput from "../../design-system/HiddenFileInput/HiddenFileInput
 import styles from "./ReviewDropzone.module.css";
 
 /**
- * Opens a review file chosen with the button or dropped anywhere on the page,
- * and shows why it can't be opened if it's not a valid review.
+ * Opens a review file chosen with the button, dropped anywhere on the page, or
+ * opened from the operating system with the installed app, and shows why it
+ * can't be opened if it's not a valid review.
  */
 export default function ReviewDropzone() {
   const intl = useIntl();
   const { openReviewFile, invalidReviewFile } = useOpenReviewFile();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    // The installed app opens review files on the start page (the manifest's
+    // file handler action). Browsers without the File Handling API have no
+    // launch queue.
+    window.launchQueue?.setConsumer((launchParams) => {
+      void launchParams.files[0]?.getFile().then(openReviewFile);
+    });
+  }, []);
   return (
     <Stack gap="condensed">
       <div className={styles["actions"]}>
