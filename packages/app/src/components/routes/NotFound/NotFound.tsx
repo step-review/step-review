@@ -1,7 +1,7 @@
 import { Button, Stack, Text } from "@primer/react";
 import { FormattedMessage } from "react-intl";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import RouteLink from "../../widgets/RouteLink/RouteLink.tsx";
 import styles from "./NotFound.module.css";
 
 export default function NotFound() {
@@ -10,7 +10,7 @@ export default function NotFound() {
       <Text>
         <FormattedMessage defaultMessage="Page not found." />
       </Text>
-      <Button onClick={() => navigateTo({ name: RouteName.Start })}>
+      <Button as={RouteLink} route={{ name: RouteName.Start }}>
         <FormattedMessage defaultMessage="Go to the start page" />
       </Button>
     </Stack>

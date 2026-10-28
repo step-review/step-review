@@ -1,14 +1,13 @@
 import { Heading, Label, Link } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import type NavigableRoute from "../../../business-logic/navigation/NavigableRoute.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import issueSeverities from "../../../business-logic/notes/issueSeverities.ts";
 import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
 import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import severityLabelVariants from "../../design-system/badges/severityLabelVariants.ts";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 import styles from "./IssuesByStep.module.css";
 
@@ -72,11 +71,8 @@ export default function IssuesByStep() {
               <tr key={step.id}>
                 <td>
                   <Link
-                    href={routeHref(route)}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateTo(route);
-                    }}
+                    as={RouteLink}
+                    route={route}
                     className={styles["stepLink"]}
                   >
                     {step.number}. <StepTitle step={step} />

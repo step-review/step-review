@@ -1,10 +1,9 @@
 import { Link } from "@primer/react";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import resolveReviewLink from "../../../business-logic/review-view/resolveReviewLink.ts";
 import { useCurrentReviewView } from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useNoteIndex from "../../../business-logic/review-view/useNoteIndex.ts";
 import Markdown from "../../design-system/Markdown/Markdown.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 
 interface Props {
   children: string;
@@ -23,15 +22,12 @@ export default function ReviewMarkdown({ children, size }: Props) {
         if (!resolved) {
           return null;
         }
-        const fragment = resolved.fragment ?? undefined;
         return (
           <Link
+            as={RouteLink}
             inline
-            href={routeHref(resolved.route, fragment)}
-            onClick={(event) => {
-              event.preventDefault();
-              navigateTo(resolved.route, fragment);
-            }}
+            route={resolved.route}
+            fragment={resolved.fragment ?? undefined}
           >
             {linkChildren}
           </Link>

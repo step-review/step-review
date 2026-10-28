@@ -8,7 +8,6 @@ import {
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { useIntl } from "react-intl";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
@@ -23,6 +22,7 @@ import JoinSessionDialog from "../JoinSessionDialog/JoinSessionDialog.tsx";
 import OpenReviewDropzone from "../OpenReviewDropzone/OpenReviewDropzone.tsx";
 import ReviewSidebar from "../ReviewSidebar/ReviewSidebar.tsx";
 import ReviewSidebarRail from "../ReviewSidebarRail/ReviewSidebarRail.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import computeSidebarLayout from "./computeSidebarLayout.ts";
 import styles from "./ReviewShell.module.css";
 
@@ -83,7 +83,6 @@ export default function ReviewShell({
       setIsSidebarOverlayOpen(true);
     }
   };
-  const goToStart = () => navigateTo({ name: RouteName.Start });
   const sidebarLabel = intl.formatMessage({ defaultMessage: "Steps" });
   const paneProps = {
     position: "start",
@@ -111,7 +110,7 @@ export default function ReviewShell({
               aria-expanded={isStackedSidebarOpen}
               onClick={() => setIsStackedSidebarOpen((isOpen) => !isOpen)}
             />
-            <Brand onClick={goToStart} />
+            <Brand />
           </div>
         </SplitPageLayout.Header>
         {isRail ? (
@@ -186,15 +185,14 @@ export default function ReviewShell({
   );
 }
 
-interface BrandProps {
-  onClick: () => void;
-}
-
-function Brand({ onClick }: BrandProps) {
+function Brand() {
   return (
-    <button type="button" className={styles["headerBrand"]} onClick={onClick}>
+    <RouteLink
+      route={{ name: RouteName.Start }}
+      className={styles["headerBrand"]}
+    >
       <Logo size={24} />
       Step Review
-    </button>
+    </RouteLink>
   );
 }
