@@ -1,7 +1,9 @@
 import { SidebarExpandIcon } from "@primer/octicons-react";
 import { IconButton, Tooltip } from "@primer/react";
 import { useIntl } from "react-intl";
+import isPlainClick from "../../../business-logic/navigation/isPlainClick.ts";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
+import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
@@ -36,13 +38,18 @@ export default function ReviewSidebarRail({
     <div className={styles["rail"]}>
       <div className={styles["brand"]}>
         <Tooltip text="Step Review" type="label" direction="e">
-          <button
-            type="button"
+          <a
+            href={routeHref({ name: RouteName.Start })}
             className={styles["home"]}
-            onClick={() => navigateTo({ name: RouteName.Start })}
+            onClick={(event) => {
+              if (isPlainClick(event)) {
+                event.preventDefault();
+                navigateTo({ name: RouteName.Start });
+              }
+            }}
           >
             <Logo size={32} />
-          </button>
+          </a>
         </Tooltip>
       </div>
       <div className={styles["navigation"]}>

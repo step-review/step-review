@@ -1,5 +1,7 @@
 import { FormattedMessage } from "react-intl";
+import isPlainClick from "../../../business-logic/navigation/isPlainClick.ts";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
+import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import ProjectCredits from "../ProjectCredits/ProjectCredits.tsx";
@@ -9,10 +11,15 @@ import styles from "./AppBrand.module.css";
 export default function AppBrand() {
   return (
     <div className={styles["brand"]}>
-      <button
-        type="button"
+      <a
+        href={routeHref({ name: RouteName.Start })}
         className={styles["home"]}
-        onClick={() => navigateTo({ name: RouteName.Start })}
+        onClick={(event) => {
+          if (isPlainClick(event)) {
+            event.preventDefault();
+            navigateTo({ name: RouteName.Start });
+          }
+        }}
       >
         <Logo size={32} />
         <span className={styles["names"]}>
@@ -21,7 +28,7 @@ export default function AppBrand() {
             <FormattedMessage defaultMessage="A better way to review PRs" />
           </span>
         </span>
-      </button>
+      </a>
       <ProjectCredits />
     </div>
   );

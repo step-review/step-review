@@ -8,7 +8,9 @@ import {
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { useIntl } from "react-intl";
+import isPlainClick from "../../../business-logic/navigation/isPlainClick.ts";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
+import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
@@ -83,7 +85,6 @@ export default function ReviewShell({
       setIsSidebarOverlayOpen(true);
     }
   };
-  const goToStart = () => navigateTo({ name: RouteName.Start });
   const sidebarLabel = intl.formatMessage({ defaultMessage: "Steps" });
   const paneProps = {
     position: "start",
@@ -111,7 +112,7 @@ export default function ReviewShell({
               aria-expanded={isStackedSidebarOpen}
               onClick={() => setIsStackedSidebarOpen((isOpen) => !isOpen)}
             />
-            <Brand onClick={goToStart} />
+            <Brand />
           </div>
         </SplitPageLayout.Header>
         {isRail ? (
@@ -186,15 +187,20 @@ export default function ReviewShell({
   );
 }
 
-interface BrandProps {
-  onClick: () => void;
-}
-
-function Brand({ onClick }: BrandProps) {
+function Brand() {
   return (
-    <button type="button" className={styles["headerBrand"]} onClick={onClick}>
+    <a
+      href={routeHref({ name: RouteName.Start })}
+      className={styles["headerBrand"]}
+      onClick={(event) => {
+        if (isPlainClick(event)) {
+          event.preventDefault();
+          navigateTo({ name: RouteName.Start });
+        }
+      }}
+    >
       <Logo size={24} />
       Step Review
-    </button>
+    </a>
   );
 }

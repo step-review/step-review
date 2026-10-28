@@ -16,11 +16,7 @@
 
 .home {
   display: flex;
-  padding: 0;
-  border: 0;
   border-radius: var(--borderRadius-medium);
-  background: none;
-  cursor: pointer;
 
   &:focus-visible {
     outline: var(--focus-outline);

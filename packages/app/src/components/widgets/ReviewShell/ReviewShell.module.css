@@ -8,12 +8,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--base-size-8);
-  padding: 0;
-  border: 0;
-  background: none;
   color: var(--fgColor-default);
-  font: inherit;
   font-weight: var(--base-text-weight-semibold);
   white-space: nowrap;
-  cursor: pointer;
+  text-decoration: none;
 }

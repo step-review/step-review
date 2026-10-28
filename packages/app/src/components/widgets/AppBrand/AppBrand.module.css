@@ -13,13 +13,8 @@
   display: flex;
   align-items: center;
   gap: var(--base-size-12);
-  padding: 0;
-  border: 0;
-  background: none;
   color: var(--fgColor-default);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  text-decoration: none;
 }
 
 /* As tall as the logo, so that the brand is as tall as the sidebar's rail's,
