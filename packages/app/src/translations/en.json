@@ -221,11 +221,32 @@
   "ProjectCredits.tsx_wTNySU": {
     "defaultMessage": "by"
   },
+  "PromptGenerator.tsx_R+Tak2": {
+    "defaultMessage": "Edit the prompt template"
+  },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
   },
   "PromptGenerator.tsx_k9O196": {
     "defaultMessage": "Prompt for your coding agent"
+  },
+  "PromptTemplateDialog.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "PromptTemplateDialog.tsx_IEQ5LB": {
+    "defaultMessage": "Edit prompt template"
+  },
+  "PromptTemplateDialog.tsx_haC9BC": {
+    "defaultMessage": "Write {placeholder} where the PR link goes. The template is saved in this browser."
+  },
+  "PromptTemplateDialog.tsx_jvo0vs": {
+    "defaultMessage": "Save"
+  },
+  "PromptTemplateDialog.tsx_qSnPFR": {
+    "defaultMessage": "Restore default"
+  },
+  "PromptTemplateDialog.tsx_z49sh0": {
+    "defaultMessage": "Prompt template"
   },
   "ReviewActions.tsx_2pwM03": {
     "defaultMessage": "Export review state"
@@ -385,6 +406,9 @@
   },
   "Start.tsx_BZvdW+": {
     "defaultMessage": "This session can't be joined: it ended or expired, or its link is incomplete."
+  },
+  "Start.tsx_JvMWRq": {
+    "defaultMessage": "The reviews you open are kept here."
   },
   "Start.tsx_NGb5sK": {
     "defaultMessage": "Step Review <strong>breaks them down into logical steps</strong>, so you can <strong>actually understand them</strong>, and keep a handle on your codebase. Try it:"

@@ -93,3 +93,8 @@
   flex: 0 1 auto;
   min-height: 0;
 }
+
+.noPastReviews {
+  margin: 0;
+  color: var(--fgColor-muted);
+}

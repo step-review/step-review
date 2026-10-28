@@ -1,12 +1,15 @@
 import type { ReviewFile } from "@step-review/review-format";
 import { beforeEach, expect, it } from "vitest";
+import addedReviewStorageKey from "./addedReviewStorageKey.ts";
 import deleteReview from "./deleteReview.ts";
+import hasAddedReview from "./hasAddedReview.ts";
 import reviewDatabase from "./reviewDatabase.ts";
 import saveReview from "./saveReview.ts";
 import updateReviewState from "./updateReviewState.ts";
 
 beforeEach(async () => {
   await Promise.all(reviewDatabase.tables.map((table) => table.clear()));
+  window.localStorage.removeItem(addedReviewStorageKey);
 });
 
 it("keeps the review state when the same review file is saved again", async () => {
@@ -80,4 +83,23 @@ it("applies every state update when several are made at once", async () => {
   // Verify
   const reviewState = await reviewDatabase.reviewStates.get("3f9a0c21b7e4d2");
   expect(reviewState?.viewedFingerprints.toSorted()).toEqual(["a1", "b2"]);
+});
+
+it("remembers that a review was added after the review is deleted", async () => {
+  // Setup SUT
+  await saveReview({
+    reviewId: "3f9a0c21b7e4d2",
+    fileName: "login.step-review",
+    text: "review text",
+    reviewFile: {
+      data: { target: { title: "Add login" } },
+    } as unknown as ReviewFile,
+    warnings: [],
+  });
+
+  // Exercise
+  await deleteReview("3f9a0c21b7e4d2");
+
+  // Verify
+  expect(hasAddedReview()).toBe(true);
 });

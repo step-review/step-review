@@ -619,6 +619,12 @@
       "value": "by"
     }
   ],
+  "PromptGenerator.tsx_R+Tak2": [
+    {
+      "type": 0,
+      "value": "Edit the prompt template"
+    }
+  ],
   "PromptGenerator.tsx_c+pa/J": [
     {
       "type": 0,
@@ -629,6 +635,50 @@
     {
       "type": 0,
       "value": "Prompt for your coding agent"
+    }
+  ],
+  "PromptTemplateDialog.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "PromptTemplateDialog.tsx_IEQ5LB": [
+    {
+      "type": 0,
+      "value": "Edit prompt template"
+    }
+  ],
+  "PromptTemplateDialog.tsx_haC9BC": [
+    {
+      "type": 0,
+      "value": "Write "
+    },
+    {
+      "type": 1,
+      "value": "placeholder"
+    },
+    {
+      "type": 0,
+      "value": " where the PR link goes. The template is saved in this browser."
+    }
+  ],
+  "PromptTemplateDialog.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "PromptTemplateDialog.tsx_qSnPFR": [
+    {
+      "type": 0,
+      "value": "Restore default"
+    }
+  ],
+  "PromptTemplateDialog.tsx_z49sh0": [
+    {
+      "type": 0,
+      "value": "Prompt template"
     }
   ],
   "ReviewActions.tsx_2pwM03": [
@@ -1035,6 +1085,12 @@
     {
       "type": 0,
       "value": "This session can't be joined: it ended or expired, or its link is incomplete."
+    }
+  ],
+  "Start.tsx_JvMWRq": [
+    {
+      "type": 0,
+      "value": "The reviews you open are kept here."
     }
   ],
   "Start.tsx_NGb5sK": [

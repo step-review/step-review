@@ -2,6 +2,7 @@ import { MarkGithubIcon, ShieldLockIcon } from "@primer/octicons-react";
 import { Banner, Heading, IconButton, Stack, Text } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import hasAddedReview from "../../../business-logic/review-store/hasAddedReview.ts";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
 import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import AppBrand from "../../widgets/AppBrand/AppBrand.tsx";
@@ -22,8 +23,8 @@ interface Props {
 }
 
 /**
- * Walks new users through the steps, with the example review. Users with stored
- * reviews get just what they work with.
+ * Walks new users through the steps, with the example review. Users who added a
+ * review get just what they work with, even after removing their reviews.
  */
 export default function Start({ missingReview }: Props) {
   const intl = useIntl();
@@ -35,16 +36,14 @@ export default function Start({ missingReview }: Props) {
   }
   const hasStoredReviews =
     storedReviews.length > 0 || sessionBookmarks.length > 0;
+  const isNewUser = !hasStoredReviews && !hasAddedReview();
   return (
     <div className={styles["page"]}>
-      <div
-        className={styles["content"]}
-        data-new-user={!hasStoredReviews || undefined}
-      >
+      <div className={styles["content"]} data-new-user={isNewUser || undefined}>
         <Stack
           gap="spacious"
           className={styles["steps"]}
-          data-new-user={!hasStoredReviews || undefined}
+          data-new-user={isNewUser || undefined}
         >
           {missingReview && (
             <Banner
@@ -60,7 +59,7 @@ export default function Start({ missingReview }: Props) {
               }
             />
           )}
-          {!hasStoredReviews && (
+          {isNewUser && (
             <Stack gap="normal" className={styles["intro"]}>
               <Text as="p">
                 <FormattedMessage
@@ -78,35 +77,25 @@ export default function Start({ missingReview }: Props) {
           )}
           <Stack gap="condensed">
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>
-              {hasStoredReviews ? (
-                <FormattedMessage defaultMessage="Prompt" />
-              ) : (
+              {isNewUser ? (
                 <FormattedMessage defaultMessage="1. Give this prompt to your agent" />
+              ) : (
+                <FormattedMessage defaultMessage="Prompt" />
               )}
             </Heading>
-            <PromptGenerator editable={hasStoredReviews} />
+            <PromptGenerator editable={!isNewUser} />
           </Stack>
           <Stack gap="condensed">
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>
-              {hasStoredReviews ? (
-                <FormattedMessage defaultMessage="Review file" />
-              ) : (
+              {isNewUser ? (
                 <FormattedMessage defaultMessage="2. Open the review file it produces" />
+              ) : (
+                <FormattedMessage defaultMessage="Review file" />
               )}
             </Heading>
             <ReviewDropzone />
           </Stack>
-          {hasStoredReviews ? (
-            <Stack gap="condensed" className={styles["pastReviews"]}>
-              <Heading as="h2" variant="small">
-                <FormattedMessage defaultMessage="Past reviews" />
-              </Heading>
-              <StoredReviewList
-                storedReviews={storedReviews}
-                sessionBookmarks={sessionBookmarks}
-              />
-            </Stack>
-          ) : (
+          {isNewUser ? (
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>
               <FormattedMessage
                 defaultMessage="3. Go through the PR ({exampleLink})"
@@ -119,6 +108,22 @@ export default function Start({ missingReview }: Props) {
                 }}
               />
             </Heading>
+          ) : (
+            <Stack gap="condensed" className={styles["pastReviews"]}>
+              <Heading as="h2" variant="small">
+                <FormattedMessage defaultMessage="Past reviews" />
+              </Heading>
+              {hasStoredReviews ? (
+                <StoredReviewList
+                  storedReviews={storedReviews}
+                  sessionBookmarks={sessionBookmarks}
+                />
+              ) : (
+                <Text as="p" className={styles["noPastReviews"]}>
+                  <FormattedMessage defaultMessage="The reviews you open are kept here." />
+                </Text>
+              )}
+            </Stack>
           )}
         </Stack>
         <footer className={styles["footer"]}>
