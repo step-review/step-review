@@ -78,3 +78,29 @@ it("copies a prompt that asks the agent to fix the file's problems", async () =>
     ].join("\n"),
   );
 });
+
+it("opens a file launched from the operating system", async () => {
+  // Setup mocks
+  let launchConsumer: ((launchParams: LaunchParams) => void) | undefined;
+  vi.stubGlobal("launchQueue", {
+    setConsumer: (consumer: (launchParams: LaunchParams) => void) => {
+      launchConsumer = consumer;
+    },
+  });
+
+  // Setup SUT
+  const screen = await render(<ReviewDropzone />, { wrapper: TestProviders });
+
+  // Exercise
+  const file = new File(["not a review"], "notes.step-review");
+  launchConsumer?.({
+    files: [{ getFile: async () => file } as FileSystemFileHandle],
+  });
+
+  // Verify
+  await expect
+    .element(
+      screen.getByRole("region", { name: "The file is not a valid review" }),
+    )
+    .toBeVisible();
+});
