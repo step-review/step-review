@@ -131,7 +131,8 @@ user to update it.
 
 If running the CLI is blocked or denied (e.g. by a permission check on
 downloaded packages), don't work around it: stop and ask the user to allow it,
-or to install it with `npm install --global @step-review/cli`.
+or to install `@step-review/cli` globally with the package manager they prefer
+(e.g. `npm install --global @step-review/cli`).
 
 Only if the CLI can't run for lack of network access, build the file by hand,
 and tell the user that it wasn't checked:
