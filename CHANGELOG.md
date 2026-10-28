@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3
+
+- The skill runs an installed `step-review` CLI first, and asks the user to
+  allow or install the CLI when running it is blocked, instead of building the
+  review file by hand.
+- Review files built by hand no longer break when the JSON has no trailing
+  newline.
+
 ## 1.1.2
 
 - The collapsed sidebar's attention and presence badges no longer cover the step
