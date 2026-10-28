@@ -1,39 +1,26 @@
 .root {
-  display: flex;
-  flex-direction: column;
-  gap: var(--base-size-8);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--base-size-8);
+  position: relative;
 }
 
 .textarea,
 .prompt {
   padding-block: var(--base-size-8);
-  padding-inline: var(--base-size-12);
+  padding-inline: var(--base-size-12) 52px;
   background: var(--bgColor-muted);
   font-family: var(--fontStack-monospace);
   font-size: var(--prompt-font-size, 15px);
 }
 
-.promptBox {
-  position: relative;
-}
-
 .prompt {
   margin: 0;
   padding-block: var(--base-size-12);
-  padding-inline: var(--base-size-16) 52px;
+  padding-inline-start: var(--base-size-16);
   border: var(--borderWidth-default) solid var(--borderColor-default);
   border-radius: var(--borderRadius-medium);
   overflow-wrap: anywhere;
 }
 
-.promptCopyButton {
+.button {
   position: absolute;
   top: var(--base-size-8);
   right: var(--base-size-8);

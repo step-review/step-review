@@ -15,7 +15,6 @@ export default function SavePromptTemplateButton({ isSaved, onSave }: Props) {
   return (
     <IconButton
       variant="invisible"
-      size="small"
       icon={isSaved ? CheckIcon : BookmarkIcon}
       className={styles["button"]}
       data-saved={isSaved || undefined}

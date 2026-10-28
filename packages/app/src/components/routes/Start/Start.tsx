@@ -75,22 +75,16 @@ export default function Start({ missingReview }: Props) {
               </Text>
             </Stack>
           )}
-          <PromptGenerator
-            editable={!isNewUser}
-            heading={
-              <Heading
-                as="h2"
-                variant="small"
-                className={styles["stepHeading"]}
-              >
-                {isNewUser ? (
-                  <FormattedMessage defaultMessage="1. Give this prompt to your agent" />
-                ) : (
-                  <FormattedMessage defaultMessage="Prompt" />
-                )}
-              </Heading>
-            }
-          />
+          <Stack gap="condensed">
+            <Heading as="h2" variant="small" className={styles["stepHeading"]}>
+              {isNewUser ? (
+                <FormattedMessage defaultMessage="1. Give this prompt to your agent" />
+              ) : (
+                <FormattedMessage defaultMessage="Prompt" />
+              )}
+            </Heading>
+            <PromptGenerator editable={!isNewUser} />
+          </Stack>
           <Stack gap="condensed">
             <Heading as="h2" variant="small" className={styles["stepHeading"]}>
               {isNewUser ? (

@@ -1,11 +1,5 @@
 import { Link, Textarea } from "@primer/react";
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import startPromptPlaceholder from "../../../business-logic/prompts/startPromptPlaceholder.ts";
 import usePromptTemplate from "../../../business-logic/prompts/usePromptTemplate.ts";
@@ -15,14 +9,13 @@ import countTextareaLines from "./countTextareaLines.ts";
 import styles from "./PromptGenerator.module.css";
 
 interface Props {
-  heading: ReactNode;
   editable?: boolean;
 }
 
 /** How long saving shows that the template was saved, in milliseconds. */
 const savedDuration = 1500;
 
-export default function PromptGenerator({ heading, editable = true }: Props) {
+export default function PromptGenerator({ editable = true }: Props) {
   const intl = useIntl();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { promptTemplate, setPromptTemplate, defaultPromptTemplate } =
@@ -35,10 +28,8 @@ export default function PromptGenerator({ heading, editable = true }: Props) {
     startPromptPlaceholder,
   );
   const skillUrlStart = defaultPromptTemplate.indexOf(skillUrl);
-  // A prompt that still has the placeholder but differs from the template is
-  // being made into a new template rather than given to an agent.
-  const canSavePromptTemplate =
-    prompt.includes(startPromptPlaceholder) && prompt !== promptTemplate;
+  // Until a PR link replaces the placeholder, the prompt is a template.
+  const isPromptTemplate = prompt.includes(startPromptPlaceholder);
 
   // Grow with the prompt as it is written.
   useLayoutEffect(() => {
@@ -73,44 +64,37 @@ export default function PromptGenerator({ heading, editable = true }: Props) {
     return () => clearTimeout(timeout);
   }, [isPromptTemplateSaved]);
 
-  const copyButtonLabel = intl.formatMessage({
-    defaultMessage: "Copy the prompt",
-  });
-
-  if (!editable) {
-    return (
-      <div className={styles["root"]}>
-        {heading}
-        <div className={styles["promptBox"]}>
-          <p className={styles["prompt"]}>
-            {defaultPromptTemplate.slice(0, placeholderStart)}
-            <em>${startPromptPlaceholder}</em>
-            {defaultPromptTemplate.slice(
-              placeholderStart + startPromptPlaceholder.length,
-              skillUrlStart,
-            )}
-            <Link inline href={skillUrl} target="_blank" rel="noreferrer">
-              {`${window.location.host}/SKILL.md`}
-            </Link>
-            {defaultPromptTemplate.slice(skillUrlStart + skillUrl.length)}
-          </p>
-          <div className={styles["promptCopyButton"]}>
-            <CopyIconButton
-              value={defaultPromptTemplate}
-              label={copyButtonLabel}
-              size="medium"
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles["root"]}>
-      <div className={styles["header"]}>
-        {heading}
-        {canSavePromptTemplate || isPromptTemplateSaved ? (
+      {editable ? (
+        <Textarea
+          ref={textareaRef}
+          aria-label={intl.formatMessage({
+            defaultMessage: "Prompt for your coding agent",
+          })}
+          block
+          resize="none"
+          rows={textareaRows}
+          className={styles["textarea"]}
+          value={prompt}
+          onChange={(event) => setPrompt(event.currentTarget.value)}
+        />
+      ) : (
+        <p className={styles["prompt"]}>
+          {defaultPromptTemplate.slice(0, placeholderStart)}
+          <em>${startPromptPlaceholder}</em>
+          {defaultPromptTemplate.slice(
+            placeholderStart + startPromptPlaceholder.length,
+            skillUrlStart,
+          )}
+          <Link inline href={skillUrl} target="_blank" rel="noreferrer">
+            {`${window.location.host}/SKILL.md`}
+          </Link>
+          {defaultPromptTemplate.slice(skillUrlStart + skillUrl.length)}
+        </p>
+      )}
+      <div className={styles["button"]}>
+        {editable && isPromptTemplate ? (
           <SavePromptTemplateButton
             isSaved={isPromptTemplateSaved}
             onSave={() => {
@@ -119,21 +103,13 @@ export default function PromptGenerator({ heading, editable = true }: Props) {
             }}
           />
         ) : (
-          <CopyIconButton value={prompt} label={copyButtonLabel} />
+          <CopyIconButton
+            value={editable ? prompt : defaultPromptTemplate}
+            label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
+            size="medium"
+          />
         )}
       </div>
-      <Textarea
-        ref={textareaRef}
-        aria-label={intl.formatMessage({
-          defaultMessage: "Prompt for your coding agent",
-        })}
-        block
-        resize="none"
-        rows={textareaRows}
-        className={styles["textarea"]}
-        value={prompt}
-        onChange={(event) => setPrompt(event.currentTarget.value)}
-      />
     </div>
   );
 }
