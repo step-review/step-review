@@ -11,9 +11,12 @@ afterEach(() => {
 
 it("shows the skill link without its protocol while keeping the full URL as its target", async () => {
   // Exercise
-  const screen = await render(<PromptGenerator editable={false} />, {
-    wrapper: TestProviders,
-  });
+  const screen = await render(
+    <PromptGenerator heading="Prompt" editable={false} />,
+    {
+      wrapper: TestProviders,
+    },
+  );
   const skillUrl = `${window.location.origin}/SKILL.md`;
   const skillLinkText = `${window.location.host}/SKILL.md`;
 
@@ -29,9 +32,12 @@ it("shows the skill link without its protocol while keeping the full URL as its 
 
 it("shows the non-editable placeholder in italics with a dollar sign", async () => {
   // Exercise
-  const screen = await render(<PromptGenerator editable={false} />, {
-    wrapper: TestProviders,
-  });
+  const screen = await render(
+    <PromptGenerator heading="Prompt" editable={false} />,
+    {
+      wrapper: TestProviders,
+    },
+  );
 
   // Verify
   await expect
@@ -46,9 +52,12 @@ it("copies the non-editable prompt with a plain placeholder and the skill URL", 
     .mockResolvedValue();
 
   // Setup SUT
-  const screen = await render(<PromptGenerator editable={false} />, {
-    wrapper: TestProviders,
-  });
+  const screen = await render(
+    <PromptGenerator heading="Prompt" editable={false} />,
+    {
+      wrapper: TestProviders,
+    },
+  );
 
   // Exercise
   const expectedPrompt = `Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`;
@@ -60,7 +69,9 @@ it("copies the non-editable prompt with a plain placeholder and the skill URL", 
 
 it("selects the PR placeholder in the editable prompt", async () => {
   // Exercise
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
   const textarea = screen
     .getByRole("textbox", {
       name: "Prompt for your coding agent",
@@ -74,9 +85,11 @@ it("selects the PR placeholder in the editable prompt", async () => {
   ).toBe("PR_LINK_HERE");
 });
 
-it("keeps the editable prompt's height when a long link is entered", async () => {
+it("grows the editable prompt as lines are entered", async () => {
   // Setup SUT
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
   const textarea = screen.getByRole("textbox", {
     name: "Prompt for your coding agent",
   });
@@ -84,11 +97,16 @@ it("keeps the editable prompt's height when a long link is entered", async () =>
 
   // Exercise
   await textarea.fill(
-    "Review https://github.com/example-organization/example-repository/pull/12345 with https://step-review.dev/SKILL.md.",
+    "Review PR_LINK_HERE.\nKeep the steps small.\nExplain why.",
   );
 
   // Verify
-  expect(textarea.element().getBoundingClientRect().height).toBe(initialHeight);
+  expect(textarea.element().getBoundingClientRect().height).toBeGreaterThan(
+    initialHeight,
+  );
+  expect(textarea.element().scrollHeight).toBeLessThanOrEqual(
+    textarea.element().clientHeight,
+  );
 });
 
 it("starts the editable prompt from the saved prompt template", async () => {
@@ -99,7 +117,9 @@ it("starts the editable prompt from the saved prompt template", async () => {
   );
 
   // Exercise
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
 
   // Verify
   await expect
@@ -111,7 +131,9 @@ it("starts the editable prompt from the saved prompt template", async () => {
 
 it("saves the edited prompt as the prompt template", async () => {
   // Setup SUT
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
 
   // Exercise
   await screen
@@ -127,7 +149,9 @@ it("saves the edited prompt as the prompt template", async () => {
 
 it("selects the PR placeholder after saving the prompt as the template", async () => {
   // Setup SUT
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
   const textarea = screen.getByRole("textbox", {
     name: "Prompt for your coding agent",
   });
@@ -153,7 +177,9 @@ it("forgets the saved prompt template when the default prompt is saved as the te
     promptTemplateStorageKey,
     "Review PR_LINK_HERE step by step.",
   );
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
 
   // Exercise
   await screen
@@ -165,44 +191,87 @@ it("forgets the saved prompt template when the default prompt is saved as the te
   expect(window.localStorage.getItem(promptTemplateStorageKey)).toBeNull();
 });
 
-it("explains that the template needs the PR placeholder when the prompt doesn't contain it", async () => {
-  // Setup SUT
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
-
+it("offers copying the unchanged prompt instead of saving it as the template", async () => {
   // Exercise
-  await screen
-    .getByRole("textbox", { name: "Prompt for your coding agent" })
-    .fill("Review https://github.com/example/repository/pull/1.");
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
 
   // Verify
-  const saveButton = screen.getByRole("button", { name: "Save as template" });
-  await expect.element(saveButton).toHaveAttribute("aria-disabled", "true");
   await expect
-    .element(saveButton)
-    .toHaveAccessibleDescription("The template needs to contain PR_LINK_HERE");
+    .element(screen.getByRole("button", { name: "Copy the prompt" }))
+    .toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Save as template" }).query(),
+  ).toBeNull();
 });
 
-it("doesn't save a prompt without the PR placeholder as the template", async () => {
+it("offers saving an edited prompt that keeps the PR placeholder instead of copying it", async () => {
   // Setup SUT
-  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review PR_LINK_HERE step by step.");
+
+  // Verify
+  await expect
+    .element(screen.getByRole("button", { name: "Save as template" }))
+    .toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Copy the prompt" }).query(),
+  ).toBeNull();
+});
+
+it("offers copying a prompt with a PR link instead of saving it as the template", async () => {
+  // Setup SUT
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
 
   // Exercise
   await screen
     .getByRole("textbox", { name: "Prompt for your coding agent" })
     .fill("Review https://github.com/example/repository/pull/1.");
-  await screen
-    .getByRole("button", { name: "Save as template" })
-    .click({ force: true });
 
   // Verify
-  expect(window.localStorage.getItem(promptTemplateStorageKey)).toBeNull();
+  await expect
+    .element(screen.getByRole("button", { name: "Copy the prompt" }))
+    .toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Save as template" }).query(),
+  ).toBeNull();
+});
+
+it("shows that the template was saved after saving it", async () => {
+  // Setup SUT
+  const screen = await render(<PromptGenerator heading="Prompt" />, {
+    wrapper: TestProviders,
+  });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review PR_LINK_HERE step by step.");
+  await screen.getByRole("button", { name: "Save as template" }).click();
+
+  // Verify
+  await expect
+    .element(screen.getByRole("button", { name: "Saved as template" }))
+    .toBeVisible();
 });
 
 it("hides saving as template from the non-editable prompt", async () => {
   // Exercise
-  const screen = await render(<PromptGenerator editable={false} />, {
-    wrapper: TestProviders,
-  });
+  const screen = await render(
+    <PromptGenerator heading="Prompt" editable={false} />,
+    {
+      wrapper: TestProviders,
+    },
+  );
 
   // Verify
   expect(
@@ -220,7 +289,7 @@ it("shows all of a saved prompt template that wraps over several lines", async (
   // Exercise
   const screen = await render(
     <div style={{ width: 360 }}>
-      <PromptGenerator />
+      <PromptGenerator heading="Prompt" />
     </div>,
     { wrapper: TestProviders },
   );

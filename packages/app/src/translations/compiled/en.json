@@ -817,16 +817,6 @@
       "value": "Save as template"
     }
   ],
-  "SavePromptTemplateButton.tsx_8aFPGg": [
-    {
-      "type": 0,
-      "value": "The template needs to contain "
-    },
-    {
-      "type": 1,
-      "value": "placeholder"
-    }
-  ],
   "SavePromptTemplateButton.tsx_id89db": [
     {
       "type": 0,

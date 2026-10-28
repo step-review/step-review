@@ -299,9 +299,6 @@
   "SavePromptTemplateButton.tsx_2Tq0+F": {
     "defaultMessage": "Save as template"
   },
-  "SavePromptTemplateButton.tsx_8aFPGg": {
-    "defaultMessage": "The template needs to contain {placeholder}"
-  },
   "SavePromptTemplateButton.tsx_id89db": {
     "defaultMessage": "Saved as template"
   },
