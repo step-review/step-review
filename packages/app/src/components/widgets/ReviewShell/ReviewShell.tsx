@@ -8,9 +8,6 @@ import {
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { useIntl } from "react-intl";
-import isPlainClick from "../../../business-logic/navigation/isPlainClick.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
@@ -25,6 +22,7 @@ import JoinSessionDialog from "../JoinSessionDialog/JoinSessionDialog.tsx";
 import OpenReviewDropzone from "../OpenReviewDropzone/OpenReviewDropzone.tsx";
 import ReviewSidebar from "../ReviewSidebar/ReviewSidebar.tsx";
 import ReviewSidebarRail from "../ReviewSidebarRail/ReviewSidebarRail.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import computeSidebarLayout from "./computeSidebarLayout.ts";
 import styles from "./ReviewShell.module.css";
 
@@ -189,18 +187,12 @@ export default function ReviewShell({
 
 function Brand() {
   return (
-    <a
-      href={routeHref({ name: RouteName.Start })}
+    <RouteLink
+      route={{ name: RouteName.Start }}
       className={styles["headerBrand"]}
-      onClick={(event) => {
-        if (isPlainClick(event)) {
-          event.preventDefault();
-          navigateTo({ name: RouteName.Start });
-        }
-      }}
     >
       <Logo size={24} />
       Step Review
-    </a>
+    </RouteLink>
   );
 }

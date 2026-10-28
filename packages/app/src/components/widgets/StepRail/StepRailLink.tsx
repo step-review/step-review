@@ -1,13 +1,12 @@
 import { Tooltip } from "@primer/react";
 import type { Attention } from "@step-review/review-format";
-import type { MouseEvent } from "react";
 import { useIntl } from "react-intl";
 import type NavigableRoute from "../../../business-logic/navigation/NavigableRoute.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import AttentionIcon from "../../design-system/badges/AttentionIcon.tsx";
 import InitialsAvatar from "../../design-system/InitialsAvatar/InitialsAvatar.tsx";
 import StepMarker from "../../design-system/StepMarker/StepMarker.tsx";
 import useParticipantsHere from "../ParticipantsHere/useParticipantsHere.ts";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import styles from "./StepRailLink.module.css";
 
 interface Props {
@@ -22,7 +21,7 @@ interface Props {
   /** `undefined` for the overview, which has no files. */
   progress: { viewedCount: number; totalCount: number } | undefined;
   isActive: boolean;
-  onNavigate: (route: NavigableRoute) => void;
+  onNavigate: () => void;
 }
 
 /**
@@ -63,17 +62,13 @@ export default function StepRailLink({
             details: intl.formatList(allDetails, { type: "unit" }),
           },
         );
-  const go = (event: MouseEvent) => {
-    event.preventDefault();
-    onNavigate(route);
-  };
   return (
     <Tooltip text={label} type="label" direction="e">
-      <a
-        href={routeHref(route)}
+      <RouteLink
+        route={route}
         className={styles["link"]}
         aria-current={isActive ? "page" : undefined}
-        onClick={go}
+        onNavigate={onNavigate}
       >
         <span className={styles["markerArea"]}>
           <StepMarker number={number} isActive={isActive} progress={progress} />
@@ -93,7 +88,7 @@ export default function StepRailLink({
             </span>
           )}
         </span>
-      </a>
+      </RouteLink>
     </Tooltip>
   );
 }

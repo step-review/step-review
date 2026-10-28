@@ -1,6 +1,4 @@
 import { useIntl } from "react-intl";
-import type NavigableRoute from "../../../business-logic/navigation/NavigableRoute.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
@@ -29,10 +27,6 @@ export default function StepRail({
   const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
   const { reviewAddress } = reviewView;
-  const go = (route: NavigableRoute) => {
-    navigateTo(route);
-    onNavigate();
-  };
   return (
     <nav
       aria-label={intl.formatMessage({ defaultMessage: "Steps" })}
@@ -47,7 +41,7 @@ export default function StepRail({
         attention="normal"
         progress={undefined}
         isActive={activeStepId === null}
-        onNavigate={go}
+        onNavigate={onNavigate}
       />
       {reviewView.steps.map((step) => {
         const progress = countViewedFiles([step], viewedFingerprints);
@@ -75,7 +69,7 @@ export default function StepRail({
             attention={step.attention}
             progress={progress}
             isActive={activeStepId === step.id}
-            onNavigate={go}
+            onNavigate={onNavigate}
           />
         );
       })}

@@ -3,7 +3,6 @@ import { useState } from "react";
 import type { MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import collectNotes from "../../../business-logic/review-view/collectNotes.ts";
@@ -15,6 +14,7 @@ import StepMarker from "../../design-system/StepMarker/StepMarker.tsx";
 import ViewedAndNoteCounts from "../../design-system/ViewedAndNoteCounts/ViewedAndNoteCounts.tsx";
 import ViewedProgressBar from "../../design-system/ViewedProgressBar/ViewedProgressBar.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import StepFileTree from "../StepFileTree/StepFileTree.tsx";
 import StepTitle from "../StepTitle/StepTitle.tsx";
 import styles from "./StepNavigation.module.css";
@@ -50,10 +50,6 @@ export default function StepNavigation({
     );
     onNavigate();
   };
-  const goOnClick = (stepId: string | null) => (event: MouseEvent) => {
-    event.preventDefault();
-    go(stepId);
-  };
   // The active step stays where it is: clicking it shows or hides its files.
   const toggleActiveStepOnClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -68,10 +64,11 @@ export default function StepNavigation({
     >
       <ActionList>
         <ActionList.LinkItem
-          href={routeHref({ name: RouteName.Overview, reviewAddress })}
+          as={RouteLink}
+          route={{ name: RouteName.Overview, reviewAddress }}
           className={activeStepId === null ? styles["current"] : undefined}
           aria-current={activeStepId === null ? "page" : undefined}
-          onClick={goOnClick(null)}
+          onNavigate={onNavigate}
         >
           <ActionList.LeadingVisual className={styles["markerSlot"]}>
             <span className={styles["marker"]}>
@@ -91,17 +88,13 @@ export default function StepNavigation({
           <div key={step.id}>
             <ActionList>
               <ActionList.LinkItem
-                href={routeHref({
-                  name: RouteName.Step,
-                  reviewAddress,
-                  stepId: step.id,
-                })}
+                as={RouteLink}
+                route={{ name: RouteName.Step, reviewAddress, stepId: step.id }}
                 className={isActive ? styles["current"] : undefined}
                 aria-current={isActive ? "page" : undefined}
                 aria-expanded={isActive ? !isActiveStepCollapsed : undefined}
-                onClick={
-                  isActive ? toggleActiveStepOnClick : goOnClick(step.id)
-                }
+                onClick={isActive ? toggleActiveStepOnClick : undefined}
+                onNavigate={onNavigate}
               >
                 <ActionList.LeadingVisual className={styles["markerSlot"]}>
                   <span className={styles["marker"]}>

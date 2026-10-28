@@ -1,15 +1,13 @@
 import { SidebarExpandIcon } from "@primer/octicons-react";
 import { IconButton, Tooltip } from "@primer/react";
 import { useIntl } from "react-intl";
-import isPlainClick from "../../../business-logic/navigation/isPlainClick.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import type LoadedReview from "../../../business-logic/review/LoadedReview.ts";
 import FadingScrollArea from "../../design-system/FadingScrollArea/FadingScrollArea.tsx";
 import Logo from "../../design-system/Logo/Logo.tsx";
 import ReviewRecapRail from "../ReviewRecapRail/ReviewRecapRail.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import SessionNotices from "../SessionNotices/SessionNotices.tsx";
 import StepRail from "../StepRail/StepRail.tsx";
 import styles from "./ReviewSidebarRail.module.css";
@@ -38,18 +36,12 @@ export default function ReviewSidebarRail({
     <div className={styles["rail"]}>
       <div className={styles["brand"]}>
         <Tooltip text="Step Review" type="label" direction="e">
-          <a
-            href={routeHref({ name: RouteName.Start })}
+          <RouteLink
+            route={{ name: RouteName.Start }}
             className={styles["home"]}
-            onClick={(event) => {
-              if (isPlainClick(event)) {
-                event.preventDefault();
-                navigateTo({ name: RouteName.Start });
-              }
-            }}
           >
             <Logo size={32} />
-          </a>
+          </RouteLink>
         </Tooltip>
       </div>
       <div className={styles["navigation"]}>

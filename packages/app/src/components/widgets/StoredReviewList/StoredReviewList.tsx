@@ -2,14 +2,13 @@ import { TrashIcon } from "@primer/octicons-react";
 import { IconButton, Link, useConfirm } from "@primer/react";
 import { useIntl } from "react-intl";
 import type NavigableRoute from "../../../business-logic/navigation/NavigableRoute.ts";
-import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
-import routeHref from "../../../business-logic/navigation/routeHref.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import deleteReview from "../../../business-logic/review-store/deleteReview.ts";
 import type StoredReview from "../../../business-logic/review-store/StoredReview.ts";
 import deleteSessionBookmark from "../../../business-logic/session-store/deleteSessionBookmark.ts";
 import type SessionBookmark from "../../../business-logic/session-store/SessionBookmark.ts";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
+import RouteLink from "../RouteLink/RouteLink.tsx";
 import styles from "./StoredReviewList.module.css";
 
 interface Props {
@@ -158,14 +157,7 @@ function ReviewItem({
   return (
     <>
       <div className={styles["details"]}>
-        <Link
-          href={routeHref(route)}
-          onClick={(event) => {
-            event.preventDefault();
-            navigateTo(route);
-          }}
-          className={styles["title"]}
-        >
+        <Link as={RouteLink} route={route} className={styles["title"]}>
           <TruncatedText tooltip={title}>{title}</TruncatedText>
         </Link>
         <span
