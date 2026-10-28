@@ -1,11 +1,11 @@
-import { PencilIcon } from "@primer/octicons-react";
-import { IconButton, Link, Textarea } from "@primer/react";
-import { useEffect, useRef, useState } from "react";
+import { Link, Textarea } from "@primer/react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import startPromptPlaceholder from "../../../business-logic/prompts/startPromptPlaceholder.ts";
 import usePromptTemplate from "../../../business-logic/prompts/usePromptTemplate.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
-import PromptTemplateDialog from "../PromptTemplateDialog/PromptTemplateDialog.tsx";
+import SavePromptTemplateButton from "../SavePromptTemplateButton/SavePromptTemplateButton.tsx";
+import countTextareaLines from "./countTextareaLines.ts";
 import styles from "./PromptGenerator.module.css";
 
 interface Props {
@@ -18,13 +18,22 @@ export default function PromptGenerator({ editable = true }: Props) {
   const { promptTemplate, setPromptTemplate, defaultPromptTemplate } =
     usePromptTemplate();
   const [prompt, setPrompt] = useState(promptTemplate);
-  const [isEditingPromptTemplate, setIsEditingPromptTemplate] = useState(false);
+  const [textareaRows, setTextareaRows] = useState(2);
   const skillUrl = `${window.location.origin}/SKILL.md`;
   const placeholderStart = defaultPromptTemplate.indexOf(
     startPromptPlaceholder,
   );
   const skillUrlStart = defaultPromptTemplate.indexOf(skillUrl);
   const promptToCopy = editable ? prompt : defaultPromptTemplate;
+
+  // A fixed height, one line taller than the template, so that pasting a link
+  // doesn't make it grow. Measured while the prompt is still the template.
+  useLayoutEffect(() => {
+    if (!editable) {
+      return;
+    }
+    setTextareaRows(countTextareaLines(textareaRef.current!) + 1);
+  }, [editable, promptTemplate]);
 
   // Select the placeholder so that pasting a link replaces it.
   useEffect(() => {
@@ -34,10 +43,6 @@ export default function PromptGenerator({ editable = true }: Props) {
     const textarea = textareaRef.current!;
     const placeholderStart = textarea.value.indexOf(startPromptPlaceholder);
     textarea.focus();
-    // Custom templates can leave the placeholder out.
-    if (placeholderStart === -1) {
-      return;
-    }
     textarea.setSelectionRange(
       placeholderStart,
       placeholderStart + startPromptPlaceholder.length,
@@ -54,9 +59,7 @@ export default function PromptGenerator({ editable = true }: Props) {
           })}
           block
           resize="none"
-          // A fixed height, one line taller than the template, so that pasting
-          // a link doesn't make it grow.
-          rows={promptTemplate.split("\n").length + 1}
+          rows={textareaRows}
           className={styles["textarea"]}
           value={prompt}
           onChange={(event) => setPrompt(event.currentTarget.value)}
@@ -77,13 +80,9 @@ export default function PromptGenerator({ editable = true }: Props) {
       )}
       <div className={styles["buttons"]}>
         {editable && (
-          <IconButton
-            variant="invisible"
-            icon={PencilIcon}
-            aria-label={intl.formatMessage({
-              defaultMessage: "Edit the prompt template",
-            })}
-            onClick={() => setIsEditingPromptTemplate(true)}
+          <SavePromptTemplateButton
+            prompt={prompt}
+            onSave={setPromptTemplate}
           />
         )}
         <CopyIconButton
@@ -92,19 +91,6 @@ export default function PromptGenerator({ editable = true }: Props) {
           size="medium"
         />
       </div>
-      {isEditingPromptTemplate && (
-        <PromptTemplateDialog
-          promptTemplate={promptTemplate}
-          defaultPromptTemplate={defaultPromptTemplate}
-          returnFocusRef={textareaRef}
-          onSave={(newPromptTemplate) => {
-            setPromptTemplate(newPromptTemplate);
-            setPrompt(newPromptTemplate);
-            setIsEditingPromptTemplate(false);
-          }}
-          onClose={() => setIsEditingPromptTemplate(false)}
-        />
-      )}
     </div>
   );
 }

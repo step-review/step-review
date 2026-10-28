@@ -221,32 +221,11 @@
   "ProjectCredits.tsx_wTNySU": {
     "defaultMessage": "by"
   },
-  "PromptGenerator.tsx_R+Tak2": {
-    "defaultMessage": "Edit the prompt template"
-  },
   "PromptGenerator.tsx_c+pa/J": {
     "defaultMessage": "Copy the prompt"
   },
   "PromptGenerator.tsx_k9O196": {
     "defaultMessage": "Prompt for your coding agent"
-  },
-  "PromptTemplateDialog.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "PromptTemplateDialog.tsx_IEQ5LB": {
-    "defaultMessage": "Edit prompt template"
-  },
-  "PromptTemplateDialog.tsx_haC9BC": {
-    "defaultMessage": "Write {placeholder} where the PR link goes. The template is saved in this browser."
-  },
-  "PromptTemplateDialog.tsx_jvo0vs": {
-    "defaultMessage": "Save"
-  },
-  "PromptTemplateDialog.tsx_qSnPFR": {
-    "defaultMessage": "Restore default"
-  },
-  "PromptTemplateDialog.tsx_z49sh0": {
-    "defaultMessage": "Prompt template"
   },
   "ReviewActions.tsx_2pwM03": {
     "defaultMessage": "Export review state"
@@ -316,6 +295,15 @@
   },
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
+  },
+  "SavePromptTemplateButton.tsx_2Tq0+F": {
+    "defaultMessage": "Save as template"
+  },
+  "SavePromptTemplateButton.tsx_8aFPGg": {
+    "defaultMessage": "The template needs to contain {placeholder}"
+  },
+  "SavePromptTemplateButton.tsx_id89db": {
+    "defaultMessage": "Saved as template"
   },
   "SessionDetailsDialog.tsx_47FYwb": {
     "defaultMessage": "Cancel"

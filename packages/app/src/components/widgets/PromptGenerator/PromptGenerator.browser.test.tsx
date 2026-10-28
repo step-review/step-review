@@ -109,54 +109,45 @@ it("starts the editable prompt from the saved prompt template", async () => {
     .toHaveValue("Review PR_LINK_HERE step by step.");
 });
 
-it("saves an edited prompt template and puts it in the prompt", async () => {
+it("saves the edited prompt as the prompt template", async () => {
   // Setup SUT
   const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
 
   // Exercise
   await screen
-    .getByRole("button", { name: "Edit the prompt template" })
-    .click();
-  await screen
-    .getByRole("textbox", { name: "Prompt template" })
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
     .fill("Review PR_LINK_HERE step by step.");
-  await screen.getByRole("button", { name: "Save" }).click();
+  await screen.getByRole("button", { name: "Save as template" }).click();
 
   // Verify
-  await expect
-    .element(
-      screen.getByRole("textbox", { name: "Prompt for your coding agent" }),
-    )
-    .toHaveValue("Review PR_LINK_HERE step by step.");
   expect(window.localStorage.getItem(promptTemplateStorageKey)).toBe(
     "Review PR_LINK_HERE step by step.",
   );
 });
 
-it("selects the PR placeholder after saving an edited prompt template", async () => {
+it("selects the PR placeholder after saving the prompt as the template", async () => {
   // Setup SUT
   const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+  const textarea = screen.getByRole("textbox", {
+    name: "Prompt for your coding agent",
+  });
 
   // Exercise
-  await screen
-    .getByRole("button", { name: "Edit the prompt template" })
-    .click();
-  await screen
-    .getByRole("textbox", { name: "Prompt template" })
-    .fill("Please review PR_LINK_HERE.");
-  await screen.getByRole("button", { name: "Save" }).click();
+  await textarea.fill("Please review PR_LINK_HERE.");
+  await screen.getByRole("button", { name: "Save as template" }).click();
 
   // Verify
-  const textarea = screen
-    .getByRole("textbox", { name: "Prompt for your coding agent" })
-    .element() as HTMLTextAreaElement;
-  await expect.poll(() => document.activeElement).toBe(textarea);
+  const textareaElement = textarea.element() as HTMLTextAreaElement;
+  await expect.poll(() => document.activeElement).toBe(textareaElement);
   expect(
-    textarea.value.slice(textarea.selectionStart, textarea.selectionEnd),
+    textareaElement.value.slice(
+      textareaElement.selectionStart,
+      textareaElement.selectionEnd,
+    ),
   ).toBe("PR_LINK_HERE");
 });
 
-it("forgets the saved prompt template when the default is restored", async () => {
+it("forgets the saved prompt template when the default prompt is saved as the template", async () => {
   // Setup SUT
   window.localStorage.setItem(
     promptTemplateStorageKey,
@@ -166,47 +157,48 @@ it("forgets the saved prompt template when the default is restored", async () =>
 
   // Exercise
   await screen
-    .getByRole("button", { name: "Edit the prompt template" })
-    .click();
-  await screen.getByRole("button", { name: "Restore default" }).click();
-  await screen.getByRole("button", { name: "Save" }).click();
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill(`Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`);
+  await screen.getByRole("button", { name: "Save as template" }).click();
 
   // Verify
-  await expect
-    .element(
-      screen.getByRole("textbox", { name: "Prompt for your coding agent" }),
-    )
-    .toHaveValue(
-      `Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`,
-    );
   expect(window.localStorage.getItem(promptTemplateStorageKey)).toBeNull();
 });
 
-it("keeps the prompt unchanged when editing the prompt template is canceled", async () => {
+it("explains that the template needs the PR placeholder when the prompt doesn't contain it", async () => {
   // Setup SUT
   const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
 
   // Exercise
   await screen
-    .getByRole("button", { name: "Edit the prompt template" })
-    .click();
-  await screen
-    .getByRole("textbox", { name: "Prompt template" })
-    .fill("Review PR_LINK_HERE step by step.");
-  await screen.getByRole("button", { name: "Cancel" }).click();
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review https://github.com/example/repository/pull/1.");
 
   // Verify
+  const saveButton = screen.getByRole("button", { name: "Save as template" });
+  await expect.element(saveButton).toHaveAttribute("aria-disabled", "true");
   await expect
-    .element(
-      screen.getByRole("textbox", { name: "Prompt for your coding agent" }),
-    )
-    .toHaveValue(
-      `Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`,
-    );
+    .element(saveButton)
+    .toHaveAccessibleDescription("The template needs to contain PR_LINK_HERE");
+});
+
+it("doesn't save a prompt without the PR placeholder as the template", async () => {
+  // Setup SUT
+  const screen = await render(<PromptGenerator />, { wrapper: TestProviders });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review https://github.com/example/repository/pull/1.");
+  await screen
+    .getByRole("button", { name: "Save as template" })
+    .click({ force: true });
+
+  // Verify
   expect(window.localStorage.getItem(promptTemplateStorageKey)).toBeNull();
 });
 
-it("hides the prompt template editing from the non-editable prompt", async () => {
+it("hides saving as template from the non-editable prompt", async () => {
   // Exercise
   const screen = await render(<PromptGenerator editable={false} />, {
     wrapper: TestProviders,
@@ -214,6 +206,28 @@ it("hides the prompt template editing from the non-editable prompt", async () =>
 
   // Verify
   expect(
-    screen.getByRole("button", { name: "Edit the prompt template" }).query(),
+    screen.getByRole("button", { name: "Save as template" }).query(),
   ).toBeNull();
+});
+
+it("shows all of a saved prompt template that wraps over several lines", async () => {
+  // Setup SUT
+  window.localStorage.setItem(
+    promptTemplateStorageKey,
+    "Review PR_LINK_HERE step by step, focusing on the security implications of every change, and keep each step small enough to read in a minute.",
+  );
+
+  // Exercise
+  const screen = await render(
+    <div style={{ width: 360 }}>
+      <PromptGenerator />
+    </div>,
+    { wrapper: TestProviders },
+  );
+
+  // Verify
+  const textarea = screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .element();
+  expect(textarea.scrollHeight).toBeLessThanOrEqual(textarea.clientHeight);
 });
