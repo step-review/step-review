@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+- Links to the app's pages, such as the logo, the steps in the sidebar, the
+  previous and next step buttons and the example review, open in a new tab on a
+  Cmd- or Ctrl-click.
+
 ## 1.2.0
 
 - Step Review can be installed as an app from Chrome or Edge on desktop, and the
