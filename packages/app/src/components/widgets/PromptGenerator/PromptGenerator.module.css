@@ -20,7 +20,7 @@
   overflow-wrap: anywhere;
 }
 
-.copyButton {
+.button {
   position: absolute;
   top: var(--base-size-8);
   right: var(--base-size-8);

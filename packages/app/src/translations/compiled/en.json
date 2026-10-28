@@ -811,6 +811,18 @@
       "pluralType": "cardinal"
     }
   ],
+  "SavePromptTemplateButton.tsx_2Tq0+F": [
+    {
+      "type": 0,
+      "value": "Save as template"
+    }
+  ],
+  "SavePromptTemplateButton.tsx_id89db": [
+    {
+      "type": 0,
+      "value": "Saved as template"
+    }
+  ],
   "SessionDetailsDialog.tsx_47FYwb": [
     {
       "type": 0,
@@ -1035,6 +1047,12 @@
     {
       "type": 0,
       "value": "This session can't be joined: it ended or expired, or its link is incomplete."
+    }
+  ],
+  "Start.tsx_JvMWRq": [
+    {
+      "type": 0,
+      "value": "The reviews you open are kept here."
     }
   ],
   "Start.tsx_NGb5sK": [

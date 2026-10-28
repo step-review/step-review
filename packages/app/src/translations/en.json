@@ -296,6 +296,12 @@
   "ReviewWarnings.tsx_gMwaXo": {
     "defaultMessage": "{warningCount, plural, one {The review has # problem} other {The review has # problems}}"
   },
+  "SavePromptTemplateButton.tsx_2Tq0+F": {
+    "defaultMessage": "Save as template"
+  },
+  "SavePromptTemplateButton.tsx_id89db": {
+    "defaultMessage": "Saved as template"
+  },
   "SessionDetailsDialog.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
@@ -385,6 +391,9 @@
   },
   "Start.tsx_BZvdW+": {
     "defaultMessage": "This session can't be joined: it ended or expired, or its link is incomplete."
+  },
+  "Start.tsx_JvMWRq": {
+    "defaultMessage": "The reviews you open are kept here."
   },
   "Start.tsx_NGb5sK": {
     "defaultMessage": "Step Review <strong>breaks them down into logical steps</strong>, so you can <strong>actually understand them</strong>, and keep a handle on your codebase. Try it:"

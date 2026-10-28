@@ -1,0 +1,3 @@
+.button[data-saved] {
+  color: var(--fgColor-success);
+}

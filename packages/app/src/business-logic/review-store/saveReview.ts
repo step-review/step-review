@@ -1,4 +1,5 @@
 import type LoadedReview from "../review/LoadedReview.ts";
+import rememberAddedReview from "./rememberAddedReview.ts";
 import reviewDatabase from "./reviewDatabase.ts";
 
 /**
@@ -25,4 +26,5 @@ export default async function saveReview(
       );
     },
   );
+  rememberAddedReview();
 }

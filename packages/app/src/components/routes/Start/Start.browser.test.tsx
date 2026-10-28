@@ -1,11 +1,13 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { page } from "vitest/browser";
+import hasAddedReview from "../../../business-logic/review-store/hasAddedReview.ts";
 import useStoredReviews from "../../../business-logic/review-store/useStoredReviews.ts";
 import useSessionBookmarks from "../../../business-logic/session-store/useSessionBookmarks.ts";
 import TestProviders from "../../../test-utils/TestProviders.tsx";
 import Start from "./Start.tsx";
 
+vi.mock("../../../business-logic/review-store/hasAddedReview.ts");
 vi.mock("../../../business-logic/review-store/useStoredReviews.ts");
 vi.mock("../../../business-logic/session-store/useSessionBookmarks.ts");
 
@@ -79,4 +81,25 @@ it("scrolls to the footer when the new-user page is shorter than its content", a
   expect(footer.getBoundingClientRect().bottom).toBeLessThanOrEqual(
     window.innerHeight,
   );
+});
+
+it("keeps the new-user steps hidden after the added reviews are removed", async () => {
+  // Setup mocks
+  vi.mocked(useStoredReviews).mockReturnValue([]);
+  vi.mocked(useSessionBookmarks).mockReturnValue([]);
+  vi.mocked(hasAddedReview).mockReturnValue(true);
+
+  // Exercise
+  const screen = await render(<Start />, { wrapper: TestProviders });
+
+  // Verify
+  await expect
+    .element(screen.getByRole("heading", { name: "Past reviews" }))
+    .toBeVisible();
+  await expect
+    .element(screen.getByText("The reviews you open are kept here."))
+    .toBeVisible();
+  expect(
+    screen.getByRole("heading", { name: /Give this prompt/u }).query(),
+  ).toBeNull();
 });
