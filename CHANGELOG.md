@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0
+
+- The prompt on the start page can be saved as a template: while it contains
+  `PR_LINK_HERE`, its button saves it in the browser, and the prompt starts from
+  it from then on. The prompt box grows as it is written.
+- Once a review was opened or a session joined, the start page no longer
+  introduces the app, even after all reviews are removed.
+
 ## 1.2.1
 
 - Links to the app's pages, such as the logo, the steps in the sidebar, the
