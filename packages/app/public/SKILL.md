@@ -105,38 +105,52 @@ built (`date -u +%Y%m%d-%H%M%S`), so that every review gets its own name
 (`pr-123-20261025-143012.step-review`), at the root of the repository, unless
 the user asked for another name. Write the JSON of the review to a temporary
 file outside the repository, then build the review file with the Step Review
-CLI, from the repository:
+CLI, from the repository. If the `step-review` command is installed, run it:
+
+```sh
+step-review build /tmp/step-review.json \
+  --output pr-123-20261025-143012.step-review
+```
+
+Otherwise, run `@step-review/cli@latest` with the package runner the user
+prefers, otherwise the one the repository uses (`pnpm dlx`, `yarn dlx`, `bunx`),
+otherwise `npx`:
 
 ```sh
 npx @step-review/cli@latest build /tmp/step-review.json \
   --output pr-123-20261025-143012.step-review
 ```
 
-Run it with the package runner the user prefers, otherwise the one the
-repository uses (`pnpm dlx`, `yarn dlx`, `bunx`), otherwise `npx`.
-
 The CLI appends the diff between the JSON's base and head commits, and reports
 the problems the app would show: invalid JSON, fields that don't match the
 schema, notes and ranges that don't match the diff, changed files in no step.
 Fix them in the JSON and build again with the same file name, until it reports
-none. `check <file>` reports the problems of an existing review file.
+none. `check <file>` reports the problems of an existing review file. If an
+installed `step-review` rejects the JSON's `version`, it is out of date: ask the
+user to update it.
 
-Only if the CLI can't run (e.g. without network access), build the file by hand,
+If running the CLI is blocked or denied (e.g. by a permission check on
+downloaded packages), don't work around it: stop and ask the user to allow it,
+or to install `@step-review/cli` globally with the package manager they prefer
+(e.g. `npm install --global @step-review/cli`).
+
+Only if the CLI can't run for lack of network access, build the file by hand,
 and tell the user that it wasn't checked:
 
 ```sh
-jq empty /tmp/step-review.json && {
-  echo '#step-review:review'
-  cat /tmp/step-review.json
-  echo '#step-review:diff'
+{
+  echo '#step-review:review' &&
+  jq . /tmp/step-review.json &&
+  echo '#step-review:diff' &&
   git -c core.quotePath=false diff --no-color --no-ext-diff -M -U20 \
     --src-prefix=a/ --dst-prefix=b/ <base> <head>
 } > pr-123-20261025-143012.step-review
 ```
 
-Use exactly these `git diff` options: the app parses the output, and notes rely
-on the 20 lines of context. `jq empty` fails on invalid JSON; without `jq`, use
-`python3 -m json.tool /tmp/step-review.json > /dev/null`.
+Use exactly these commands. The app parses the output, and notes rely on the 20
+lines of context of the `git diff`. `jq .` fails on invalid JSON, and ends the
+JSON with a newline, which the line after it needs: don't replace it with `cat`.
+Without `jq`, use `python3 -m json.tool /tmp/step-review.json`.
 
 ## JSON format
 
