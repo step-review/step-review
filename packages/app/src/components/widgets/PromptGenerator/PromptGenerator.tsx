@@ -1,9 +1,11 @@
-import { Link, Textarea } from "@primer/react";
+import { PencilIcon } from "@primer/octicons-react";
+import { IconButton, Link, Textarea } from "@primer/react";
 import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import createStartPrompt from "../../../business-logic/prompts/createStartPrompt.ts";
 import startPromptPlaceholder from "../../../business-logic/prompts/startPromptPlaceholder.ts";
+import usePromptTemplate from "../../../business-logic/prompts/usePromptTemplate.ts";
 import CopyIconButton from "../../design-system/CopyIconButton/CopyIconButton.tsx";
+import PromptTemplateDialog from "../PromptTemplateDialog/PromptTemplateDialog.tsx";
 import styles from "./PromptGenerator.module.css";
 
 interface Props {
@@ -13,12 +15,16 @@ interface Props {
 export default function PromptGenerator({ editable = true }: Props) {
   const intl = useIntl();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const defaultPrompt = createStartPrompt(window.location.origin);
-  const [prompt, setPrompt] = useState(defaultPrompt);
+  const { promptTemplate, setPromptTemplate, defaultPromptTemplate } =
+    usePromptTemplate();
+  const [prompt, setPrompt] = useState(promptTemplate);
+  const [isEditingPromptTemplate, setIsEditingPromptTemplate] = useState(false);
   const skillUrl = `${window.location.origin}/SKILL.md`;
-  const placeholderStart = defaultPrompt.indexOf(startPromptPlaceholder);
-  const skillUrlStart = defaultPrompt.indexOf(skillUrl);
-  const promptToCopy = editable ? prompt : defaultPrompt;
+  const placeholderStart = defaultPromptTemplate.indexOf(
+    startPromptPlaceholder,
+  );
+  const skillUrlStart = defaultPromptTemplate.indexOf(skillUrl);
+  const promptToCopy = editable ? prompt : defaultPromptTemplate;
 
   // Select the placeholder so that pasting a link replaces it.
   useEffect(() => {
@@ -28,11 +34,15 @@ export default function PromptGenerator({ editable = true }: Props) {
     const textarea = textareaRef.current!;
     const placeholderStart = textarea.value.indexOf(startPromptPlaceholder);
     textarea.focus();
+    // Custom templates can leave the placeholder out.
+    if (placeholderStart === -1) {
+      return;
+    }
     textarea.setSelectionRange(
       placeholderStart,
       placeholderStart + startPromptPlaceholder.length,
     );
-  }, [editable]);
+  }, [editable, promptTemplate]);
 
   return (
     <div className={styles["root"]}>
@@ -44,33 +54,57 @@ export default function PromptGenerator({ editable = true }: Props) {
           })}
           block
           resize="none"
-          // A fixed height, so that pasting a link doesn't make it grow.
-          rows={2}
+          // A fixed height, one line taller than the template, so that pasting
+          // a link doesn't make it grow.
+          rows={promptTemplate.split("\n").length + 1}
           className={styles["textarea"]}
           value={prompt}
           onChange={(event) => setPrompt(event.currentTarget.value)}
         />
       ) : (
         <p className={styles["prompt"]}>
-          {defaultPrompt.slice(0, placeholderStart)}
+          {defaultPromptTemplate.slice(0, placeholderStart)}
           <em>${startPromptPlaceholder}</em>
-          {defaultPrompt.slice(
+          {defaultPromptTemplate.slice(
             placeholderStart + startPromptPlaceholder.length,
             skillUrlStart,
           )}
           <Link inline href={skillUrl} target="_blank" rel="noreferrer">
             {`${window.location.host}/SKILL.md`}
           </Link>
-          {defaultPrompt.slice(skillUrlStart + skillUrl.length)}
+          {defaultPromptTemplate.slice(skillUrlStart + skillUrl.length)}
         </p>
       )}
-      <div className={styles["copyButton"]}>
+      <div className={styles["buttons"]}>
+        {editable && (
+          <IconButton
+            variant="invisible"
+            icon={PencilIcon}
+            aria-label={intl.formatMessage({
+              defaultMessage: "Edit the prompt template",
+            })}
+            onClick={() => setIsEditingPromptTemplate(true)}
+          />
+        )}
         <CopyIconButton
           value={promptToCopy}
           label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
           size="medium"
         />
       </div>
+      {isEditingPromptTemplate && (
+        <PromptTemplateDialog
+          promptTemplate={promptTemplate}
+          defaultPromptTemplate={defaultPromptTemplate}
+          returnFocusRef={textareaRef}
+          onSave={(newPromptTemplate) => {
+            setPromptTemplate(newPromptTemplate);
+            setPrompt(newPromptTemplate);
+            setIsEditingPromptTemplate(false);
+          }}
+          onClose={() => setIsEditingPromptTemplate(false)}
+        />
+      )}
     </div>
   );
 }
