@@ -30,13 +30,11 @@ export default function PromptGenerator({ editable = true }: Props) {
   const skillUrlStart = defaultPromptTemplate.indexOf(skillUrl);
   // Until a PR link replaces the placeholder, the prompt is a template.
   const isPromptTemplate = prompt.includes(startPromptPlaceholder);
-  // The untouched default prompt can be neither copied (it has no PR link) nor
-  // usefully saved. Saving it stays offered while another template is saved,
-  // as that restores the default, and shows that it was saved meanwhile.
-  const isUntouchedDefaultPrompt =
-    prompt === defaultPromptTemplate &&
-    promptTemplate === defaultPromptTemplate &&
-    !isPromptTemplateSaved;
+  // The prompt as the template starts it can be neither copied (it has no PR
+  // link) nor usefully saved (it is the template already). Just after saving,
+  // it still shows that it was saved.
+  const isUnchangedPromptTemplate =
+    prompt === promptTemplate && !isPromptTemplateSaved;
 
   // Grow with the prompt as it is written.
   useLayoutEffect(() => {
@@ -100,7 +98,7 @@ export default function PromptGenerator({ editable = true }: Props) {
           {defaultPromptTemplate.slice(skillUrlStart + skillUrl.length)}
         </p>
       )}
-      {!(editable && isUntouchedDefaultPrompt) && (
+      {!(editable && isUnchangedPromptTemplate) && (
         <div className={styles["button"]}>
           {editable && isPromptTemplate ? (
             <SavePromptTemplateButton
