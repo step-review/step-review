@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+
+- A file path too long for its file card's header is cut off from the start,
+  instead of pushing the diffstat and Viewed checkbox onto another line.
+
 ## 1.3.0
 
 - The prompt on the start page can be saved as a template: while it contains
