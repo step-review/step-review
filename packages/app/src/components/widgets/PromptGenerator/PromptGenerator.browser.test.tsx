@@ -183,10 +183,15 @@ it("forgets the saved prompt template when the default prompt is saved as the te
 });
 
 it("offers saving the prompt as the template instead of copying it while it contains the PR placeholder", async () => {
-  // Exercise
+  // Setup SUT
   const screen = await render(<PromptGenerator />, {
     wrapper: TestProviders,
   });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review PR_LINK_HERE step by step.");
 
   // Verify
   await expect
@@ -195,6 +200,69 @@ it("offers saving the prompt as the template instead of copying it while it cont
   expect(
     screen.getByRole("button", { name: "Copy the prompt" }).query(),
   ).toBeNull();
+});
+
+it("offers neither saving nor copying the untouched default prompt", async () => {
+  // Exercise
+  const screen = await render(<PromptGenerator />, {
+    wrapper: TestProviders,
+  });
+
+  // Verify
+  await expect
+    .element(
+      screen.getByRole("textbox", { name: "Prompt for your coding agent" }),
+    )
+    .toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Save as template" }).query(),
+  ).toBeNull();
+  expect(
+    screen.getByRole("button", { name: "Copy the prompt" }).query(),
+  ).toBeNull();
+});
+
+it("offers saving the default prompt as the template while another template is saved", async () => {
+  // Setup SUT
+  window.localStorage.setItem(
+    promptTemplateStorageKey,
+    "Review PR_LINK_HERE step by step.",
+  );
+  const screen = await render(<PromptGenerator />, {
+    wrapper: TestProviders,
+  });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill(`Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`);
+
+  // Verify
+  await expect
+    .element(screen.getByRole("button", { name: "Save as template" }))
+    .toBeVisible();
+});
+
+it("shows that the default prompt was saved as the template after saving it", async () => {
+  // Setup SUT
+  window.localStorage.setItem(
+    promptTemplateStorageKey,
+    "Review PR_LINK_HERE step by step.",
+  );
+  const screen = await render(<PromptGenerator />, {
+    wrapper: TestProviders,
+  });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill(`Review PR_LINK_HERE with ${window.location.origin}/SKILL.md.`);
+  await screen.getByRole("button", { name: "Save as template" }).click();
+
+  // Verify
+  await expect
+    .element(screen.getByRole("button", { name: "Saved as template" }))
+    .toBeVisible();
 });
 
 it("offers copying a prompt with a PR link instead of saving it as the template", async () => {

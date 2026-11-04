@@ -30,6 +30,13 @@ export default function PromptGenerator({ editable = true }: Props) {
   const skillUrlStart = defaultPromptTemplate.indexOf(skillUrl);
   // Until a PR link replaces the placeholder, the prompt is a template.
   const isPromptTemplate = prompt.includes(startPromptPlaceholder);
+  // The untouched default prompt can be neither copied (it has no PR link) nor
+  // usefully saved. Saving it stays offered while another template is saved,
+  // as that restores the default, and shows that it was saved meanwhile.
+  const isUntouchedDefaultPrompt =
+    prompt === defaultPromptTemplate &&
+    promptTemplate === defaultPromptTemplate &&
+    !isPromptTemplateSaved;
 
   // Grow with the prompt as it is written.
   useLayoutEffect(() => {
@@ -93,23 +100,25 @@ export default function PromptGenerator({ editable = true }: Props) {
           {defaultPromptTemplate.slice(skillUrlStart + skillUrl.length)}
         </p>
       )}
-      <div className={styles["button"]}>
-        {editable && isPromptTemplate ? (
-          <SavePromptTemplateButton
-            isSaved={isPromptTemplateSaved}
-            onSave={() => {
-              setPromptTemplate(prompt);
-              setIsPromptTemplateSaved(true);
-            }}
-          />
-        ) : (
-          <CopyIconButton
-            value={editable ? prompt : defaultPromptTemplate}
-            label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
-            size="medium"
-          />
-        )}
-      </div>
+      {!(editable && isUntouchedDefaultPrompt) && (
+        <div className={styles["button"]}>
+          {editable && isPromptTemplate ? (
+            <SavePromptTemplateButton
+              isSaved={isPromptTemplateSaved}
+              onSave={() => {
+                setPromptTemplate(prompt);
+                setIsPromptTemplateSaved(true);
+              }}
+            />
+          ) : (
+            <CopyIconButton
+              value={editable ? prompt : defaultPromptTemplate}
+              label={intl.formatMessage({ defaultMessage: "Copy the prompt" })}
+              size="medium"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }
