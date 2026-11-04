@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2
+
+- The prompt on the start page shows no copy or save button while it is the
+  untouched default prompt, which has no PR link to copy. Saving stays offered
+  while another template is saved, to bring the default back.
+
 ## 1.3.1
 
 - A file path too long for its file card's header is cut off from the start,
