@@ -222,6 +222,53 @@ it("offers neither saving nor copying the untouched default prompt", async () =>
   ).toBeNull();
 });
 
+it("offers neither saving nor copying the untouched saved prompt template", async () => {
+  // Setup SUT
+  window.localStorage.setItem(
+    promptTemplateStorageKey,
+    "Review PR_LINK_HERE step by step.",
+  );
+
+  // Exercise
+  const screen = await render(<PromptGenerator />, {
+    wrapper: TestProviders,
+  });
+
+  // Verify
+  await expect
+    .element(
+      screen.getByRole("textbox", { name: "Prompt for your coding agent" }),
+    )
+    .toHaveValue("Review PR_LINK_HERE step by step.");
+  expect(
+    screen.getByRole("button", { name: "Save as template" }).query(),
+  ).toBeNull();
+  expect(
+    screen.getByRole("button", { name: "Copy the prompt" }).query(),
+  ).toBeNull();
+});
+
+it("offers saving an edited saved prompt template as the template", async () => {
+  // Setup SUT
+  window.localStorage.setItem(
+    promptTemplateStorageKey,
+    "Review PR_LINK_HERE step by step.",
+  );
+  const screen = await render(<PromptGenerator />, {
+    wrapper: TestProviders,
+  });
+
+  // Exercise
+  await screen
+    .getByRole("textbox", { name: "Prompt for your coding agent" })
+    .fill("Review PR_LINK_HERE in small steps.");
+
+  // Verify
+  await expect
+    .element(screen.getByRole("button", { name: "Save as template" }))
+    .toBeVisible();
+});
+
 it("offers saving the default prompt as the template while another template is saved", async () => {
   // Setup SUT
   window.localStorage.setItem(
