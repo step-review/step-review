@@ -19,11 +19,22 @@
   }
 }
 
+/* The path with its copy button and the participants on the file, filling the
+   space the rest leaves. */
+.pathGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-8);
+  /* A zero basis lets a long path truncate instead of wrapping the rest onto
+     another line, while the minimum keeps it readable on narrow screens,
+     wrapping what follows it. */
+  flex: 1 1 0;
+  min-width: min(160px, 50%);
+}
+
 .path {
   cursor: pointer;
-  /* Keeps the path readable on narrow screens, wrapping what follows it. */
-  flex: 0 1 auto;
-  min-width: min(160px, 50%);
+  min-width: 0;
   font-family: var(--fontStack-monospace);
   font-size: var(--text-body-size-small);
 }

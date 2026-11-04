@@ -54,16 +54,18 @@ export default function FileCardHeader({
       {fileDiff.status !== "modified" && (
         <FileStatusBadge status={fileDiff.status} />
       )}
-      <div className={styles["path"]} onClick={onToggleCollapsed}>
-        <TruncatedText tooltip={displayedPath} truncateFrom="start">
-          {displayedPath}
-        </TruncatedText>
+      <div className={styles["pathGroup"]}>
+        <div className={styles["path"]} onClick={onToggleCollapsed}>
+          <TruncatedText tooltip={displayedPath} truncateFrom="start">
+            {displayedPath}
+          </TruncatedText>
+        </div>
+        <CopyIconButton
+          value={stepFileView.path}
+          label={intl.formatMessage({ defaultMessage: "Copy the path" })}
+        />
+        <ParticipantsHere fileId={stepFileView.id} />
       </div>
-      <CopyIconButton
-        value={stepFileView.path}
-        label={intl.formatMessage({ defaultMessage: "Copy the path" })}
-      />
-      <ParticipantsHere fileId={stepFileView.id} />
       <div className={styles["trailing"]}>
         <Diffstat
           additions={stepFileView.additions}
