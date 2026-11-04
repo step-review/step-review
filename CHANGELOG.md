@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.3
+
+- The prompt on the start page also hides its copy and save buttons while it is
+  an unchanged saved template, until it is edited.
+
 ## 1.3.2
 
 - The prompt on the start page shows no copy or save button while it is the
