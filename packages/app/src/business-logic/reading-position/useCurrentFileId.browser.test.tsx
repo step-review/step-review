@@ -1,8 +1,8 @@
 import type { FileDiff } from "@step-review/review-format";
 import { expect, it } from "vitest";
 import { render } from "vitest-browser-react";
+import FragmentScroll from "../navigation/FragmentScroll.ts";
 import type StepFileView from "../review-view/StepFileView.ts";
-import FragmentScroll from "./FragmentScroll.ts";
 import useCurrentFileId from "./useCurrentFileId.ts";
 
 interface FileCardsProps {
@@ -32,7 +32,7 @@ function FileCards({ stepFileViews, cardHeights }: FileCardsProps) {
   );
 }
 
-it("returns the file a link scrolled to, even when the page can't bring its card to the top", async () => {
+it("returns the file a link scrolled to, even when the page can't bring its card to the reading line", async () => {
   // Setup SUT
   const stepFileViews: StepFileView[] = [
     {
@@ -47,7 +47,7 @@ it("returns the file a link scrolled to, even when the page can't bring its card
       notes: [],
     },
     {
-      id: "short",
+      id: "middle",
       path: "src/lexer.ts",
       fileDiff: { status: "modified" } as FileDiff,
       hunks: [],
@@ -57,18 +57,29 @@ it("returns the file a link scrolled to, even when the page can't bring its card
       fingerprint: "fingerprint-2",
       notes: [],
     },
+    {
+      id: "last",
+      path: "src/printer.ts",
+      fileDiff: { status: "modified" } as FileDiff,
+      hunks: [],
+      additions: 1,
+      deletions: 0,
+      summary: null,
+      fingerprint: "fingerprint-3",
+      notes: [],
+    },
   ];
   const screen = await render(
-    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50]} />,
+    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50, 50]} />,
   );
 
   // Exercise
-  FragmentScroll.scrollTo("file-short");
+  FragmentScroll.scrollTo("file-middle");
 
   // Verify
   await expect
     .element(screen.getByTestId("current-file"))
-    .toHaveTextContent("short");
+    .toHaveTextContent("middle");
 });
 
 it("returns the file holding the note a link scrolled to", async () => {
@@ -86,7 +97,7 @@ it("returns the file holding the note a link scrolled to", async () => {
       notes: [],
     },
     {
-      id: "short",
+      id: "middle",
       path: "src/lexer.ts",
       fileDiff: { status: "modified" } as FileDiff,
       hunks: [],
@@ -96,9 +107,20 @@ it("returns the file holding the note a link scrolled to", async () => {
       fingerprint: "fingerprint-2",
       notes: [{ id: "note-1", kind: "explainer", body: "Why." }],
     },
+    {
+      id: "last",
+      path: "src/printer.ts",
+      fileDiff: { status: "modified" } as FileDiff,
+      hunks: [],
+      additions: 1,
+      deletions: 0,
+      summary: null,
+      fingerprint: "fingerprint-3",
+      notes: [],
+    },
   ];
   const screen = await render(
-    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50]} />,
+    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50, 50]} />,
   );
 
   // Exercise
@@ -107,10 +129,10 @@ it("returns the file holding the note a link scrolled to", async () => {
   // Verify
   await expect
     .element(screen.getByTestId("current-file"))
-    .toHaveTextContent("short");
+    .toHaveTextContent("middle");
 });
 
-it("returns the file at the top once the page scrolls on from where a link left it", async () => {
+it("returns the file being read once the page scrolls on from where a link left it", async () => {
   // Setup SUT
   const stepFileViews: StepFileView[] = [
     {
@@ -125,7 +147,7 @@ it("returns the file at the top once the page scrolls on from where a link left 
       notes: [],
     },
     {
-      id: "short",
+      id: "middle",
       path: "src/lexer.ts",
       fileDiff: { status: "modified" } as FileDiff,
       hunks: [],
@@ -135,14 +157,25 @@ it("returns the file at the top once the page scrolls on from where a link left 
       fingerprint: "fingerprint-2",
       notes: [],
     },
+    {
+      id: "last",
+      path: "src/printer.ts",
+      fileDiff: { status: "modified" } as FileDiff,
+      hunks: [],
+      additions: 1,
+      deletions: 0,
+      summary: null,
+      fingerprint: "fingerprint-3",
+      notes: [],
+    },
   ];
   const screen = await render(
-    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50]} />,
+    <FileCards stepFileViews={stepFileViews} cardHeights={[3000, 50, 50]} />,
   );
-  FragmentScroll.scrollTo("file-short");
+  FragmentScroll.scrollTo("file-middle");
   await expect
     .element(screen.getByTestId("current-file"))
-    .toHaveTextContent("short");
+    .toHaveTextContent("middle");
 
   // Exercise
   window.scrollBy(0, -100);

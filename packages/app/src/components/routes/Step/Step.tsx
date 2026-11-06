@@ -1,9 +1,9 @@
 import { Stack } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
-import useCurrentFileId from "../../../business-logic/navigation/useCurrentFileId.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
 import useDiffPreferences from "../../../business-logic/preferences/useDiffPreferences.ts";
+import useCurrentFileId from "../../../business-logic/reading-position/useCurrentFileId.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";

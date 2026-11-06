@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import FragmentScroll from "../navigation/FragmentScroll.ts";
 import type StepFileView from "../review-view/StepFileView.ts";
-import FragmentScroll from "./FragmentScroll.ts";
-import useTopFileId from "./useTopFileId.ts";
+import useReadingLineFileId from "./useReadingLineFileId.ts";
 
 interface FragmentScrollStop {
   fileId: string;
@@ -10,15 +10,15 @@ interface FragmentScrollStop {
 
 /**
  * The ID of the file being viewed, among a page's files in their order: the one
- * a link last scrolled to, until the page scrolls on, then the one whose card
- * is closest to the top of the viewport. The link's file wins because the page
- * can't always bring its card to the top, e.g. a short one at the end. `null`
- * when no file is in view.
+ * a link last scrolled to, until the page scrolls on, then the one being read
+ * as the page scrolls. The link's file wins because the page can't always bring
+ * its card to the reading line, e.g. a short one near the end. `null` when no
+ * file is being viewed.
  */
 export default function useCurrentFileId(
   stepFileViews: StepFileView[],
 ): string | null {
-  const topFileId = useTopFileId(stepFileViews);
+  const readingLineFileId = useReadingLineFileId(stepFileViews);
   const [fragmentScrollStop, setFragmentScrollStop] =
     useState<FragmentScrollStop | null>(null);
   useEffect(
@@ -50,5 +50,5 @@ export default function useCurrentFileId(
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [fragmentScrollStop]);
-  return fragmentScrollStop?.fileId ?? topFileId;
+  return fragmentScrollStop?.fileId ?? readingLineFileId;
 }
