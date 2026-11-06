@@ -100,7 +100,8 @@ To deploy by hand, export the same variables and run `pnpm build`, then
 
 All packages share one version, released by a `vX.Y.Z` tag on `main`.
 
-1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md), in a PR.
+1. Add a `## X.Y.Z` section to [`CHANGELOG.md`](../CHANGELOG.md) and commit it
+   on `main`.
 2. On a clean `main`, run `pnpm release:prepare X.Y.Z`: it sets the version of
    every package, runs QA, commits and tags.
 3. Push both: `git push --atomic origin main vX.Y.Z`. Pushing to `main` without
