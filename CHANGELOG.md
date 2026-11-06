@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0
+
+- The step page repeats its Mark all as viewed button below the last file, so it
+  is at hand without scrolling back up.
+
 ## 1.3.3
 
 - The prompt on the start page also hides its copy and save buttons while it is
