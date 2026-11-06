@@ -107,6 +107,9 @@
   "JoinSessionDialog.tsx_vFA0iR": {
     "defaultMessage": "The other participants will see your name, the files you viewed, and where you are."
   },
+  "MarkAllViewedButton.tsx_I5Wd5l": {
+    "defaultMessage": "Mark all as viewed"
+  },
   "NotFound.tsx_osJs96": {
     "defaultMessage": "Page not found."
   },
@@ -484,9 +487,6 @@
   },
   "StepToolbar.tsx_AVI/0j": {
     "defaultMessage": "Split"
-  },
-  "StepToolbar.tsx_I5Wd5l": {
-    "defaultMessage": "Mark all as viewed"
   },
   "StepToolbar.tsx_LzD3TV": {
     "defaultMessage": "Unified"

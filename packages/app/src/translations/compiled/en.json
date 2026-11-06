@@ -245,6 +245,12 @@
       "value": "The other participants will see your name, the files you viewed, and where you are."
     }
   ],
+  "MarkAllViewedButton.tsx_I5Wd5l": [
+    {
+      "type": 0,
+      "value": "Mark all as viewed"
+    }
+  ],
   "NotFound.tsx_osJs96": [
     {
       "type": 0,
@@ -1363,12 +1369,6 @@
     {
       "type": 0,
       "value": "Split"
-    }
-  ],
-  "StepToolbar.tsx_I5Wd5l": [
-    {
-      "type": 0,
-      "value": "Mark all as viewed"
     }
   ],
   "StepToolbar.tsx_LzD3TV": [

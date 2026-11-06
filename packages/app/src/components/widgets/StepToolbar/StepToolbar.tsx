@@ -1,15 +1,16 @@
-import { ChecklistIcon } from "@primer/octicons-react";
 import { Button, ButtonGroup, Checkbox, FormControl } from "@primer/react";
 import { FormattedMessage, useIntl } from "react-intl";
 import type DiffPreferences from "../../../business-logic/preferences/DiffPreferences.ts";
+import type StepView from "../../../business-logic/review-view/StepView.ts";
+import MarkAllViewedButton from "../MarkAllViewedButton/MarkAllViewedButton.tsx";
 import styles from "./StepToolbar.module.css";
 
 interface Props {
   preferences: DiffPreferences;
-  onMarkAllViewed: () => void;
+  stepView: StepView;
 }
 
-export default function StepToolbar({ preferences, onMarkAllViewed }: Props) {
+export default function StepToolbar({ preferences, stepView }: Props) {
   const intl = useIntl();
   return (
     <div className={styles["toolbar"]}>
@@ -47,14 +48,9 @@ export default function StepToolbar({ preferences, onMarkAllViewed }: Props) {
           <FormattedMessage defaultMessage="Only issues" />
         </FormControl.Label>
       </FormControl>
-      <Button
-        size="small"
-        leadingVisual={ChecklistIcon}
-        className={styles["markAllViewed"]}
-        onClick={onMarkAllViewed}
-      >
-        <FormattedMessage defaultMessage="Mark all as viewed" />
-      </Button>
+      <div className={styles["markAllViewed"]}>
+        <MarkAllViewedButton stepView={stepView} />
+      </div>
     </div>
   );
 }
