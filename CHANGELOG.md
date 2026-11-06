@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.0
+
+- The step's file tree in the sidebar highlights the file being read, one that
+  crosses a line a third down the page or the one a link just went to, and sets
+  the folders it's in in bold. The sidebar scrolls along to keep it in view,
+  unless it was scrolled away from it.
+
 ## 1.4.0
 
 - The step page repeats its Mark all as viewed button below the last file, so it
