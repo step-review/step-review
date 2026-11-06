@@ -36,3 +36,8 @@
 .viewedIcon {
   color: var(--fgColor-success);
 }
+
+/* The folders the file being viewed is in, to place it in the tree. */
+.folderName[data-contains-current] {
+  font-weight: var(--base-text-weight-semibold);
+}

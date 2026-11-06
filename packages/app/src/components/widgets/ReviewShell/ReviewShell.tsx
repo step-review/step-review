@@ -30,6 +30,8 @@ interface Props {
   loadedReview: LoadedReview;
   reviewView: ReviewView;
   activeStepId: string | null;
+  /** The file being viewed in the active step, if any. */
+  currentFileId: string | null;
   children: ReactNode;
 }
 
@@ -43,6 +45,7 @@ export default function ReviewShell({
   loadedReview,
   reviewView,
   activeStepId,
+  currentFileId,
   children,
 }: Props) {
   const intl = useIntl();
@@ -143,6 +146,7 @@ export default function ReviewShell({
               loadedReview={loadedReview}
               reviewView={reviewView}
               activeStepId={activeStepId}
+              currentFileId={currentFileId}
               onNavigate={closeSidebars}
               onCollapse={
                 isStacked ? undefined : () => setSidebarState("collapsed")
@@ -167,6 +171,7 @@ export default function ReviewShell({
               loadedReview={loadedReview}
               reviewView={reviewView}
               activeStepId={activeStepId}
+              currentFileId={currentFileId}
               onNavigate={closeSidebars}
               onCollapse={() => setIsSidebarOverlayOpen(false)}
             />

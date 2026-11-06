@@ -22,12 +22,15 @@ import styles from "./StepNavigation.module.css";
 interface Props {
   reviewView: ReviewView;
   activeStepId: string | null;
+  /** The file being viewed in the active step, if any. */
+  currentFileId: string | null;
   onNavigate: () => void;
 }
 
 export default function StepNavigation({
   reviewView,
   activeStepId,
+  currentFileId,
   onNavigate,
 }: Props) {
   const intl = useIntl();
@@ -130,6 +133,7 @@ export default function StepNavigation({
               <div className={styles["fileTree"]}>
                 <StepFileTree
                   stepView={step}
+                  currentFileId={currentFileId}
                   onFileSelect={(fileFragment) => go(step.id, fileFragment)}
                 />
               </div>

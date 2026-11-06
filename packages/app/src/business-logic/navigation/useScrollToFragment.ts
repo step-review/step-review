@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import FragmentScroll from "./FragmentScroll.ts";
 import useFragment from "./useFragment.ts";
 
 /** Scrolls to the element named by the URL fragment, once it renders. */
@@ -11,7 +12,7 @@ export default function useScrollToFragment(): void {
     }
     // Cards expand when the fragment targets them; wait for that render.
     const timeout = window.setTimeout(() => {
-      document.getElementById(fragment)?.scrollIntoView({ block: "start" });
+      FragmentScroll.scrollTo(fragment);
     }, 50);
     return () => window.clearTimeout(timeout);
   }, [fragment]);

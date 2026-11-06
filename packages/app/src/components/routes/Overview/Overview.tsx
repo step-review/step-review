@@ -48,6 +48,7 @@ export default function Overview() {
         loadedReview={loadedReview}
         reviewView={reviewView}
         activeStepId={null}
+        currentFileId={null}
       >
         <Stack gap="spacious" className={styles["content"]}>
           <OverviewHeader />
