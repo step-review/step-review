@@ -29,6 +29,7 @@ it("hides the active step's files when clicking it, keeping it current", async (
       <StepNavigation
         reviewView={reviewView}
         activeStepId="step-1"
+        currentFileId={null}
         onNavigate={() => undefined}
       />
     </ReviewViewProvider>,
@@ -70,6 +71,7 @@ it("shows the active step's files again when clicking it a second time", async (
       <StepNavigation
         reviewView={reviewView}
         activeStepId="step-1"
+        currentFileId={null}
         onNavigate={() => undefined}
       />
     </ReviewViewProvider>,
@@ -118,6 +120,7 @@ it("shows the files of a step that becomes active after another was collapsed", 
       <StepNavigation
         reviewView={reviewView}
         activeStepId={activeStepId}
+        currentFileId={null}
         onNavigate={() => undefined}
       />
     </ReviewViewProvider>

@@ -44,7 +44,11 @@ it("shows how many issues and notes each file has", async () => {
   // Exercise
   const screen = await render(
     <ReviewViewProvider reviewView={reviewView}>
-      <StepFileTree stepView={stepView} onFileSelect={() => undefined} />
+      <StepFileTree
+        stepView={stepView}
+        currentFileId={null}
+        onFileSelect={() => undefined}
+      />
     </ReviewViewProvider>,
     { wrapper: TestProviders },
   );
@@ -96,7 +100,11 @@ it.each([
   // Exercise
   const screen = await render(
     <ReviewViewProvider reviewView={reviewView}>
-      <StepFileTree stepView={stepView} onFileSelect={() => undefined} />
+      <StepFileTree
+        stepView={stepView}
+        currentFileId={null}
+        onFileSelect={() => undefined}
+      />
     </ReviewViewProvider>,
     { wrapper: TestProviders },
   );
@@ -105,4 +113,66 @@ it.each([
   await expect
     .element(screen.getByRole("treeitem", { name: /parser\.ts/ }))
     .toHaveAccessibleDescription(label);
+});
+
+it("marks the file being viewed as current", async () => {
+  // Setup SUT
+  const stepView: StepView = {
+    id: "step-1",
+    number: 1,
+    title: "Change the parser",
+    attention: "normal",
+    intro: null,
+    notes: [],
+    files: [
+      {
+        id: "file-1",
+        path: "src/parser.ts",
+        fileDiff: { status: "modified" } as FileDiff,
+        hunks: [],
+        additions: 0,
+        deletions: 0,
+        summary: null,
+        fingerprint: "fingerprint-1",
+        notes: [],
+      },
+      {
+        id: "file-2",
+        path: "src/lexer.ts",
+        fileDiff: { status: "modified" } as FileDiff,
+        hunks: [],
+        additions: 0,
+        deletions: 0,
+        summary: null,
+        fingerprint: "fingerprint-2",
+        notes: [],
+      },
+    ],
+  };
+  const reviewView: ReviewView = {
+    reviewAddress: { kind: "local", reviewId: "review-1" },
+    data: {} as ReviewData,
+    diff: [],
+    steps: [stepView],
+  };
+
+  // Exercise
+  const screen = await render(
+    <ReviewViewProvider reviewView={reviewView}>
+      <StepFileTree
+        stepView={stepView}
+        currentFileId="file-2"
+        onFileSelect={() => undefined}
+      />
+    </ReviewViewProvider>,
+    { wrapper: TestProviders },
+  );
+
+  // Verify
+  await expect
+    .element(screen.getByRole("treeitem", { name: /lexer\.ts/ }))
+    .toHaveAttribute("aria-current", "true");
+  await expect
+    .element(screen.getByRole("treeitem", { name: /parser\.ts/ }))
+    .not.toHaveAttribute("aria-current");
 });

@@ -1,8 +1,8 @@
 import { Stack } from "@primer/react";
 import navigateTo from "../../../business-logic/navigation/navigateTo.ts";
 import RouteName from "../../../business-logic/navigation/RouteName.ts";
+import useCurrentFileId from "../../../business-logic/navigation/useCurrentFileId.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
-import useTopFileId from "../../../business-logic/navigation/useTopFileId.ts";
 import useDiffPreferences from "../../../business-logic/preferences/useDiffPreferences.ts";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
@@ -60,7 +60,8 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
   const { reviewAddress } = reviewView;
   const preferences = useDiffPreferences();
   useScrollToFragment();
-  useOwnPresence(stepView.id, useTopFileId(stepView.files));
+  const currentFileId = useCurrentFileId(stepView.files);
+  useOwnPresence(stepView.id, currentFileId);
   const goToStep = (index: number) => {
     const step = reviewView.steps[index];
     if (step) {
@@ -78,6 +79,7 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
       loadedReview={loadedReview}
       reviewView={reviewView}
       activeStepId={stepView.id}
+      currentFileId={currentFileId}
     >
       <Stack gap="normal">
         <StepHeader

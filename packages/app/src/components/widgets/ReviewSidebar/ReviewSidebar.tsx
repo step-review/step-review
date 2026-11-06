@@ -14,6 +14,8 @@ interface Props {
   loadedReview: LoadedReview;
   reviewView: ReviewView;
   activeStepId: string | null;
+  /** The file being viewed in the active step, if any. */
+  currentFileId: string | null;
   onNavigate: () => void;
   /** Omitted where the sidebar can't collapse into the rail. */
   onCollapse?: () => void;
@@ -24,6 +26,7 @@ export default function ReviewSidebar({
   loadedReview,
   reviewView,
   activeStepId,
+  currentFileId,
   onNavigate,
   onCollapse,
 }: Props) {
@@ -38,6 +41,7 @@ export default function ReviewSidebar({
           <StepNavigation
             reviewView={reviewView}
             activeStepId={activeStepId}
+            currentFileId={currentFileId}
             onNavigate={onNavigate}
           />
         </FadingScrollArea>

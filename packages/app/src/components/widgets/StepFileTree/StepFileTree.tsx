@@ -4,13 +4,13 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import buildFileTree from "../../../business-logic/file-tree/buildFileTree.ts";
 import type FileTreeNode from "../../../business-logic/file-tree/FileTreeNode.ts";
-import useFragment from "../../../business-logic/navigation/useFragment.ts";
 import useViewedFingerprints from "../../../business-logic/review-state/useViewedFingerprints.ts";
 import countNotes from "../../../business-logic/review-view/countNotes.ts";
 import type StepFileView from "../../../business-logic/review-view/StepFileView.ts";
 import type StepView from "../../../business-logic/review-view/StepView.ts";
 import formatFileStatus from "../../design-system/badges/formatFileStatus.ts";
 import FileStatusIcon from "../../design-system/FileStatusIcon/FileStatusIcon.tsx";
+import useFollowingScroll from "../../design-system/hooks/useFollowingScroll.ts";
 import NoteCounts from "../../design-system/NoteCounts/NoteCounts.tsx";
 import TruncatedText from "../../design-system/TruncatedText/TruncatedText.tsx";
 import ParticipantsHere from "../ParticipantsHere/ParticipantsHere.tsx";
@@ -18,15 +18,29 @@ import styles from "./StepFileTree.module.css";
 
 interface Props {
   stepView: StepView;
+  /** The file being viewed, if any. */
+  currentFileId: string | null;
   onFileSelect: (fileFragment: string) => void;
 }
 
-/** The files of a step, in a tree of folders. */
-export default function StepFileTree({ stepView, onFileSelect }: Props) {
+/**
+ * The files of a step, in a tree of folders. The file being viewed stands out,
+ * with the folders it's in, and the tree scrolls along with it.
+ */
+export default function StepFileTree({
+  stepView,
+  currentFileId,
+  onFileSelect,
+}: Props) {
   const intl = useIntl();
   const fileTree = useMemo(
     () => buildFileTree(stepView.files, (file) => file.path),
     [stepView.files],
+  );
+  const currentFile =
+    stepView.files.find((file) => file.id === currentFileId) ?? null;
+  useFollowingScroll(
+    currentFileId === null ? null : treeItemId(`file-${currentFileId}`),
   );
   return (
     <div className={styles["tree"]}>
@@ -35,7 +49,11 @@ export default function StepFileTree({ stepView, onFileSelect }: Props) {
         truncate={false}
         aria-label={intl.formatMessage({ defaultMessage: "Files of the step" })}
       >
-        <FileTreeNodes nodes={fileTree} onFileSelect={onFileSelect} />
+        <FileTreeNodes
+          nodes={fileTree}
+          currentFile={currentFile}
+          onFileSelect={onFileSelect}
+        />
       </TreeView>
     </div>
   );
@@ -43,15 +61,21 @@ export default function StepFileTree({ stepView, onFileSelect }: Props) {
 
 interface FileTreeNodesProps {
   nodes: FileTreeNode<StepFileView>[];
+  currentFile: StepFileView | null;
   onFileSelect: (fileFragment: string) => void;
 }
 
-function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
+function FileTreeNodes({
+  nodes,
+  currentFile,
+  onFileSelect,
+}: FileTreeNodesProps) {
   const intl = useIntl();
   const viewedFingerprints = useViewedFingerprints();
-  const fragment = useFragment();
   return nodes.map((node) => {
     if (node.kind === "folder") {
+      const containsCurrentFile =
+        currentFile?.path.startsWith(`${node.path}/`) ?? false;
       return (
         <TreeView.Item
           key={node.path}
@@ -61,11 +85,18 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
           <TreeView.LeadingVisual>
             <TreeView.DirectoryIcon />
           </TreeView.LeadingVisual>
-          <span className={styles["folderName"]}>
+          <span
+            className={styles["folderName"]}
+            data-contains-current={containsCurrentFile || undefined}
+          >
             <TruncatedText tooltip={node.path}>{node.label}</TruncatedText>
           </span>
           <TreeView.SubTree>
-            <FileTreeNodes nodes={node.children} onFileSelect={onFileSelect} />
+            <FileTreeNodes
+              nodes={node.children}
+              currentFile={currentFile}
+              onFileSelect={onFileSelect}
+            />
           </TreeView.SubTree>
         </TreeView.Item>
       );
@@ -108,8 +139,8 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
       <TreeView.Item
         key={stepFileView.id}
         // Not the fragment: that's the ID of the file's card, to scroll to.
-        id={`tree-${fileFragment}`}
-        current={fragment === fileFragment}
+        id={treeItemId(fileFragment)}
+        current={stepFileView.id === currentFile?.id}
         onSelect={() => onFileSelect(fileFragment)}
       >
         <TreeView.LeadingVisual>
@@ -135,4 +166,8 @@ function FileTreeNodes({ nodes, onFileSelect }: FileTreeNodesProps) {
       </TreeView.Item>
     );
   });
+}
+
+function treeItemId(fileFragment: string): string {
+  return `tree-${fileFragment}`;
 }

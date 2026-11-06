@@ -1,3 +1,4 @@
+import FragmentScroll from "./FragmentScroll.ts";
 import type NavigableRoute from "./NavigableRoute.ts";
 import routeHref from "./routeHref.ts";
 
@@ -20,6 +21,6 @@ export default function navigateTo(
     window.dispatchEvent(new PopStateEvent("popstate"));
   } else if (fragment) {
     // Already there, but maybe scrolled away from it.
-    document.getElementById(fragment)?.scrollIntoView({ block: "start" });
+    FragmentScroll.scrollTo(fragment);
   }
 }
