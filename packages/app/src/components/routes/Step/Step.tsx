@@ -4,7 +4,6 @@ import RouteName from "../../../business-logic/navigation/RouteName.ts";
 import useScrollToFragment from "../../../business-logic/navigation/useScrollToFragment.ts";
 import useTopFileId from "../../../business-logic/navigation/useTopFileId.ts";
 import useDiffPreferences from "../../../business-logic/preferences/useDiffPreferences.ts";
-import { useReviewState } from "../../../business-logic/review-state/ReviewStateProvider.tsx";
 import type ReviewView from "../../../business-logic/review-view/ReviewView.ts";
 import ReviewViewProvider from "../../../business-logic/review-view/ReviewViewProvider.tsx";
 import useReviewView from "../../../business-logic/review-view/useReviewView.ts";
@@ -13,6 +12,7 @@ import { useLoadedReviewContext } from "../../../business-logic/review/LoadedRev
 import useOwnPresence from "../../../business-logic/session-connection/useOwnPresence.ts";
 import useHotkeys from "../../design-system/hooks/useHotkeys.ts";
 import FileCard from "../../widgets/FileCard/FileCard.tsx";
+import MarkAllViewedButton from "../../widgets/MarkAllViewedButton/MarkAllViewedButton.tsx";
 import ReviewShell from "../../widgets/ReviewShell/ReviewShell.tsx";
 import StepHeader from "../../widgets/StepHeader/StepHeader.tsx";
 import StepPager from "../../widgets/StepPager/StepPager.tsx";
@@ -59,7 +59,6 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
   const stepView = reviewView.steps[stepIndex]!;
   const { reviewAddress } = reviewView;
   const preferences = useDiffPreferences();
-  const { dispatch } = useReviewState();
   useScrollToFragment();
   useOwnPresence(stepView.id, useTopFileId(stepView.files));
   const goToStep = (index: number) => {
@@ -86,16 +85,7 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
           stepCount={reviewView.steps.length}
           areExplainersHidden={preferences.explainers === "hidden"}
         />
-        <StepToolbar
-          preferences={preferences}
-          onMarkAllViewed={() =>
-            dispatch({
-              type: "setViewed",
-              fingerprints: stepView.files.map((file) => file.fingerprint),
-              viewed: true,
-            })
-          }
-        />
+        <StepToolbar preferences={preferences} stepView={stepView} />
         {stepView.files.map((file) => (
           <FileCard
             key={file.id}
@@ -105,6 +95,10 @@ function StepPage({ loadedReview, reviewView, stepIndex }: StepPageProps) {
             areExplainersHidden={preferences.explainers === "hidden"}
           />
         ))}
+        {/* Saves scrolling back up after reviewing the last file. */}
+        <Stack direction="horizontal" justify="end">
+          <MarkAllViewedButton stepView={stepView} />
+        </Stack>
         <StepPager reviewView={reviewView} stepIndex={stepIndex} />
       </Stack>
     </ReviewShell>

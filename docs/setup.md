@@ -21,14 +21,14 @@ Contributors and coding agents follow the principles in
 
 ## System requirements
 
-- [Node.js 24](https://nodejs.org/en/).
-- [Corepack](https://github.com/nodejs/corepack), to install pnpm. Make sure it
-  is enabled by running `corepack enable`.
+- [mise](https://mise.jdx.dev/), which installs the Node.js and pnpm versions
+  pinned in [`mise.toml`](../mise.toml).
 
 ## First time setup
 
 After cloning the repository:
 
+- Run `mise install`.
 - Run `pnpm install`.
 - Run `pnpm --filter @step-review/app exec playwright install chromium` to
   install Chromium for the component tests.
